@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <?php $this->GetHeader(); ?>
-  </head>
-  
+  <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
 
       <!-- Preloader -->
       <!-- <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="<?php echo constant("URL");?>views/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+        <img class="animation__shake" src="<?php //echo constant("URL");?>views/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
       </div> -->
 
       <?php 

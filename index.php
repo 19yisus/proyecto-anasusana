@@ -1,14 +1,18 @@
 <?php
   require_once("./models/config.php");
-  require_once("./controller/c_errors.php");
+  require_once("./controller/c_messages.php");
 
   class App{
-    private $ruta_actual, $code_error;
+    private $ruta_actual, $code_error, $code_done, $titleContent, $controlador;
 
     public function __construct(){
       session_start();
-      $ruta = $this->GetRoute();
-      $this->GetView($ruta[0]);
+      $this->GetView($this->GetRoute());
+    }
+
+    private function IsActive($nameRoute){
+      if(is_array($nameRoute) && in_array($this->ruta_actual, $nameRoute)) echo "active";
+      if($nameRoute === $this->ruta_actual) echo "active";
     }
 
     private function GetHeader(){
@@ -24,28 +28,38 @@
     private function Auth(){
       if(in_array($this->ruta_actual, constant("PRIVATE_URLS"))){
         if(!isset($_SESSION['id_username'])){
-          header("Location: ".constant("URL")."inicio/err/01AUTH");
+          $this->Redirect("inicio/index","err/01AUTH");
         }
       }
       if(isset($this->code_error)){
-        $objError = new c_errors();
-        $objError->printError($this->code_error);
+        $ObjMessage = new c_messages();
+        $ObjMessage->printError($this->code_error);
+      }
+
+      if(isset($this->code_done)){
+        $ObjMessage = new c_messages();
+        $ObjMessage->printMessage($this->code_done);
       }
     }
 
+    private function Redirect($view, $params){ header("Location: ".constant("URL")."$view/$params"); }
+
     private function GetRoute(){
-      $url = isset($_GET['url']) ? $_GET['url'] : "inicio";
+      $url = isset($_GET['url']) ? $_GET['url'] : "inicio/index";
       $url = rtrim($url, '/');
       $url = explode('/', $url);
 
-      if(sizeof($url) > 1 && $url[1] == "err") $this->code_error = $url[2];
+      if(sizeof($url) > 2 && $url[2] === "err") $this->code_error = $url[3];
+      if(sizeof($url) > 2 && $url[2] === "msg") $this->code_done = $url[3];
       return $url;
     }
 
     private function GetView($nameView){
-      $file_view = "./views/contents/vis_$nameView.php";
+      $vista = (isset($nameView[1]) ? $nameView[1] : "index");
+      $file_view = "./views/contents/".$nameView[0]."/vis_".$vista.".php";
       if(file_exists($file_view)){
-        $this->ruta_actual = $nameView;
+        $this->ruta_actual = $nameView[0]."/".$vista;
+        $this->controlador = $nameView[0];
         require_once($file_view);
       }
     }

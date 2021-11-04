@@ -5,6 +5,7 @@
   $port_string = $_SERVER['SERVER_PORT'];
 
   foreach($url as $item){
+    if($item === "controller") break;
     if($item != "index.php"){
       $string_url .= $item."/";
     }else{
