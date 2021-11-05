@@ -3,21 +3,13 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-
-      <!-- Preloader -->
-      <!-- <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="<?php //echo constant("URL");?>views/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-      </div> -->
-
       <?php 
         $this->titleContent = "Registro de grupos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
         require_once("./models/m_db.php");
-        
       ?>
-
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <?php $this->GetComplement("contentHeader");?>
@@ -46,11 +38,11 @@
                                         <label for="">Estado del grupo</label>
                                         <div class="row">
                                             <div class="form-check mx-3">
-                                                <input type="radio" name="status_grupo" id="status_grupo" value="1" class="form-check-input">
+                                                <input type="radio" name="status_grupo" id="status_grupo" value="1" class="form-check-input" readonly checked>
                                                 <label for="status_grupo" class="form-check-label">Activo</label>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" name="status_grupo" id="status_grupo" value="0" class="form-check-input">
+                                                <input type="radio" name="status_grupo" id="status_grupo" value="0" class="form-check-input" disabled>
                                                 <label for="status_grupo" class="form-check-label">Innactivo</label>
                                             </div>
                                         </div>
@@ -59,7 +51,8 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" name="ope" value="Registrar" class="btn btn-primary">Registrar</button>
+                                <input type="hidden" name="ope">
+                                <button type="button" id="btn" onclick="ope.value = this.value" value="Registrar" class="btn btn-primary">Registrar</button>
                             </div>
                         </form>
                     </div>
@@ -91,24 +84,25 @@
 <!-- ./wrapper -->
 <?php $this->GetComplement("scripts");?>
 <script>
+    $("#btn").click( async () =>{
+        if($("#formulario").valid()){
+            let res = await Confirmar();
+            console.log(res)
+            if(res) $("#formulario").submit();
+        }
+    })
+
     $("#formulario").validate({
-        submitHandler: function(form) { $(form).submit(); },
         rules:{
             nom_grupo:{
                 required: true,
                 minlength: 3,
-            },
-            status_grupo:{
-                required: true,
             }
         },
         messages:{
             nom_grupo:{
                 required: "Este campo no puede estar vacio",
                 minlength: "Debe de contener al menos 3 caracteres",
-            },
-            status_grupo:{
-                required: "Este campo no puede estar vacio",
             }
         },
         errorElement: "span",

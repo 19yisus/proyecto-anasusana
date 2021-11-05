@@ -77,6 +77,9 @@
       form.status_grupo.value = value;
     }else form.ope.value = "Eliminar";
 
+    let res = await Confirmar();
+    if(!res) return false;
+
     const data = new FormData(form);
     await fetch(`<?php echo constant("URL");?>controller/c_grupo.php`,{
       method: "POST",

@@ -1,7 +1,6 @@
 <?php
   require_once("./models/config.php");
-  require_once("./controller/c_messages.php");
-
+  
   class App{
     private $ruta_actual, $code_error, $code_done, $titleContent, $controlador;
 
@@ -30,15 +29,6 @@
         if(!isset($_SESSION['id_username'])){
           $this->Redirect("inicio/index","err/01AUTH");
         }
-      }
-      if(isset($this->code_error)){
-        $ObjMessage = new c_messages();
-        $ObjMessage->printError($this->code_error);
-      }
-
-      if(isset($this->code_done)){
-        $ObjMessage = new c_messages();
-        $ObjMessage->printMessage($this->code_done);
       }
     }
 

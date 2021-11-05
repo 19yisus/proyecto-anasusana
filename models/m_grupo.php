@@ -31,19 +31,22 @@
         }
 
         public function Disable(){
-            // $sqlConsulta = "SELECT * FROM producto WHERE grupo_id_product = $this->id_group ;";
-            // $result = $this->Query($sql);
-            // if($result) return ["code" => "error", "message" => "Este grupo de ya esta en uso"]
+            $sqlConsulta = "SELECT * FROM producto WHERE grupo_id_product = $this->id_grupo ;";
+            $result = $this->Query($sqlConsulta);
+            
+            if($result->num_rows > 0){
+                return ["code" => "error", "message" => "Este grupo de ya esta en uso"];
+            }else{
+                $sql = "UPDATE grupo SET status_grupo = $this->status_grupo WHERE id_grupo = $this->id_grupo ;";
+                $this->Query($sql);
 
-            $sql = "UPDATE grupo SET status_grupo = $this->status_grupo WHERE id_grupo = $this->id_grupo ;";
-            $this->Query($sql);
-
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+                if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
+                else return ["code" => "error", "message" => "Operacion Fallida"];
+            }            
         }
 
         public function Delete(){
-            $sql = "DELETE * FROM grupo WHERE id_grupo = $this->id_grupo AND status_grupo = 0 ;";
+            $sql = "DELETE FROM grupo WHERE id_grupo = $this->id_grupo AND status_grupo = '0' ;";
             $this->Query($sql);
 
             if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];

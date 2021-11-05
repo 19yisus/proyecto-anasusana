@@ -35,7 +35,8 @@
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" name="ope" value="Actualizar" class="btn btn-primary">Actualizar</button>
+                                    <input type="hidden" name="ope">
+                                    <button type="button" id="btn" onclick="ope.value = this.value" value="Actualizar" class="btn btn-primary">Actualizar</button>
                                 </div>
                             </form>
                         </div>
@@ -51,32 +52,30 @@
 </div>
 <!-- /.modal -->
 <script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000
-    });
+    $("#btn").click( async () =>{
+        if($("#formulario").valid()){
+            let res = await Confirmar();
+            if(!res) return false;
 
-    $("#formulario").validate({
-        submitHandler: function(form) {
-            let datos = new FormData(form);
-
+            let datos = new FormData(document.formulario);
             fetch(`<?php echo constant("URL");?>controller/c_grupo.php`, {
                 method: "POST",
                 body: datos,
             }).then( response => response.json())
             .then( res =>{
                 FreshCatalogo();
-                form.reset();
+                document.formulario.reset();
                 $("#modal-lg").modal("hide");
                 
                 Toast.fire({
                     icon: `${res.data.code}`,
                     title: `${res.data.message}`
                 });
-            }).catch( Err => console.error(Err))
-        },
+            }).catch( Err => console.log(Err))
+        }
+    })
+
+    $("#formulario").validate({
         rules:{
             nom_grupo:{
                 required: true,

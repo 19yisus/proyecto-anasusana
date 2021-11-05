@@ -44,3 +44,38 @@
 <script src="<?php echo constant("URL");?>views/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.js"></script>
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000
+    });
+
+    const Confirmar = async () => {
+        return await Swal.fire({
+            title: "Estas seguro de realizar esta operacion?",
+            text: "Confirma esta operacion",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, estoy segur@",
+        }).then( result =>{
+            if(result.isConfirmed) return true; else return false;
+        })
+    }
+</script>
+<?php
+    require_once("./controller/c_messages.php");
+
+    if(isset($this->code_error)){
+        $ObjMessage = new c_messages();
+        $ObjMessage->printError($this->code_error);
+    }
+
+    if(isset($this->code_done)){
+        $ObjMessage = new c_messages();
+        $ObjMessage->printMessage($this->code_done);
+    }
+?>

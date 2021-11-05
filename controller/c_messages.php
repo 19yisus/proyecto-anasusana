@@ -14,7 +14,10 @@
         if($indexError === $error){
           ?>
           <script>
-            alert("<?php echo $key; ?>")
+            Toast.fire({
+              icon: "error",
+              title: "<?php echo $key; ?>"
+            });
           </script>
           <?php
         }
@@ -26,7 +29,10 @@
         if($indexMessage === $msg){
           ?>
           <script>
-            alert("<?php echo $key; ?>")
+            Toast.fire({
+              icon: "success",
+              title: "<?php echo $key; ?>"
+            });
           </script>
           <?php
         }
