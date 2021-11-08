@@ -17,32 +17,30 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-          <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Catalogo de grupos</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                          <table id="dataTable" class="table table-bordered table-striped">
-                            <thead>
-                              <tr>
-                                <th>Id</th>
-                                <th>Nombre</th>
-                                <th>Estado</th>
-                                <th>Creacion</th>
-                                <th>Opciones</th>
-                              </tr>
-                            </thead>
-                            <tbody></tbody>
-                          </table>
-                        </div>
-                    </div>
-                    <!-- /.card -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Catalogo de grupos</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table id="dataTable" class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Nombre</th>
+                          <th>Estado</th>
+                          <th>Creacion</th>
+                          <th>Opciones</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
                 </div>
-                <!--/.col (left) -->
-            <!--/.col (right) -->
+                <!-- /.card -->
+              </div>
             </div>
             <!-- /.row -->
           </div><!-- /.container-fluid -->
@@ -105,8 +103,6 @@
       console.error(Err)
     });
   }
-
-  const FreshCatalogo = () => $(`#dataTable`).DataTable().ajax.reload(null, false); 
 
   $( () => {
     $('#dataTable').DataTable({
