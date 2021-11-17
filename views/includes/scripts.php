@@ -45,6 +45,8 @@
 <!-- Toastr -->
 <script src="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.js"></script>
 <script>
+    const FreshCatalogo = () => $(`#dataTable`).DataTable().ajax.reload(null, false); 
+    
     const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
