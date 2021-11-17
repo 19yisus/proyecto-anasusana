@@ -20,7 +20,7 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-          <div class="row">
+            <div class="row">
               <div class="col-md-12">
                 <div class="card card-primary">
                   <div class="card-header">
@@ -46,7 +46,8 @@
               </div>
             </div>
             <!-- /.row -->
-          </div><!-- /.container-fluid -->
+          </div>
+          <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
       </div>
@@ -127,9 +128,12 @@
         {defaultContent: "",
         render: function(data, type, row, meta){
           let btn_secondary;
+          let estadoBtnEdit;
           if(row.status_marca === "1"){
+            estadoBtnEdit = "";
             btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_marca})"><i class="fas fa-power-off"></i></button>`;
           }else{
+            estadoBtnEdit = "disabled";
             btn_secondary = `
             <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_marca})"><i class="fas fa-power-off"></i></button>
             <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_marca})"></i></button>`;
@@ -141,7 +145,7 @@
               <input type="hidden" name="ope">
             </form>
             <div class="btn-group">
-              <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_marca})"><i class="fas fa-edit"></i></button>${btn_secondary}
+              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_marca})"><i class="fas fa-edit"></i></button>${btn_secondary}
             </div>`;
 
           return btn;

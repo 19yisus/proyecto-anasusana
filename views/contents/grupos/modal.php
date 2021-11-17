@@ -21,13 +21,13 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_grupo">Id del grupo</label>
+                                                <label for="id_grupo">Id del grupo(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_grupo" id="id_grupo" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="nom_grupo">Nombre del grupo</label>
+                                                <label for="nom_grupo">Nombre del grupo(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="nom_grupo" id="nom_grupo" placeholder="Ingrese el nombre del grupo" class="form-control">
                                             </div>
                                         </div>

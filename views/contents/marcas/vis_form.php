@@ -8,7 +8,7 @@
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
-        require_once("./models/m_db.php");
+        
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -30,12 +30,12 @@
                                     <div class="col-7">
                                         <div class="form-group">
                                             <input type="hidden" name="id_marca">
-                                            <label for="nom_marca">Nombre de la marca</label>
+                                            <label for="nom_marca">Nombre de la marca(<span class="text-danger text-md">*</span>)</label>
                                             <input type="text" name="nom_marca" id="nom_marca" placeholder="Ingrese el nombre de la marca" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <label for="">Estado de la marca</label>
+                                        <label for="">Estado de la marca(<span class="text-danger text-md">*</span>)</label>
                                         <div class="row">
                                             <div class="form-check mx-3">
                                                 <input type="radio" name="status_marca" id="status_marca" value="1" class="form-check-input" readonly checked>
@@ -87,7 +87,6 @@
     $("#btn").click( async () =>{
         if($("#formulario").valid()){
             let res = await Confirmar();
-            console.log(res)
             if(res) $("#formulario").submit();
         }
     })

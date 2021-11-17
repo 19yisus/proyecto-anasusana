@@ -8,7 +8,6 @@
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
-        require_once("./models/m_db.php");
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -30,12 +29,12 @@
                                     <div class="col-7">
                                         <div class="form-group">
                                             <input type="hidden" name="id_grupo">
-                                            <label for="nom_grupo">Nombre del grupo</label>
+                                            <label for="nom_grupo">Nombre del grupo<(<span class="text-danger text-md">*</span>)/label>
                                             <input type="text" name="nom_grupo" id="nom_grupo" placeholder="Ingrese el nombre del grupo" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <label for="">Estado del grupo</label>
+                                        <label for="">Estado del grupo(<span class="text-danger text-md">*</span>)</label>
                                         <div class="row">
                                             <div class="form-check mx-3">
                                                 <input type="radio" name="status_grupo" id="status_grupo" value="1" class="form-check-input" readonly checked>
@@ -87,7 +86,6 @@
     $("#btn").click( async () =>{
         if($("#formulario").valid()){
             let res = await Confirmar();
-            console.log(res)
             if(res) $("#formulario").submit();
         }
     })

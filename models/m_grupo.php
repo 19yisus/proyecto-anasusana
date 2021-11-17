@@ -53,8 +53,8 @@
             else return ["code" => "error", "message" => "Operacion Fallida"];
         }
 
-        public function Get_todos_grupos(){
-            $sql = "SELECT * FROM grupo ;";
+        public function Get_todos_grupos($status = ''){
+            if($status != '') $sql = "SELECT * FROM grupo WHERE status_grupo = '1';"; else $sql = "SELECT * FROM grupo ;";            
             $results = $this->query($sql);
             return $this->Get_todos_array($results);
         }

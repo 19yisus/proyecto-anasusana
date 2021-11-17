@@ -30,7 +30,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link <?php $this->IsActive(["grupos/index","grupos/form","marcas/index","personas/index","productos/index"]);?>">
+          <a href="#" class="nav-link <?php $this->IsActive(["grupos/index","grupos/form","marcas/index","personas/index","productos/index","productos/form"]);?>">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Registros

@@ -53,8 +53,8 @@
             else return ["code" => "error", "message" => "Operacion Fallida"];
         }
 
-        public function Get_todos_marcas(){
-            $sql = "SELECT * FROM marca ;";
+        public function Get_todos_marcas($status = ''){
+            if($status != '') $sql = "SELECT * FROM marca WHERE status_marca = '1';"; else $sql = "SELECT * FROM marca ;";            
             $results = $this->query($sql);
             return $this->Get_todos_array($results);
         }

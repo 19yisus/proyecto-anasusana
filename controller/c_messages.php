@@ -3,6 +3,7 @@
     private $list_errors = [
       '01AUTH' => "NO EXISTE SESSION ACTIVA",
       '01ERR' => "Operacion fallida!",
+      '02ERR' => "El registro no se puede duplicar",
     ];
 
     private $list_messages = [

@@ -21,13 +21,13 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_marca">Id de la marca</label>
+                                                <label for="id_marca">Id de la marca(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_marca" id="id_marca" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="nom_marca">Nombre de la marca</label>
+                                                <label for="nom_marca">Nombre de la marca<(<span class="text-danger text-md">*</span>)/label>
                                                 <input type="text" name="nom_marca" id="nom_marca" placeholder="Ingrese el nombre de la marca" class="form-control">
                                             </div>
                                         </div>
