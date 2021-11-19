@@ -3,12 +3,6 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-
-      <!-- Preloader -->
-      <!-- <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="<?php //echo constant("URL");?>views/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-      </div> -->
-
       <?php 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");

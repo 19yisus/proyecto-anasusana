@@ -34,6 +34,7 @@
             $variable = str_ireplace("}","",$variable);
             $variable = str_ireplace("==","",$variable);
             $variable = str_ireplace("=","",$variable);
+            $variable = str_ireplace("-","",$variable);
             $variable = str_ireplace("<script>","",$variable);
             $variable = str_ireplace("<script src= >","",$variable);
             $variable = str_ireplace("src=","",$variable);

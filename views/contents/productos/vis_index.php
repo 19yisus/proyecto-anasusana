@@ -35,6 +35,9 @@
                         <tr>
                           <th>Id</th>
                           <th>Nombre</th>
+                          <th>Cantidad en stock</th>
+                          <th>Marca</th>
+                          <th>Grupo</th>
                           <th>Estado</th>
                           <th>Creacion</th>
                           <th>Opciones</th>
@@ -122,6 +125,9 @@
       columns: [
         {data: "id_product"},
         {data: "nom_product"},
+        {data: "stock_product"},
+        {data: "nom_marca"},
+        {data: "nom_grupo"},
         {data: "status_product", 
         render: function(data){
           return (data == 1) ? "Activo" : "Innactivo";

@@ -40,6 +40,8 @@
 <script src="<?php echo constant("URL");?>views/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- Moment -->
 <script src="<?php echo constant("URL");?>views/plugins/moment/moment.min.js"></script>
+<!-- InputMask -->
+<script src="<?php echo constant("URL");?>views/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="<?php echo constant("URL");?>views/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->

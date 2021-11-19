@@ -76,7 +76,7 @@
         }
 
         public function Get_todos_productos($status = ''){
-            if($status != '') $sql = "SELECT * FROM producto WHERE status_product = '1';"; else $sql = "SELECT * FROM producto ;";
+            if($status != '') $sql = "SELECT * FROM producto WHERE status_product = '1';"; else $sql = "SELECT * FROM producto INNER JOIN marca ON marca.id_marca = producto.marca_id_product INNER JOIN grupo ON grupo.id_grupo = producto.grupo_id_product;";
             $results = $this->query($sql);
             return $this->Get_todos_array($results);
         }

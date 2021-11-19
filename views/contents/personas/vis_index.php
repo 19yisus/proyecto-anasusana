@@ -4,11 +4,6 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
 
-      <!-- Preloader -->
-      <!-- <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="<?php //echo constant("URL");?>views/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-      </div> -->
-
       <?php 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -20,7 +15,33 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <h1>Vista de Personas</h1>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Catalogo de personas</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <table id="dataTable" class="table table-bordered table-striped">
+                      <thead>
+                        <tr>
+                          <th>Cedula</th>
+                          <th>Nombre y Apellido</th>
+                          <th>Es proveedor?</th>
+                          <th>Estado</th>
+                          <th>Creacion</th>
+                          <th>Opciones</th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.card -->
+              </div>
+            </div>
+            <!-- /.row -->
           </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
@@ -41,5 +62,119 @@
       <!-- /.control-sidebar -->
     </div>
 <!-- ./wrapper -->
-<?php $this->GetComplement("scripts");?>
+<?php 
+  $this->GetComplement("scripts");
+  require_once("./views/contents/personas/modal.php");
+?>
+<script>
+  $("#telefono_movil_persona").inputmask();
+  $("#telefono_casa_persona").inputmask();
+
+  const ChangeStatus = async (value, id) => {
+    const form = document.getElementById(`formSecondary-${id}`);
+    if(value !== 2){
+      form.ope.value = "Desactivar";
+      form.status_persona.value = value;
+    }else form.ope.value = "Eliminar";
+
+    let res = await Confirmar();
+    if(!res) return false;
+
+    const data = new FormData(form);
+    await fetch(`<?php echo constant("URL");?>controller/c_persona.php`,{
+      method: "POST",
+      body: data
+    }).then(response => response.json())
+    .then( res =>{
+      Toast.fire({
+        icon: `${res.data.code}`,
+        title: `${res.data.message}`
+      });
+      FreshCatalogo();
+    });
+  }
+
+  const Consultar = async (value) => {
+    await fetch(`<?php echo constant("URL");?>controller/c_persona.php?ope=Consultar_persona&id_persona=${value}`)
+    .then( response => response.json()).then( res => {
+      console.log(res)
+      const form = document.formulario;
+      form.tipo_persona.value = res.data.tipo_person;
+      form.if_proveedor.value = res.data.if_proveedor;
+      form.if_user.value = res.data.if_user;
+
+      form.id_persona.value = res.data.id_person;
+      form.cedula_persona.value = res.data.cedula_person;
+      form.nom_persona.value = res.data.nom_person;
+      form.sexo_persona.value = res.data.sexo_person;
+      form.telefono_movil_persona.value = res.data.telefono_movil_person;
+      form.telefono_casa_persona.value = res.data.telefono_casa_person;
+      form.correo_persona.value = res.data.correo_person;
+      form.direccion_persona.value = res.data.direccion_person;
+    })
+    .catch( Err => {
+      console.error(Err)
+    });
+  }
+
+  $( () => {
+    $('#dataTable').DataTable({
+      ajax:{
+        url: "<?php echo constant("URL");?>controller/c_persona.php?ope=Todos_personas",
+        dataSrc: "data",
+      },
+      columns: [
+        {data: "cedula_person"},
+        {data: "nom_person"},
+        {data: "if_proveedor",
+        render: function(data){
+          return (data === "1") ? "Si es proveedor" : "No es proveedor";
+        }},
+        {data: "status_person", 
+        render: function(data){
+          return (data == "1") ? "Activo" : "Innactivo";
+        }},
+        {data: "created_person", 
+        render: function(data){
+          return moment(data).format("DD/MM/YYYY h:mm A")
+        }},
+        {defaultContent: "",
+        render: function(data, type, row, meta){
+          let btn_secondary;
+          let estadoBtnEdit;
+          if(row.status_person === "1"){
+            estadoBtnEdit = "";
+            btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_person})"><i class="fas fa-power-off"></i></button>`;
+          }else{
+            estadoBtnEdit = "disabled";
+            btn_secondary = `
+            <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_person})"><i class="fas fa-power-off"></i></button>
+            <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_person})"></i></button>`;
+          }
+          let btn = `
+            <form method="POST" id="formSecondary-${row.id_person}" action="<?php echo constant('URL');?>controller/c_persona.php">
+              <input type="hidden" name="id_persona" value="${row.id_person}">
+              <input type="hidden" name="status_persona">
+              <input type="hidden" name="ope">
+            </form>
+            <div class="btn-group">
+              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_person})"><i class="fas fa-edit"></i></button>${btn_secondary}
+            </div>`;
+
+          return btn;
+        }}
+      ],
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      language: {
+        url: `<?php echo constant("URL");?>views/js/DataTable.config.json`
+      }
+    });
+  })
+</script>
 </html>
