@@ -8,7 +8,6 @@
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
       ?>
-
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <?php $this->GetComplement("contentHeader");?>
