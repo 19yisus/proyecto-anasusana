@@ -38,6 +38,8 @@
 <script src="<?php echo constant("URL");?>views/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="<?php echo constant("URL");?>views/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?php echo constant("URL");?>views/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- Select2 -->
+<script src="<?php echo constant("URL");?>views/plugins/select2/js/select2.full.min.js"></script>
 <!-- Moment -->
 <script src="<?php echo constant("URL");?>views/plugins/moment/moment.min.js"></script>
 <!-- InputMask -->
@@ -46,6 +48,8 @@
 <script src="<?php echo constant("URL");?>views/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.js"></script>
+<!-- Vuejs -->
+<script src="<?php echo constant("URL");?>views/js/vue.min.js"></script>
 <script>
     const FreshCatalogo = () => $(`#dataTable`).DataTable().ajax.reload(null, false); 
     

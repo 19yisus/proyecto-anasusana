@@ -88,13 +88,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?php echo constant("URL"); ?>entradas" class="nav-link <?php $this->IsActive("entradas"); ?>">
+              <a href="<?php echo constant("URL");?>entradas/index" class="nav-link <?php $this->IsActive("entradas"); ?>">
                 <i class="nav-item fas fa-hand-holding-medical"></i>
                 <p>Entrada de productos</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo constant("URL"); ?>salidas" class="nav-link <?php $this->IsActive("salidas"); ?>">
+              <a href="<?php echo constant("URL");?>salidas/index" class="nav-link <?php $this->IsActive("salidas"); ?>">
                 <i class="nav-item fas fa-cart-arrow-down"></i>
                 <p>Salida de productos</p>
               </a>
