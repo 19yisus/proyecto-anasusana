@@ -25,7 +25,8 @@
                                         <div class="col-4">
                                             <div class="form-group d-block">
                                                 <label for="id_product">Codigo del producto(<span class="text-danger text-md">*</span>)</label>
-                                                <select name="id_product" v-model="productos[index].code" :value="item.code" id="" class="special_select2">
+                                                <!-- special_select2 lo dejo aca por si acaso -->
+                                                <select name="id_product" v-model="productos[index].code" value="" id="" class="custom-select">
                                                     <option value="">Seleccione un producto</option>
                                                     <?php foreach($productos as $item){?>
                                                     <option value="<?php echo $item['id_product'];?>"><?php echo $item['nom_product']; ?></option>
@@ -35,20 +36,20 @@
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="number" name="cant_product" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
+                                                <label for="cant_product">Cantidad {{index}} (<span class="text-danger text-md">*</span>)</label>
+                                                <input type="number" name="cant_product" min="0" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label for="precio_product">Precio(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="text" name="precio_product" v-model="productos[index].precio" :value="item.precio" id="precio_product" placeholder="Ingrese su precio" class="form-control">
+                                                <input type="number" name="precio_product" min="0" v-model="productos[index].precio" :value="item.precio" id="precio_product" placeholder="Ingrese su precio" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="fecha_vencimiento">Fecha de vencimiento(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="date" name="fecha_vencimiento" v-model="productos[index].fecha" :value="item.fecha" id="fecha_vencimiento" placeholder="Ingrese fecha de vencimiento" class="form-control">
+                                                <input type="date" name="fecha_vencimiento" min="<?php echo $this->DateNow();?>" v-model="productos[index].fecha" :value="item.fecha" id="fecha_vencimiento" placeholder="Ingrese fecha de vencimiento" class="form-control">
                                             </div>
                                         </div>
                                         <button type="button" v-on:click="Disminuir(index)" class="btn btn-danger mt-3">-</button>

@@ -95,5 +95,11 @@
             $results = $this->Query($sql);
             return $this->Get_array($results);
         }
+
+        public function Get_proveedor(){
+            $sql = "SELECT * FROM personas WHERE if_proveedor = '1' AND status_person = '1' ;";
+            $results = $this->Query($sql);
+            return $this->Get_todos_array($results);
+        }
     }
 ?>

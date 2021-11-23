@@ -38,8 +38,8 @@
         $model = new m_persona();
         $model->setDatos($_POST);
         $mensage = $model->Create();
-
-        header("Location: ".constant("URL")."personas/form/$mensage");
+        
+        $this->Redirect("personas/form",$mensage);
     }
 
     function fn_Actualizar(){

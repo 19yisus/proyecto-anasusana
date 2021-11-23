@@ -8,7 +8,15 @@
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
-        
+        require_once("./models/m_entrada_salida.php");
+        require_once("./models/m_persona.php");
+
+        $model = new m_entrada_salida();
+        $NextId_inventario = $model->NextId();
+        $datosComedor = $model->GetComedor();
+
+        $model_person = new m_persona();
+        $person = $model_person->Get_proveedor();
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -20,7 +28,7 @@
                 <div class="col-md-12">
                     <div class="card card-cyan">
                         <div class="card-header">
-                            <h3 class="card-title">Formulario de registro de entradas</h3>
+                            <h3 class="card-title">Formulario de registro de entradas </h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -30,21 +38,21 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="id_invent">Codigo de inventario</label>
-                                            <input type="text" name="id_invent" id="id_invent" disabled value="00000001" class="form-control">
+                                            <input type="text" name="id_invent" id="id_invent" disabled value="<?php echo $NextId_inventario;?>" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="person_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
-                                            <select name="person_id_invent" id="person_id_invent" class="custom-select" readonly>
-                                                <option value="" selected>Comedor name</option>
+                                            <label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
+                                            <select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
+                                                <option value="<?php echo $datosComedor['id_comedor']; ?>" selected><?php echo $datosComedor['nom_comedor'];?></option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="orden_invent">N-Orden</label>
-                                            <input type="text" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el numero de orden">
+                                            <input type="number" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el numero de orden">
                                         </div>
                                     </div>
                                     <div class="col-3">
@@ -52,6 +60,9 @@
                                             <label for="person_id_invent">Selecione el proveedor(<span class="text-danger text-md">*</span>)</label>
                                             <select name="person_id_invent" id="person_id_invent" class="custom-select">
                                                 <option value="">Seleccione un proveedor</option>
+                                                <?php foreach($person as $persona){?>
+                                                <option value="<?php echo $persona['id_person'];?>"><?php echo $persona['nom_person'];?></option>
+                                                <?php }?>
                                             </select>
                                         </div>
                                     </div>
@@ -59,17 +70,17 @@
                                 <div class="row">
                                     <div class="col-10">
                                         <div class="form-group">
-                                            <label for="observacion_invent">Observacion</label>
-                                            <textarea name="observacion_invent" id="" cols="30" rows="2" class="form-control"></textarea>
+                                            <label for="observacion_invent">Observacion(<span class="text-danger text-md">*</span>)</label>
+                                            <textarea name="observacion_invent" minlength="4" maxlength="120" id="" cols="30" rows="2" class="form-control"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="">Cantidad de productos(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="number" name="" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
+                                            <input type="number" min="0" name="cantidad_productos" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
                                         </div>
                                     </div>
-                                    <div class="d-none" v-for="(item, index) in productos">
+                                    <div class="d-none" v-for="(item, index) in productos" :key="index">
                                         <input type="hidden" name="id_product[]" :value="item.code">
                                         <input type="hidden" name="precio_product[]" :value="item.precio">
                                         <input type="hidden" name="cantidad_product[]" :value="item.cantidad">
@@ -126,7 +137,19 @@
         },
         methods: {
             Duplicar: function () {
-                this.productos.push({code: "", precio: 0, cantidad: 1, fecha: ""})
+                
+                let datos = this.productos[this.productos.length - 1];
+                if(datos.cantidad > 0 && datos.code != "" && datos.fecha != "" && datos.precio > 0){
+                    this.productos.push({code: "", precio: 0, cantidad: 0, fecha: ""})
+                }else{
+                    console.log(datos)
+                    Toast.fire({
+                        icon: "error",
+                        title: "Completa los campos antes de agregar otro producto"
+                    });
+                }
+                
+                
             },
             Disminuir: function(codigo){
                 this.productos[codigo].cantidad -= 1;
@@ -149,20 +172,44 @@
         }
     })
 
-    $(".special_select2").select2();
+    // $(".special_select2").select2();
 
     $("#formulario").validate({
         rules:{
-            nom_marca:{
+            orden_invent:{
+                number: true,
+                max:20,
+            },
+            person_id_invent:{
                 required: true,
-                minlength: 3,
-            }
+            },
+            observacion_invent:{
+                required: true,
+                minlength: 4,
+                maxlength: 120,
+            },
+            cantidad_productos:{
+                required: true,
+                min: 1,
+            },
         },
         messages:{
-            nom_marca:{
-                required: "Este campo no puede estar vacio",
-                minlength: "Debe de contener al menos 3 caracteres",
-            }
+            orden_invent:{
+                number: "Solo se aceptan numeros",
+                max:"Maximo 20 caracteres numericos",
+            },
+            person_id_invent:{
+                required: "Debe seleecionar un proveedor",
+            },
+            observacion_invent:{
+                required: "La observacion para esta operacion es necesaria",
+                minlength: "La observacion puede ser de minimo 4 caracteres",
+                maxlength: "Maximo 120 caracteres numericos",
+            },
+            cantidad_productos:{
+                required: "Es necesario tener al menos 1 producto para esta operacion",
+                min: "Minimo 1 producto",
+            },
         },
         errorElement: "span",
         errorPlacement: function (error, element){

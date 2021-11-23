@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-11-2021 a las 01:33:41
+-- Tiempo de generación: 23-11-2021 a las 03:09:49
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -36,6 +36,13 @@ CREATE TABLE `comedor` (
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `comedor`
+--
+
+INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `status_comedor`, `created_comedor`) VALUES
+(1, 'Comedor de la iglesia', 1, '2021-11-22 18:36:35');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +55,28 @@ CREATE TABLE `grupo` (
   `status_grupo` tinyint(4) NOT NULL,
   `created_grupo` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `grupo`
+--
+
+INSERT INTO `grupo` (`id_grupo`, `nom_grupo`, `status_grupo`, `created_grupo`) VALUES
+(3, 'ACTUALIZACIONNNNNN', 1, '2021-11-03 20:43:11'),
+(4, 'ULTIMA CREACION', 1, '2021-11-03 21:00:14'),
+(5, 'JHJKHKJHJKHKHJKH', 1, '2021-11-04 19:38:27'),
+(6, 'KJHKJHKHKHKJH', 1, '2021-11-04 20:18:42'),
+(7, 'SDFSDDDDDD', 1, '2021-11-04 20:31:57'),
+(8, 'GDGDGDFGDGDFGFD', 1, '2021-11-04 20:41:04'),
+(9, 'HDJJJDJDJJDJDD', 1, '2021-11-04 20:41:44'),
+(10, 'FSFSDFSDFSFSD', 1, '2021-11-04 20:49:24'),
+(11, 'GDGDFGDFGDFGDG', 1, '2021-11-04 20:53:46'),
+(12, 'GSDFGSDFGSDFGD', 1, '2021-11-04 21:26:26'),
+(13, 'HKJHKJHKJHJH', 1, '2021-11-04 21:32:10'),
+(14, 'FASDFASDFASDFASDF', 1, '2021-11-04 21:35:50'),
+(15, 'DDDDDDDSSSSSSSSSS', 1, '2021-11-04 21:38:10'),
+(16, 'FASDFADSFASDF', 1, '2021-11-04 21:47:07'),
+(17, 'NUEVO GRUPO', 1, '2021-11-04 22:13:58'),
+(18, 'GHJGHJGJHGJHJGHJGHJGH', 1, '2021-11-08 17:50:43');
 
 -- --------------------------------------------------------
 
@@ -63,7 +92,8 @@ CREATE TABLE `inventario` (
   `type_operacion_invent` enum('E','S') COLLATE utf8_spanish_ci NOT NULL,
   `person_id_invent` int(11) DEFAULT NULL,
   `comedor_id_invent` int(11) NOT NULL,
-  `user_id_invent` int(11) NOT NULL
+  `user_id_invent` int(11) NOT NULL,
+  `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -78,6 +108,14 @@ CREATE TABLE `marca` (
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
+(2, 'POLAR', 1, '2021-11-16 22:31:47'),
+(3, 'MASECA', 1, '2021-11-16 22:32:00');
 
 -- --------------------------------------------------------
 
@@ -100,16 +138,26 @@ CREATE TABLE `operacion` (
 
 CREATE TABLE `personas` (
   `id_person` int(11) NOT NULL,
-  `cedula_person` char(8) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `rif_person` char(9) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `cedula_person` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
   `tipo_person` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
   `nom_person` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono_movil_person` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `telefono_casa_person` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `sexo_person` enum('F','M') COLLATE utf8_spanish_ci DEFAULT NULL,
+  `telefono_movil_person` varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `telefono_casa_person` varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
   `direccion_person` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
   `correo_person` varchar(130) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `if_proveedor` tinyint(4) NOT NULL
+  `if_proveedor` tinyint(1) NOT NULL,
+  `if_user` tinyint(1) NOT NULL,
+  `status_person` tinyint(1) NOT NULL,
+  `created_person` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `personas`
+--
+
+INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person`, `sexo_person`, `telefono_movil_person`, `telefono_casa_person`, `direccion_person`, `correo_person`, `if_proveedor`, `if_user`, `status_person`, `created_person`) VALUES
+(1, '27132642', 'V', 'JESUS MORALEZZ', 'F', '0424 5198398', '', 'GASGSDFGSDFGSDFGSDFGSDFGSFGD', 'JESUSITMORALES70@GMAIL.COM', 1, 1, 1, '2021-11-18 22:38:38');
 
 -- --------------------------------------------------------
 
@@ -129,6 +177,13 @@ CREATE TABLE `producto` (
   `grupo_id_product` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `marca_id_product`, `grupo_id_product`) VALUES
+(1, 'NUEVA HARINA', 'KL', 1, 1, '2021-11-16 23:03:41', 0, 2, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -146,6 +201,13 @@ CREATE TABLE `usuarios` (
   `respuesta1_user` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `respuesta2_user` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_user`, `person_id_user`, `username_user`, `password_user`, `created_user`, `pregun1_user`, `pregun2_user`, `respuesta1_user`, `respuesta2_user`) VALUES
+(1, 1, 'master', '123456', '2021-11-23 02:08:10', 'nada', 'nada', 'nada', 'nada');
 
 --
 -- Índices para tablas volcadas
@@ -189,7 +251,8 @@ ALTER TABLE `operacion`
 -- Indices de la tabla `personas`
 --
 ALTER TABLE `personas`
-  ADD PRIMARY KEY (`id_person`);
+  ADD PRIMARY KEY (`id_person`),
+  ADD UNIQUE KEY `cedula_person` (`cedula_person`);
 
 --
 -- Indices de la tabla `producto`
@@ -214,13 +277,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `inventario`
@@ -232,25 +295,25 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

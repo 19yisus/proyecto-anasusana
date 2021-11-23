@@ -31,7 +31,13 @@
         }
       }
     }
+    private function DateNow(){
+      setlocale(LC_ALL,"es_ES");
+      date_default_timezone_set("America/Caracas");
+      $fecha = date('Y-m-d');
 
+      return $fecha;
+    }
     private function Redirect($view, $params){ header("Location: ".constant("URL")."$view/$params"); }
 
     private function GetRoute(){

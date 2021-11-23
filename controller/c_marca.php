@@ -39,7 +39,7 @@
         $model->setDatos($_POST);
         $mensage = $model->Create();
 
-        header("Location: ".constant("URL")."marcas/form/$mensage");
+        $this->Redirect("marcas/form",$mensage);
     }
 
     function fn_Actualizar(){
