@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="fecha_vencimiento">Fecha de vencimiento(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="fecha_vencimiento">Fecha de vencimiento</label>
                                                 <input type="date" name="fecha_vencimiento" min="<?php echo $this->DateNow();?>" v-model="productos[index].fecha" :value="item.fecha" id="fecha_vencimiento" placeholder="Ingrese fecha de vencimiento" class="form-control">
                                             </div>
                                         </div>

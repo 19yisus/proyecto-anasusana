@@ -75,7 +75,7 @@
                     return "err/01ERR";
                 }      
             }catch(Error $e){
-                var_dump($e->printMessage());
+                var_dump($e);
                 die("AH OCURRIDO UN ERROR");
             }
         }
@@ -85,36 +85,31 @@
         }
 
         public function Get_todos_invent($type_operacion){
-            $sql = "SELECT * FROM inventario INNER JOIN operacion ON operacion.invent_id_ope = inventario.id_invent 
-            WHERE inventario.type_operacion_invent = '$type_operacion';";
-            $results = $this->query($sql);
-            return $this->Get_todos_array($results);
+            $sql = "SELECT inventario.id_invent, inventario.orden_invent, inventario.status_invent, inventario.created_invent,
+            personas.nom_person, COUNT(operacion.invent_id_ope) AS cantidad_producst FROM inventario 
+            INNER JOIN operacion ON operacion.invent_id_ope = inventario.id_invent 
+            INNER JOIN personas ON personas.id_person = inventario.person_id_invent WHERE
+            inventario.type_operacion_invent = '$type_operacion' GROUP BY inventario.id_invent;";
+            
+            return $this->Get_todos_array($this->query($sql));
         }
 
         public function Get_Consultar_invent(){
-            $sql = "SELECT * FROM inventario INNER JOIN operacion ON operacion.invent_id_ope = inventario.id_invent  
-            WHERE inventario.id_invent = $this->id_invent;";
-            $results = $this->Query($sql);
+            $results = $this->Query("SELECT * FROM inventario INNER JOIN operacion ON operacion.invent_id_ope = inventario.id_invent  
+            WHERE inventario.id_invent = $this->id_invent;");
+
             return $this->Get_array($results);
         }
 
         public function NextId(){
-            $sql = "SELECT MAX(id_invent) AS maximo FROM inventario;";
-            $results = $this->Query($sql);
-            $sqlComedor = "INSERT INTO comedor(id_comedor, nom_comedor, status_comedor, created_comedor) VALUES(null, 'Comedor de la iglesia', 1,NOW());";
-            if($results->num_rows > 0){
-                
-                $number = $this->Get_array($results)['maximo'] + 1;
-                return $number;
-            }else{
-                return 1;
-            }
+            $results = $this->Query("SELECT MAX(id_invent) AS maximo FROM inventario;");
+
+            if($results->num_rows > 0) return $this->Get_array($results)['maximo'] + 1;
+            else return 1;
         }
 
         public function GetComedor(){
-            $sql = "SELECT * FROM comedor;";
-            $results = $this->Query($sql);
-
+            $results = $this->Query("SELECT * FROM comedor;");
             if($results->num_rows > 0) return $this->Get_array($results);
         }
     }

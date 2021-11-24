@@ -28,7 +28,7 @@
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Id</th>
+                          <th>codigo</th>
                           <th>Nombre</th>
                           <th>Estado</th>
                           <th>Creacion</th>

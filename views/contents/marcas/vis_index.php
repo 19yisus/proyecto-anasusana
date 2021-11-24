@@ -4,6 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
+        $this->titleContent = "Catalogo Marcas";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
       ?>
@@ -25,7 +26,7 @@
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Id</th>
+                          <th>Codigo</th>
                           <th>Nombre</th>
                           <th>Estado</th>
                           <th>Creacion</th>

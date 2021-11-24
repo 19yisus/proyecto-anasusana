@@ -4,6 +4,8 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
+        $this->titleContent = "Catalogo de Productos";
+
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
         require_once("./models/m_marca.php");
@@ -33,7 +35,7 @@
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Id</th>
+                          <th>Codigo</th>
                           <th>Nombre</th>
                           <th>Cantidad en stock</th>
                           <th>Marca</th>

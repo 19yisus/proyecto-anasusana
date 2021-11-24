@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-11-2021 a las 03:09:49
+-- Tiempo de generación: 24-11-2021 a las 16:27:37
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -61,22 +61,11 @@ CREATE TABLE `grupo` (
 --
 
 INSERT INTO `grupo` (`id_grupo`, `nom_grupo`, `status_grupo`, `created_grupo`) VALUES
-(3, 'ACTUALIZACIONNNNNN', 1, '2021-11-03 20:43:11'),
-(4, 'ULTIMA CREACION', 1, '2021-11-03 21:00:14'),
-(5, 'JHJKHKJHJKHKHJKH', 1, '2021-11-04 19:38:27'),
-(6, 'KJHKJHKHKHKJH', 1, '2021-11-04 20:18:42'),
-(7, 'SDFSDDDDDD', 1, '2021-11-04 20:31:57'),
-(8, 'GDGDGDFGDGDFGFD', 1, '2021-11-04 20:41:04'),
-(9, 'HDJJJDJDJJDJDD', 1, '2021-11-04 20:41:44'),
-(10, 'FSFSDFSDFSFSD', 1, '2021-11-04 20:49:24'),
-(11, 'GDGDFGDFGDFGDG', 1, '2021-11-04 20:53:46'),
-(12, 'GSDFGSDFGSDFGD', 1, '2021-11-04 21:26:26'),
-(13, 'HKJHKJHKJHJH', 1, '2021-11-04 21:32:10'),
-(14, 'FASDFASDFASDFASDF', 1, '2021-11-04 21:35:50'),
-(15, 'DDDDDDDSSSSSSSSSS', 1, '2021-11-04 21:38:10'),
-(16, 'FASDFADSFASDF', 1, '2021-11-04 21:47:07'),
-(17, 'NUEVO GRUPO', 1, '2021-11-04 22:13:58'),
-(18, 'GHJGHJGJHGJHJGHJGHJGH', 1, '2021-11-08 17:50:43');
+(3, 'HARINAS', 1, '2021-11-03 20:43:11'),
+(19, 'ENLATADOS', 1, '2021-11-24 11:19:48'),
+(20, 'FRUTAS', 1, '2021-11-24 11:19:56'),
+(21, 'VERDURAS', 1, '2021-11-24 11:20:08'),
+(22, 'BEBIDAS', 1, '2021-11-24 11:20:30');
 
 -- --------------------------------------------------------
 
@@ -95,6 +84,14 @@ CREATE TABLE `inventario` (
   `user_id_invent` int(11) NOT NULL,
   `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `inventario`
+--
+
+INSERT INTO `inventario` (`id_invent`, `orden_invent`, `status_invent`, `created_invent`, `type_operacion_invent`, `person_id_invent`, `comedor_id_invent`, `user_id_invent`, `observacion_invent`) VALUES
+(1, '4546', 1, '2021-11-23 13:11:21', 'E', 1, 1, 1, 'FASFASDFASD'),
+(2, '465464', 1, '2021-11-24 09:55:33', 'E', 1, 1, 1, 'FASDFASDFADSFADSF');
 
 -- --------------------------------------------------------
 
@@ -115,7 +112,10 @@ CREATE TABLE `marca` (
 
 INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
 (2, 'POLAR', 1, '2021-11-16 22:31:47'),
-(3, 'MASECA', 1, '2021-11-16 22:32:00');
+(3, 'MASECA', 1, '2021-11-16 22:32:00'),
+(4, 'PEPSI', 1, '2021-11-24 11:20:50'),
+(5, 'COCACOLA', 1, '2021-11-24 11:20:58'),
+(6, 'SIN MARCA', 1, '2021-11-24 11:24:29');
 
 -- --------------------------------------------------------
 
@@ -129,6 +129,15 @@ CREATE TABLE `operacion` (
   `fecha_vencimiento_ope` datetime DEFAULT NULL,
   `precio_product_ope` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `operacion`
+--
+
+INSERT INTO `operacion` (`product_id_ope`, `invent_id_ope`, `fecha_vencimiento_ope`, `precio_product_ope`) VALUES
+(1, 1, '2021-12-04 00:00:00', 2),
+(1, 1, '2021-12-05 00:00:00', 200),
+(1, 2, '2021-11-30 00:00:00', 450);
 
 -- --------------------------------------------------------
 
@@ -157,7 +166,8 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person`, `sexo_person`, `telefono_movil_person`, `telefono_casa_person`, `direccion_person`, `correo_person`, `if_proveedor`, `if_user`, `status_person`, `created_person`) VALUES
-(1, '27132642', 'V', 'JESUS MORALEZZ', 'F', '0424 5198398', '', 'GASGSDFGSDFGSDFGSDFGSDFGSFGD', 'JESUSITMORALES70@GMAIL.COM', 1, 1, 1, '2021-11-18 22:38:38');
+(1, '27132642', 'V', 'ALFREDO MENDEZ', 'M', '0424 5198398', '', 'GASGSDFGSDFGSDFGSDFGSDFGSFGD', 'MENDEZ23_FASDFASD@GMAIL.COM', 1, 1, 1, '2021-11-18 22:38:38'),
+(2, '14887880', 'V', 'ALFONSO MEDINA', 'M', '0424 5589669', '0255 6846698', 'FFASDFASDFASDFASDFASDFASDFASDFASDFASDF', 'ALFONSOMEDINA23@GMAIL.COM', 1, 0, 1, '2021-11-24 09:59:47');
 
 -- --------------------------------------------------------
 
@@ -182,7 +192,9 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `marca_id_product`, `grupo_id_product`) VALUES
-(1, 'NUEVA HARINA', 'KL', 1, 1, '2021-11-16 23:03:41', 0, 2, 3);
+(1, 'NUEVA HARINA', 'KL', 1, 1, '2021-11-16 23:03:41', 24, 2, 3),
+(2, 'REFRESCO', 'LT', 1, 1, '2021-11-24 11:23:05', 0, 2, 22),
+(3, 'MANZANAS', 'KL', 2, 1, '2021-11-24 11:25:07', 0, 6, 20);
 
 -- --------------------------------------------------------
 
@@ -283,31 +295,31 @@ ALTER TABLE `comedor`
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id_invent` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_invent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

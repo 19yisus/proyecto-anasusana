@@ -29,7 +29,7 @@
                                     <div class="col-7">
                                         <div class="form-group">
                                             <input type="hidden" name="id_grupo">
-                                            <label for="nom_grupo">Nombre del grupo<(<span class="text-danger text-md">*</span>)/label>
+                                            <label for="nom_grupo">Nombre del grupo(<span class="text-danger text-md">*</span>)</label>
                                             <input type="text" name="nom_grupo" id="nom_grupo" placeholder="Ingrese el nombre del grupo" class="form-control">
                                         </div>
                                     </div>

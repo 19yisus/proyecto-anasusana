@@ -139,10 +139,9 @@
             Duplicar: function () {
                 
                 let datos = this.productos[this.productos.length - 1];
-                if(datos.cantidad > 0 && datos.code != "" && datos.fecha != "" && datos.precio > 0){
+                if(datos.cantidad > 0 && datos.code != "" && datos.precio > 0){
                     this.productos.push({code: "", precio: 0, cantidad: 0, fecha: ""})
                 }else{
-                    console.log(datos)
                     Toast.fire({
                         icon: "error",
                         title: "Completa los campos antes de agregar otro producto"

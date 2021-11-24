@@ -3,8 +3,8 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-
       <?php 
+        $this->titleContent = "Catalogo de Personas";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
       ?>
