@@ -51,9 +51,9 @@
             ]);
         }
         $model->setDatos($_POST,$list_products);
-        $mensage = $model->Entrada_productos();
+        $mensaje = $model->Entrada_productos();
 
-        $this->Redirect("entradas/form",$mensage);
+        header("Location: ".constant("URL")."entradas/form/$mensaje");
     }
 
     function fn_Salida(){

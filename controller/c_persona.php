@@ -37,9 +37,9 @@
     function fn_Registrar(){
         $model = new m_persona();
         $model->setDatos($_POST);
-        $mensage = $model->Create();
+        $mensaje = $model->Create();
         
-        $this->Redirect("personas/form",$mensage);
+        header("Location: ".constant("URL")."personas/form/$mensaje");
     }
 
     function fn_Actualizar(){

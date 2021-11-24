@@ -37,9 +37,9 @@
     function fn_Registrar(){
         $model = new m_grupo();
         $model->setDatos($_POST);
-        $mensage = $model->Create();
+        $mensaje = $model->Create();
 
-        $this->Redirect("grupos/form",$mensage);
+        header("Location: ".constant("URL")."grupos/form/$mensaje");
     }
 
     function fn_Actualizar(){

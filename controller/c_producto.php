@@ -37,9 +37,9 @@
     function fn_Registrar(){
         $model = new m_producto();
         $model->setDatos($_POST);
-        $mensage = $model->Create();
+        $mensaje = $model->Create();
 
-        $this->Redirect("productos/form",$mensage);
+        header("Location: ".constant("URL")."productos/form/$mensaje");
     }
 
     function fn_Actualizar(){

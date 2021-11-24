@@ -37,9 +37,9 @@
     function fn_Registrar(){
         $model = new m_marca();
         $model->setDatos($_POST);
-        $mensage = $model->Create();
+        $mensaje = $model->Create();
 
-        $this->Redirect("marcas/form",$mensage);
+        header("Location: ".constant("URL")."marcas/form/$mensaje");
     }
 
     function fn_Actualizar(){
