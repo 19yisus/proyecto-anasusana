@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label for="cant_product">Cantidad {{index}} (<span class="text-danger text-md">*</span>)</label>
+                                                <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="number" name="cant_product" min="0" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
                                             </div>
                                         </div>

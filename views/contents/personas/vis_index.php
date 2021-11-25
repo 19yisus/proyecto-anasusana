@@ -96,7 +96,6 @@
   const Consultar = async (value) => {
     await fetch(`<?php echo constant("URL");?>controller/c_persona.php?ope=Consultar_persona&id_persona=${value}`)
     .then( response => response.json()).then( res => {
-      console.log(res)
       const form = document.formulario;
       form.tipo_persona.value = res.data.tipo_person;
       form.if_proveedor.value = res.data.if_proveedor;

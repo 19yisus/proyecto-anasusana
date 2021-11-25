@@ -130,15 +130,18 @@
     new Vue({
         el: '#VueApp',
         data: {
-        mensaje: "Hola vue",
         productos: [
             {code: "", precio: 0, cantidad: 0, fecha: ""},
         ]
         },
         methods: {
             Duplicar: function () {
-                
                 let datos = this.productos[this.productos.length - 1];
+                if(typeof datos == "undefined"){
+                    this.productos.push({code: "", precio: 0, cantidad: 0, fecha: ""});
+                    return false;
+                }
+
                 if(datos.cantidad > 0 && datos.code != "" && datos.precio > 0){
                     this.productos.push({code: "", precio: 0, cantidad: 0, fecha: ""})
                 }else{
@@ -146,13 +149,11 @@
                         icon: "error",
                         title: "Completa los campos antes de agregar otro producto"
                     });
-                }
-                
-                
+                }               
             },
             Disminuir: function(codigo){
                 this.productos[codigo].cantidad -= 1;
-                if(this.productos[codigo].cantidad === 0) this.productos.splice(codigo, 1);
+                if(this.productos[codigo].cantidad === 0 || this.productos[codigo].cantidad < 0) this.productos.splice(codigo, 1);
             }
         },
         computed: {
@@ -177,7 +178,7 @@
         rules:{
             orden_invent:{
                 number: true,
-                max:20,
+                maxlength:20,
             },
             person_id_invent:{
                 required: true,
@@ -195,7 +196,7 @@
         messages:{
             orden_invent:{
                 number: "Solo se aceptan numeros",
-                max:"Maximo 20 caracteres numericos",
+                maxlength:"Maximo 20 caracteres numericos",
             },
             person_id_invent:{
                 required: "Debe seleecionar un proveedor",
