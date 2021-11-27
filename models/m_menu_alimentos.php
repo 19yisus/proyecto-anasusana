@@ -83,7 +83,7 @@
                     INNER JOIN marca ON marca.id_marca = producto.marca_id_product
                     INNER JOIN grupo ON grupo.id_grupo = producto.grupo_id_product
                     INNER JOIN operacion ON operacion.product_id_ope = producto.id_product
-                    $condition GROUP BY producto.id_product;";
+                    $condition AND producto.stock_product > 0 GROUP BY producto.id_product;";
             }
             $results = $this->query($sql);
             return $this->Get_todos_array($results);
