@@ -16,7 +16,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_producto.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_menu-alimentos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
@@ -101,7 +101,7 @@
             if(!res) return false;
 
             let datos = new FormData(document.formulario);
-            fetch(`<?php echo constant("URL");?>controller/c_producto.php`, {
+            fetch(`<?php echo constant("URL");?>controller/c_menu-alimentos.php`, {
                 method: "POST",
                 body: datos,
             }).then( response => response.json())

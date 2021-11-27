@@ -1,7 +1,7 @@
 <?php
     require_once("m_db.php");
 
-    class m_producto extends m_db{
+    class m_menu_alimentos extends m_db{
         private $id_producto, $nom_producto, $status_producto, $med_producto, $valor_producto, $stock_producto, $marca_id_producto, $grupo_id_producto;
 
         public function __construct(){
@@ -76,7 +76,15 @@
         }
 
         public function Get_todos_productos($status = ''){
-            if($status != '') $sql = "SELECT * FROM producto WHERE status_product = '1';"; else $sql = "SELECT * FROM producto INNER JOIN marca ON marca.id_marca = producto.marca_id_product INNER JOIN grupo ON grupo.id_grupo = producto.grupo_id_product;";
+            if($status != '') $condition = "WHERE producto.status_product = '1' "; else $condition = "";
+            $sql = "SELECT * FROM producto INNER JOIN marca ON marca.id_marca = producto.marca_id_product INNER JOIN grupo ON grupo.id_grupo = producto.grupo_id_product $condition ;";
+            if($status != '' && $status == 2){
+                $sql = "SELECT * FROM producto
+                    INNER JOIN marca ON marca.id_marca = producto.marca_id_product
+                    INNER JOIN grupo ON grupo.id_grupo = producto.grupo_id_product
+                    INNER JOIN operacion ON operacion.product_id_ope = producto.id_product
+                    $condition GROUP BY producto.id_product;";
+            }
             $results = $this->query($sql);
             return $this->Get_todos_array($results);
         }

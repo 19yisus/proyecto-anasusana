@@ -1,13 +1,13 @@
 <?php 
-    require("./models/m_producto.php");
-    $model = new m_producto();
+    require("./models/m_menu_alimentos.php");
+    $model = new m_menu_alimentos();
     $productos = $model->Get_todos_productos(1);
 ?>
 <div class="modal fade" id="modal-lg">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Lista de productos</h4>
+                <h4 class="modal-title">Lista del menu de alimentos</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -24,12 +24,12 @@
                                     <div class="row d-flex align-items-center" v-for="(item, index) in productos" :key="index">
                                         <div class="col-4">
                                             <div class="form-group d-block">
-                                                <label for="id_product">Codigo del producto(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_product">Datos generales del producto(<span class="text-danger text-md">*</span>)</label>
                                                 <!-- special_select2 lo dejo aca por si acaso -->
                                                 <select name="id_product" v-model="productos[index].code" value="" id="" class="custom-select">
                                                     <option value="">Seleccione un producto</option>
                                                     <?php foreach($productos as $item){?>
-                                                    <option value="<?php echo $item['id_product'];?>"><?php echo $item['nom_product']; ?></option>
+                                                    <option value="<?php echo $item['id_product'];?>"><?php echo $item['nom_product'] ." - ". $item['nom_marca'] .' - '.$item['valor_product'].$item['med_product']; ?></option>
                                                     <?php }?>
                                                 </select>
                                             </div>
@@ -72,21 +72,3 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<script>
-    // $("#btn_duplicar").click( () => { $("#caja").children(":first-child").clone().appendTo($("#caja").children(":first-child")) });
-
-    // const PrintContent = async () => {
-    //     let cantidad = parseInt($("#cant_ope").val());
-
-    //     if(cantidad == 0){
-    //         let modal_datos_product = await fetch("<?php //echo constant("URL");?>views/contents/entradas/modal_datos_product.php")
-    //         .then( response => response.text()).then( res => res).catch(Err => console.error(Err));
-    //         $(modal_datos_product).attr("id","element-1").appendTo($("#caja"))
-    //     }
-
-    //     if(cantidad > 0){
-
-    //     }
-    // }
-
-</script>

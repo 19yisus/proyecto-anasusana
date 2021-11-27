@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2021 a las 16:27:37
+-- Tiempo de generación: 27-11-2021 a las 18:15:06
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -76,22 +76,16 @@ INSERT INTO `grupo` (`id_grupo`, `nom_grupo`, `status_grupo`, `created_grupo`) V
 CREATE TABLE `inventario` (
   `id_invent` int(11) NOT NULL,
   `orden_invent` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `cantidad_invent` int(11) NOT NULL,
   `status_invent` tinyint(4) NOT NULL,
   `created_invent` datetime DEFAULT NULL,
   `type_operacion_invent` enum('E','S') COLLATE utf8_spanish_ci NOT NULL,
+  `concept_invent` enum('C','D','O','V') COLLATE utf8_spanish_ci DEFAULT NULL,
   `person_id_invent` int(11) DEFAULT NULL,
   `comedor_id_invent` int(11) NOT NULL,
   `user_id_invent` int(11) NOT NULL,
   `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `inventario`
---
-
-INSERT INTO `inventario` (`id_invent`, `orden_invent`, `status_invent`, `created_invent`, `type_operacion_invent`, `person_id_invent`, `comedor_id_invent`, `user_id_invent`, `observacion_invent`) VALUES
-(1, '4546', 1, '2021-11-23 13:11:21', 'E', 1, 1, 1, 'FASFASDFASD'),
-(2, '465464', 1, '2021-11-24 09:55:33', 'E', 1, 1, 1, 'FASDFASDFADSFADSF');
 
 -- --------------------------------------------------------
 
@@ -129,15 +123,6 @@ CREATE TABLE `operacion` (
   `fecha_vencimiento_ope` datetime DEFAULT NULL,
   `precio_product_ope` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `operacion`
---
-
-INSERT INTO `operacion` (`product_id_ope`, `invent_id_ope`, `fecha_vencimiento_ope`, `precio_product_ope`) VALUES
-(1, 1, '2021-12-04 00:00:00', 2),
-(1, 1, '2021-12-05 00:00:00', 200),
-(1, 2, '2021-11-30 00:00:00', 450);
 
 -- --------------------------------------------------------
 
@@ -186,15 +171,6 @@ CREATE TABLE `producto` (
   `marca_id_product` int(11) NOT NULL,
   `grupo_id_product` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `producto`
---
-
-INSERT INTO `producto` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `marca_id_product`, `grupo_id_product`) VALUES
-(1, 'NUEVA HARINA', 'KL', 1, 1, '2021-11-16 23:03:41', 24, 2, 3),
-(2, 'REFRESCO', 'LT', 1, 1, '2021-11-24 11:23:05', 0, 2, 22),
-(3, 'MANZANAS', 'KL', 2, 1, '2021-11-24 11:25:07', 0, 6, 20);
 
 -- --------------------------------------------------------
 
@@ -301,7 +277,7 @@ ALTER TABLE `grupo`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id_invent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_invent` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
@@ -319,7 +295,7 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

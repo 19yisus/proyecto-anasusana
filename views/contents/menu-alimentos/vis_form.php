@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Registro de Productos";
+        $this->titleContent = "Formulario de registro Menu de alimentos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -31,7 +31,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form id="formulario" action="<?php echo constant("URL");?>controller/c_producto.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                        <form id="formulario" action="<?php echo constant("URL");?>controller/c_menu-alimentos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6">

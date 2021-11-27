@@ -58,10 +58,18 @@
 
     function fn_Salida(){
         $model = new m_entrada_salida();
-        // $model->setDatos($_POST);
-        // $mensage = $model->Salida_productos();
+        // ESTA OPEACION ORDENA TODOS LOS PRODUCTOS EN UN GRAN ARREGLO PARA UN MEJOR ORDEN EN LA TRANSACCION
+        $list_products = [];
+        for($i = 0; $i < sizeof($_POST['id_product']); $i++){
+            array_push($list_products,[
+                'id_product' => $_POST['id_product'][$i],
+                'stock_product' => $_POST['cantidad_product'][$i],
+            ]);
+        }
+        $model->setDatos($_POST,$list_products);
+        $mensage = $model->Salida_productos();
 
-        // header("Location: ".constant("URL")."salidas/form/$mensage");
+        header("Location: ".constant("URL")."salidas/form/$mensage");
     }
 
     // function fn_Actualizar(){

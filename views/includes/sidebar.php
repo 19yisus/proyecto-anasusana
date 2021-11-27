@@ -30,7 +30,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link <?php $this->IsActive(["grupos/index","grupos/form","marcas/index","personas/index","productos/index","productos/form"]);?>">
+          <a href="#" class="nav-link <?php $this->IsActive(["grupos/index","grupos/form","marcas/index","personas/index","menu-alimentos/index","menu-alimentos/form"]);?>">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Registros
@@ -67,19 +67,19 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>productos/index" class="nav-link <?php $this->IsActive("productos/index"); ?>">
+              <a href="<?php echo constant("URL");?>menu-alimentos/index" class="nav-link <?php $this->IsActive("menu-alimentos/index"); ?>">
                 <i class="nav-icon fas fa-people-carry"></i>
                 <!-- <i class="fas fa-user-friends"></i> -->
                 <!-- <i class="fas fa-child"></i> -->
                 <p>
-                  Productos
+                  Menu de alimentos
                 </p>
               </a>
             </li>
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link <?php $this->IsActive(["entradas","salidas"]);?>">
+          <a href="#" class="nav-link <?php $this->IsActive(["entradas/index","entradas/form","salidas/index","salidas/form"]);?>">
             <i class="nav-icon fas fa-chart-pie"></i>
             <p>
               Operaciones

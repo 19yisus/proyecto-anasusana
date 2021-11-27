@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Catalogo de Productos";
+        $this->titleContent = "Catalogo de Menu de alimentos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -75,7 +75,7 @@
 <!-- ./wrapper -->
 <?php 
   $this->GetComplement("scripts");
-  require_once("./views/contents/productos/modal.php");
+  require_once("./views/contents/menu-alimentos/modal.php");
 ?>
 <script>
   const ChangeStatus = async (value, id) => {
@@ -89,7 +89,7 @@
     if(!res) return false;
 
     const data = new FormData(form);
-    await fetch(`<?php echo constant("URL");?>controller/c_producto.php`,{
+    await fetch(`<?php echo constant("URL");?>controller/c_menu-alimentos.php`,{
       method: "POST",
       body: data
     }).then(response => response.json())
@@ -103,7 +103,7 @@
   }
 
   const Consultar = async (value) => {
-    await fetch(`<?php echo constant("URL");?>controller/c_producto.php?ope=Consultar_producto&id_producto=${value}`)
+    await fetch(`<?php echo constant("URL");?>controller/c_menu-alimentos.php?ope=Consultar_producto&id_producto=${value}`)
     .then( response => response.json()).then( res => {
       const form = document.formulario;
       form.id_producto.value = res.data.id_product;
@@ -121,7 +121,7 @@
   $( () => {
     $('#dataTable').DataTable({
       ajax:{
-        url: "<?php echo constant("URL");?>controller/c_producto.php?ope=Todos_productos",
+        url: "<?php echo constant("URL");?>controller/c_menu-alimentos.php?ope=Get_alimentos",
         dataSrc: "data",
       },
       columns: [
@@ -152,7 +152,7 @@
             <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_product})"></i></button>`;
           }
           let btn = `
-            <form method="POST" id="formSecondary-${row.id_product}" action="<?php echo constant('URL');?>controller/c_producto.php">
+            <form method="POST" id="formSecondary-${row.id_product}" action="<?php echo constant('URL');?>controller/c_menu-alimentos.php">
               <input type="hidden" name="id_producto" value="${row.id_product}">
               <input type="hidden" name="status_producto">
               <input type="hidden" name="ope">
