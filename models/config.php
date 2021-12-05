@@ -6,15 +6,13 @@
 
   foreach($url as $item){
     if($item === "controller") break;
-    if($item != "index.php"){
-      $string_url .= $item."/";
-    }else{
-      break;
-    }
+    if($item != "index.php") $string_url .= $item."/"; else break;
   }
 
   $rutas_privadas = [
-    "otro"
+    "inicio/index","grupos/index","grupos/form","marcas/index","marcas/form","personas/index","personas/form",
+    "menu-alimentos/index","menu-alimentos/form","entradas/index","entradas/form","salidas/index","salidas/form",
+    "usuarios/index",
   ];
 
   define("URL", "http://$host_string:$port_string$string_url");

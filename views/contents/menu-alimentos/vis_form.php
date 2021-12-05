@@ -54,7 +54,7 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="">Valor de medida(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="number" name="valor_producto" id="valor_producto" class="form-control" placeholder="Ingrese un valor">
+                                            <input type="number" name="valor_producto" step="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un valor">
                                         </div>
                                     </div>
                                 </div>
@@ -118,19 +118,7 @@
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-      <footer class="main-footer text-sm">
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-          <b>Version</b> 3.1.0
-        </div>
-      </footer>
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-      <!-- /.control-sidebar -->
+      <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
 <?php $this->GetComplement("scripts");?>

@@ -47,19 +47,7 @@
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-      <footer class="main-footer text-sm">
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-          <b>Version</b> 3.1.0
-        </div>
-      </footer>
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-      <!-- /.control-sidebar -->
+      <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
 <?php 
@@ -114,7 +102,7 @@
         {data: "nom_marca"},
         {data: "status_marca", 
         render: function(data){
-          return (data == 1) ? "Activo" : "Innactivo";
+          return (data == 1) ? "Activo" : "Inactivo";
         }},
         {data: "created_marca", 
         render: function(data){
@@ -142,6 +130,10 @@
             <div class="btn-group">
               <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_marca})"><i class="fas fa-edit"></i></button>${btn_secondary}
             </div>`;
+          
+            <?php if(isset($_SESSION['permisos'])){?>
+              if(<?php echo $_SESSION['permisos'];?> == 1) btn = ``;
+            <?php }?>
 
           return btn;
         }}

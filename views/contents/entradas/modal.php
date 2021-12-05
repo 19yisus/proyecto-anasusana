@@ -43,7 +43,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label for="precio_product">Precio(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="number" name="precio_product" min="0" v-model="productos[index].precio" :value="item.precio" id="precio_product" placeholder="Ingrese su precio" class="form-control">
+                                                <input type="number" name="precio_product" min="0" step="0.01" v-model="productos[index].precio" :value="item.precio" id="precio_product" placeholder="Ingrese su precio" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-3">

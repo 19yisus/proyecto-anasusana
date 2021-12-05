@@ -24,11 +24,11 @@
             <div class="row">
               <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box bg-success">
                   <div class="inner">
                     <h3>150</h3>
 
-                    <p>New Orders</p>
+                    <p>nueva orden</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -89,19 +89,7 @@
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-      <footer class="main-footer text-sm">
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-          <b>Version</b> 3.1.0
-        </div>
-      </footer>
-
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-      </aside>
-      <!-- /.control-sidebar -->
+      <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
 <?php $this->GetComplement("scripts");?>

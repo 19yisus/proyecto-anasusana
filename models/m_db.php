@@ -2,6 +2,8 @@
     class m_db{
         private $host, $dbname, $user, $pass, $conexion;
         public function __construct(){
+            if(!isset($_SESSION)) session_start();
+            
             $this->host = "localhost";
             $this->dbname = "proyecto_iglesia";
             $this->user = "root";

@@ -9,7 +9,10 @@
         <ol class="breadcrumb float-sm-right">
             <?php if($this->controlador !== "inicio"){ ?>
             <li class="breadcrumb-item"><a href="<?php echo constant("URL"). $this->controlador;?>">Listar Registros</a></li>
+            <!-- SI EL USURIO ES ADMIN PODRA CREAR REGISTROS, SI NO LO ES, ENTONCES EL ENLACE NO APARECERA EN SU PANTALLA -->
+            <?php if(isset($_SESSION['permisos']) && $_SESSION['permisos'] > 2){?>
             <li class="breadcrumb-item active"><a href="<?php echo constant("URL"). $this->controlador;?>/form">Formulario de registros</a></li>
+            <?php }?>
             <?php 
                 }else{
             ?>

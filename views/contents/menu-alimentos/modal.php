@@ -45,7 +45,7 @@
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
                                                 <label for="">Valor de medida(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="number" name="valor_producto" id="valor_producto" class="form-control" placeholder="Ingrese un valor">
+                                                <input type="number" name="valor_producto" step="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un valor">
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">

@@ -46,11 +46,11 @@
                         $stock = $producto['stock_product'];
                         $id_inventario = $inventario['id_invent'];
     
-                        $sql_operacion = "INSERT INTO operacion(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) 
+                        $sql_operacion = "INSERT INTO detalle_inventario(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) 
                         VALUES ($id,$id_inventario,'$fecha',$precio)";
         
-                        $sql_producto_stock = "UPDATE producto SET producto.stock_product = (SELECT SUM(producto.stock_product + $stock) 
-                        WHERE producto.id_product = $id) WHERE producto.id_product = $id";
+                        $sql_producto_stock = "UPDATE menu_alimentos SET menu_alimentos.stock_product = (SELECT SUM(menu_alimentos.stock_product + $stock) 
+                        WHERE menu_alimentos.id_product = $id) WHERE menu_alimentos.id_product = $id";
                             
                         $results_operacion = $this->Query($sql_operacion);    
                         if(!$this->Result_last_query()){
@@ -76,8 +76,8 @@
                     $this->Rollback();
                     return "err/01ERR";
                 }      
-            }catch(Error $e){
-                die("AH OCURRIDO UN ERROR");
+            }catch(Exception $e){
+                die("AH OCURRIDO UN ERROR: ".$e->getMessage());
             }
         }
 
@@ -104,11 +104,11 @@
                         $stock = $producto['stock_product'];
                         $id_inventario = $inventario['id_invent'];
     
-                        $sql_operacion = "INSERT INTO operacion(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) 
+                        $sql_operacion = "INSERT INTO detalle_inventario(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) 
                         VALUES ($id,$id_inventario,null,null)";
         
-                        $sql_producto_stock = "UPDATE producto SET producto.stock_product =( 
-                            (SELECT producto.stock_product FROM producto WHERE producto.id_product = $id) - $stock) WHERE producto.id_product = $id;";
+                        $sql_producto_stock = "UPDATE menu_alimentos SET menu_alimentos.stock_product =( 
+                            (SELECT menu_alimentos.stock_product FROM menu_alimentos WHERE menu_alimentos.id_product = $id) - $stock) WHERE menu_alimentos.id_product = $id;";
                             
                         $results_operacion = $this->Query($sql_operacion);    
                         if(!$this->Result_last_query()){
@@ -134,8 +134,8 @@
                     $this->Rollback();
                     return "err/01ERR";
                 }      
-            }catch(Error $e){
-                die("AH OCURRIDO UN ERROR");
+            }catch(Exception $e){
+                die("AH OCURRIDO UN ERROR: ".$e->getMessage());
             }
         }
 
@@ -146,14 +146,14 @@
 
             $sql = "SELECT inventario.id_invent, inventario.orden_invent, inventario.status_invent, inventario.created_invent,
             $select_person cantidad_invent FROM inventario 
-            INNER JOIN operacion ON operacion.invent_id_ope = inventario.id_invent $second_inner WHERE
+            INNER JOIN detalle_inventario ON detalle_inventario.invent_id_ope = inventario.id_invent $second_inner WHERE
             inventario.type_operacion_invent = '$type_operacion' GROUP BY inventario.id_invent;";
             
             return $this->Get_todos_array($this->query($sql));
         }
 
         public function Get_Consultar_invent(){
-            $results = $this->Query("SELECT * FROM inventario INNER JOIN operacion ON operacion.invent_id_ope = inventario.id_invent  
+            $results = $this->Query("SELECT * FROM inventario INNER JOIN detalle_inventario ON detalle_inventario.invent_id_ope = inventario.id_invent  
             WHERE inventario.id_invent = $this->id_invent;");
 
             return $this->Get_array($results);

@@ -2,12 +2,21 @@
   class c_messages{
     private $list_errors = [
       '01AUTH' => "NO EXISTE SESSION ACTIVA",
+      '02AUTH' => "La cedula es invalida o no esta registrado en el sistema",
+      '03AUTH' => "Usted no esta habilitado para poseer un usuario",
+      '04AUTH' => "Usted ya posee un usuario registrado",
+      '05AUTH' => "Usuario no registrado",
+      '06AUTH' => "Usuario Inactivo o bloqueado!",
+      '07AUTH' => "La clave ingresada no coincide!",
+      '08AUTH' => "No tienes permisos para entrar a esta ruta",
       '01ERR' => "Operacion fallida!",
       '02ERR' => "El registro no se puede duplicar",
     ];
 
     private $list_messages = [
       '01DONE' => "Operacion exitosa!",
+      '01AUTH' => "Login exitoso!",
+      '02AUTH' => "Registro de usuario exitoso!",
     ];
 
     public function printError($indexError){

@@ -2,7 +2,7 @@
   require_once("./models/config.php");
   
   class App{
-    private $ruta_actual, $code_error, $code_done, $titleContent, $controlador;
+    private $ruta_actual, $code_error, $code_done, $titleContent, $controlador, $file_view_name;
 
     public function __construct(){
       session_start();
@@ -26,8 +26,13 @@
 
     private function Auth(){
       if(in_array($this->ruta_actual, constant("PRIVATE_URLS"))){
-        if(!isset($_SESSION['id_username'])){
-          $this->Redirect("inicio/index","err/01AUTH");
+        if(!isset($_SESSION['user_id'])){
+          $this->Redirect("auth/login","err/01AUTH");
+        }
+
+        if(isset($_SESSION['user_id'])){
+          if($_SESSION['permisos'] == 1 && $this->file_view_name == "form") $this->Redirect($this->controlador,"err/08AUTH");
+          if($_SESSION['permisos'] < 3 && $this->controlador == "usuarios" && $this->file_view_name == "index") $this->Redirect("inicio/index","err/08AUTH");
         }
       }
     }
@@ -51,12 +56,12 @@
     }
 
     private function GetView($nameView){
-      $vista = (isset($nameView[1]) ? $nameView[1] : "index");
-      $file_view = "./views/contents/".$nameView[0]."/vis_".$vista.".php";
-      if(file_exists($file_view)){
-        $this->ruta_actual = $nameView[0]."/".$vista;
+      $this->file_view_name = (isset($nameView[1]) ? $nameView[1] : "index");
+      $file_view_path = "./views/contents/".$nameView[0]."/vis_".$this->file_view_name.".php";
+      if(file_exists($file_view_path)){
+        $this->ruta_actual = $nameView[0]."/".$this->file_view_name;
         $this->controlador = $nameView[0];
-        require_once($file_view);
+        require_once($file_view_path);
       }
     }
   }
