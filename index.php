@@ -31,7 +31,7 @@
         }
 
         if(isset($_SESSION['user_id'])){
-          if($_SESSION['permisos'] == 1 && $this->file_view_name == "form") $this->Redirect($this->controlador,"err/08AUTH");
+          if($_SESSION['permisos'] == 1 && $this->file_view_name == "form") $this->Redirect($this->controlador.'/index',"err/08AUTH");
           if($_SESSION['permisos'] < 3 && $this->controlador == "usuarios" && $this->file_view_name == "index") $this->Redirect("inicio/index","err/08AUTH");
         }
       }
@@ -56,7 +56,7 @@
     }
 
     private function GetView($nameView){
-      $this->file_view_name = (isset($nameView[1]) ? $nameView[1] : "index");
+      $this->file_view_name = (isset($nameView[1]) && $nameView[1] != "err" ? $nameView[1] : "index");
       $file_view_path = "./views/contents/".$nameView[0]."/vis_".$this->file_view_name.".php";
       if(file_exists($file_view_path)){
         $this->ruta_actual = $nameView[0]."/".$this->file_view_name;

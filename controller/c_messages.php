@@ -48,5 +48,18 @@
         }
       }
     }
+
+    public function MensajePersonal($array){
+      $code = $array['code'];
+      $mensaje = $array['msg'];
+      ?>
+      <script>
+        Toast.fire({
+          icon: "<?php echo $code; ?>",
+          title: "<?php echo $mensaje; ?>"
+        });
+      </script>
+      <?php
+    }
   }
 ?>
