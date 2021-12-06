@@ -31,7 +31,7 @@
         }
 
         public function Disable(){
-            $sqlConsulta = "SELECT * FROM producto WHERE marca_id_product = $this->id_marca ;";
+            $sqlConsulta = "SELECT * FROM menu_alimentos WHERE marca_id_product = $this->id_marca ;";
             $result = $this->Query($sqlConsulta);
             
             if($result->num_rows > 0){

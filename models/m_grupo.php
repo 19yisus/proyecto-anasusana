@@ -31,7 +31,7 @@
         }
 
         public function Disable(){
-            $sqlConsulta = "SELECT * FROM producto WHERE grupo_id_product = $this->id_grupo ;";
+            $sqlConsulta = "SELECT * FROM menu_alimentos WHERE grupo_id_product = $this->id_grupo ;";
             $result = $this->Query($sqlConsulta);
             
             if($result->num_rows > 0) return ["code" => "error", "message" => "Este grupo de ya esta en uso"];

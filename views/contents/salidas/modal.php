@@ -37,7 +37,7 @@
                                         <div class="col-5">
                                           <div class="form-group">
                                             <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="number" name="cant_product" :max="item.limite_stock" min="0" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
+                                            <input type="number" onkeyup="validaCantidad(this)" name="cant_product" :max="item.limite_stock" min="0" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
                                           </div>
                                         </div>
                                         <button type="button" v-on:click="Disminuir(index)" class="btn btn-danger mt-3">-</button>
@@ -60,3 +60,11 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<script>
+    const validaCantidad = (element) =>{
+        if(parseInt(element.value) > element.max){
+            element.value = element.max;
+        }
+    }
+</script>
