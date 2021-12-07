@@ -65,4 +65,87 @@
         return "err/02AUTH";
       }
     }
+
+    public function FindUser($cod){
+      $cod = $this->Clean(intval($cod));
+      $sql = "SELECT personas.id_person,usuarios.pregun1_user,usuarios.pregun2_user FROM personas INNER JOIN usuarios ON usuarios.person_id_user = personas.id_person WHERE personas.cedula_person = $cod ;";
+      $result = $this->Query($sql);
+
+      if($result->num_rows > 0){
+        $datos = $this->Get_array($result);
+        return [
+          'cedula' => $cod,
+          'id' => $datos['id_person'],
+          'pregun1' => $datos['pregun1_user'],
+          'pregun2' => $datos['pregun2_user'],
+          'status' => true,
+          'next' => 2
+        ];
+      }
+
+      return [
+        'status' => false,
+        'next' => 1,
+        'message' => [
+          'code' => 'error',
+          'msg' => "Su cedula no se encuentra registrada",
+        ]
+      ];
+    }
+    public function ValidarRespuestas($array){
+      $pg1 = $this->Clean($array['respuesta1']);
+      $pg2 = $this->Clean($array['respuesta2']);
+      $id = $this->Clean(intval($array['id']));
+
+      $sql = "SELECT person_id_user FROM usuarios WHERE respuesta1_user = '$pg1' AND respuesta2_user = '$pg2' AND person_id_user = $id;";
+      $result = $this->Query($sql);
+
+      if($result->num_rows > 0){
+        return [
+          'cedula' => $array['cedula'],
+          'id' => $id,
+          'next' => 3,
+          'status' => true,
+        ];
+      }
+
+      return [
+        'cedula' => $array['cedula'],
+        'id' => $id,
+        'next' => 2,
+        'status' => false,
+        'message' => [
+          'code' => 'error',
+          'msg' => "Las respuestas no son correctas",
+        ]
+      ];
+    }
+
+    public function resetPassword($array){
+      $password = password_hash($array['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+      $id = $this->Clean(intval($array['id']));
+
+      $sql = "UPDATE usuarios SET password_user = '$password' WHERE person_id_user = $id ;";
+      $this->Query($sql);
+
+      if($this->Result_last_query()){
+        return [
+          'status' => true,
+          'next' => 1,
+          'message' => [
+            'code' => 'success',
+            'msg' => "Su clave a sido actualizada",
+          ]
+        ];
+      }
+
+      return [
+        'status' => false,
+        'next' => 1,
+        'message' => [
+          'code' => 'error',
+          'msg' => "Su clave no a sido actualizada"
+        ]
+      ];
+    }
   }

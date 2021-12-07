@@ -75,10 +75,6 @@
     }
 </script>
 <?php
-    require_once("./controller/c_messages.php");
-    $ObjMessage = new c_messages();
-
-    if(isset($this->code_error)) $ObjMessage->printError($this->code_error);
-
-    if(isset($this->code_done)) $ObjMessage->printMessage($this->code_done);
+    if(isset($this->code_error)) $this->ObjMessage->printError($this->code_error);
+    if(isset($this->code_done)) $this->ObjMessage->printMessage($this->code_done);
 ?>

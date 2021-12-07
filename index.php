@@ -1,11 +1,13 @@
 <?php
   require_once("./models/config.php");
+  require_once("./controller/c_messages.php");
   
   class App{
-    private $ruta_actual, $code_error, $code_done, $titleContent, $controlador, $file_view_name;
+    private $ruta_actual, $code_error, $code_done, $titleContent, $controlador, $file_view_name, $ObjMessage;
 
     public function __construct(){
       session_start();
+      $this->ObjMessage = new c_messages();
       $this->GetView($this->GetRoute());
     }
 

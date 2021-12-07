@@ -1,6 +1,7 @@
 <?php
   $status_form = 1;
   $cedula = null;
+  $id = null;
   $pregun1 = null;
   $pregun2 = null;
   $result =  null;
@@ -16,6 +17,7 @@
         if($result['status']){
           $status_form = $result['next'];
           $cedula = $result['cedula'];
+          $id = $result['id'];
           $pregun1 = $result['pregun1'];
           $pregun2 = $result['pregun2'];
         }
@@ -26,6 +28,7 @@
         $result = $model->ValidarRespuestas($_POST);
         if($result['status']){
           $cedula = $result['cedula'];
+          $id = $result['id'];
           $status_form = $result['next'];
         }
       break;
@@ -49,7 +52,7 @@
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Recuperacion de contraseña</p>
-
+        
         <?php if($status_form == 1){?>
         <form action="#" method="post">
           <div class="input-group mb-3">
@@ -69,6 +72,7 @@
         <?php }else if($status_form == 2){?>
         <form action="#" method="post">
           <div class="input-group mb-3">
+            <input type="hidden" name="id" readonly value="<?php echo $id;?>">
             <input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cedula de la persona" readonly>
             <div class="input-group-append">
               <div class="input-group-text">
@@ -101,6 +105,7 @@
         <?php }else if($status_form == 3){?>
         <form action="#" id="formulario" method="post" class="needs-validation" novalidate>
           <div class="input-group mb-3">
+            <input type="hidden" name="id" readonly value="<?php echo $id;?>">
             <input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cedula de la persona" readonly>
             <div class="input-group-append">
               <div class="input-group-text">
@@ -126,7 +131,7 @@
           </div>
           <div class="row mb-2">
             <div class="col-12">
-              <button type="submit" class="btn btn-primary btn-block">Enviar datos</button>
+              <button type="submit" name="ope" value="form3" class="btn btn-primary btn-block">Enviar datos</button>
             </div>
           </div>
         </form>
@@ -143,7 +148,7 @@
   <?php $this->GetComplement("scripts"); ?>
   
   <?php 
-    if(isset($result['message'])) $ObjMessage->MensajePersonal($result['message']);
+    if(isset($result['message'])) $this->ObjMessage->MensajePersonal($result['message']);
 
     if($status_form == 3){?>
     <script>
