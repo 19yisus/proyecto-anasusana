@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Formulario de registro Menu de alimentos";
+        $this->titleContent = "Formulario de registros de alimentos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -25,13 +25,13 @@
           <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-cyan">
+                    <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Formulario de registro de productos</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form id="formulario" action="<?php echo constant("URL");?>controller/c_menu-alimentos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                        <form id="formulario" action="<?php echo constant("URL");?>controller/c_productos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6">
@@ -103,7 +103,9 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <input type="hidden" name="ope">
-                                <button type="button" id="btn" onclick="ope.value = this.value" value="Registrar" class="btn btn-primary">Registrar</button>
+                                <button type="button" id="btn" onclick="ope.value = this.value" value="Registrar" class="btn btn-primary">
+                                    <i class="fas fa-save"></i>Registrar
+                                </button>
                             </div>
                         </form>
                     </div>

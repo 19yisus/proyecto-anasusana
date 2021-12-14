@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card-cyan">
+                        <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Formulario de modificacion de personas</h3>
                             </div>
@@ -120,7 +120,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <input type="hidden" name="ope">
-                                    <button type="button" id="btn" onclick="ope.value = this.value" value="Actualizar" class="btn btn-primary">Actualizar</button>
+                                    <button type="button" id="btn" onclick="ope.value = this.value" value="Actualizar" class="btn btn-primary"><i class="fas fa-edit"></i> Actualizar</button>
                                 </div>
                             </form>
                         </div>

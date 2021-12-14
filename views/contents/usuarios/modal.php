@@ -15,7 +15,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card-cyan">
+                        <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Formulario de modificacion de usuarios</h3>
                             </div>

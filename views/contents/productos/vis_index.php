@@ -4,13 +4,20 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Catalogo de grupos";
+        $this->titleContent = "Catalogo de Registros de alimentos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
-        require_once("./models/m_db.php");
-        
+        require_once("./models/m_marca.php");
+        require_once("./models/m_grupo.php");
+
+        $model_marca = new m_marca();
+        $marcas = $model_marca->Get_todos_marcas(1);
+
+        $model_grupo = new m_grupo();
+        $grupos = $model_grupo->Get_todos_grupos(1);
       ?>
+
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <?php $this->GetComplement("contentHeader");?>
@@ -21,15 +28,18 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catalogo de grupos</h3>
+                    <h3 class="card-title">Catalogo de Productos</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>codigo</th>
+                          <th>Codigo</th>
                           <th>Nombre</th>
+                          <th>Cantidad en stock</th>
+                          <th>Marca</th>
+                          <th>Grupo</th>
                           <th>Estado</th>
                           <th>Creacion</th>
                           <th>Opciones</th>
@@ -53,21 +63,21 @@
 <!-- ./wrapper -->
 <?php 
   $this->GetComplement("scripts");
-  require_once("./views/contents/grupos/modal.php");
+  require_once("./views/contents/productos/modal.php");
 ?>
 <script>
   const ChangeStatus = async (value, id) => {
     const form = document.getElementById(`formSecondary-${id}`);
     if(value !== 2){
       form.ope.value = "Desactivar";
-      form.status_grupo.value = value;
+      form.status_producto.value = value;
     }else form.ope.value = "Eliminar";
 
     let res = await Confirmar();
     if(!res) return false;
 
     const data = new FormData(form);
-    await fetch(`<?php echo constant("URL");?>controller/c_grupo.php`,{
+    await fetch(`<?php echo constant("URL");?>controller/c_productos.php`,{
       method: "POST",
       body: data
     }).then(response => response.json())
@@ -81,11 +91,15 @@
   }
 
   const Consultar = async (value) => {
-    await fetch(`<?php echo constant("URL");?>controller/c_grupo.php?ope=Consultar_grupo&id_grupo=${value}`)
+    await fetch(`<?php echo constant("URL");?>controller/c_productos.php?ope=Consultar_producto&id_producto=${value}`)
     .then( response => response.json()).then( res => {
       const form = document.formulario;
-      form.id_grupo.value = res.data.id_grupo;
-      form.nom_grupo.value = res.data.nom_grupo;
+      form.id_producto.value = res.data.id_product;
+      form.nom_producto.value = res.data.nom_product;
+      form.med_producto.value = res.data.med_product;
+      form.valor_producto.value = res.data.valor_product;
+      form.grupo_id_producto.value = res.data.grupo_id_product;
+      form.marca_id_producto.value = res.data.marca_id_product;
     })
     .catch( Err => {
       console.error(Err)
@@ -95,17 +109,20 @@
   $( () => {
     $('#dataTable').DataTable({
       ajax:{
-        url: "<?php echo constant("URL");?>controller/c_grupo.php?ope=Todos_grupos",
+        url: "<?php echo constant("URL");?>controller/c_productos.php?ope=Get_alimentos",
         dataSrc: "data",
       },
       columns: [
-        {data: "id_grupo"},
+        {data: "id_product"},
+        {data: "nom_product"},
+        {data: "stock_product"},
+        {data: "nom_marca"},
         {data: "nom_grupo"},
-        {data: "status_grupo", 
+        {data: "status_product", 
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_grupo", 
+        {data: "created_product", 
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},
@@ -113,23 +130,23 @@
         render: function(data, type, row, meta){
           let btn_secondary;
           let estadoBtnEdit;
-          if(row.status_grupo === "1"){
+          if(row.status_product === "1"){
             estadoBtnEdit = "";
-            btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_grupo})"><i class="fas fa-power-off"></i></button>`;
+            btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_product})"><i class="fas fa-power-off"></i></button>`;
           }else{
             estadoBtnEdit = "disabled";
             btn_secondary = `
-            <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_grupo})"><i class="fas fa-power-off"></i></button>
-            <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_grupo})"></i></button>`;
+            <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_product})"><i class="fas fa-power-off"></i></button>
+            <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_product})"></i></button>`;
           }
           let btn = `
-            <form method="POST" id="formSecondary-${row.id_grupo}" action="<?php echo constant('URL');?>controller/c_grupo.php">
-              <input type="hidden" name="id_grupo" value="${row.id_grupo}">
-              <input type="hidden" name="status_grupo">
+            <form method="POST" id="formSecondary-${row.id_product}" action="<?php echo constant('URL');?>controller/c_productos.php">
+              <input type="hidden" name="id_producto" value="${row.id_product}">
+              <input type="hidden" name="status_producto">
               <input type="hidden" name="ope">
             </form>
             <div class="btn-group">
-              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_grupo})"><i class="fas fa-edit"></i></button>${btn_secondary}
+              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_product})"><i class="fas fa-edit"></i></button>${btn_secondary}
             </div>`;
 
           <?php if(isset($_SESSION['permisos'])){?>

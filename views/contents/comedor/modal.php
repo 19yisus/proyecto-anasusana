@@ -12,23 +12,23 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificacion de marcas</h3>
+                                <h3 class="card-title">Formulario de modificacion de comedor</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_marca.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_comedor.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_marca">Id de la marca(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="text" name="id_marca" id="id_marca" class="form-control" readonly>
+                                                <label for="id_comedor">Codigo del comedor(<span class="text-danger text-md">*</span>)</label>
+                                                <input type="text" name="id_comedor" id="id_comedor" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="nom_marca">Nombre de la marca(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="text" name="nom_marca" id="nom_marca" placeholder="Ingrese el nombre de la marca" class="form-control">
+                                                <label for="nom_comedor">Nombre del comedor(<span class="text-danger text-md">*</span>)</label>
+                                                <input type="text" name="nom_comedor" id="nom_comedor" placeholder="Ingrese el nombre del comedor" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
             if(!res) return false;
 
             let datos = new FormData(document.formulario);
-            fetch(`<?php echo constant("URL");?>controller/c_marca.php`, {
+            fetch(`<?php echo constant("URL");?>controller/c_comedor.php`, {
                 method: "POST",
                 body: datos,
             }).then( response => response.json())
@@ -77,20 +77,20 @@
 
     $("#formulario").validate({
         rules:{
-            nom_marca:{
+            nom_comedor:{
                 required: true,
                 minlength: 3,
             },
-            status_marca:{
+            status_comedor:{
                 required: true,
             }
         },
         messages:{
-            nom_marca:{
+            nom_comedor:{
                 required: "Este campo no puede estar vacio",
                 minlength: "Debe de contener al menos 3 caracteres",
             },
-            status_marca:{
+            status_comedor:{
                 required: "Este campo no puede estar vacio",
             }
         },

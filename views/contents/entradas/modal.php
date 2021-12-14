@@ -1,19 +1,18 @@
 <?php 
-    require("./models/m_menu_alimentos.php");
-    $model = new m_menu_alimentos();
+    require("./models/m_productos.php");
+    $model = new m_productos();
     $productos = $model->Get_todos_productos(1);
 ?>
-<div class="modal fade" id="modal-lg">
+<div class="modal fade" id="modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Lista del menu de alimentos</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Lista de productos</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card card-cyan">
+                        <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Productos para esta transaccion</h3>
                             </div>
@@ -37,12 +36,12 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="number" name="cant_product" min="0" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
+                                                <input type="number" name="cant_product" min="1" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label for="precio_product">Precio(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="precio_product">Precio</label>
                                                 <input type="number" name="precio_product" min="0" step="0.01" v-model="productos[index].precio" :value="item.precio" id="precio_product" placeholder="Ingrese su precio" class="form-control">
                                             </div>
                                         </div>
@@ -57,7 +56,9 @@
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="button" v-on:click="Duplicar" id="btn_duplicar" class="btn btn-success">Mas productos</button>
+                                    <button type="button" v-on:click="Duplicar" id="btn_duplicar" class="btn btn-success"><i class="fas fa-plus-square"></i> Mas productos</button>
+                                    <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-primary"><i class="fas fa-save"></i> Guardar y Salir</button>
+                                    <button type="button" v-on:click="resetProductos" class="btn btn-danger"><i class="fas fa-trash"></i> Cancelar</button>
                                 </div>
                             </form>
                         </div>

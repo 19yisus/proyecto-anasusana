@@ -2,15 +2,15 @@
     require_once("m_db.php");
 
     class m_entrada_salida extends m_db{
-        private $id_invent, $orden_invent, $status_invent, $cantidad_invent, $type_operation_invent, $concept_invent, $person_id_invent, $comedor_id_invent, $user_id_invent, $observacion_invent, $productos;
+        private $id_invent, $orden_invent, $status_invent, $cantidad_invent, $type_operation_invent, $concept_invent, $person_id_invent, $comedor_id_invent, $user_id_invent, $observacion_invent, $productos, $fecha_invent;
         
         public function __construct(){
             parent::__construct();
-            $this->id_invent = $this->orden_invent = $this->status_invent = $this->cantidad_invent = $this->type_operation_invent = $this->concept_invent = $this->person_id_invent = $this->comedor_id_invent = $this->user_id_invent = $this->observacion_invent = $this->productos = "";
+            $this->id_invent = $this->orden_invent = $this->status_invent = $this->cantidad_invent = $this->type_operation_invent = $this->concept_invent = $this->person_id_invent = $this->comedor_id_invent = $this->user_id_invent = $this->observacion_invent = $this->productos = $this->fecha_invent = "";
         }
 
         public function setDatos($d, $productos =[]){
-            $this->id_invent = isset($d['id_invent']) ? $d['id_ivent'] : null;
+            $this->id_invent = isset($d['id_invent']) ? $d['id_invent'] : null;
             $this->orden_invent = isset($d['orden_invent']) ? $this->Clean(intval($d['orden_invent'])) : null;
             $this->status_invent = isset($d['status_invent']) ? $d['status_invent'] : null;
             $this->type_operation_invent = isset($d['type_operation_invent']) ? $d['type_operation_invent'] : null;
@@ -21,6 +21,7 @@
             $this->observacion_invent = isset($d['observacion_invent']) ? $this->Clean($d['observacion_invent']) : null;
             $this->cantidad_invent = isset($d['cantidad_invent']) ? $this->Clean(intVal($d['cantidad_invent'])) : null;
             $this->productos = isset($productos) ? $productos : null;
+            $this->fecha_invent = isset($d['fecha_invent']) ? $d['fecha_invent'] : null;
         }
 
         public function Entrada_productos(){
@@ -28,29 +29,25 @@
             $status_transaccion = true;
             $sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
             concept_invent,person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
-            VALUES (null,'$this->orden_invent',$this->cantidad_invent,1,NOW(),'E','$this->concept_invent',$this->person_id_invent,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E','$this->concept_invent',$this->person_id_invent,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
             
-            $sql_inventario_select = "SELECT MAX(id_invent) AS id_invent FROM inventario WHERE status_invent = '1';";
-
             try{
                 $this->Start_transacction();
                 $results_invent = $this->Query($sql_inventario_insert);
     
                 if($this->Result_last_query()){
-                    $inventario = $this->Get_array($this->Query($sql_inventario_select));
-    
+                        
                     foreach($this->productos as $producto){
                         $id = $producto['id_product'];
                         $precio = $producto['precio_product'];
                         $fecha = $producto['fecha_product'];
                         $stock = $producto['stock_product'];
-                        $id_inventario = $inventario['id_invent'];
-    
-                        $sql_operacion = "INSERT INTO detalle_inventario(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) 
-                        VALUES ($id,$id_inventario,'$fecha',$precio)";
-        
-                        $sql_producto_stock = "UPDATE menu_alimentos SET menu_alimentos.stock_product = (SELECT SUM(menu_alimentos.stock_product + $stock) 
-                        WHERE menu_alimentos.id_product = $id) WHERE menu_alimentos.id_product = $id";
+
+                        if($fecha != "") $sql_operacion = "INSERT INTO detalle_inventario(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) VALUES ('$id','$this->id_invent','$fecha',$precio)";
+                        else $sql_operacion = "INSERT INTO detalle_inventario(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) VALUES ('$id','$this->id_invent',NULL,$precio)";                        
+
+                        $sql_producto_stock = "UPDATE productos SET productos.stock_product = (SELECT SUM(productos.stock_product + $stock) 
+                        WHERE productos.id_product = $id) WHERE productos.id_product = $id";
                             
                         $results_operacion = $this->Query($sql_operacion);    
                         if(!$this->Result_last_query()){
@@ -86,29 +83,23 @@
             $status_transaccion = true;
             $sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
             concept_invent,person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
-            VALUES (null,'$this->orden_invent',$this->cantidad_invent,1,NOW(),'S','$this->concept_invent',null,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','S','$this->concept_invent',null,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
             
-            $sql_inventario_select = "SELECT MAX(id_invent) AS id_invent FROM inventario WHERE status_invent = '1';";
-
             try{
                 $this->Start_transacction();
                 $results_invent = $this->Query($sql_inventario_insert);
     
                 if($this->Result_last_query()){
-                    $inventario = $this->Get_array($this->Query($sql_inventario_select));
     
                     foreach($this->productos as $producto){
                         $id = $producto['id_product'];
-                        // $precio = $producto['precio_product'];
-                        // $fecha = $producto['fecha_product'];
                         $stock = $producto['stock_product'];
-                        $id_inventario = $inventario['id_invent'];
-    
+                            
                         $sql_operacion = "INSERT INTO detalle_inventario(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope) 
-                        VALUES ($id,$id_inventario,null,null)";
+                        VALUES ($id,'$this->id_invent',null,null)";
         
-                        $sql_producto_stock = "UPDATE menu_alimentos SET menu_alimentos.stock_product =( 
-                            (SELECT menu_alimentos.stock_product FROM menu_alimentos WHERE menu_alimentos.id_product = $id) - $stock) WHERE menu_alimentos.id_product = $id;";
+                        $sql_producto_stock = "UPDATE productos SET productos.stock_product =( 
+                            (SELECT productos.stock_product FROM productos WHERE productos.id_product = $id) - $stock) WHERE productos.id_product = $id;";
                             
                         $results_operacion = $this->Query($sql_operacion);    
                         if(!$this->Result_last_query()){
@@ -159,16 +150,16 @@
             return $this->Get_array($results);
         }
 
-        public function NextId(){
-            $results = $this->Query("SELECT MAX(id_invent) AS maximo FROM inventario;");
-
-            if($results->num_rows > 0) return $this->Get_array($results)['maximo'] + 1;
-            else return 1;
-        }
-
-        public function GetComedor(){
-            $results = $this->Query("SELECT * FROM comedor;");
-            if($results->num_rows > 0) return $this->Get_array($results);
+        public function NextId($tipo){
+			$count = 1;
+			$digits = 8;
+            $result = $this->Query("SELECT MAX(id_invent) AS id_invent FROM inventario WHERE type_operacion_invent = '$tipo' ;");
+            if($result->num_rows == 0) return "$tipo-00000001";
+            $valor = $this->Get_array($result)['id_invent'];
+            $start = ( intval(explode("-",$valor)[1]) + 1);
+                        
+            for ($n = $start; $n < $start + $count; $n++) $new_code = str_pad($n, $digits, "0", STR_PAD_LEFT);			
+			if (strlen($new_code) < 8) return "$tipo-0".$new_code; else return  "$tipo-$new_code";
         }
     }
 ?>

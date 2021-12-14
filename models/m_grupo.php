@@ -16,6 +16,9 @@
         }
 
         public function Create(){
+            $result = $this->Query("SELECT * FROM grupo WHERE nom_grupo = '$this->nom_grupo' ;");
+            if($result->num_rows > 0) return "err/02ERR";
+
             $sql = "INSERT INTO grupo(id_grupo, nom_grupo, status_grupo, created_grupo) VALUES(null,'$this->nom_grupo', $this->status_grupo, NOW());";
             $this->Query($sql);
             
@@ -23,6 +26,9 @@
         }
 
         public function Update(){
+            $result = $this->Query("SELECT * FROM grupo WHERE nom_grupo = '$this->nom_grupo' AND id_grupo != $this->id_grupo ;");
+            if($result->num_rows > 0) return ["code" => "error", "message" => "Los datos no se pueden duplicar"];
+
             $sql = "UPDATE grupo SET nom_grupo = '$this->nom_grupo' WHERE id_grupo = $this->id_grupo ;";
             $this->Query($sql);
             
@@ -31,7 +37,7 @@
         }
 
         public function Disable(){
-            $sqlConsulta = "SELECT * FROM menu_alimentos WHERE grupo_id_product = $this->id_grupo ;";
+            $sqlConsulta = "SELECT * FROM productos WHERE grupo_id_product = $this->id_grupo ;";
             $result = $this->Query($sqlConsulta);
             
             if($result->num_rows > 0) return ["code" => "error", "message" => "Este grupo de ya esta en uso"];

@@ -4,18 +4,9 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Catalogo de Menu de alimentos";
-
+        $this->titleContent = "Catalogo Comedor";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
-        require_once("./models/m_marca.php");
-        require_once("./models/m_grupo.php");
-
-        $model_marca = new m_marca();
-        $marcas = $model_marca->Get_todos_marcas(1);
-
-        $model_grupo = new m_grupo();
-        $grupos = $model_grupo->Get_todos_grupos(1);
       ?>
 
       <!-- Content Wrapper. Contains page content -->
@@ -26,9 +17,9 @@
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-12">
-                <div class="card card-primary">
+                <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catalogo de Productos</h3>
+                    <h3 class="card-title">Catalogo de Comedores</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -37,9 +28,6 @@
                         <tr>
                           <th>Codigo</th>
                           <th>Nombre</th>
-                          <th>Cantidad en stock</th>
-                          <th>Marca</th>
-                          <th>Grupo</th>
                           <th>Estado</th>
                           <th>Creacion</th>
                           <th>Opciones</th>
@@ -53,7 +41,8 @@
               </div>
             </div>
             <!-- /.row -->
-          </div><!-- /.container-fluid -->
+          </div>
+          <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
       </div>
@@ -63,21 +52,21 @@
 <!-- ./wrapper -->
 <?php 
   $this->GetComplement("scripts");
-  require_once("./views/contents/menu-alimentos/modal.php");
+  require_once("./views/contents/comedor/modal.php");
 ?>
 <script>
   const ChangeStatus = async (value, id) => {
     const form = document.getElementById(`formSecondary-${id}`);
     if(value !== 2){
       form.ope.value = "Desactivar";
-      form.status_producto.value = value;
+      form.status_comedor.value = value;
     }else form.ope.value = "Eliminar";
 
     let res = await Confirmar();
     if(!res) return false;
 
     const data = new FormData(form);
-    await fetch(`<?php echo constant("URL");?>controller/c_menu-alimentos.php`,{
+    await fetch(`<?php echo constant("URL");?>controller/c_comedor.php`,{
       method: "POST",
       body: data
     }).then(response => response.json())
@@ -91,15 +80,11 @@
   }
 
   const Consultar = async (value) => {
-    await fetch(`<?php echo constant("URL");?>controller/c_menu-alimentos.php?ope=Consultar_producto&id_producto=${value}`)
+    await fetch(`<?php echo constant("URL");?>controller/c_comedor.php?ope=Consultar_comedor&id_comedor=${value}`)
     .then( response => response.json()).then( res => {
       const form = document.formulario;
-      form.id_producto.value = res.data.id_product;
-      form.nom_producto.value = res.data.nom_product;
-      form.med_producto.value = res.data.med_product;
-      form.valor_producto.value = res.data.valor_product;
-      form.grupo_id_producto.value = res.data.grupo_id_product;
-      form.marca_id_producto.value = res.data.marca_id_product;
+      form.id_comedor.value = res.data.id_comedor;
+      form.nom_comedor.value = res.data.nom_comedor;
     })
     .catch( Err => {
       console.error(Err)
@@ -109,20 +94,17 @@
   $( () => {
     $('#dataTable').DataTable({
       ajax:{
-        url: "<?php echo constant("URL");?>controller/c_menu-alimentos.php?ope=Get_alimentos",
+        url: "<?php echo constant("URL");?>controller/c_comedor.php?ope=Todos_comedor",
         dataSrc: "data",
       },
       columns: [
-        {data: "id_product"},
-        {data: "nom_product"},
-        {data: "stock_product"},
-        {data: "nom_marca"},
-        {data: "nom_grupo"},
-        {data: "status_product", 
+        {data: "id_comedor"},
+        {data: "nom_comedor"},
+        {data: "status_comedor", 
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_product", 
+        {data: "created_comedor", 
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},
@@ -130,28 +112,28 @@
         render: function(data, type, row, meta){
           let btn_secondary;
           let estadoBtnEdit;
-          if(row.status_product === "1"){
+          if(row.status_comedor === "1"){
             estadoBtnEdit = "";
-            btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_product})"><i class="fas fa-power-off"></i></button>`;
+            btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_comedor})"><i class="fas fa-power-off"></i></button>`;
           }else{
             estadoBtnEdit = "disabled";
             btn_secondary = `
-            <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_product})"><i class="fas fa-power-off"></i></button>
-            <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_product})"></i></button>`;
+            <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_comedor})"><i class="fas fa-power-off"></i></button>
+            <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_comedor})"></i></button>`;
           }
           let btn = `
-            <form method="POST" id="formSecondary-${row.id_product}" action="<?php echo constant('URL');?>controller/c_menu-alimentos.php">
-              <input type="hidden" name="id_producto" value="${row.id_product}">
-              <input type="hidden" name="status_producto">
+            <form method="POST" id="formSecondary-${row.id_comedor}" action="<?php echo constant('URL');?>controller/c_comedor.php">
+              <input type="hidden" name="id_comedor" value="${row.id_comedor}">
+              <input type="hidden" name="status_comedor">
               <input type="hidden" name="ope">
             </form>
             <div class="btn-group">
-              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_product})"><i class="fas fa-edit"></i></button>${btn_secondary}
+              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_comedor})"><i class="fas fa-edit"></i></button>${btn_secondary}
             </div>`;
-
-          <?php if(isset($_SESSION['permisos'])){?>
-            if(<?php echo $_SESSION['permisos'];?> == 1) btn = ``;
-          <?php }?>
+          
+            <?php if(isset($_SESSION['permisos'])){?>
+              if(<?php echo $_SESSION['permisos'];?> == 1) btn = ``;
+            <?php }?>
 
           return btn;
         }}

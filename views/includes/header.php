@@ -1,5 +1,14 @@
 <head>
     <meta charset="utf-8">
+    <style>
+        #fondo{
+            background-image: url('<?php echo constant("URL");?>views/images/cielo.jpg') !important;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+    </style>
     <title>Proyecto | Iglesia</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -31,4 +40,6 @@
     <link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="<?php echo constant("URL");?>views/css/login.css">
 </head>

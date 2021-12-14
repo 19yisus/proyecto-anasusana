@@ -46,9 +46,8 @@
             $sqlConsulta = "SELECT * FROM personas WHERE cedula_person = $this->cedula_persona AND id_person != $this->id_persona;";
             $result = $this->Query($sqlConsulta);
 
-            if($result->num_rows > 0){
-                return ["code" => "error", "message" => "Estas duplicando la informacion de otra persona"];
-            }else{
+            if($result->num_rows > 0)return ["code" => "error", "message" => "Estas duplicando la informacion de otra persona"];
+            else{
                 $sql = "UPDATE personas SET nom_person = '$this->nom_persona', sexo_person = '$this->sexo_persona', 
                 telefono_movil_person = '$this->telefono_movil_persona', telefono_casa_person = '$this->telefono_casa_persona', 
                 direccion_person = '$this->direccion_persona', correo_person = '$this->correo_persona', 

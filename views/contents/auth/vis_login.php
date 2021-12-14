@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php $this->GetHeader(); ?>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" id="fondo">
   <div class="login-box">
     <div class="login-logo">
-      <a href="<?php echo constant("URL");?>"><b>Iglesia </b>pan de vida</a>
+      <img src="<?php echo constant("URL");?>views/images/logo.jpeg" alt="Logo" class="img-fluid rounded mx-auto d-block">
     </div>
     <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
+    <div class="card align-middle">
+      <div class="card-body login-card-body rounded">
         <p class="login-box-msg">Inicio de sesion</p>
-        <?php //echo password_hash("Iglesia.2021",PASSWORD_BCRYPT,['cost' => 12]);?>
         <form action="<?php echo constant("URL");?>controller/c_auth.php" method="post" id="formulario" class="needs-validation" novalidate>
           <div class="input-group mb-3">
-            <input type="number" class="form-control" name="user_id" placeholder="Cedula de la persona">
+            <input type="number" class="form-control" name="cedula" placeholder="Cedula de la persona">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -31,7 +30,7 @@
           <div class="row mb-2">
             <div class="col-12">
               <input type="hidden" name="ope">
-              <button type="button" onclick="ope.value = this.value" value="Login" class="btn btn-primary btn-block" id="btn">Login</button>
+              <button type="button" onclick="ope.value = this.value" value="Login" class="btn btn-warning btn-block" id="btn">Login</button>
             </div>
           </div>
         </form>

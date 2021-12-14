@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-12-2021 a las 00:19:44
+-- Tiempo de generación: 14-12-2021 a las 20:11:11
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -36,13 +36,6 @@ CREATE TABLE `comedor` (
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `comedor`
---
-
-INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `status_comedor`, `created_comedor`) VALUES
-(1, 'Comedor de la iglesia', 1, '2021-11-22 18:36:35');
-
 -- --------------------------------------------------------
 
 --
@@ -51,19 +44,10 @@ INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `status_comedor`, `created_c
 
 CREATE TABLE `detalle_inventario` (
   `product_id_ope` int(11) NOT NULL,
-  `invent_id_ope` int(11) NOT NULL,
+  `invent_id_ope` char(10) COLLATE utf8_spanish_ci NOT NULL,
   `fecha_vencimiento_ope` datetime DEFAULT NULL,
   `precio_product_ope` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `detalle_inventario`
---
-
-INSERT INTO `detalle_inventario` (`product_id_ope`, `invent_id_ope`, `fecha_vencimiento_ope`, `precio_product_ope`) VALUES
-(1, 1, '2021-12-22 00:00:00', 1000),
-(1, 2, '2021-12-16 00:00:00', 100),
-(1, 3, '2021-12-16 00:00:00', 2.57);
 
 -- --------------------------------------------------------
 
@@ -78,18 +62,6 @@ CREATE TABLE `grupo` (
   `created_grupo` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `grupo`
---
-
-INSERT INTO `grupo` (`id_grupo`, `nom_grupo`, `status_grupo`, `created_grupo`) VALUES
-(3, 'HARINASFFF', 1, '2021-11-03 20:43:11'),
-(19, 'ENLATADOS', 1, '2021-11-24 11:19:48'),
-(20, 'FRUTAS', 1, '2021-11-24 11:19:56'),
-(21, 'VERDURAS', 1, '2021-11-24 11:20:08'),
-(22, 'BEBIDAS', 1, '2021-11-24 11:20:30'),
-(23, 'GHJGHJGHGHJGHJGJ', 1, '2021-12-02 10:12:37');
-
 -- --------------------------------------------------------
 
 --
@@ -97,7 +69,7 @@ INSERT INTO `grupo` (`id_grupo`, `nom_grupo`, `status_grupo`, `created_grupo`) V
 --
 
 CREATE TABLE `inventario` (
-  `id_invent` int(11) NOT NULL,
+  `id_invent` char(10) COLLATE utf8_spanish_ci NOT NULL,
   `orden_invent` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
   `cantidad_invent` int(11) NOT NULL,
   `status_invent` tinyint(4) NOT NULL,
@@ -109,15 +81,6 @@ CREATE TABLE `inventario` (
   `user_id_invent` int(11) NOT NULL,
   `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `inventario`
---
-
-INSERT INTO `inventario` (`id_invent`, `orden_invent`, `cantidad_invent`, `status_invent`, `created_invent`, `type_operacion_invent`, `concept_invent`, `person_id_invent`, `comedor_id_invent`, `user_id_invent`, `observacion_invent`) VALUES
-(1, '654646464', 8, 1, '2021-12-05 18:39:44', 'E', 'D', 1, 1, 1, 'FASDFASDFASDFADSFASDFASDFA'),
-(2, '4654654', 5, 1, '2021-12-05 18:44:02', 'E', 'C', 1, 1, 1, 'FASDFASDFASDFASDF'),
-(3, '523523452', 7, 1, '2021-12-05 19:15:09', 'E', 'C', 1, 1, 1, 'FASDFASDFASDFASDFASDFADS');
 
 -- --------------------------------------------------------
 
@@ -131,43 +94,6 @@ CREATE TABLE `marca` (
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `marca`
---
-
-INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
-(2, 'POLAR', 1, '2021-11-16 22:31:47'),
-(3, 'MASECA', 1, '2021-11-16 22:32:00'),
-(4, 'PEPSI', 1, '2021-11-24 11:20:50'),
-(5, 'COCACOLA', 1, '2021-11-24 11:20:58'),
-(6, 'SIN MARCA', 1, '2021-11-24 11:24:29');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `menu_alimentos`
---
-
-CREATE TABLE `menu_alimentos` (
-  `id_product` int(11) NOT NULL,
-  `nom_product` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `med_product` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `valor_product` double NOT NULL,
-  `status_product` tinyint(4) NOT NULL,
-  `created_product` datetime NOT NULL,
-  `stock_product` int(11) NOT NULL,
-  `marca_id_product` int(11) NOT NULL,
-  `grupo_id_product` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `menu_alimentos`
---
-
-INSERT INTO `menu_alimentos` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `marca_id_product`, `grupo_id_product`) VALUES
-(1, 'HARINA DE MAIZ ', 'KL', 1, 1, '2021-12-05 18:38:54', 12, 3, 3),
-(2, 'REFRESCO', 'LT', 1, 1, '2021-12-05 18:57:24', 0, 2, 22);
 
 -- --------------------------------------------------------
 
@@ -197,8 +123,67 @@ CREATE TABLE `personas` (
 
 INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person`, `sexo_person`, `telefono_movil_person`, `telefono_casa_person`, `direccion_person`, `correo_person`, `if_proveedor`, `if_user`, `status_person`, `created_person`) VALUES
 (1, '26587968', 'V', 'ALFREDO MENDEZ', 'M', '0424 5198398', '', 'GASGSDFGSDFGSDFGSDFGSDFGSFGD', 'MENDEZ23_FASDFASD@GMAIL.COM', 1, 1, 1, '2021-11-18 22:38:38'),
-(2, '14887880', 'V', 'ALFONSO MEDINA', 'M', '0424 5589669', '0255 6846698', 'FFASDFASDFASDFASDFASDFASDFASDFASDFASDF', 'ALFONSOMEDINA23@GMAIL.COM', 1, 0, 1, '2021-11-24 09:59:47'),
+(2, '14887889', 'V', 'ALFONSO MEDINA', 'M', '0424 5589669', '0255 6846698', 'FFASDFASDFASDFASDFASDFASDFASDFASDFASDF', 'ALFONSOMEDINA23@GMAIL.COM', 1, 1, 1, '2021-11-24 09:59:47'),
 (3, '30400100', 'V', 'RONALDO PEREZ', 'M', '0424 5198396', '', 'FASDFASDFASDFASDFASDFASDFASDF', 'FASDFASDFASDFADS@GMAIL.COM', 0, 1, 1, '2021-12-05 10:58:34');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `preguntas`
+--
+
+CREATE TABLE `preguntas` (
+  `id_pregun` int(11) NOT NULL,
+  `des_pregun` varchar(30) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`id_pregun`, `des_pregun`) VALUES
+(1, 'Color favorito'),
+(2, 'Animal favorito');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `productos`
+--
+
+CREATE TABLE `productos` (
+  `id_product` int(11) NOT NULL,
+  `nom_product` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `med_product` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `valor_product` double NOT NULL,
+  `status_product` tinyint(4) NOT NULL,
+  `created_product` datetime NOT NULL,
+  `stock_product` int(11) NOT NULL,
+  `marca_id_product` int(11) NOT NULL,
+  `grupo_id_product` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+CREATE TABLE `respuestas` (
+  `id_respues` int(11) NOT NULL,
+  `des_respues` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `pregun_id_respues` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `respuestas`
+--
+
+INSERT INTO `respuestas` (`id_respues`, `des_respues`, `pregun_id_respues`) VALUES
+(1, 'azul', 1),
+(2, 'rojo', 1),
+(3, 'perro', 2),
+(4, 'gato', 2);
 
 -- --------------------------------------------------------
 
@@ -236,10 +221,10 @@ CREATE TABLE `usuarios` (
   `status_user` tinyint(1) NOT NULL,
   `id_rol` int(11) NOT NULL,
   `created_user` datetime NOT NULL,
-  `pregun1_user` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `pregun2_user` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `respuesta1_user` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `respuesta2_user` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+  `pregun1_user` int(11) NOT NULL,
+  `pregun2_user` int(11) NOT NULL,
+  `respuesta1_user` int(11) NOT NULL,
+  `respuesta2_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -247,8 +232,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_user`, `person_id_user`, `password_user`, `status_user`, `id_rol`, `created_user`, `pregun1_user`, `pregun2_user`, `respuesta1_user`, `respuesta2_user`) VALUES
-(1, 1, '$2y$12$pjpx67b6tIofE81f5S773OSscmB3W6g/A3Iubx5V8uFJk8uN7t5ci', 1, 1, '2021-11-23 02:08:10', 'nada', 'nada', 'nada', 'nada'),
-(2, 3, '$2y$12$GJZI2qWrdzg3r4XGpjA8zuiEkR7Hd.IOpj10EKxr7oQHqtIB2Cfo2', 1, 3, '2021-12-05 11:08:09', 'nada', 'nada', 'nada', 'nada');
+(1, 1, '$2y$12$pjpx67b6tIofE81f5S773OSscmB3W6g/A3Iubx5V8uFJk8uN7t5ci', 1, 1, '2021-11-23 02:08:10', 1, 2, 1, 4),
+(2, 3, '$2y$12$AGxghVHoNWTdArAy2NxoKuCRk6B74xAr9Wi.E1MUF3WAdTufZ6VC.', 1, 3, '2021-12-05 11:08:09', 2, 1, 3, 2);
 
 --
 -- Índices para tablas volcadas
@@ -265,7 +250,7 @@ ALTER TABLE `comedor`
 --
 ALTER TABLE `detalle_inventario`
   ADD KEY `product_id_ope` (`product_id_ope`),
-  ADD KEY `invent_id_ope` (`invent_id_ope`);
+  ADD KEY `detalle_inventario_ibfk_2` (`invent_id_ope`);
 
 --
 -- Indices de la tabla `grupo`
@@ -289,19 +274,32 @@ ALTER TABLE `marca`
   ADD PRIMARY KEY (`id_marca`);
 
 --
--- Indices de la tabla `menu_alimentos`
---
-ALTER TABLE `menu_alimentos`
-  ADD PRIMARY KEY (`id_product`),
-  ADD KEY `marca_id_product` (`marca_id_product`),
-  ADD KEY `grupo_id_product` (`grupo_id_product`);
-
---
 -- Indices de la tabla `personas`
 --
 ALTER TABLE `personas`
   ADD PRIMARY KEY (`id_person`),
   ADD UNIQUE KEY `cedula_person` (`cedula_person`);
+
+--
+-- Indices de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  ADD PRIMARY KEY (`id_pregun`);
+
+--
+-- Indices de la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`id_product`),
+  ADD KEY `marca_id_product` (`marca_id_product`),
+  ADD KEY `grupo_id_product` (`grupo_id_product`);
+
+--
+-- Indices de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD PRIMARY KEY (`id_respues`),
+  ADD KEY `pregun_id_respues` (`pregun_id_respues`);
 
 --
 -- Indices de la tabla `roles_usuario`
@@ -315,7 +313,11 @@ ALTER TABLE `roles_usuario`
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `person_id_user` (`person_id_user`),
-  ADD KEY `id_rol` (`id_rol`);
+  ADD KEY `id_rol` (`id_rol`),
+  ADD KEY `usuarios_preguntas1` (`pregun1_user`),
+  ADD KEY `usuarios_preguntas2` (`pregun2_user`),
+  ADD KEY `usuarios_respuestas1` (`respuesta1_user`),
+  ADD KEY `usuarios_respuestas2` (`respuesta2_user`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -325,37 +327,43 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
---
--- AUTO_INCREMENT de la tabla `inventario`
---
-ALTER TABLE `inventario`
-  MODIFY `id_invent` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `menu_alimentos`
---
-ALTER TABLE `menu_alimentos`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
   MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  MODIFY `id_pregun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `productos`
+--
+ALTER TABLE `productos`
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  MODIFY `id_respues` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `roles_usuario`
@@ -367,7 +375,7 @@ ALTER TABLE `roles_usuario`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -377,7 +385,7 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `detalle_inventario`
 --
 ALTER TABLE `detalle_inventario`
-  ADD CONSTRAINT `detalle_inventario_ibfk_1` FOREIGN KEY (`product_id_ope`) REFERENCES `menu_alimentos` (`id_product`),
+  ADD CONSTRAINT `detalle_inventario_ibfk_1` FOREIGN KEY (`product_id_ope`) REFERENCES `productos` (`id_product`),
   ADD CONSTRAINT `detalle_inventario_ibfk_2` FOREIGN KEY (`invent_id_ope`) REFERENCES `inventario` (`id_invent`);
 
 --
@@ -389,18 +397,28 @@ ALTER TABLE `inventario`
   ADD CONSTRAINT `inventario_ibfk_3` FOREIGN KEY (`user_id_invent`) REFERENCES `usuarios` (`id_user`);
 
 --
--- Filtros para la tabla `menu_alimentos`
+-- Filtros para la tabla `productos`
 --
-ALTER TABLE `menu_alimentos`
-  ADD CONSTRAINT `menu_alimentos_ibfk_1` FOREIGN KEY (`marca_id_product`) REFERENCES `marca` (`id_marca`),
-  ADD CONSTRAINT `menu_alimentos_ibfk_2` FOREIGN KEY (`grupo_id_product`) REFERENCES `grupo` (`id_grupo`);
+ALTER TABLE `productos`
+  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`marca_id_product`) REFERENCES `marca` (`id_marca`),
+  ADD CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`grupo_id_product`) REFERENCES `grupo` (`id_grupo`);
+
+--
+-- Filtros para la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`pregun_id_respues`) REFERENCES `preguntas` (`id_pregun`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `roles_fk` FOREIGN KEY (`id_rol`) REFERENCES `roles_usuario` (`id`),
-  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`person_id_user`) REFERENCES `personas` (`id_person`);
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`person_id_user`) REFERENCES `personas` (`id_person`),
+  ADD CONSTRAINT `usuarios_preguntas1` FOREIGN KEY (`pregun1_user`) REFERENCES `preguntas` (`id_pregun`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuarios_preguntas2` FOREIGN KEY (`pregun2_user`) REFERENCES `preguntas` (`id_pregun`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuarios_respuestas1` FOREIGN KEY (`respuesta1_user`) REFERENCES `respuestas` (`id_respues`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuarios_respuestas2` FOREIGN KEY (`respuesta2_user`) REFERENCES `respuestas` (`id_respues`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

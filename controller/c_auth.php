@@ -20,8 +20,8 @@
 
   if(isset($_GET['ope'])){
     switch($_GET['ope']){
-      case "Todos_grupos":
-        fn_Consultar_todos();
+      case "Get_respuesta":
+        fn_Get_respuesta();
       break;
 
       case "Consultar_grupo":
@@ -45,6 +45,12 @@
     $mensaje = $model->Register_user();
 
     header("Location: ".constant("URL")."auth/sign_in/$mensaje");
+  }
+
+  function fn_Get_respuesta(){
+    $model = new m_auth();
+    $result = $model->Get_Respuestas_to_preguntas($_GET['id']);
+    print json_encode(["data" => $result]);
   }
 
   function fn_Cerrar(){

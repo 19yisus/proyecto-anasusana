@@ -1,2 +1,0 @@
-Cedula: 26587968 Clave: Iglesia.2021 Rol: Super Amin Estado: Activo
-Cedula: 30400100 Clave: Jesus.2021 Rol: General Estado: Activo

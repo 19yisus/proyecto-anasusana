@@ -16,6 +16,9 @@
         }
 
         public function Create(){
+            $result = $this->Query("SELECT * FROM marca WHERE nom_marca = '$this->nom_marca' ;");
+            if($result->num_rows > 0) return "err/02ERR";
+
             $sql = "INSERT INTO marca(id_marca, nom_marca, status_marca, created_marca) VALUES(null,'$this->nom_marca', $this->status_marca, NOW());";
             $this->Query($sql);
             
@@ -23,6 +26,9 @@
         }
 
         public function Update(){
+            $result = $this->Query("SELECT * FROM marca WHERE nom_marca = '$this->nom_marca' AND id_marca != $this->id_marca ;");
+            if($result->num_rows > 0) return ["code" => "error", "message" => "Los datos no se pueden duplicar"];
+
             $sql = "UPDATE marca SET nom_marca = '$this->nom_marca' WHERE id_marca = $this->id_marca ;";
             $this->Query($sql);
             
@@ -31,7 +37,7 @@
         }
 
         public function Disable(){
-            $sqlConsulta = "SELECT * FROM menu_alimentos WHERE marca_id_product = $this->id_marca ;";
+            $sqlConsulta = "SELECT * FROM productos WHERE marca_id_product = $this->id_marca ;";
             $result = $this->Query($sqlConsulta);
             
             if($result->num_rows > 0){

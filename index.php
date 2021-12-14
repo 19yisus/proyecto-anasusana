@@ -38,10 +38,15 @@
         }
       }
     }
-    private function DateNow(){
-      setlocale(LC_ALL,"es_ES");
-      date_default_timezone_set("America/Caracas");
-      $fecha = date('Y-m-d');
+    private function DateNow($param = ""){
+      $unixTime = time();
+      $timeZone = new \DateTimeZone('America/Caracas');
+
+      $time = new \DateTime();
+      $time->setTimestamp($unixTime)->setTimezone($timeZone);
+            
+      if($param == "") $fecha = $time->format('Y-m-d');
+      else $fecha = $fecha = $time->format($param);;
 
       return $fecha;
     }

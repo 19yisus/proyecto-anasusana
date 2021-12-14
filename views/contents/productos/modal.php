@@ -10,13 +10,13 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card card-cyan">
+                        <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Formulario de modificacion de productos</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_menu-alimentos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_productos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
@@ -79,7 +79,9 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <input type="hidden" name="ope">
-                                    <button type="button" id="btn" onclick="ope.value = this.value" value="Actualizar" class="btn btn-primary">Actualizar</button>
+                                    <button type="button" id="btn" onclick="ope.value = this.value" value="Actualizar" class="btn btn-primary">
+                                        <i class="fas fa-edit"></i>
+                                        Actualizar</button>
                                 </div>
                             </form>
                         </div>
@@ -101,7 +103,7 @@
             if(!res) return false;
 
             let datos = new FormData(document.formulario);
-            fetch(`<?php echo constant("URL");?>controller/c_menu-alimentos.php`, {
+            fetch(`<?php echo constant("URL");?>controller/c_productos.php`, {
                 method: "POST",
                 body: datos,
             }).then( response => response.json())

@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-warning elevation-4">
   <!-- Brand Logo -->
   <a href="<?php echo constant("URL");?>inicio/index" class="brand-link">
-    <img src="<?php echo constant('URL');?>views/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <img src="<?php echo constant('URL');?>views/images/logo.jpeg" alt="AdminLTE Logo" class="brand-image mr-2 elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-bold">Iglesia pan de vida</span>
   </a>
 
@@ -30,7 +30,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link <?php $this->IsActive(["grupos/index","grupos/form","marcas/index","marcas/form","personas/index","menu-alimentos/index","menu-alimentos/form"]);?>">
+          <a href="#" class="nav-link <?php $this->IsActive(["grupos/index","grupos/form","marcas/index","marcas/form","personas/index","productos/index","productos/form","comedor/index","comedor/form"]);?>">
             <i class="nav-icon fas fa-copy"></i>
             <p>
               Registros
@@ -67,12 +67,18 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>menu-alimentos/index" class="nav-link <?php $this->IsActive("menu-alimentos/index"); ?>">
+              <a href="<?php echo constant("URL");?>productos/index" class="nav-link <?php $this->IsActive("productos/index"); ?>">
                 <i class="nav-icon fas fa-people-carry"></i>
-                <!-- <i class="fas fa-user-friends"></i> -->
-                <!-- <i class="fas fa-child"></i> -->
                 <p>
-                  Menu de alimentos
+                  Productos
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo constant("URL");?>comedor/index" class="nav-link <?php $this->IsActive("comedor/index"); ?>">
+                <i class="nav-icon fas fa-house-user"></i>
+                <p>
+                  Comedor
                 </p>
               </a>
             </li>
