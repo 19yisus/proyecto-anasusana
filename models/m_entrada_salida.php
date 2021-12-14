@@ -154,7 +154,7 @@
 			$count = 1;
 			$digits = 8;
             $result = $this->Query("SELECT MAX(id_invent) AS id_invent FROM inventario WHERE type_operacion_invent = '$tipo' ;");
-            if($result->num_rows == 0) return "$tipo-00000001";
+            if($result->lengths == null) return "$tipo-00000001";
             $valor = $this->Get_array($result)['id_invent'];
             $start = ( intval(explode("-",$valor)[1]) + 1);
                         
