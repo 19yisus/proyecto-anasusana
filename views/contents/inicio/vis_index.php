@@ -20,70 +20,22 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
-              <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                  <div class="inner">
-                    <h3>150</h3>
-
-                    <p>nueva orden</p>
+            <div class="card">
+              <div class="card-body">
+                
+                <div class="row">
+                  <div class="col-6">
+                    <div class="d-flex flex-column">
+                      <h3 class="">Bienvenid@</h3>
+                      <h4 class="text-muted">Software de Inventario y Control de Alimentos para el comedor de la “Iglesia Cristiana Pan de Vida”</h4>
+                    </div>
                   </div>
-                  <div class="icon">
-                    <i class="ion ion-bag"></i>
+                  <div class="col-6">
+                    <img src="<?php echo constant('URL');?>views/images/logo.jpeg" alt="AdminLTE Logo" class="w-50 float-right">
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                  <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                    <p>Bounce Rate</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-warning">
-                  <div class="inner">
-                    <h3>44</h3>
-
-                    <p>User Registrations</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
-              <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                  <div class="inner">
-                    <h3>65</h3>
-
-                    <p>Unique Visitors</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                  </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-              </div>
-              <!-- ./col -->
             </div>
-            <!-- /.row -->
           </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->

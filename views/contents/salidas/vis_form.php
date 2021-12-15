@@ -58,7 +58,7 @@
 																		<div class="col-3">
 																				<div class="form-group">
 																						<label for="orden_invent">N-Orden(<span class="text-danger text-md">*</span>)</label>
-																						<input type="number" maxlength="20" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el numero de orden">
+																						<input type="text" maxlength="20" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el numero de orden">
 																				</div>
 																		</div>
 																		<div class="col-3">

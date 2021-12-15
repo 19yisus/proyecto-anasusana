@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Catalogo de Registros de alimentos";
+        $this->titleContent = "Catalogo de Registros de productos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");

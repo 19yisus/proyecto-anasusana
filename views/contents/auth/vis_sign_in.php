@@ -151,9 +151,9 @@
 				})
 
 				if(id_element != "#respues_2"){
-					$(`#pregun2 option[value!='${id_pregun}']`)[0].attr("selected", true);
-					$(`#pregun2 option[value!='${id_pregun}']`)[0].attr("disabled", false);
-					$(`#pregun2 option[value='${id_pregun}']`)[0].attr("disabled", true);
+					$(`#pregun2 option[value!='${id_pregun}']`).attr("selected", true);
+					$(`#pregun2 option[value!='${id_pregun}']`).attr("disabled", false);
+					$(`#pregun2 option[value='${id_pregun}']`).attr("disabled", true);
 
 					Get_respuestas('#respues_2', $('#pregun2').val())
 				}		
