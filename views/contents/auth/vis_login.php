@@ -9,10 +9,10 @@
     <!-- /.login-logo -->
     <div class="card align-middle">
       <div class="card-body login-card-body rounded">
-        <p class="login-box-msg">Inicio de sesion</p>
+        <p class="login-box-msg">Inicio de sesión</p>
         <form action="<?php echo constant("URL");?>controller/c_auth.php" method="post" id="formulario" class="needs-validation" novalidate>
           <div class="input-group mb-3">
-            <input type="number" class="form-control" name="cedula" placeholder="Cedula de la persona">
+            <input type="number" class="form-control" name="cedula" placeholder="Cédula de la persona">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -36,7 +36,7 @@
         </form>
 
         <p class="mb-1">
-          <a href="<?php echo constant("URL");?>auth/recuperar_clave">Olvide mi contraseña</a>
+          <a href="<?php echo constant("URL");?>auth/recuperar_clave">Olvidé mi contraseña</a>
         </p>
         <p class="mb-0">
           <a href="<?php echo constant("URL");?>auth/sign_in" class="text-center">Registro de nuevo usuario</a>

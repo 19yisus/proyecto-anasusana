@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificacion de productos</h3>
+                                <h3 class="card-title">Formulario de modificación de productos</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -21,8 +21,8 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_producto">Id del producto(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="text" name="id_producto" id="id_producto" placeholder="Ingrese el nombre del producto" class="form-control" readonly>
+                                                <label for="id_producto">código del producto(<span class="text-danger text-md">*</span>)</label>
+                                                <input type="text" name="id_producto" id="id_producto" placeholder="Ingrese el código del producto" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
@@ -146,17 +146,17 @@
                 minlength: "Debe de contener al menos 3 caracteres",
             },
             med_producto:{
-                required: "Debe de seleccionar una opcion",
+                required: "Debe de seleccionar una opción",
             },
             valor_producto:{
                 required: "Este campo no puede estar vacio",
                 number: "Solo se aceptan numeros"
             },
             grupo_id_producto:{
-                required: "Debe de seleccionar una opcion"
+                required: "Debe de seleccionar una opción"
             },
             marca_id_producto:{
-                required: "Debe de seleccionar una opcion"
+                required: "Debe de seleccionar una opción"
             }
         },
         errorElement: "span",

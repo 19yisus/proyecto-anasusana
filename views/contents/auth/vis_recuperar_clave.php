@@ -14,7 +14,8 @@
 			case 'form1':
 				
 				$result = $model->FindUser($_POST['cedula']);    
-				
+				if(isset($result['view']) && $result['view'] == "sign_in") $this->Redirect("auth/login","err/05AUTH");
+
 				if($result['status']){
 					$status_form = $result['next'];
 					$cedula = $result['cedula'];
@@ -54,12 +55,12 @@
 		<!-- /.login-logo -->
 		<div class="card">
 			<div class="card-body login-card-body rounded">
-				<p class="login-box-msg">Recuperacion de contraseña</p>
+				<p class="login-box-msg">Recuperación de contraseña</p>
 				
 				<?php if($status_form == 1){?>
 				<form action="#" method="post">
 					<div class="input-group mb-3">
-						<input type="number" class="form-control" name="cedula" placeholder="Cedula de la persona" require>
+						<input type="number" class="form-control" maxlength="8" name="cedula" placeholder="Cédula de la persona" require>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
@@ -76,7 +77,7 @@
 				<form action="#" method="post">
 					<div class="input-group mb-3">
 						<input type="hidden" name="user_id" readonly value="<?php echo $id;?>">
-						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cedula de la persona" readonly>
+						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cédula de la persona" readonly>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
@@ -123,7 +124,7 @@
 				<form action="#" id="formulario" method="post" class="needs-validation" novalidate>
 					<div class="input-group mb-3">
 						<input type="hidden" name="user_id" readonly value="<?php echo $id;?>">
-						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cedula de la persona" readonly>
+						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cédula de la persona" readonly>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
@@ -195,7 +196,7 @@
 						minlength: "Minimo de 8 caracteres para ingresa una contraseña",
 						maxlength: "Maximo de 20 caracteres dpara una contraseña",
 						pattern: "Se debe de ingresar una clave mas segura (1 Mayuscula, 1 minuscula, 1 numero y un caracter especial, 8 caracteres minimo)",
-						equalTo: "Las contraseñas ingresadas no conciden"
+						equalTo: "Las contraseñas ingresadas no coinciden"
 					}
 				},
 				errorElement: "span",

@@ -46,9 +46,15 @@
       $time->setTimestamp($unixTime)->setTimezone($timeZone);
             
       if($param == "") $fecha = $time->format('Y-m-d');
-      else $fecha = $fecha = $time->format($param);;
-
+      else $fecha = $fecha = $time->format($param);
+      
       return $fecha;
+    }
+    private function thisDateMoreOneHour(){
+      $date = $this->DateNow("Y-m-d H:i");
+      $fecha = new DateTime($this->DateNow("Y-m-d H:i"));
+      $fecha->add(new dateInterval("PT1H"));
+      return $fecha->format("Y-m-d\TH:i");
     }
     private function Redirect($view, $params){ header("Location: ".constant("URL")."$view/$params"); }
 

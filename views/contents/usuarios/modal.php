@@ -17,7 +17,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificacion de usuarios</h3>
+                                <h3 class="card-title">Formulario de modificación de usuarios</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -26,7 +26,7 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_user">Id del grupo(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_user">código del usuario(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_user" id="id_user" class="form-control" readonly>
                                             </div>
                                         </div>
@@ -34,7 +34,7 @@
                                             <div class="form-group">
                                                 <label for="nom_user">Rol de este usuario(<span class="text-danger text-md">*</span>)</label>                                                
                                                 <select name="rol_user" id="rol_user" class="custom-select">
-                                                  <option value="">Seleccione una opcion</option>
+                                                  <option value="">Seleccione una opción</option>
                                                   <?php foreach($roles as $rol){?>
                                                     <option value="<?php echo $rol['id'];?>"><?php echo $rol['nom_rol'];?></option>
                                                   <?php }?>

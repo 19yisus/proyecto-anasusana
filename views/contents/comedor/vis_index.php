@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Catalogo Comedor";
+        $this->titleContent = "Catálogo Comedor";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
       ?>
@@ -26,10 +26,12 @@
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Codigo</th>
+                          <th>Código</th>
                           <th>Nombre</th>
+                          <th>Cédula del encargado</th>
+                          <th>Encargado</th>
                           <th>Estado</th>
-                          <th>Creacion</th>
+                          <th>Creación</th>
                           <th>Opciones</th>
                         </tr>
                       </thead>
@@ -81,10 +83,12 @@
 
   const Consultar = async (value) => {
     await fetch(`<?php echo constant("URL");?>controller/c_comedor.php?ope=Consultar_comedor&id_comedor=${value}`)
-    .then( response => response.json()).then( res => {
+    .then( response => response.json()).then( ({data}) => {
       const form = document.formulario;
-      form.id_comedor.value = res.data.id_comedor;
-      form.nom_comedor.value = res.data.nom_comedor;
+      form.id_comedor.value = data.id_comedor;
+      form.nom_comedor.value = data.nom_comedor;
+      form.encargado_comedor.value = data.encargado_comedor;
+      form.direccion_comedor.value = data.direccion_comedor;
     })
     .catch( Err => {
       console.error(Err)
@@ -100,6 +104,11 @@
       columns: [
         {data: "id_comedor"},
         {data: "nom_comedor"},
+        {data: "cedula_person",
+        render: function(data, type, row){
+          return row.tipo_person+'-'+row.cedula_person
+        }},
+        {data: "nom_person"},
         {data: "status_comedor", 
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";

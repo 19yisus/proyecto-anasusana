@@ -2,6 +2,7 @@
     require("./models/m_productos.php");
     $model = new m_productos();
     $productos = $model->Get_todos_productos(2);
+
 ?>
 <div class="modal fade" id="modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -14,7 +15,7 @@
                     <div class="col-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Productos para esta transaccion</h3>
+                                <h3 class="card-title">Productos para esta transacción</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -25,8 +26,8 @@
                                           <div class="form-group d-block">
                                             <label for="id_product">Datos generales del producto(<span class="text-danger text-md">*</span>)</label>
                                             <!-- special_select2 lo dejo aca por si acaso -->
-                                            <select name="id_product" v-model="productos[index].code" :data-index="index" v-on:change="consulta_limite_stock" value="" id="" class="custom-select">
-                                              <option value="">Seleccione un producto</option>
+                                            <select name="id_product" v-model="productos[index].code" :data-index="index" v-on:change="ConsultarName" :id="index" class="custom-select">
+                                              <option value=".">Seleccione un producto</option>
                                               <?php foreach($productos as $item){?>
                                               <option value="<?php echo $item['id_product'];?>"><?php echo $item['nom_product'] ." - ". $item['nom_marca'] .' - '.$item['valor_product'].$item['med_product']; ?></option>
                                               <?php }?>
@@ -36,7 +37,7 @@
                                         <div class="col-5">
                                           <div class="form-group">
                                             <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="number" onkeyup="validaCantidad(this)" name="cant_product" :max="item.limite_stock" min="0" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
+                                            <input type="number" v-on:keyup="validaCantidad" name="cant_product" :data-index="index" :max="item.limite_stock" min="0" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
                                           </div>
                                         </div>
                                         <button type="button" v-on:click="Disminuir(index)" class="btn btn-danger mt-3">-</button>
@@ -61,11 +62,3 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
-<script>
-    const validaCantidad = (element) =>{
-        if(parseInt(element.value) > element.max){
-            element.value = element.max;
-        }
-    }
-</script>

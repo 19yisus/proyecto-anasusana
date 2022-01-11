@@ -36,14 +36,14 @@
             $sqlVerificar = "SELECT * FROM productos WHERE nom_product = '$this->nom_producto' AND id_product != $this->id_producto ;";
             $result = $this->Query($sqlVerificar);
 
-            if($result->num_rows > 0) return ["code" => "error", "message" => "Operacion Fallida!, el regitro no se puede duplicar"];
+            if($result->num_rows > 0) return ["code" => "error", "message" => "Operación Fallida!, el regitro no se puede duplicar"];
             $sql = "UPDATE productos SET nom_product = '$this->nom_producto', med_product = '$this->med_producto',
             valor_product = '$this->valor_producto', marca_id_product = $this->marca_id_producto, 
             grupo_id_product = $this->grupo_id_producto WHERE id_product = $this->id_producto ;";
             $this->Query($sql);
             
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Disable(){
@@ -57,8 +57,8 @@
             $sql = "UPDATE productos SET status_product = $this->status_producto WHERE id_product = $this->id_producto ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];            
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];            
         }
 
         public function Delete(){
@@ -70,8 +70,8 @@
             $sql = "DELETE FROM productos WHERE id_product = $this->id_producto AND status_product = '0' ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Get_todos_productos($status = ''){

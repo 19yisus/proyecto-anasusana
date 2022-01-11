@@ -22,7 +22,6 @@
           <div class="container-fluid">
             <div class="card">
               <div class="card-body">
-                
                 <div class="row">
                   <div class="col-6">
                     <div class="d-flex flex-column">
@@ -32,6 +31,24 @@
                   </div>
                   <div class="col-6">
                     <img src="<?php echo constant('URL');?>views/images/logo.jpeg" alt="AdminLTE Logo" class="w-50 float-right">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="mx-1">
+                    <h4>Misión de la Escuela Dominical para niños:</h4>
+                    <h6 class="text-justify">Enseñar, instruir e incentivar a los niños a que aprendan la palabra de Dios y sean buenos cuidadanos en todo lugar.
+                      Tambien, crear estrategias para hacer crecer la matrícula, y luego hacerlos miembros de la iglesia.
+                    </h6>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="mx-1">
+                    <h4>Visión de la Escuela Dominical para niños:</h4>
+                    <h6 class="text-justify">Consolidar la masa total de los niños a una motivación de conocer las Santas Escrituras y mantener una conducta integra
+                      en la iglesia, hogar, escuela y comunidad; con el fin de prevenir que caigan en la delincuencia y sedentarismo.
+                    </h6>
                   </div>
                 </div>
               </div>

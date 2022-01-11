@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificacion de personas</h3>
+                                <h3 class="card-title">Formulario de modificación de personas</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -21,7 +21,7 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_persona">Cedula de la persona(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_persona">Cédula de la persona(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_persona" id="id_persona" class="form-control" hidden>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
@@ -31,7 +31,7 @@
                                                             <option value="E">E</option>
                                                         </select>
                                                     </div>
-                                                    <input type="number" name="cedula_persona" id="cedula_persona" placeholder="Ingrese la cedula o rif" class="form-control" readonly>
+                                                    <input type="number" name="cedula_persona" id="cedula_persona" placeholder="Ingrese la cédula o rif" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -58,13 +58,13 @@
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="telefono_movil_persona">Telefono movil(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="telefono_movil_persona">Teléfono movil(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="telefono_movil_persona" id="telefono_movil_persona" placeholder="Ingrese su telefono movil" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" inputmode="text">
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="telefono_casa_persona">Telefono de casa</label>
+                                                <label for="telefono_casa_persona">Teléfono de casa</label>
                                                 <input type="text" name="telefono_casa_persona" id="telefono_casa_persona" placeholder="Ingrese su telefono de casa" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" inputmode="text">
                                             </div>
                                         </div>
@@ -85,7 +85,7 @@
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="if_user">Esta persona tendra usuario?(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="if_user">Esta persona tendrá usuario?(<span class="text-danger text-md">*</span>)</label>
                                                 <div class="row">
                                                     <div class="form-check mx-3">
                                                         <input type="radio" name="if_user" id="if_user" value="1" class="form-check-input">
@@ -111,7 +111,7 @@
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="direccion_persona">Direccion de la persona(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="direccion_persona">Dirección de la persona(<span class="text-danger text-md">*</span>)</label>
                                                 <textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la direcion de la persona"></textarea>
                                             </div>
                                         </div>
@@ -212,7 +212,7 @@
                 required:"Seleccione el tipo de persona",
             },
             cedula_persona:{
-                required:"La cedula es requerida",
+                required:"La cédula es requerida",
                 minlength: "Minomo de 7 caracteres",
                 maxlength: "Maximo de 9 caracteres",
                 number: "Solo se permiten numeros",
@@ -233,10 +233,10 @@
                 minlength: "Minimo de 11 caracteres numericos",
             },
             if_proveedor:{
-                required:"Seleccione una opcion",
+                required:"Seleccione una opción",
             },
             if_user:{
-                required:"Seleccione una opcion",
+                required:"Seleccione una opción",
             },
             correo_persona:{
                 required:"Este campo no puede estar vacio",
@@ -250,7 +250,7 @@
                 maxlength: "Maximo de 120 caracteres",
             },
             status_persona:{
-                required:"Seleccione una opcion",
+                required:"Seleccione una opción",
             }
         },
         errorElement: "span",

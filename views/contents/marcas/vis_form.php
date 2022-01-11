@@ -43,7 +43,7 @@
                                             </div>
                                             <div class="form-check">
                                                 <input type="radio" name="status_marca" id="status_marca" value="0" class="form-check-input" disabled>
-                                                <label for="status_marca" class="form-check-label">Innactivo</label>
+                                                <label for="status_marca" class="form-check-label">Inactivo</label>
                                             </div>
                                         </div>
                                     </div>

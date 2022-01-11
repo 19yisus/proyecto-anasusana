@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificacion de grupos</h3>
+                                <h3 class="card-title">Formulario de modificación de grupos</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -21,7 +21,7 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_grupo">Id del grupo(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_grupo">código del grupo(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_grupo" id="id_grupo" class="form-control" readonly>
                                             </div>
                                         </div>
@@ -80,18 +80,12 @@
             nom_grupo:{
                 required: true,
                 minlength: 3,
-            },
-            status_grupo:{
-                required: true,
             }
         },
         messages:{
             nom_grupo:{
                 required: "Este campo no puede estar vacio",
                 minlength: "Debe de contener al menos 3 caracteres",
-            },
-            status_grupo:{
-                required: "Este campo no puede estar vacio",
             }
         },
         errorElement: "span",

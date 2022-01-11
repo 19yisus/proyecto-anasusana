@@ -32,8 +32,8 @@
             $sql = "UPDATE marca SET nom_marca = '$this->nom_marca' WHERE id_marca = $this->id_marca ;";
             $this->Query($sql);
             
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Disable(){
@@ -46,8 +46,8 @@
                 $sql = "UPDATE marca SET status_marca = $this->status_marca WHERE id_marca = $this->id_marca ;";
                 $this->Query($sql);
 
-                if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-                else return ["code" => "error", "message" => "Operacion Fallida"];
+                if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+                else return ["code" => "error", "message" => "Operación Fallida"];
             }            
         }
 
@@ -55,8 +55,8 @@
             $sql = "DELETE FROM marca WHERE id_marca = $this->id_marca AND status_marca = '0' ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Get_todos_marcas($status = ''){

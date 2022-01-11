@@ -14,7 +14,7 @@
                     <div class="col-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Productos para esta transaccion</h3>
+                                <h3 class="card-title">Productos para esta transacción</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -24,8 +24,8 @@
                                         <div class="col-4">
                                             <div class="form-group d-block">
                                                 <label for="id_product">Datos generales del producto(<span class="text-danger text-md">*</span>)</label>
-                                                <!-- special_select2 lo dejo aca por si acaso -->
-                                                <select name="id_product" v-model="productos[index].code" value="" id="" class="custom-select">
+                                                <!--  lo dejo aca por si acaso -->
+                                                <select name="id_product" v-model="productos[index].code" value="" id="product" class="custom-select" v-on:change="ConsultarName(index)">
                                                     <option value="">Seleccione un producto</option>
                                                     <?php foreach($productos as $item){?>
                                                     <option value="<?php echo $item['id_product'];?>"><?php echo $item['nom_product'] ." - ". $item['nom_marca'] .' - '.$item['valor_product'].$item['med_product']; ?></option>
@@ -36,7 +36,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="number" name="cant_product" min="1" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control">
+                                                <input type="number" name="cant_product" min="1" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
                                             </div>
                                         </div>
                                         <div class="col-2">

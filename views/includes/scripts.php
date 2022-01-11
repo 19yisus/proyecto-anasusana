@@ -1,28 +1,7 @@
 <!-- jQuery -->
 <script src="<?php echo constant("URL");?>views/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<!-- <script src="<?php //echo constant("URL");?>views/plugins/jquery-ui/jquery-ui.min.js"></script> -->
-<!-- Bootstrap 4 -->
 <script src="<?php echo constant("URL");?>views/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<!-- <script src="<?php //echo constant("URL");?>views/plugins/chart.js/Chart.min.js"></script> -->
-<!-- Sparkline -->
-<!-- <script src="<?php //echo constant("URL");?>views/plugins/sparklines/sparkline.js"></script> -->
-<!-- jQuery Knob Chart -->
-<!-- <script src="<?php //echo constant("URL");?>views/plugins/jquery-knob/jquery.knob.min.js"></script> -->
-<!-- Tempusdominus Bootstrap 4 -->
-<!-- <script src="<?php //echo constant("URL");?>views/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script> -->
-<!-- Summernote -->
-<!-- <script src="<?php //echo constant("URL");?>views/plugins/summernote/summernote-bs4.min.js"></script> -->
-<!-- overlayScrollbars -->
-<!-- <script src="<?php //echo constant("URL");?>views/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script> -->
-<!-- AdminLTE App -->
 <script src="<?php echo constant("URL");?>views/dist/js/adminlte.js"></script>
-<!-- AdminLTE for demo purposes -->
-<!-- <script src="<?php //echo constant("URL");?>views/dist/js/demo.js"></script> -->
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- <script src="<?php //echo constant("URL");?>views/dist/js/pages/dashboard.js"></script> -->
-<!-- jquery-validation -->
 <script src="<?php echo constant("URL");?>views/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?php echo constant("URL");?>views/plugins/jquery-validation/additional-methods.min.js"></script>
 <!-- DataTables  & Plugins -->
@@ -39,7 +18,7 @@
 <script src="<?php echo constant("URL");?>views/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?php echo constant("URL");?>views/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- Select2 -->
-<script src="<?php echo constant("URL");?>views/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?php echo constant("URL");?>views/plugins/select2/js/select2.min.js"></script>
 <!-- Moment -->
 <script src="<?php echo constant("URL");?>views/plugins/moment/moment.min.js"></script>
 <!-- InputMask -->
@@ -51,6 +30,8 @@
 <!-- Vuejs -->
 <script src="<?php echo constant("URL");?>views/js/vue.min.js"></script>
 <script>
+    $(document).ready( () => $(".special_select2").select2({ width: "resolve"}) );
+    
     const FreshCatalogo = () => $(`#dataTable`).DataTable().ajax.reload(null, false); 
     
     const Toast = Swal.mixin({
@@ -62,9 +43,9 @@
 
     const Confirmar = async () => {
         return await Swal.fire({
-            title: "Estas seguro de realizar esta operacion?",
-            text: "Confirma esta operacion",
-            icon: "warning",
+            title: "Estas seguro de realizar esta operación?",
+            text: "Confirma esta operación",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",

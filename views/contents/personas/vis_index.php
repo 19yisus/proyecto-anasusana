@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Catalogo de Personas";
+        $this->titleContent = "Catálogo de Personas";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
       ?>
@@ -18,18 +18,18 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catalogo de personas</h3>
+                    <h3 class="card-title">Catálogo de personas</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Cedula</th>
+                          <th>Cédula</th>
                           <th>Nombre y Apellido</th>
                           <th>Es proveedor?</th>
                           <th>Estado</th>
-                          <th>Creacion</th>
+                          <th>Creación</th>
                           <th>Opciones</th>
                         </tr>
                       </thead>

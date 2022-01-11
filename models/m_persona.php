@@ -54,8 +54,8 @@
                 if_proveedor = '$this->if_proveedor', if_user = '$this->if_user' WHERE id_person = $this->id_persona ;";
                 $this->Query($sql);
                 
-                if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-                else return ["code" => "error", "message" => "Operacion Fallida"];
+                if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+                else return ["code" => "error", "message" => "Operación Fallida"];
             }
         }
 
@@ -64,8 +64,8 @@
             $sql = "UPDATE personas SET status_person = $this->status_persona WHERE id_person = $this->id_persona ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];       
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];       
         }
 
         public function Delete(){
@@ -78,8 +78,8 @@
                 $sql = "DELETE FROM personas WHERE id_person = $this->id_persona AND status_person = '0' ;";
                 $this->Query($sql);
 
-                if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-                else return ["code" => "error", "message" => "Operacion Fallida"];
+                if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+                else return ["code" => "error", "message" => "Operación Fallida"];
             }
         }
 
@@ -97,6 +97,13 @@
 
         public function Get_proveedor(){
             $sql = "SELECT * FROM personas WHERE if_proveedor = '1' AND status_person = '1' ;";
+            $results = $this->Query($sql);
+            return $this->Get_todos_array($results);
+        }
+
+        public function Get_Personas(){
+            // NO PROVEDORES
+            $sql = "SELECT * FROM personas WHERE status_person = '1' AND if_proveedor = '0' AND tipo_person = 'V' ;";
             $results = $this->Query($sql);
             return $this->Get_todos_array($results);
         }

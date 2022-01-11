@@ -1,3 +1,8 @@
+<?php 
+    require_once("./models/m_persona.php");
+    $model_person = new m_persona();
+    $person = $model_person->Get_Personas();
+?>
 <div class="modal fade" id="modal-lg">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -12,7 +17,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificacion de comedor</h3>
+                                <h3 class="card-title">Formulario de modificación de comedor</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -21,7 +26,7 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_comedor">Codigo del comedor(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_comedor">Código del comedor(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_comedor" id="id_comedor" class="form-control" readonly>
                                             </div>
                                         </div>
@@ -29,6 +34,23 @@
                                             <div class="form-group">
                                                 <label for="nom_comedor">Nombre del comedor(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="nom_comedor" id="nom_comedor" placeholder="Ingrese el nombre del comedor" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="encargado_comedor">Selecione al encargado(<span class="text-danger text-md">*</span>)</label>
+                                                <select name="encargado_comedor" id="encargado_comedor" class="custom-select">
+                                                    <option value="">Seleccione una persona</option>
+                                                    <?php foreach($person as $persona){?>
+                                                    <option value="<?php echo $persona['id_person'];?>"><?php echo $persona['nom_person'];?></option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="direccion_comedor">Dirección del comedor(<span class="text-danger text-md">*</span>)</label>
+                                                <textarea name="direccion_comedor" class="form-control" maxlength="120" id="direccion_comedor" cols="30" placeholder="Ingrese la direccion del comedor" rows="2"></textarea>                                            
                                             </div>
                                         </div>
                                     </div>
@@ -81,8 +103,13 @@
                 required: true,
                 minlength: 3,
             },
-            status_comedor:{
+            encargado_comedor:{
                 required: true,
+            },
+            direccion_comedor:{
+                required: true,
+                minlength: 5,
+                maxlength: 120,
             }
         },
         messages:{
@@ -90,8 +117,13 @@
                 required: "Este campo no puede estar vacio",
                 minlength: "Debe de contener al menos 3 caracteres",
             },
-            status_comedor:{
-                required: "Este campo no puede estar vacio",
+            encargado_comedor:{
+                required: "Debes de seleccionar al encargado del comedor",
+            },
+            direccion_comedor:{
+                required: "La dirección del comedor es requerida",
+                minlength: "Minimo de 5 letras",
+                maxlength: "Maximo de 120 letras",
             }
         },
         errorElement: "span",

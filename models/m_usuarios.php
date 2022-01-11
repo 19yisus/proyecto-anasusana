@@ -19,8 +19,8 @@
             $sql = "UPDATE usuarios SET id_rol = '$this->rol_user' WHERE id_user = $this->id_user ;";
             $this->Query($sql);
             
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Disable(){
@@ -31,16 +31,16 @@
             $sql = "UPDATE usuarios SET status_user = $this->status_user WHERE id_user = $this->id_user ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         // public function Delete(){
         //     $sql = "DELETE FROM grupo WHERE id_user = $this->id_user AND status_user = '0' ;";
         //     $this->Query($sql);
 
-        //     if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-        //     else return ["code" => "error", "message" => "Operacion Fallida"];
+        //     if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+        //     else return ["code" => "error", "message" => "Operación Fallida"];
         // }
 
         public function Get_todos_users(){

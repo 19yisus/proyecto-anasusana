@@ -41,6 +41,7 @@
           $_SESSION['cedula'] = $datos['cedula_person'];
           $_SESSION['username'] = $datos['nom_person'];
           $_SESSION['permisos'] = $datos['nivel_permisos_rol'];
+          $_SESSION['nom_rol'] = $datos['nom_rol'];
           
           return [true,'msg/01AUTH'];
         }else return [false,'err/07AUTH'];
@@ -139,7 +140,7 @@
         'next' => 1,
         'message' => [
           'code' => 'error',
-          'msg' => "Su cedula no se encuentra registrada",
+          'msg' => "Su cédula no se encuentra registrada",
         ]
       ];      
     }

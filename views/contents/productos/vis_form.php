@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Formulario de registros de alimentos";
+        $this->titleContent = "Formulario de registros de productos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -94,7 +94,7 @@
                                             </div>
                                             <div class="form-check">
                                                 <input type="radio" name="status_producto" id="status_producto" value="0" class="form-check-input" disabled>
-                                                <label for="status_producto" class="form-check-label">Innactivo</label>
+                                                <label for="status_producto" class="form-check-label">Inactivo</label>
                                             </div>
                                         </div>
                                     </div>
@@ -158,17 +158,17 @@
                 minlength: "Debe de contener al menos 3 caracteres",
             },
             med_producto:{
-                required: "Debe de seleccionar una opcion",
+                required: "Debe de seleccionar una opción",
             },
             valor_producto:{
                 required: "Este campo no puede estar vacio",
                 number: "Solo se aceptan numeros"
             },
             grupo_id_producto:{
-                required: "Debe de seleccionar una opcion"
+                required: "Debe de seleccionar una opción"
             },
             marca_id_producto:{
-                required: "Debe de seleccionar una opcion"
+                required: "Debe de seleccionar una opción"
             }
         },
         errorElement: "span",

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-12-2021 a las 20:11:11
+-- Tiempo de generación: 09-01-2022 a las 22:08:33
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -32,9 +32,18 @@ USE `proyecto_iglesia`;
 CREATE TABLE `comedor` (
   `id_comedor` int(11) NOT NULL,
   `nom_comedor` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  `encargado_comedor` int(11) NOT NULL,
+  `direccion_comedor` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
   `status_comedor` tinyint(4) NOT NULL,
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `comedor`
+--
+
+INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `encargado_comedor`, `direccion_comedor`, `status_comedor`, `created_comedor`) VALUES
+(1, 'COMEDOR NUMERO 12', 3, 'NUEVA DIRECCION', 1, '2021-12-21 17:12:58');
 
 -- --------------------------------------------------------
 
@@ -46,7 +55,8 @@ CREATE TABLE `detalle_inventario` (
   `product_id_ope` int(11) NOT NULL,
   `invent_id_ope` char(10) COLLATE utf8_spanish_ci NOT NULL,
   `fecha_vencimiento_ope` datetime DEFAULT NULL,
-  `precio_product_ope` double DEFAULT NULL
+  `precio_product_ope` double DEFAULT NULL,
+  `detalle_cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -61,6 +71,14 @@ CREATE TABLE `grupo` (
   `status_grupo` tinyint(4) NOT NULL,
   `created_grupo` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `grupo`
+--
+
+INSERT INTO `grupo` (`id_grupo`, `nom_grupo`, `status_grupo`, `created_grupo`) VALUES
+(1, 'LACTEOS', 1, '2021-12-14 17:00:39'),
+(2, 'HARINAS', 1, '2021-12-14 21:03:47');
 
 -- --------------------------------------------------------
 
@@ -77,6 +95,7 @@ CREATE TABLE `inventario` (
   `type_operacion_invent` enum('E','S') COLLATE utf8_spanish_ci NOT NULL,
   `concept_invent` enum('C','D','O','V','R') COLLATE utf8_spanish_ci DEFAULT NULL,
   `person_id_invent` int(11) DEFAULT NULL,
+  `recibe_person_id_invent` int(11) DEFAULT NULL,
   `comedor_id_invent` int(11) NOT NULL,
   `user_id_invent` int(11) NOT NULL,
   `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
@@ -94,6 +113,13 @@ CREATE TABLE `marca` (
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
+(1, 'POLAR', 1, '2021-12-14 20:59:32');
 
 -- --------------------------------------------------------
 
@@ -124,7 +150,10 @@ CREATE TABLE `personas` (
 INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person`, `sexo_person`, `telefono_movil_person`, `telefono_casa_person`, `direccion_person`, `correo_person`, `if_proveedor`, `if_user`, `status_person`, `created_person`) VALUES
 (1, '26587968', 'V', 'ALFREDO MENDEZ', 'M', '0424 5198398', '', 'GASGSDFGSDFGSDFGSDFGSDFGSFGD', 'MENDEZ23_FASDFASD@GMAIL.COM', 1, 1, 1, '2021-11-18 22:38:38'),
 (2, '14887889', 'V', 'ALFONSO MEDINA', 'M', '0424 5589669', '0255 6846698', 'FFASDFASDFASDFASDFASDFASDFASDFASDFASDF', 'ALFONSOMEDINA23@GMAIL.COM', 1, 1, 1, '2021-11-24 09:59:47'),
-(3, '30400100', 'V', 'RONALDO PEREZ', 'M', '0424 5198396', '', 'FASDFASDFASDFASDFASDFASDFASDF', 'FASDFASDFASDFADS@GMAIL.COM', 0, 1, 1, '2021-12-05 10:58:34');
+(3, '30400100', 'V', 'RONALDO PEREZ', 'M', '0424 5198396', '', 'FASDFASDFASDFASDFASDFASDFASDF', 'FASDFASDFASDFADS@GMAIL.COM', 0, 1, 1, '2021-12-05 10:58:34'),
+(4, '27132642', 'V', 'JESUS MORALES', 'M', '0424 5198398', '', 'FASDFADSFADSFASDFASDFASDF', 'FASDFASDFASDF@GMAIL.COM', 1, 1, 1, '2021-12-14 21:56:01'),
+(5, '30400110', 'V', 'CARLOS TORRES', 'M', '0424 5198398', '', 'FASDFASDFASDFASDFASDF', 'FASDFASFASDFA@GMAIL.COM', 0, 1, 1, '2021-12-15 12:53:11'),
+(6, '29540849', 'V', 'JESUS RIVERO', 'F', '0424 4566646', '', 'FASDFASDFASDFASDFASDFASDF', 'FAFASFASDFASDFASDFASFADS@GMAIL.COM', 0, 0, 1, '2022-01-04 18:38:55');
 
 -- --------------------------------------------------------
 
@@ -232,8 +261,11 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_user`, `person_id_user`, `password_user`, `status_user`, `id_rol`, `created_user`, `pregun1_user`, `pregun2_user`, `respuesta1_user`, `respuesta2_user`) VALUES
-(1, 1, '$2y$12$pjpx67b6tIofE81f5S773OSscmB3W6g/A3Iubx5V8uFJk8uN7t5ci', 1, 1, '2021-11-23 02:08:10', 1, 2, 1, 4),
-(2, 3, '$2y$12$AGxghVHoNWTdArAy2NxoKuCRk6B74xAr9Wi.E1MUF3WAdTufZ6VC.', 1, 3, '2021-12-05 11:08:09', 2, 1, 3, 2);
+(1, 1, '$2y$12$tu6ib2eWHywHPEzQyDCjR.7R/Cfc6kb7f2ou8NDXf2Fer94BIQnqS', 1, 1, '2021-11-23 02:08:10', 1, 2, 1, 4),
+(2, 3, '$2y$12$AGxghVHoNWTdArAy2NxoKuCRk6B74xAr9Wi.E1MUF3WAdTufZ6VC.', 1, 2, '2021-12-05 11:08:09', 2, 1, 3, 2),
+(4, 2, '$2y$12$D7e0XgYow5KmL.aQb5akGuOjzJt2/ZzURUPH.YarhL5VlXGwB8U.C', 1, 2, '2021-12-14 21:43:29', 1, 2, 1, 3),
+(5, 4, '$2y$12$si90t.l91IB4HFuaoWnsluU1sLxpu5yvoF5feoZnu2mKiIybgvuB.', 1, 3, '2021-12-14 21:56:41', 1, 2, 1, 4),
+(6, 5, '$2y$12$QZj0K7DWxY84cIGEqUXvE.07GHWe7hiTkfhS2cj9aBvazK1eBJFnC', 1, 2, '2021-12-15 13:11:43', 2, 1, 3, 1);
 
 --
 -- Índices para tablas volcadas
@@ -243,7 +275,8 @@ INSERT INTO `usuarios` (`id_user`, `person_id_user`, `password_user`, `status_us
 -- Indices de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  ADD PRIMARY KEY (`id_comedor`);
+  ADD PRIMARY KEY (`id_comedor`),
+  ADD KEY `encargado_comedor` (`encargado_comedor`);
 
 --
 -- Indices de la tabla `detalle_inventario`
@@ -265,7 +298,8 @@ ALTER TABLE `inventario`
   ADD PRIMARY KEY (`id_invent`),
   ADD KEY `person_id_invent` (`person_id_invent`),
   ADD KEY `comedor_id_invent` (`comedor_id_invent`),
-  ADD KEY `user_id_invent` (`user_id_invent`);
+  ADD KEY `user_id_invent` (`user_id_invent`),
+  ADD KEY `recibe_person_id_invent` (`recibe_person_id_invent`);
 
 --
 -- Indices de la tabla `marca`
@@ -327,25 +361,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_grupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -375,11 +409,17 @@ ALTER TABLE `roles_usuario`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `comedor`
+--
+ALTER TABLE `comedor`
+  ADD CONSTRAINT `encargado_comedor` FOREIGN KEY (`encargado_comedor`) REFERENCES `personas` (`id_person`);
 
 --
 -- Filtros para la tabla `detalle_inventario`
@@ -394,7 +434,8 @@ ALTER TABLE `detalle_inventario`
 ALTER TABLE `inventario`
   ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`person_id_invent`) REFERENCES `personas` (`id_person`),
   ADD CONSTRAINT `inventario_ibfk_2` FOREIGN KEY (`comedor_id_invent`) REFERENCES `comedor` (`id_comedor`),
-  ADD CONSTRAINT `inventario_ibfk_3` FOREIGN KEY (`user_id_invent`) REFERENCES `usuarios` (`id_user`);
+  ADD CONSTRAINT `inventario_ibfk_3` FOREIGN KEY (`user_id_invent`) REFERENCES `usuarios` (`id_user`),
+  ADD CONSTRAINT `persona_quien_recibe` FOREIGN KEY (`recibe_person_id_invent`) REFERENCES `personas` (`id_person`);
 
 --
 -- Filtros para la tabla `productos`

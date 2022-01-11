@@ -11,14 +11,6 @@
             case 'Salida': 
                 fn_Salida();
             break;
-
-            case "Desactivar":
-                fn_Desactivar();
-            break;
-
-            case "Eliminar":
-                fn_Eliminar();
-            break;
         }
     }
 
@@ -72,30 +64,6 @@
         header("Location: ".constant("URL")."salidas/form/$mensage");
     }
 
-    // function fn_Actualizar(){
-    //     $model = new m_entrada_salida();
-    //     $model->setDatos($_POST);
-    //     $result = $model->Update();
-
-    //     print json_encode(["data" => $result]);
-    // }
-
-    // function fn_Desactivar(){
-    //     $model = new m_entrada_salida();
-    //     $model->setDatos(["id_entrada_salida" => $_POST["id_entrada_salida"], "status_entrada_salida" => $_POST["status_entrada_salida"]]);
-    //     $result = $model->Disable();
-
-    //     print json_encode(["data" => $result]);
-    // }
-
-    // function fn_Eliminar(){
-    //     $model = new m_entrada_salida();
-    //     $model->setDatos(["id_entrada_salida" => $_POST['id_entrada_salida']]);
-    //     $result = $model->Delete();
-
-    //     print json_encode(["data" => $result]);
-    // }
-
     function fn_Consultar_todos_entradas(){
         $model = new m_entrada_salida();
         $results = $model->Get_todos_invent("E");
@@ -114,7 +82,6 @@
         $model = new m_entrada_salida();
         $model->setDatos(["id_invent" => $_GET["id_invent"]]);
         $result = $model->Get_Consultar_invent();
-
-        print json_encode(["data" => $result]);
+        echo $result;
     }
 ?>

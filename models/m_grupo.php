@@ -32,8 +32,8 @@
             $sql = "UPDATE grupo SET nom_grupo = '$this->nom_grupo' WHERE id_grupo = $this->id_grupo ;";
             $this->Query($sql);
             
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Disable(){
@@ -45,8 +45,8 @@
             $sql = "UPDATE grupo SET status_grupo = $this->status_grupo WHERE id_grupo = $this->id_grupo ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
             
         }
 
@@ -54,8 +54,8 @@
             $sql = "DELETE FROM grupo WHERE id_grupo = $this->id_grupo AND status_grupo = '0' ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operacion Exitosa"];
-            else return ["code" => "error", "message" => "Operacion Fallida"];
+            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Get_todos_grupos($status = ''){

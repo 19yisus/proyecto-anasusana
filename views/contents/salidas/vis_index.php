@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php 
-        $this->titleContent = "Catalogo de salida de productos";
+        $this->titleContent = "Catálogo de salida de productos";
         
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -19,18 +19,18 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catalogo de salida de productos / Alimentos</h3>
+                    <h3 class="card-title">Catálogo de salida de productos / Alimentos</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Codigo</th>
+                          <th>Código</th>
                           <th>Numero de orden</th>
                           <th>Cantidad de productos</th>
                           <th>Estado</th>
-                          <th>Creacion</th>
+                          <th>Creación</th>
                           <th>Opciones</th>
                         </tr>
                       </thead>
@@ -53,17 +53,22 @@
 <!-- ./wrapper -->
 <?php 
   $this->GetComplement("scripts");
-  require_once("./views/contents/salidas/modal.php");
-  // require_once("./views/contents/salidas/modal2.php");
+  $this->GetComplement("modal_vista"); 
 ?>
 <script>
 
   const PDF = (id) => {
-    alert("Funcion en desarrollo");
+    const form = document.getElementById(`formSecondary-${id}`);
+    form.ope.value = "pdf_salida";
+    $(form).attr('action','<?php echo constant("URL");?>controller/c_pdf.php');
+    form.submit();
   }
 
-  const ListarDatos = (id) => {
-    alert("Funcion en desarrollo");
+  const ListarDatos = async (id) => {
+    await fetch(`<?php echo constant("URL");?>controller/c_entrada_salida.php?ope=Consultar_invent&id_invent=${id}`)
+    .then( response => response.text()).then( data => {
+      $("#body_html").html(data);
+    }).catch( Error => console.error(Error))
   }
 
   $( () => {
@@ -88,9 +93,13 @@
         render: function(data, type, row, meta){
           
           let btn = `
+            <form method="POST" id="formSecondary-${row.id_invent}" target="<?php echo constant("URL");?>controller/c_pdf.php" action="<?php echo constant('URL');?>controller/c_entrada_salida.php">
+              <input type="hidden" name="id_invent" value="${row.id_invent}">
+              <input type="hidden" name="ope">
+            </form>
             <div class="btn-group">
-              <button title="Imprimr pdf" type="button" class="btn btn-sm btn-danger" onclick="PDF(${row.id_invent})"><i class="fas fa-file-pdf"></i></button>
-              <button title="Listar datos" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg-2" onclick="ListarDatos(${row.id_invent})"><i class="fas fa-list"></i></button>
+              <button title="Imprimr pdf" type="button" class="btn btn-sm btn-danger" onclick="PDF('${row.id_invent}')"><i class="fas fa-file-pdf"></i></button>
+              <button title="Listar datos" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg-vista" onclick="ListarDatos('${row.id_invent}')"><i class="fas fa-list"></i></button>
             </div>`;
 
           return btn;

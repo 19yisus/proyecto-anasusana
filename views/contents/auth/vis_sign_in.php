@@ -40,7 +40,7 @@
 				<?php if($status_form == 1){?>
 				<form action="#" method="post">
 					<div class="input-group mb-3">
-						<input type="number" class="form-control" name="cedula" placeholder="Cedula de la persona" required>
+						<input type="number" class="form-control" name="cedula" placeholder="Cédula de la persona" required>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
@@ -57,7 +57,7 @@
 				<form action="<?php echo constant("URL");?>controller/c_auth.php" id="formulario" method="post" class="needs-validation" novalidate>
 					<div class="input-group mb-3">
 						<input type="hidden" name="user_id" value="<?php echo $id;?>">
-						<input type="number" name="cedula" class="form-control" placeholder="Cedula" value="<?php echo $cedula; ?>" readonly>
+						<input type="number" name="cedula" class="form-control" placeholder="Cédula" value="<?php echo $cedula; ?>" readonly>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
@@ -128,7 +128,7 @@
 				</form>
 				<?php }?>
 				<p class="mb-0">
-					<a href="<?php echo constant("URL");?>auth/login" class="text-center">Ya tengo Cuenta</a>
+					<a href="<?php echo constant("URL");?>auth/login" class="text-center">Ya tengo cuenta</a>
 				</p>
 			</div>
 			<!-- /.login-card-body -->
@@ -146,6 +146,9 @@
 			fetch(`<?php echo constant("URL");?>controller/c_auth.php?ope=Get_respuesta&id=${id_pregun}`)
 			.then( response => response.json())
 			.then( datos => {
+
+				$(`${id_element} option[value!='']`).remove();				
+
 				datos.data.forEach( dato => {
 					$(id_element).append(`<option value='${dato.id_respues}'>${dato.des_respues}</option>`)
 				})
@@ -184,8 +187,8 @@
 			messages:{
 				user_id:{
 					required: "Este campo es obligatorio",
-					minlength: "Minimo 7 caracteres numericos para la cedula",
-					maxlength: "Maximo 8 caracteres numericos para la cedula",
+					minlength: "Minimo 7 caracteres numericos para la cédula",
+					maxlength: "Maximo 8 caracteres numericos para la cédula",
 					number: "Solo se aceptan numeros",
 				},
 				password:{
