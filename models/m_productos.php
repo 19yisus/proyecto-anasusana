@@ -65,7 +65,7 @@
             $sqlConsulta = "SELECT * FROM detalle_inventario WHERE product_id_ope = $this->id_producto ;";
             $result = $this->Query($sqlConsulta);
 
-            if($results->num_rows > 0) return ["code" => "error", "message" => "No es posible eliminar este producto"];
+            if($result->num_rows > 0) return ["code" => "error", "message" => "No es posible eliminar este producto, ya que esta registrado en el inventario"];
 
             $sql = "DELETE FROM productos WHERE id_product = $this->id_producto AND status_product = '0' ;";
             $this->Query($sql);

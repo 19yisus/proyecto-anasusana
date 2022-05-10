@@ -3,8 +3,8 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
-        $this->titleContent = "Formulario de registros de productos";
+      <?php
+        $this->titleContent = "Formulario de Registros de Productos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -27,7 +27,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Formulario de registro de productos</h3>
+                            <h3 class="card-title">Formulario de Registro de Productos</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -36,34 +36,34 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label for="nom_producto">Nombre del producto(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="text" name="nom_producto" id="nom_producto" placeholder="Ingrese el nombre del producto" class="form-control">
+                                            <label for="nom_producto">Nombre del Producto(<span class="text-danger text-md">*</span>)</label>
+                                            <input type="text" name="nom_producto" id="nom_producto" placeholder="Ingrese el Nombre del Producto" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="">Unidad de medida(<span class="text-danger text-md">*</span>)</label>
+                                            <label for="">Unidad de Medida(<span class="text-danger text-md">*</span>)</label>
                                             <select name="med_producto" id="med_producto" class="custom-select">
-                                                <option value="">Seleccione una medida</option>
-                                                <option value="KL">Kilo gramos</option>
-                                                <option value="LT">Litros</option>
-                                                <option value="GM">Gramos</option>
+                                                <option value="">Seleccione una Medida</option>
+                                                <option value="KL">Kilo gramos (KL)</option>
+                                                <option value="LT">Litros (L)</option>
+                                                <option value="GM">Gramos (G)</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="">Valor de medida(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="number" name="valor_producto" step="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un valor">
+                                            <label for="">Valor de Medida(<span class="text-danger text-md">*</span>)</label>
+                                            <input type="number" name="valor_producto" step="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un Valor">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="">Grupo del producto(<span class="text-danger text-md">*</span>)</label>
+                                            <label for="">Grupo del Producto(<span class="text-danger text-md">*</span>)</label>
                                             <select name="grupo_id_producto" id="grupo_id_producto" class="custom-select">
-                                                <option value="">Seleccione una medida</option>
+                                                <option value="">Seleccione un Grupo</option>
                                                 <?php
                                                     foreach($grupos as $grupo){
                                                         ?><option value="<?php echo $grupo['id_grupo'];?>"><?php echo $grupo['nom_grupo'];?></option><?php
@@ -74,9 +74,9 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label for="">Marca del producto(<span class="text-danger text-md">*</span>)</label>
+                                            <label for="">Marca del Producto(<span class="text-danger text-md">*</span>)</label>
                                             <select name="marca_id_producto" id="marca_id_producto" class="custom-select">
-                                                <option value="">Seleccione una marca</option>
+                                                <option value="">Seleccione una Marca</option>
                                                 <?php
                                                     foreach($marcas as $marca){
                                                         ?><option value="<?php echo $marca['id_marca'];?>"><?php echo $marca['nom_marca'];?></option><?php
@@ -86,7 +86,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <label for="">Estado del producto(<span class="text-danger text-md">*</span>)</label>
+                                        <label for="">Estado del Producto(<span class="text-danger text-md">*</span>)</label>
                                         <div class="row">
                                             <div class="form-check mx-3">
                                                 <input type="radio" name="status_producto" id="status_producto" value="1" class="form-check-input" readonly checked>
@@ -153,23 +153,23 @@
             }
         },
         messages:{
-            nom_producto:{
-                required: "Este campo no puede estar vacio",
-                minlength: "Debe de contener al menos 3 caracteres",
-            },
-            med_producto:{
-                required: "Debe de seleccionar una opción",
-            },
-            valor_producto:{
-                required: "Este campo no puede estar vacio",
-                number: "Solo se aceptan numeros"
-            },
-            grupo_id_producto:{
-                required: "Debe de seleccionar una opción"
-            },
-            marca_id_producto:{
-                required: "Debe de seleccionar una opción"
-            }
+          nom_producto:{
+              required: "Este Campo NO puede estar Vacio",
+              minlength: "Debe de Contener al menos 3 Caracteres",
+          },
+          med_producto:{
+              required: "Debe de Seleccionar una Opción",
+          },
+          valor_producto:{
+              required: "Este Campo NO puede estar Vacio",
+              number: "Sólo se Aceptan Números"
+          },
+          grupo_id_producto:{
+              required: "Debe de Seleccionar una Opción"
+          },
+          marca_id_producto:{
+              required: "Debe de Seleccionar una Opción"
+          }
         },
         errorElement: "span",
         errorPlacement: function (error, element){

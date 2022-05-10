@@ -15,7 +15,7 @@
 				if($result['status']){
 
 					if($result['view'] == "recuperar_clave") $this->Redirect("auth/login","err/04AUTH");
-					
+
 					$preguntas = $model->Get_Preguntas();
 					$status_form = $result['next'];
 					$cedula = $result['cedula'];
@@ -36,11 +36,11 @@
 		<!-- /.login-logo -->
 		<div class="card">
 			<div class="card-body login-card-body rounded">
-				<p class="login-box-msg">Registro de nuevo Usuario</p>
+				<p class="login-box-msg">Registro de Nuevo Usuario</p>
 				<?php if($status_form == 1){?>
 				<form action="#" method="post">
 					<div class="input-group mb-3">
-						<input type="number" class="form-control" name="cedula" placeholder="Cédula de la persona" required>
+						<input type="number" class="form-control" name="cedula" placeholder="Cédula de la Persona" required>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
@@ -73,7 +73,7 @@
 						</div>
 					</div>
 					<div class="input-group mb-3">
-						<input type="password" name="password2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@#$%^&*_=+-]).{8,20}$" class="form-control" placeholder="Confirmar contraseña">
+						<input type="password" name="password2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@#$%^&*_=+-]).{8,20}$" class="form-control" placeholder="Confirmar Contraseña">
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-lock"></span>
@@ -82,9 +82,9 @@
 					</div>
 
 					<div class="mb-3 form-group">
-						<label for="">Primera pregunta de seguridad</label>
+						<label for="">Primera Pregunta de Seguridad</label>
 						<select name="pregunta1" class="custom-select" id="" onchange="Get_respuestas('#respues_1', this.value)">
-							<option value="">Seleccione una pregunta</option>
+							<option value="">Seleccione una Pregunta</option>
 							<?php foreach($preguntas as $pregunta1){
 								$id_pregun1 = $pregunta1['id_pregun'];
 								?>
@@ -96,14 +96,14 @@
 					<div class="mb-3 form-group">
 						<label for="">Primera Respuesta</label>
 						<select name="respuesta1" class="custom-select" id="respues_1">
-							<option value="">Seleccione una respuesta</option>
+							<option value="">Seleccione una Respuesta</option>
 						</select>
 					</div>
 
 					<div class="mb-3 form-group">
-						<label for="">Segunda pregunta de seguridad</label>
+						<label for="">Segunda Pregunta de Seguridad</label>
 						<select name="pregunta2" id="pregun2" class="custom-select" id="">
-							<option value="">Seleccione una pregunta</option>
+							<option value="">Seleccione una Pregunta</option>
 							<?php foreach($preguntas as $pregunta2){
 								$id_pregun2 = $pregunta2['id_pregun'];
 								?>
@@ -115,7 +115,7 @@
 					<div class="mb-3 form-group">
 						<label for="">Segunda Respuesta</label>
 						<select name="respuesta2" class="custom-select" id="respues_2">
-							<option value="">Seleccione una respuesta</option>
+							<option value="">Seleccione una Respuesta</option>
 						</select>
 					</div>
 
@@ -128,26 +128,26 @@
 				</form>
 				<?php }?>
 				<p class="mb-0">
-					<a href="<?php echo constant("URL");?>auth/login" class="text-center">Ya tengo cuenta</a>
+					<a href="<?php echo constant("URL");?>auth/login" class="text-center">Ya tengo Cuenta</a>
 				</p>
 			</div>
 			<!-- /.login-card-body -->
 		</div>
 	</div>
 	<!-- /.login-box -->
-	<?php 
-		$this->GetComplement("scripts"); 
+	<?php
+		$this->GetComplement("scripts");
 		if(isset($result['message'])) $this->ObjMessage->MensajePersonal($result['message']);
 	?>
 	<script>
 		$("#btn").click( async () =>{ if($("#formulario").valid()){ $("#formulario").submit(); }})
-				
+
 		const Get_respuestas = (id_element, id_pregun) => {
 			fetch(`<?php echo constant("URL");?>controller/c_auth.php?ope=Get_respuesta&id=${id_pregun}`)
 			.then( response => response.json())
 			.then( datos => {
 
-				$(`${id_element} option[value!='']`).remove();				
+				$(`${id_element} option[value!='']`).remove();
 
 				datos.data.forEach( dato => {
 					$(id_element).append(`<option value='${dato.id_respues}'>${dato.des_respues}</option>`)
@@ -159,7 +159,7 @@
 					$(`#pregun2 option[value='${id_pregun}']`).attr("disabled", true);
 
 					Get_respuestas('#respues_2', $('#pregun2').val())
-				}		
+				}
 
 			}).catch( Err => console.error(Err))
 		}
@@ -186,23 +186,23 @@
 			},
 			messages:{
 				user_id:{
-					required: "Este campo es obligatorio",
-					minlength: "Minimo 7 caracteres numericos para la cédula",
-					maxlength: "Maximo 8 caracteres numericos para la cédula",
-					number: "Solo se aceptan numeros",
+					required: "Este campo es Obligatorio",
+					minlength: "Mínimo 7 caracteres Numéricos para la Cédula",
+					maxlength: "Maximo 8 caracteres Numéricos para la Cédula",
+					number: "Sólo se Aceptan Números",
 				},
 				password:{
-					required: "Este campo es obligatorio",
-					minlength: "Minimo de 8 caracteres para ingresa una contraseña",
-					maxlength: "Maximo de 20 caracteres dpara una contraseña",
-					pattern: "Se debe de ingresar una clave mas segura (1 Mayuscula, 1 minuscula, 1 numero y un caracter especial, 8 caracteres minimo)",
+					required: "Este campo es Obligatorio",
+					minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
+					maxlength: "Máximo de 20 caracteres para una Contraseña",
+					pattern: "Se debe de Ingresar una Clave más Segura (1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
 				},
 				password2:{
-					required: "Este campo es obligatorio",
-					minlength: "Minimo de 8 caracteres para ingresa una contraseña",
-					maxlength: "Maximo de 20 caracteres dpara una contraseña",
-					pattern: "Se debe de ingresar una clave mas segura (1 Mayuscula, 1 minuscula, 1 numero y un caracter especial, 8 caracteres minimo)",
-					equalTo: "Las contraseñas ingresadas no conciden"
+					required: "Este campo es Obligatorio",
+					minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
+					maxlength: "Máximo de 20 caracteres para una Contraseña",
+					pattern: "Se debe de Ingresar una Clave más Segura (1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+					equalTo: "Las Contraseñas Ingresadas NO Conciden"
 				}
 			},
 			errorElement: "span",

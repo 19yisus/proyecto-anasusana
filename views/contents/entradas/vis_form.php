@@ -3,8 +3,8 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
 	<div class="wrapper" id="VueApp">
-	  <?php 
-		$this->titleContent = "Registro de entrada de productos";
+	  <?php
+		$this->titleContent = "Registro de Entrada de Productos";
 
 		$this->GetComplement("navbar");
 		$this->GetComplement("sidebar");
@@ -33,7 +33,7 @@
 				<div class="col-md-12">
 					<div class="card card-primary">
 						<div class="card-header">
-							<h3 class="card-title">Formulario de registro de entradas </h3>
+							<h3 class="card-title">Formulario de Registro de Entradas </h3>
 						</div>
 						<!-- /.card-header -->
 						<!-- form start -->
@@ -42,7 +42,7 @@
 								<div class="row">
 									<div class="col-3">
 										<div class="form-group">
-											<label for="id_invent">Numero de operación</label>
+											<label for="id_invent">Número de Operación</label>
 											<input type="text" name="id_invent" id="id_invent" readonly value="<?php echo $NextId_inventario;?>" class="form-control">
 										</div>
 									</div>
@@ -50,7 +50,7 @@
 										<div class="form-group">
 											<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
 											<select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
-												<option value="">Seleccione una opción</option>
+												<option value="">Seleccione una Opción</option>
 												<?php foreach($datosComedor as $comedor){?>
 												<option value="<?php echo $comedor['id_comedor'];?>"><?php echo $comedor['nom_comedor'];?></option>
 												<?php }?>
@@ -60,14 +60,14 @@
 									<div class="col-3">
 										<div class="form-group">
 											<label for="orden_invent">N° Orden(<span class="text-danger text-md">*</span>)</label>
-											<input type="text" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el numero de orden" maxlength="20">
+											<input type="text" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el Número de Orden" maxlength="20">
 										</div>
 									</div>
 									<div class="col-3">
 										<div class="form-group">
-											<label for="person_id_invent">Selecione el proveedor(<span class="text-danger text-md">*</span>)</label>
+											<label for="person_id_invent">Selecione el Proveedor(<span class="text-danger text-md">*</span>)</label>
 											<select name="person_id_invent" id="person_id_invent" class="custom-select special_select2">
-												<option value="">Seleccione un proveedor</option>
+												<option value="">Seleccione un Proveedor</option>
 												<?php foreach($person as $persona){?>
 												<option value="<?php echo $persona['id_person'];?>"><?php echo $persona['tipo_person']."-".$persona['cedula_person']." ".$persona['nom_person'];?></option>
 												<?php }?>
@@ -78,9 +78,9 @@
 								<div class="row">
 									<div class="col-3">
 										<div class="form-group">
-											<label for="concept_invent">Concepto de operación(<span class="text-danger text-md">*</span>)</label>
+											<label for="concept_invent">Concepto de Operación(<span class="text-danger text-md">*</span>)</label>
 											<select name="concept_invent" id="concept_invent" class="custom-select">
-												<option value="">Seleccione un proveedor</option>
+												<option value="">Seleccione un Proveedor</option>
 												<option value="C">Compra</option>
 												<option value="D">Donación</option>
 											</select>
@@ -88,7 +88,7 @@
 									</div>
 									<div class="col-3">
 										<div class="form-group">
-											<label for="fecha_invent">Fecha de la operación(<span class="text-danger text-md">*</span>)</label>
+											<label for="fecha_invent">Fecha de la Operación(<span class="text-danger text-md">*</span>)</label>
 											<input type="datetime-local" name="fecha_invent" id="" class="form-control" max="<?php echo $this->thisDateMoreOneHour();?>" value="<?php echo $this->DateNow("Y-m-d H:i");?>" >
 										</div>
 									</div>
@@ -96,7 +96,7 @@
 										<div class="form-group">
 											<input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
 											<label for="observacion_invent">Observación(<span class="text-danger text-md">*</span>)</label>
-											<textarea name="observacion_invent" minlength="4" maxlength="120" id="" cols="30" rows="2" class="form-control" placeholder="Ingrese una observacion para esta opearcion"></textarea>
+											<textarea name="observacion_invent" minlength="4" maxlength="120" id="" cols="30" rows="2" class="form-control" placeholder="Ingrese una Observación para esta operación"></textarea>
 										</div>
 									</div>
 									<div class="d-none" v-for="(item, index) in productos" id="lista_alimentos" :key="index">
@@ -110,7 +110,7 @@
 									<div class="col-12">
 									  <div class="card card-dark">
 											<div class="card-header">
-												<h4 class="card-title">Productos en esta operación</h4>
+												<h4 class="card-title">Productos en esta Operación</h4>
 											</div>
 											<div class="card-body">
 												<table id="dataTable" class="table table-bordered table-striped">
@@ -120,7 +120,7 @@
 															<th>Descripción</th>
 															<th>Cantidad</th>
 															<th>Precio</th>
-															<th>Fecha</th>
+															<th>Fecha de Vencimiento</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -143,10 +143,10 @@
 								<input type="hidden" name="ope">
 								<button type="button" id="btn" onclick="ope.value = this.value" value="Entrada" class="btn btn-primary">
 									<i class="fas fa-save"></i>
-									Registrar entrada
+									Registrar Entrada
 								</button>
 								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg">
-									<i class="fas fa-plus-square"></i> Agregar productos</button>
+									<i class="fas fa-plus-square"></i> Agregar Productos</button>
 							</div>
 						</form>
 					</div>
@@ -161,7 +161,7 @@
 		<!-- /.content -->
 	  </div>
 	  <!-- /.content-wrapper -->
-	  <?php 
+	  <?php
 		$this->GetComplement("footer");
 		$this->GetComplement("scripts");
 		require_once("./views/contents/entradas/modal.php");
@@ -191,7 +191,7 @@
 						icon: "error",
 						title: "Completa los campos antes de agregar otro producto"
 					});
-				}               
+				}
 			},
 			Disminuir: function(codigo){
 				this.productos[codigo].cantidad = parseInt(this.productos[codigo].cantidad);
@@ -226,10 +226,10 @@
 			let status_inputs = true;
 			document.querySelectorAll(".id_input").forEach( item =>{ if(item.value == "") status_inputs = false;});
 			document.querySelectorAll(".cant_input").forEach( item =>{ if(parseInt(item.value) == 0) status_inputs = false;});
-			
-			if(!status_inputs) return Toast.fire({icon: "error",title: "Los datos de los productos estan incompletos"});
 
-			if($("#cant_ope").val() == 0) return Toast.fire({icon: "error",title: "Debes de ingresar productos para realizar esta operacion"});
+			if(!status_inputs) return Toast.fire({icon: "error",title: "Los datos de los Productos están Incompletos"});
+
+			if($("#cant_ope").val() == 0) return Toast.fire({icon: "error",title: "Debes de Ingresar Productos para realizar esta Operación"});
 			let res = await Confirmar();
 			if(res) $("#formulario").submit();
 		}
@@ -262,30 +262,30 @@
 		},
 		messages:{
 			comedor_id_invent:{
-				required: "Debe seleccionar un comedor",
+				required: "Debe Seleccionar un Comedor",
 			},
 			orden_invent:{
-				required: "El numero de orden es requerido",
-				number: "Solo se aceptan numeros",
-				maxlength:"Maximo 20 caracteres numericos",
+				required: "El Número de orden es Requerido",
+				number: "Sólo se aceptan Números",
+				maxlength:"Máximo 20 caracteres numéricos",
 			},
 			person_id_invent:{
-				required: "Debe seleccionar un proveedor",
+				required: "Debe seleccionar un Proveedor",
 			},
 			recibe_person_id_invent: {
-				required: "Debe seleccionar quien recibe los productos",
+				required: "Debe Seleccionar quién recibe los Productos",
 			},
 			observacion_invent:{
-				required: "La observacion para esta operacion es necesaria",
-				minlength: "La observacion puede ser de minimo 4 caracteres",
-				maxlength: "Maximo 120 caracteres",
+				required: "La observación para ésta operación es Necesaria",
+				minlength: "La Observación puede ser de mínimo 4 caracteres",
+				maxlength: "Máximo 120 caracteres",
 			},
 			concept_invent:{
-			  required: "Seleccione el concepto para esta operacion",
+			  required: "Seleccione el Concepto para ésta Operación",
 			},
 			fecha_invent:{
-				required: "La fecha de esta operacion es necesaria",
-				max: "Esta fecha no puede superar la fecha y hora actual",
+				required: "La Fecha de ésta Operación es Necesaria",
+				max: "Ésta fecha no puede superar la Fecha y Hora actual",
 			}
 		},
 		errorElement: "span",

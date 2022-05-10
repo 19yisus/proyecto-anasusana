@@ -103,7 +103,7 @@
 
         public function Get_Personas(){
             // NO PROVEDORES
-            $sql = "SELECT * FROM personas WHERE status_person = '1' AND if_proveedor = '0' AND tipo_person = 'V' ;";
+            $sql = "SELECT * FROM personas WHERE status_person = '1' AND tipo_person = 'V' ;";
             $results = $this->Query($sql);
             return $this->Get_todos_array($results);
         }

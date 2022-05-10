@@ -1,4 +1,4 @@
-<?php 
+<?php
   require_once("./models/m_usuarios.php");
   $model = new m_usuarios();
   $roles = $model->Get_roles();
@@ -17,7 +17,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificación de usuarios</h3>
+                                <h3 class="card-title">Formulario de Modificación de Usuarios</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -26,15 +26,15 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_user">código del usuario(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_user">Código del Usuario(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_user" id="id_user" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="nom_user">Rol de este usuario(<span class="text-danger text-md">*</span>)</label>                                                
+                                                <label for="nom_user">Rol de Usuario(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="rol_user" id="rol_user" class="custom-select">
-                                                  <option value="">Seleccione una opción</option>
+                                                  <option value="">Seleccione una Opción</option>
                                                   <?php foreach($roles as $rol){?>
                                                     <option value="<?php echo $rol['id'];?>"><?php echo $rol['nom_rol'];?></option>
                                                   <?php }?>
@@ -76,7 +76,7 @@
                 FreshCatalogo();
                 document.formulario.reset();
                 $("#modal-lg").modal("hide");
-                
+
                 Toast.fire({
                   icon: `${res.data.code}`,
                   title: `${res.data.message}`
@@ -93,7 +93,7 @@
         },
         messages:{
           rol_user:{
-            required: "Debe de seleccionar un rol para el usuario",
+            required: "Debe de Seleccionar un Rol para el Usuario",
           }
         },
         errorElement: "span",

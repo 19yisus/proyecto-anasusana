@@ -3,7 +3,7 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
+      <?php
         $this->titleContent = "Catálogo de Personas";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -18,7 +18,7 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catálogo de personas</h3>
+                    <h3 class="card-title">Catálogo de Personas</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -27,7 +27,7 @@
                         <tr>
                           <th>Cédula</th>
                           <th>Nombre y Apellido</th>
-                          <th>Es proveedor?</th>
+                          <th>¿Es Proveedor?</th>
                           <th>Estado</th>
                           <th>Creación</th>
                           <th>Opciones</th>
@@ -49,7 +49,7 @@
       <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
-<?php 
+<?php
   $this->GetComplement("scripts");
   require_once("./views/contents/personas/modal.php");
 ?>
@@ -114,13 +114,13 @@
         {data: "nom_person"},
         {data: "if_proveedor",
         render: function(data){
-          return (data === "1") ? "Si es proveedor" : "No es proveedor";
+          return (data === "1") ? "Sí es Proveedor" : "No es Proveedor";
         }},
-        {data: "status_person", 
+        {data: "status_person",
         render: function(data){
           return (data == "1") ? "Activo" : "Inactivo";
         }},
-        {data: "created_person", 
+        {data: "created_person",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},
@@ -150,7 +150,7 @@
             <?php if(isset($_SESSION['permisos'])){?>
               if(<?php echo $_SESSION['permisos'];?> == 1) btn = ``;
             <?php }?>
-          
+
           return btn;
         }}
       ],

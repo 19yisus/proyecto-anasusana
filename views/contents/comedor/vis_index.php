@@ -3,7 +3,7 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
+      <?php
         $this->titleContent = "Catálogo Comedor";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -19,7 +19,7 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catalogo de Comedores</h3>
+                    <h3 class="card-title">Catálogo de Comedores</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -28,7 +28,7 @@
                         <tr>
                           <th>Código</th>
                           <th>Nombre</th>
-                          <th>Cédula del encargado</th>
+                          <th>Cédula del Encargado</th>
                           <th>Encargado</th>
                           <th>Estado</th>
                           <th>Creación</th>
@@ -52,7 +52,7 @@
       <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
-<?php 
+<?php
   $this->GetComplement("scripts");
   require_once("./views/contents/comedor/modal.php");
 ?>
@@ -109,11 +109,11 @@
           return row.tipo_person+'-'+row.cedula_person
         }},
         {data: "nom_person"},
-        {data: "status_comedor", 
+        {data: "status_comedor",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_comedor", 
+        {data: "created_comedor",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},
@@ -139,7 +139,7 @@
             <div class="btn-group">
               <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_comedor})"><i class="fas fa-edit"></i></button>${btn_secondary}
             </div>`;
-          
+
             <?php if(isset($_SESSION['permisos'])){?>
               if(<?php echo $_SESSION['permisos'];?> == 1) btn = ``;
             <?php }?>

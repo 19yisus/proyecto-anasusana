@@ -3,7 +3,7 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
+      <?php
         $this->titleContent = "Catálogo Marcas";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -19,7 +19,7 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catálogo de marcas</h3>
+                    <h3 class="card-title">Catálogo de Marcas</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -50,7 +50,7 @@
       <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
-<?php 
+<?php
   $this->GetComplement("scripts");
   require_once("./views/contents/marcas/modal.php");
 ?>
@@ -100,11 +100,11 @@
       columns: [
         {data: "id_marca"},
         {data: "nom_marca"},
-        {data: "status_marca", 
+        {data: "status_marca",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_marca", 
+        {data: "created_marca",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},
@@ -130,7 +130,7 @@
             <div class="btn-group">
               <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_marca})"><i class="fas fa-edit"></i></button>${btn_secondary}
             </div>`;
-          
+
             <?php if(isset($_SESSION['permisos'])){?>
               if(<?php echo $_SESSION['permisos'];?> == 1) btn = ``;
             <?php }?>

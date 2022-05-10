@@ -9,10 +9,10 @@
     <!-- /.login-logo -->
     <div class="card align-middle">
       <div class="card-body login-card-body rounded">
-        <p class="login-box-msg">Inicio de sesión</p>
+        <p class="login-box-msg">Inicio de Sesión</p>
         <form action="<?php echo constant("URL");?>controller/c_auth.php" method="post" id="formulario" class="needs-validation" novalidate>
           <div class="input-group mb-3">
-            <input type="number" class="form-control" name="cedula" placeholder="Cédula de la persona">
+            <input type="number" class="form-control" name="cedula" placeholder="Cédula de la Persona">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -30,16 +30,16 @@
           <div class="row mb-2">
             <div class="col-12">
               <input type="hidden" name="ope">
-              <button type="button" onclick="ope.value = this.value" value="Login" class="btn btn-warning btn-block" id="btn">Login</button>
+              <button type="button" onclick="ope.value = this.value" value="Login" class="btn btn-warning btn-block" id="btn">Ingresar</button>
             </div>
           </div>
         </form>
 
         <p class="mb-1">
-          <a href="<?php echo constant("URL");?>auth/recuperar_clave">Olvidé mi contraseña</a>
+          <a href="<?php echo constant("URL");?>auth/recuperar_clave">Olvidé mi Contraseña</a>
         </p>
         <p class="mb-0">
-          <a href="<?php echo constant("URL");?>auth/sign_in" class="text-center">Registro de nuevo usuario</a>
+          <a href="<?php echo constant("URL");?>auth/sign_in" class="text-center">Registro de Nuevo Usuario</a>
         </p>
       </div>
     </div>
@@ -64,16 +64,16 @@
       },
         messages:{
           user_id:{
-          required: "Este campo es obligatorio",
-          minlength: "Minimo 7 caracteres numericos para la cedula",
-          maxlength: "Maximo 8 caracteres numericos para la cedula",
-          number: "Solo se aceptan numeros",
+          required: "Este Campo es Obligatorio",
+          minlength: "Mínimo 7 caracteres numéricos para la cédula",
+          maxlength: "Máximo 8 caracteres numéricos para la cédula",
+          number: "Sólo se Aceptan Números",
         },
         password:{
-          required: "Este campo es obligatorio",
-          minlength: "Minimo de 8 caracteres para ingresa una contraseña",
-          maxlength: "Maximo de 50 caracteres dpara una contraseña",
-          pattern: "Se debe de ingresar una clave mas segura (1 Mayuscula, 1 minuscula, 1 numero y un caracter especial, 8 caracteres minimo)",
+          required: "Este Campo es Obligatorio",
+          minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
+          maxlength: "Máximo de 50 caracteres para una Contraseña",
+          pattern: "Se debe de ingresar una Clave mas segura (1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo)",
         }
         },
         errorElement: "span",

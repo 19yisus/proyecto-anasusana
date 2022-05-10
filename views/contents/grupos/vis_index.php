@@ -3,13 +3,11 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
-        $this->titleContent = "Catálogo de grupos";
+      <?php
+        $this->titleContent = "Catálogo de Grupos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
-        require_once("./models/m_db.php");
-        
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -21,14 +19,14 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catálogo de grupos</h3>
+                    <h3 class="card-title">Catálogo de Grupos</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>código</th>
+                          <th>Código</th>
                           <th>Nombre</th>
                           <th>Estado</th>
                           <th>Creación</th>
@@ -51,7 +49,7 @@
       <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
-<?php 
+<?php
   $this->GetComplement("scripts");
   require_once("./views/contents/grupos/modal.php");
 ?>
@@ -101,11 +99,11 @@
       columns: [
         {data: "id_grupo"},
         {data: "nom_grupo"},
-        {data: "status_grupo", 
+        {data: "status_grupo",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_grupo", 
+        {data: "created_grupo",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},

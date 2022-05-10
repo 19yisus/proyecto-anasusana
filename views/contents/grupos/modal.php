@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificación de grupos</h3>
+                                <h3 class="card-title">Formulario de Modificación de Grupos</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -21,13 +21,13 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_grupo">código del grupo(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_grupo">Código del Grupo(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_grupo" id="id_grupo" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="nom_grupo">Nombre del grupo(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="nom_grupo">Nombre del Grupo(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="nom_grupo" id="nom_grupo" placeholder="Ingrese el nombre del grupo" class="form-control">
                                             </div>
                                         </div>
@@ -66,7 +66,7 @@
                 FreshCatalogo();
                 document.formulario.reset();
                 $("#modal-lg").modal("hide");
-                
+
                 Toast.fire({
                     icon: `${res.data.code}`,
                     title: `${res.data.message}`
@@ -84,8 +84,8 @@
         },
         messages:{
             nom_grupo:{
-                required: "Este campo no puede estar vacio",
-                minlength: "Debe de contener al menos 3 caracteres",
+                required: "Este campo NO puede estar vacío",
+                minlength: "Debe de contener al menos tres (3) caracteres",
             }
         },
         errorElement: "span",

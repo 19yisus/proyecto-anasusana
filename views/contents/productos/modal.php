@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Formulario de modificación de productos</h3>
+                                <h3 class="card-title">Formulario de Modificación de Productos</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -21,38 +21,38 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_producto">código del producto(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="text" name="id_producto" id="id_producto" placeholder="Ingrese el código del producto" class="form-control" readonly>
+                                                <label for="id_producto">Código del Producto(<span class="text-danger text-md">*</span>)</label>
+                                                <input type="text" name="id_producto" id="id_producto" placeholder="Ingrese el Código del Producto" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="nom_producto">Nombre del producto(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="text" name="nom_producto" id="nom_producto" placeholder="Ingrese el nombre del producto" class="form-control">
+                                                <label for="nom_producto">Nombre del Producto(<span class="text-danger text-md">*</span>)</label>
+                                                <input type="text" name="nom_producto" id="nom_producto" placeholder="Ingrese el Nombre del Producto" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="">Unidad de medida(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="">Unidad de Medida(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="med_producto" id="med_producto" class="custom-select">
-                                                    <option value="">Seleccione una medida</option>
-                                                    <option value="KL">Kilo gramos</option>
-                                                    <option value="LT">Litros</option>
-                                                    <option value="GM">Gramos</option>
+                                                    <option value="">Seleccione una Medida</option>
+                                                    <option value="KL">Kilo gramos (KL)</option>
+                                                    <option value="LT">Litros (L)</option>
+                                                    <option value="GM">Gramos (G)</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="">Valor de medida(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="number" name="valor_producto" step="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un valor">
+                                                <label for="">Valor de Medida(<span class="text-danger text-md">*</span>)</label>
+                                                <input type="number" name="valor_producto" step="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un Valor">
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="">Grupo del producto(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="">Grupo del Producto(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="grupo_id_producto" id="grupo_id_producto" class="custom-select">
-                                                    <option value="">Seleccione una medida</option>
+                                                    <option value="">Seleccione una Medida</option>
                                                     <?php
                                                         foreach($grupos as $grupo){
                                                             ?><option value="<?php echo $grupo['id_grupo'];?>"><?php echo $grupo['nom_grupo'];?></option><?php
@@ -63,9 +63,9 @@
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="">Marca del producto(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="">Marca del Producto(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="marca_id_producto" id="marca_id_producto" class="custom-select">
-                                                    <option value="">Seleccione una marca</option>
+                                                    <option value="">Seleccione una Marca</option>
                                                     <?php
                                                         foreach($marcas as $marca){
                                                             ?><option value="<?php echo $marca['id_marca'];?>"><?php echo $marca['nom_marca'];?></option><?php
@@ -111,7 +111,7 @@
                 FreshCatalogo();
                 document.formulario.reset();
                 $("#modal-lg").modal("hide");
-                
+
                 Toast.fire({
                     icon: `${res.data.code}`,
                     title: `${res.data.message}`
@@ -142,21 +142,21 @@
         },
         messages:{
             nom_producto:{
-                required: "Este campo no puede estar vacio",
-                minlength: "Debe de contener al menos 3 caracteres",
+                required: "Este Campo NO puede estar Vacio",
+                minlength: "Debe de Contener al menos 3 Caracteres",
             },
             med_producto:{
-                required: "Debe de seleccionar una opción",
+                required: "Debe de Seleccionar una Opción",
             },
             valor_producto:{
-                required: "Este campo no puede estar vacio",
-                number: "Solo se aceptan numeros"
+                required: "Este Campo NO puede estar Vacio",
+                number: "Sólo se Aceptan Números"
             },
             grupo_id_producto:{
-                required: "Debe de seleccionar una opción"
+                required: "Debe de Seleccionar una Opción"
             },
             marca_id_producto:{
-                required: "Debe de seleccionar una opción"
+                required: "Debe de Seleccionar una Opción"
             }
         },
         errorElement: "span",

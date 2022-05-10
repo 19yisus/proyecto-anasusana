@@ -3,9 +3,9 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
-        $this->titleContent = "Catálogo de entrada de productos";
-        
+      <?php
+        $this->titleContent = "Catálogo de Entrada de Productos";
+
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
 
@@ -20,7 +20,7 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header">
-                    <h3 class="card-title">Catálogo de entradas de productos / Alimentos</h3>
+                    <h3 class="card-title">Catálogo de Entradas de Productos / Alimentos</h3>
                   </div>
                   <!-- /.card-header -->
                   <form method="POST" name="form_hide" target="<?php echo constant("URL");?>controller/c_pdf.php" action="<?php echo constant('URL');?>controller/c_pdf.php">
@@ -32,9 +32,9 @@
                       <thead>
                         <tr>
                           <th>Código</th>
-                          <th>Numero de orden</th>
+                          <th>Número de Orden</th>
                           <th>Proveedor</th>
-                          <th>Cantidad de productos</th>
+                          <th>Cantidad de Productos</th>
                           <th>Estado</th>
                           <th>Creación</th>
                           <th>Opciones</th>
@@ -57,9 +57,9 @@
       <?php $this->GetComplement("footer");?>
     </div>
 <!-- ./wrapper -->
-<?php 
-  $this->GetComplement("scripts"); 
-  $this->GetComplement("modal_vista"); 
+<?php
+  $this->GetComplement("scripts");
+  $this->GetComplement("modal_vista");
 ?>
 <script>
 
@@ -88,17 +88,17 @@
         {data: "orden_invent"},
         {data: "nom_person"},
         {data: "cantidad_invent"},
-        {data: "status_invent", 
+        {data: "status_invent",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_invent", 
+        {data: "created_invent",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},
         {defaultContent: "",
         render: function(data, type, row, meta){
-          
+
           let btn = `
             <form method="POST" id="formSecondary-${row.id_invent}" target="<?php echo constant("URL");?>controller/c_pdf.php" action="<?php echo constant('URL');?>controller/c_entrada_salida.php">
               <input type="hidden" name="id_invent" value="${row.id_invent}">

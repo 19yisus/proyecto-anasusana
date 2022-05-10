@@ -3,8 +3,8 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
-        $this->titleContent = "Catálogo de Registros de productos";
+      <?php
+        $this->titleContent = "Catálogo de Registros de Productos";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -37,7 +37,7 @@
                         <tr>
                           <th>Código</th>
                           <th>Nombre</th>
-                          <th>Cantidad en stock</th>
+                          <th>Cantidad en Stock</th>
                           <th>Marca</th>
                           <th>Grupo</th>
                           <th>Estado</th>
@@ -61,7 +61,7 @@
       <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
-<?php 
+<?php
   $this->GetComplement("scripts");
   require_once("./views/contents/productos/modal.php");
 ?>
@@ -118,11 +118,11 @@
         {data: "stock_product"},
         {data: "nom_marca"},
         {data: "nom_grupo"},
-        {data: "status_product", 
+        {data: "status_product",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_product", 
+        {data: "created_product",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},

@@ -3,13 +3,13 @@
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
-      <?php 
+      <?php
         $this->titleContent = "Catálogo de Usuarios";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
         require_once("./models/m_db.php");
-        
+
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -28,7 +28,7 @@
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>código</th>
+                          <th>Código</th>
                           <th>Nombre</th>
                           <th>Rol</th>
                           <th>Estado</th>
@@ -52,14 +52,14 @@
       <?php $this->GetComplement("footer"); ?>
     </div>
 <!-- ./wrapper -->
-<?php 
+<?php
   $this->GetComplement("scripts");
   require_once("./views/contents/usuarios/modal.php");
 ?>
 <script>
   const ChangeStatus = async (value, id) => {
     const form = document.getElementById(`formSecondary-${id}`);
-    
+
     if(value !== 2){
       form.ope.value = "Desactivar";
       form.status_user.value = value;
@@ -104,11 +104,11 @@
         {data: "id_user"},
         {data: "nom_person"},
         {data: "nom_rol"},
-        {data: "status_user", 
+        {data: "status_user",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
         }},
-        {data: "created_user", 
+        {data: "created_user",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")
         }},
