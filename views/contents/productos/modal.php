@@ -49,17 +49,16 @@
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="">Grupo del Producto(<span class="text-danger text-md">*</span>)</label>
-                                                <select name="grupo_id_producto" id="grupo_id_producto" class="custom-select">
-                                                    <option value="">Seleccione una Medida</option>
-                                                    <?php
-                                                        foreach($grupos as $grupo){
-                                                            ?><option value="<?php echo $grupo['id_grupo'];?>"><?php echo $grupo['nom_grupo'];?></option><?php
-                                                        }
-                                                    ?>
-                                                </select>
-                                            </div>
+                                          <div class="form-group">
+                                              <label for="">Stock Minimo(<span class="text-danger text-md">*</span>)</label>
+                                              <input type="number" name="stock_minimo_producto" step="0.01" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
+                                          </div>
+                                        </div>
+                                        <div class="col-7 col-sm-12">
+                                          <div class="form-group">
+                                            <label for="">Stock Maximo(<span class="text-danger text-md">*</span>)</label>
+                                            <input type="number" name="stock_maximo_producto" step="0.01" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
+                                          </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
@@ -133,8 +132,13 @@
                 required: true,
                 number: true,
             },
-            grupo_id_producto:{
-                required: true
+            stock_minimo_producto:{
+                required: true,
+                number: true,
+            },
+            stock_maximo_producto:{
+                required: true,
+                number: true,
             },
             marca_id_producto:{
                 required: true
@@ -152,8 +156,13 @@
                 required: "Este Campo NO puede estar Vacio",
                 number: "Sólo se Aceptan Números"
             },
-            grupo_id_producto:{
-                required: "Debe de Seleccionar una Opción"
+            stock_minimo_producto:{
+                required: "Este Campo NO puede estar Vacio",
+                number: "Sólo se Aceptan Números"
+            },
+            stock_maximo_producto:{
+                required: "Este Campo NO puede estar Vacio",
+                number: "Sólo se Aceptan Números"
             },
             marca_id_producto:{
                 required: "Debe de Seleccionar una Opción"

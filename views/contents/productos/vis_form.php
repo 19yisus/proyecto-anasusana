@@ -9,13 +9,9 @@
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
         require_once("./models/m_marca.php");
-        require_once("./models/m_grupo.php");
 
         $model_marca = new m_marca();
         $marcas = $model_marca->Get_todos_marcas(1);
-
-        $model_grupo = new m_grupo();
-        $grupos = $model_grupo->Get_todos_grupos(1);
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -59,19 +55,18 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="">Grupo del Producto(<span class="text-danger text-md">*</span>)</label>
-                                            <select name="grupo_id_producto" id="grupo_id_producto" class="custom-select">
-                                                <option value="">Seleccione un Grupo</option>
-                                                <?php
-                                                    foreach($grupos as $grupo){
-                                                        ?><option value="<?php echo $grupo['id_grupo'];?>"><?php echo $grupo['nom_grupo'];?></option><?php
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                                  <div class="col-3">
+                                      <div class="form-group">
+                                          <label for="">Stock Minimo(<span class="text-danger text-md">*</span>)</label>
+                                          <input type="number" name="stock_minimo_producto" step="0.01" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
+                                      </div>
+                                  </div>
+                                  <div class="col-3">
+                                      <div class="form-group">
+                                          <label for="">Stock Maximo(<span class="text-danger text-md">*</span>)</label>
+                                          <input type="number" name="stock_maximo_producto" step="0.01" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
+                                      </div>
+                                  </div>
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="">Marca del Producto(<span class="text-danger text-md">*</span>)</label>
@@ -145,8 +140,13 @@
                 required: true,
                 number: true,
             },
-            grupo_id_producto:{
-                required: true
+            stock_minimo_producto:{
+                required: true,
+                number: true,
+            },
+            stock_maximo_producto:{
+                required: true,
+                number: true,
             },
             marca_id_producto:{
                 required: true
@@ -164,8 +164,13 @@
               required: "Este Campo NO puede estar Vacio",
               number: "Sólo se Aceptan Números"
           },
-          grupo_id_producto:{
-              required: "Debe de Seleccionar una Opción"
+          stock_minimo_producto:{
+              required: "Este Campo NO puede estar Vacio",
+              number: "Sólo se Aceptan Números"
+          },
+          stock_maximo_producto:{
+              required: "Este Campo NO puede estar Vacio",
+              number: "Sólo se Aceptan Números"
           },
           marca_id_producto:{
               required: "Debe de Seleccionar una Opción"

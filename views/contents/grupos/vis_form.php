@@ -4,6 +4,7 @@
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php
+        exit;
         $this->titleContent = "Registro de grupos";
 
         $this->GetComplement("navbar");

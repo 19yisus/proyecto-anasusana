@@ -8,9 +8,9 @@
     if($item === "controller") break;
     if($item != "index.php") $string_url .= $item."/"; else break;
   }
-
+  // "grupos/index","grupos/form",
   $rutas_privadas = [
-    "inicio/index","grupos/index","grupos/form","marcas/index","marcas/form","personas/index","personas/form",
+    "inicio/index","marcas/index","marcas/form","personas/index","personas/form",
     "productos/index","productos/form","entradas/index","entradas/form","salidas/index","salidas/form",
     "usuarios/index","comedor/index","comedor/form",
   ];

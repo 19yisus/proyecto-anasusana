@@ -13,9 +13,6 @@
 
         $model_marca = new m_marca();
         $marcas = $model_marca->Get_todos_marcas(1);
-
-        $model_grupo = new m_grupo();
-        $grupos = $model_grupo->Get_todos_grupos(1);
       ?>
 
       <!-- Content Wrapper. Contains page content -->
@@ -38,8 +35,9 @@
                           <th>Código</th>
                           <th>Nombre</th>
                           <th>Cantidad en Stock</th>
+                          <th>Stock Minimo</th>
+                          <th>Stock Máximo</th>
                           <th>Marca</th>
-                          <th>Grupo</th>
                           <th>Estado</th>
                           <th>Creación</th>
                           <th>Opciones</th>
@@ -98,7 +96,8 @@
       form.nom_producto.value = res.data.nom_product;
       form.med_producto.value = res.data.med_product;
       form.valor_producto.value = res.data.valor_product;
-      form.grupo_id_producto.value = res.data.grupo_id_product;
+      form.stock_minimo_producto.value = res.data.stock_minimo_product;
+      form.stock_maximo_producto.value = res.data.stock_maximo_product;
       form.marca_id_producto.value = res.data.marca_id_product;
     })
     .catch( Err => {
@@ -116,8 +115,9 @@
         {data: "id_product"},
         {data: "nom_product"},
         {data: "stock_product"},
+        {data: "stock_minimo_product"},
+        {data: "stock_maximo_product"},
         {data: "nom_marca"},
-        {data: "nom_grupo"},
         {data: "status_product",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";

@@ -39,14 +39,14 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?php echo constant("URL");?>grupos/index" class="nav-link  <?php $this->IsActive("grupos/index"); ?>">
+            <!-- <li class="nav-item">
+              <a href="<?php //echo constant("URL");?>grupos/index" class="nav-link  <?php //$this->IsActive("grupos/index"); ?>">
                 <i class="nav-icon fas fa-layer-group"></i>
                 <p>
                   Grupos
                 </p>
-              </a>    
-            </li>
+              </a>
+            </li> -->
             <li class="nav-item">
               <a href="<?php echo constant("URL");?>marcas/index" class="nav-link  <?php $this->IsActive("marcas/index"); ?>">
                 <i class="nav-icon fas fa-bullseye"></i>

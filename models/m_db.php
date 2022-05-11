@@ -3,9 +3,9 @@
         private $host, $dbname, $user, $pass, $conexion;
         public function __construct(){
             if(!isset($_SESSION)) session_start();
-            
+
             $this->host = "localhost";
-            $this->dbname = "proyecto_iglesia";
+            $this->dbname = "proyecto_iglesia2";
             $this->user = "root";
             $this->pass = "";
             $this->Connect();
@@ -22,7 +22,9 @@
         protected function Rollback(){ mysqli_rollback($this->conexion); }
         protected function Result_last_query(){ return (mysqli_affected_rows($this->conexion)) ? true : false;}
         protected function Get_array($results){ return mysqli_fetch_array($results); }
-        protected function Get_todos_array($results){ return mysqli_fetch_all($results, MYSQLI_ASSOC); }
+        protected function Get_todos_array($results){
+          if($results) return mysqli_fetch_all($results, MYSQLI_ASSOC); else return [];
+        }
         protected function Clean($variable){
             $variable = stripslashes($variable);
             $variable = str_ireplace("SELECT * FROM","",$variable);
@@ -40,7 +42,7 @@
             $variable = str_ireplace("<script>","",$variable);
             $variable = str_ireplace("<script src= >","",$variable);
             $variable = str_ireplace("src=","",$variable);
-                
+
             if(!is_numeric($variable)){
                 $variable = strtoupper($variable);
             }else{
