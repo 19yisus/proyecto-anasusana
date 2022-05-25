@@ -8,12 +8,12 @@
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <?php if($this->controlador !== "inicio"){ ?>
-            <li class="breadcrumb-item"><a class="btn btn-sm btn-warning" href="<?php echo constant("URL"). $this->controlador;?>"><i class="fas fa-list"></i> Listar Registros</a></li>
+            <li class="breadcrumb-item"><a class="btn btn-sm btn-warning" href="<?php $this->SetURL(); ?>"><i class="fas fa-list"></i> Listar Registros</a></li>
             <!-- SI EL USURIO ES ADMIN PODRA CREAR REGISTROS, SI NO LO ES, ENTONCES EL ENLACE NO APARECERA EN SU PANTALLA -->
             <?php if(isset($_SESSION['permisos']) && $this->controlador != "usuarios" && $_SESSION['permisos'] >= 2){?>
-            <li class="breadcrumb-item active"><a class="btn btn-sm btn-primary" href="<?php echo constant("URL"). $this->controlador;?>/form"><i class="fas fa-pen"></i> Formulario de registros</a></li>
+            <li class="breadcrumb-item active"><a class="btn btn-sm btn-primary" href="<?php $this->SetURL("$this->controlador/form"); ?>"><i class="fas fa-pen"></i> Formulario de registros</a></li>
             <?php }?>
-            <?php 
+            <?php
                 }else{
             ?>
             <li class="breadcrumb-item"><a href="<?php echo constant("URL"). $this->controlador;?>"><?php echo $this->controlador; ?></a></li>

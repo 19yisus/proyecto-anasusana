@@ -173,25 +173,19 @@
 		el: '#VueApp',
 		data: {
 		productos: [
-			// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: ""},
+			// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: "", stock_maximo: 0},
 		],
 		},
 		methods: {
 			Duplicar: function () {
 				let datos = this.productos[this.productos.length - 1];
 				if(typeof datos == "undefined"){
-					this.productos.push({code: "",  nom_product: "",precio: 0, cantidad: 1, fecha: ""});
+					this.productos.push({code: "",  nom_product: "",precio: 0, cantidad: 1, fecha: "", stock_maximo: 1});
 					return false;
 				}
 
-				if(datos.cantidad > 0 && datos.code != ""){
-					this.productos.push({code: "", nom_product: "", precio: 0, cantidad: 1, fecha: ""})
-				}else{
-					Toast.fire({
-						icon: "error",
-						title: "Completa los campos antes de agregar otro producto"
-					});
-				}
+				if(datos.cantidad > 0 && datos.code != "") this.productos.push({code: "", nom_product: "", precio: 0, cantidad: 1, fecha: "", stock_maximo: 1});
+				else this.Fn_mensaje_error("Completa los campos antes de agregar otro producto!");
 			},
 			Disminuir: function(codigo){
 				this.productos[codigo].cantidad = parseInt(this.productos[codigo].cantidad);
@@ -203,12 +197,41 @@
 					this.Disminuir(this.productos.length - 1)
 				}
 			},
-			ConsultarName: async function(index){
-				await fetch(`<?php echo constant("URL");?>controller/c_productos.php?ope=Consultar_producto&id_producto=${this.productos[index].code}`)
+			ConsultarName: async function(e){
+        if(e.target.value == ".") return;
+				if(this.CodigosDuplicados(e.target)){
+					this.Fn_mensaje_error("No se puede Seleccionar un Producto Dos veces en la Misma Operación!");
+					return;
+				}
+				await fetch(`<?php echo constant("URL");?>controller/c_productos.php?ope=Consultar_producto&id_producto=${this.productos[e.target.dataset.index].code}`)
 				.then( response => response.json()).then( ({data}) => {
-					this.productos[index].nom_product = data.nom_product;
-					this.productos[index].cantidad = parseInt(this.productos[index].cantidad);
+					this.productos[e.target.dataset.index].nom_product = data.nom_product;
+					this.productos[e.target.dataset.index].cantidad = parseInt(this.productos[e.target.dataset.index].cantidad);
+          this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product);
 				}).catch( error => console.error(error));
+			},
+      CodigosDuplicados(element){
+				let contador = 0;
+				this.productos.forEach( item => { if(parseInt(item.code) == parseInt(element.value)) contador += 1})
+				if(contador > 1){
+					this.productos[element.dataset.index].code = "";
+					$(`#${element.id} option[value='.']`).attr('selected', true);
+				}
+				return contador > 1;
+			},
+      validarStockMaximo: function(index){
+        let input = index.target, value = parseInt(input.value), maximo = parseInt(input.max);
+        input.value = maximo;
+        if(value > maximo){
+          this.Fn_mensaje_error(`No se puede superar el Stock Maximo de este producto (${this.productos[input.dataset.index].stock_maximo})`);
+          this.productos[input.dataset.index].cantidad = maximo;
+        }
+      },
+      Fn_mensaje_error: function(sms){
+				Toast.fire({
+					icon: "error",
+					title: `${sms}`
+				});
 			}
 		},
 		computed: {

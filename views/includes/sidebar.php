@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-warning elevation-4">
   <!-- Brand Logo -->
-  <a href="<?php echo constant("URL");?>inicio/index" class="brand-link">
+  <a href="<?php $this->SetURL('inicio/index'); ?>" class="brand-link">
     <span class="brand-text font-weight-bold mx-auto">Iglesia pan de vida</span>
   </a>
 
@@ -24,7 +24,7 @@
         <!-- Add icons to the links using the .nav-icon class
               with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="<?php echo constant("URL");?>inicio/index" class="nav-link <?php $this->IsActive("inicio/index"); ?>">
+          <a href="<?php $this->SetURL('inicio/index'); ?>" class="nav-link <?php $this->IsActive("inicio/index"); ?>">
             <i class="nav-icon fas fa-home"></i>
             <p>Inicio</p>
           </a>
@@ -38,17 +38,9 @@
               <!-- <span class="badge badge-info right">6</span> -->
             </p>
           </a>
-          <ul class="nav nav-treeview">
-            <!-- <li class="nav-item">
-              <a href="<?php //echo constant("URL");?>grupos/index" class="nav-link  <?php //$this->IsActive("grupos/index"); ?>">
-                <i class="nav-icon fas fa-layer-group"></i>
-                <p>
-                  Grupos
-                </p>
-              </a>
-            </li> -->
+          <ul class="nav nav-treeview bg-primary">
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>marcas/index" class="nav-link  <?php $this->IsActive("marcas/index"); ?>">
+              <a href="<?php $this->SetURL('marcas/index'); ?>" class="nav-link  <?php $this->IsActive("marcas/index"); ?>">
                 <i class="nav-icon fas fa-bullseye"></i>
                 <p>
                   Marcas
@@ -56,7 +48,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>productos/index" class="nav-link <?php $this->IsActive("productos/index"); ?>">
+              <a href="<?php $this->SetURL('productos/index');?>" class="nav-link <?php $this->IsActive("productos/index"); ?>">
                 <i class="nav-icon fas fa-people-carry"></i>
                 <p>
                   Productos
@@ -64,7 +56,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>personas/index" class="nav-link  <?php $this->IsActive("personas/index"); ?>">
+              <a href="<?php $this->SetURL('personas/index');?>" class="nav-link  <?php $this->IsActive("personas/index"); ?>">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                   Personas o Proveedores
@@ -72,7 +64,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>comedor/index" class="nav-link <?php $this->IsActive("comedor/index"); ?>">
+              <a href="<?php $this->SetURL('comedor/index');?>" class="nav-link <?php $this->IsActive("comedor/index"); ?>">
                 <i class="nav-icon fas fa-house-user"></i>
                 <p>
                   Comedor
@@ -89,15 +81,15 @@
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-          <ul class="nav nav-treeview">
+          <ul class="nav nav-treeview bg-primary">
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>entradas/index" class="nav-link <?php $this->IsActive("entradas"); ?>">
+              <a href="<?php $this->SetURL('entradas/index');?>" class="nav-link <?php $this->IsActive("entradas"); ?>">
                 <i class="nav-item fas fa-hand-holding-medical"></i>
                 <p>Entrada de productos</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>salidas/index" class="nav-link <?php $this->IsActive("salidas"); ?>">
+              <a href="<?php $this->SetURL('salidas/index');?>" class="nav-link <?php $this->IsActive("salidas"); ?>">
                 <i class="nav-item fas fa-cart-arrow-down"></i>
                 <p>Salida de productos</p>
               </a>
@@ -113,9 +105,9 @@
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-          <ul class="nav nav-treeview">
+          <ul class="nav nav-treeview bg-primary">
             <li class="nav-item">
-              <a href="<?php echo constant("URL");?>usuarios/index" class="nav-link <?php $this->IsActive("usuarios"); ?>">
+              <a href="<?php $this->SetURL('usuarios/index');?>" class="nav-link <?php $this->IsActive("usuarios"); ?>">
                 <i class="nav-icon fas fa-user-cog"></i>
                 <p>usuarios</p>
               </a>

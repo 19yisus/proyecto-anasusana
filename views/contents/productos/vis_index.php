@@ -9,7 +9,6 @@
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
         require_once("./models/m_marca.php");
-        require_once("./models/m_grupo.php");
 
         $model_marca = new m_marca();
         $marcas = $model_marca->Get_todos_marcas(1);

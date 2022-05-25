@@ -1,7 +1,7 @@
 <?php
   require_once("./models/config.php");
   require_once("./controller/c_messages.php");
-  
+
   class App{
     private $ruta_actual, $code_error, $code_done, $titleContent, $controlador, $file_view_name, $ObjMessage;
 
@@ -26,6 +26,10 @@
       if(file_exists($ruta)) require_once("./views/includes/$name.php");
     }
 
+    private function NotFound404(){
+      require_once("./views/contents/error/404.php");
+    }
+
     private function Auth(){
       if(in_array($this->ruta_actual, constant("PRIVATE_URLS"))){
         if(!isset($_SESSION['user_id'])){
@@ -44,10 +48,10 @@
 
       $time = new \DateTime();
       $time->setTimestamp($unixTime)->setTimezone($timeZone);
-            
+
       if($param == "") $fecha = $time->format('Y-m-d');
       else $fecha = $fecha = $time->format($param);
-      
+
       return $fecha;
     }
     private function thisDateMoreOneHour(){
@@ -68,6 +72,11 @@
       return $url;
     }
 
+    private function SetURL($vista = ''){ 
+      if($vista == '') echo constant("URL"). $this->controlador;
+      else echo constant("URL"). $vista;
+    }
+
     private function GetView($nameView){
       $this->file_view_name = (isset($nameView[1]) && $nameView[1] != "err" ? $nameView[1] : "index");
       $file_view_path = "./views/contents/".$nameView[0]."/vis_".$this->file_view_name.".php";
@@ -75,7 +84,7 @@
         $this->ruta_actual = $nameView[0]."/".$this->file_view_name;
         $this->controlador = $nameView[0];
         require_once($file_view_path);
-      }
+      }else $this->NotFound404();
     }
   }
 

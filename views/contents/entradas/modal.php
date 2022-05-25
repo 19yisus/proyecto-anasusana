@@ -25,7 +25,7 @@
                                             <div class="form-group d-block">
                                                 <label for="id_product">Datos Generales del Producto(<span class="text-danger text-md">*</span>)</label>
                                                 <!--  lo dejo aca por si acaso -->
-                                                <select name="id_product" v-model="productos[index].code" value="" id="product" class="custom-select" v-on:change="ConsultarName(index)">
+                                                <select name="id_product" v-model="productos[index].code" :data-index="index" value="" id="product" class="custom-select" v-on:change="ConsultarName">
                                                     <option value="">Seleccione un Producto</option>
                                                     <?php foreach($productos as $item){?>
                                                     <option value="<?php echo $item['id_product'];?>"><?php echo $item['nom_product'] ." - ". $item['nom_marca'] .' - '.$item['valor_product'].$item['med_product']; ?></option>
@@ -36,7 +36,7 @@
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-                                                <input type="number" name="cant_product" min="1" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la Cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
+                                                <input type="number" name="cant_product" :data-index="index" v-on:keyup="validarStockMaximo" max="<?php echo $item['stock_maximo_product']; ?>" min="1" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la Cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
                                             </div>
                                         </div>
                                         <div class="col-2">
