@@ -5,13 +5,21 @@
     <div class="wrapper">
       <?php
         require_once("./models/m_persona.php");
+        require_once("./models/m_comedor.php");
+
         $model_person = new m_persona();
-		$person = $model_person->Get_Personas();
+		    $person = $model_person->Get_Personas();
+
+        $model_comedor = new m_comedor();
+        $resultSede = $model_comedor->ExisteSede();
 
         $this->titleContent = "Registro de Comedor";
 
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
+
+        // var_dump($resultSede);
+        // die("fasdfa");
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -38,16 +46,16 @@
                                         </div>
                                     </div>
                                     <div class="col-3">
-										<div class="form-group">
-											<label for="encargado_comedor">Selecione al Encargado(<span class="text-danger text-md">*</span>)</label>
-											<select name="encargado_comedor" id="encargado_comedor" class="custom-select">
-												<option value="">Seleccione una Persona</option>
-												<?php foreach($person as $persona){?>
-												<option value="<?php echo $persona['id_person'];?>"><?php echo $persona['nom_person'];?></option>
-												<?php }?>
-											</select>
-										</div>
-									</div>
+                  										<div class="form-group">
+                  											<label for="encargado_comedor">Selecione al Encargado(<span class="text-danger text-md">*</span>)</label>
+                  											<select name="encargado_comedor" id="encargado_comedor" class="custom-select">
+                  												<option value="">Seleccione una Persona</option>
+                  												<?php foreach($person as $persona){?>
+                  												<option value="<?php echo $persona['id_person'];?>"><?php echo $persona['nom_person'];?></option>
+                  												<?php }?>
+                  											</select>
+                  										</div>
+                  									</div>
                                     <div class="col-4">
                                         <label for="">Estado del Comedor(<span class="text-danger text-md">*</span>)</label>
                                         <div class="row">
@@ -63,7 +71,21 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
+                                  <div class="col-2">
+                                      <label for="">Es sede principal?(<span class="text-danger text-md">*</span>)</label>
+                                      <div class="row">
+                                          <div class="form-check mx-3">
+                                            <input type="hidden" name="if_sede" value="<?php echo ($resultSede) ? 0 : 1 ; ?>">
+                                              <input type="radio" name="if_sede" id="if_sede" value="1" class="form-check-input" disabled <?php if(!$resultSede) echo "checked"; ?> >
+                                              <label for="if_sede" class="form-check-label">Si</label>
+                                          </div>
+                                          <div class="form-check">
+                                              <input type="radio" name="if_sede" id="if_sede" value="0" class="form-check-input" disabled <?php if($resultSede) echo "checked"; ?> >
+                                              <label for="if_sede" class="form-check-label">No</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                    <div class="col-10">
                                         <div class="form-group">
                                             <label for="direccion_comedor">Dirección del Comedor(<span class="text-danger text-md">*</span>)</label>
                                             <textarea name="direccion_comedor" class="form-control" maxlength="120" id="" cols="30" placeholder="Ingrese la Dirección del Comedor" rows="2"></textarea>

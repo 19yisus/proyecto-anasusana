@@ -5,6 +5,9 @@
     <div class="wrapper">
       <?php
         $this->titleContent = "Catálogo de Personas";
+        require_once './models/m_marca.php';
+        $model_marca = new m_marca();
+        $marcas = $model_marca->Get_todos_marcas(1);
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
       ?>
@@ -56,6 +59,71 @@
 <script>
   $("#telefono_movil_persona").inputmask();
   $("#telefono_casa_persona").inputmask();
+  
+  const app_vue = new Vue({
+    el: "#modal-lg",
+    data:{
+      tipo_persona: "",
+      if_proveedor: "",
+      marcas: []
+    },
+    methods:{
+      eliminar: function(index){ this.marcas.splice(index, 1) },
+      validaRepetidos: function(e){
+        let contador = 0;
+        this.marcas.forEach( item => { if(parseInt(item.id_marca) == parseInt(e.target.value)) contador += 1})
+        if(contador > 1){
+          this.marcas[e.target.dataset.index].id_marca = "";
+          this.Fn_mensaje_error("No se pueden duplicar las marcas ya seleccionadas!");
+        }
+      },
+      agregar: function(){
+        if(this.marcas.length == 0){
+          this.marcas.push({id_marca: ''});
+          return false;
+        }
+        if(this.marcas[this.marcas.length -1 ].id_marca != '') this.marcas.push({id_marca: ''});
+        else this.Fn_mensaje_error("Selecciona una Marca primero");
+      },
+      Fn_mensaje_error: function(sms){
+        Toast.fire({
+          icon: "error",
+          title: `${sms}`
+        });
+      },
+      envio: async function(){
+        if($("#formulario").valid()){
+          let res = await Confirmar();
+          if(!res) return false;
+
+          let datos = new FormData(document.formulario);
+          fetch(`<?php echo constant("URL");?>controller/c_persona.php`, {
+              method: "POST",
+              body: datos,
+          }).then( response => response.json())
+          .then( res =>{
+            FreshCatalogo();
+            document.formulario.reset();
+            $("#modal-lg").modal("hide");
+
+            Toast.fire({
+              icon: `${res.data.code}`,
+              title: `${res.data.message}`
+            });
+          }).catch( Err => console.log(Err))
+        }
+      }
+    },
+    computed:{
+      juridico: function(){
+        if(this.tipo_persona == "J" && this.if_proveedor == 1) return true; 
+        else{
+          this.marcas = [];
+          return false;
+        }
+      }
+    }
+  });
 
   const ChangeStatus = async (value, id) => {
     const form = document.getElementById(`formSecondary-${id}`);
@@ -84,11 +152,20 @@
   const Consultar = async (value) => {
     await fetch(`<?php echo constant("URL");?>controller/c_persona.php?ope=Consultar_persona&id_persona=${value}`)
     .then( response => response.json()).then( res => {
+      app_vue.tipo_persona = res.data.tipo_person;
+      app_vue.if_proveedor = res.data.if_proveedor;
+      marcas = res.marcas.map( item =>{
+        let array = [];
+        array['id_marca'] = item.id_marca
+        return array
+      });
+
+      app_vue.marcas = marcas;
+
       const form = document.formulario;
       form.tipo_persona.value = res.data.tipo_person;
       form.if_proveedor.value = res.data.if_proveedor;
       form.if_user.value = res.data.if_user;
-
       form.id_persona.value = res.data.id_person;
       form.cedula_persona.value = res.data.cedula_person;
       form.nom_persona.value = res.data.nom_person;
@@ -97,6 +174,7 @@
       form.telefono_casa_persona.value = res.data.telefono_casa_person;
       form.correo_persona.value = res.data.correo_person;
       form.direccion_persona.value = res.data.direccion_person;
+      return res;
     })
     .catch( Err => {
       console.error(Err)

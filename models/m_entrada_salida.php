@@ -2,11 +2,11 @@
     require_once("m_db.php");
 
     class m_entrada_salida extends m_db{
-        private $id_invent, $orden_invent, $status_invent, $cantidad_invent, $type_operation_invent, $concept_invent, $person_id_invent, $comedor_id_invent, $user_id_invent, $observacion_invent, $productos, $fecha_invent, $recibe_person_id_invent;
+        private $id_invent, $orden_invent, $status_invent, $cantidad_invent, $type_operation_invent, $concept_invent, $person_id_invent, $comedor_id_invent, $user_id_invent, $observacion_invent, $productos, $fecha_invent, $recibe_person_id_invent, $if_credito;
         
         public function __construct(){
             parent::__construct();
-            $this->id_invent = $this->orden_invent = $this->status_invent = $this->cantidad_invent = $this->type_operation_invent = $this->concept_invent = $this->person_id_invent = $this->comedor_id_invent = $this->user_id_invent = $this->observacion_invent = $this->productos = $this->fecha_invent = $this->recibe_person_id_invent = "";
+            $this->id_invent = $this->orden_invent = $this->status_invent = $this->cantidad_invent = $this->type_operation_invent = $this->concept_invent = $this->person_id_invent = $this->comedor_id_invent = $this->user_id_invent = $this->observacion_invent = $this->productos = $this->fecha_invent = $this->recibe_person_id_invent = $this->if_credito = "";
         }
 
         public function setDatos($d, $productos =[]){
@@ -23,14 +23,15 @@
             $this->cantidad_invent = isset($d['cantidad_invent']) ? $this->Clean(intVal($d['cantidad_invent'])) : null;
             $this->productos = isset($productos) ? $productos : null;
             $this->fecha_invent = isset($d['fecha_invent']) ? $d['fecha_invent'] : null;
+            $this->if_credito = isset($d['if_credito']) ? $d['if_credito'] : null;
         }
 
         public function Entrada_productos(){
             // TRANSACCTION
             $status_transaccion = true;
             $sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
-            concept_invent,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
-            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E','$this->concept_invent',$this->person_id_invent,NULL,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+            concept_invent,if_credito,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
+            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E','$this->concept_invent','$this->if_credito',$this->person_id_invent,NULL,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
             
             try{
                 $this->Start_transacction();

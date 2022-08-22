@@ -25,6 +25,7 @@
         protected function Get_todos_array($results){
           if($results) return mysqli_fetch_all($results, MYSQLI_ASSOC); else return [];
         }
+        protected function Returning_id(){ return mysqli_insert_id($this->conexion); }
         protected function Clean($variable){
             $variable = stripslashes($variable);
             $variable = str_ireplace("SELECT * FROM","",$variable);

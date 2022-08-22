@@ -47,6 +47,22 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-3 col-sm-12">
+                                          <div class="form-group">
+                                            <label for="">Es sede principal?(<span class="text-danger text-md">*</span>)</label>
+                                            <div class="row">
+                                                <div class="form-check mx-3">
+                                                    <!-- <input type="hidden" name="if_sede" value=""> -->
+                                                    <input type="radio" name="if_sede" id="if_sede" value="1" class="form-check-input"  >
+                                                    <label for="if_sede" class="form-check-label">Si</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input type="radio" name="if_sede" id="if_sede" value="0" class="form-check-input"  >
+                                                    <label for="if_sede" class="form-check-label">No</label>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="direccion_comedor">Dirección del Comedor(<span class="text-danger text-md">*</span>)</label>

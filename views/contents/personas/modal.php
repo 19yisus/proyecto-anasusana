@@ -25,8 +25,9 @@
                                                 <input type="text" name="id_persona" id="id_persona" class="form-control" hidden>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <select name="tipo_persona" id="" class="custom-select" readonly>
+                                                        <select v-model="tipo_persona" name="tipo_persona" id="" class="custom-select" readonly>
                                                             <option value="V">V</option>
+                                                            <option value="J">J</option>
                                                             <option value="R">R</option>
                                                             <option value="E">E</option>
                                                         </select>
@@ -115,12 +116,31 @@
                                                 <textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la Direcion de la Persona"></textarea>
                                             </div>
                                         </div>
+                                        <div v-show="marcas.length > 0" v-for="(item, index) in marcas" class="col-7 col-sm-12">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="form-group">
+                                                    <label for="marcas_proveedor">Marcas ({{index+1}})</label>
+                                                    <select name="id_marca[]" @click="validaRepetidos" v-model="marcas[index].id_marca" :data-index="index" id="" class="custom-select">
+                                                        <option value="">Seleccione una opción</option>
+                                                        <?php 
+                                                          foreach($marcas as $marca){
+                                                            ?>
+                                                             <option v-model="marcas[index].id_marca" v-bind:selected="this.value == item.id_marcas" value="<?php echo $marca['id_marca'];?>"><?php echo $marca['nom_marca'];?></option>
+                                                            <?php
+                                                          }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <button @click="eliminar(index)" type="button" class="btn btn-sm btn-danger my-auto">Eliminar</button>    
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <input type="hidden" name="ope">
-                                    <button type="button" id="btn" onclick="ope.value = this.value" value="Actualizar" class="btn btn-primary"><i class="fas fa-edit"></i> Actualizar</button>
+                                    <input type="hidden" name="ope" value="Actualizar">
+                                    <button type="button" id="btn_actualizar" @click="envio" value="Actualizar" class="btn btn-primary"><i class="fas fa-edit"></i> Actualizar</button>
+                                    <button v-show="juridico" class="btn btn-success" @click="agregar" type="button">Añadir Marcas <i class="fas fa-plus-square"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -136,28 +156,32 @@
 </div>
 <!-- /.modal -->
 <script>
-    $("#btn").click( async () =>{
-        if($("#formulario").valid()){
-            let res = await Confirmar();
-            if(!res) return false;
 
-            let datos = new FormData(document.formulario);
-            fetch(`<?php echo constant("URL");?>controller/c_persona.php`, {
-                method: "POST",
-                body: datos,
-            }).then( response => response.json())
-            .then( res =>{
-                FreshCatalogo();
-                document.formulario.reset();
-                $("#modal-lg").modal("hide");
+    // $("#btn_actualizar").click( async () =>{
+    //     console.log("CLick")
+    //     if($("#formulario").valid()){
+    //         let res = await Confirmar();
+    //         if(!res) return false;
 
-                Toast.fire({
-                    icon: `${res.data.code}`,
-                    title: `${res.data.message}`
-                });
-            }).catch( Err => console.log(Err))
-        }
-    })
+    //         let datos = new FormData(document.formulario);
+    //         fetch(`<?php //echo constant("URL");?>controller/c_persona.php`, {
+    //             method: "POST",
+    //             body: datos,
+    //         }).then( response => response.json())
+    //         .then( res =>{
+    //             FreshCatalogo();
+    //             document.formulario.reset();
+    //             $("#modal-lg").modal("hide");
+
+    //             Toast.fire({
+    //                 icon: `${res.data.code}`,
+    //                 title: `${res.data.message}`
+    //             });
+    //         }).catch( Err => console.log(Err))
+    //     }else{
+    //         console.log("Formulario invalido")
+    //     }
+    // })
 
     $("#formulario").validate({
         rules:{

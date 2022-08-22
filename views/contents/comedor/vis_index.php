@@ -5,6 +5,7 @@
     <div class="wrapper">
       <?php
         $this->titleContent = "Catálogo Comedor";
+
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
       ?>
@@ -31,6 +32,7 @@
                           <th>Cédula del Encargado</th>
                           <th>Encargado</th>
                           <th>Estado</th>
+                          <th>Sede Principal</th>
                           <th>Creación</th>
                           <th>Opciones</th>
                         </tr>
@@ -81,7 +83,16 @@
     });
   }
 
+  const ExisteSede = async () => {
+    return await fetch(`<?php echo constant("URL");?>controller/c_comedor.php?ope=Existe_sede`)
+    .then( response => response.json()).then( ({data}) => data).catch( error => {
+      console.error(error)
+      return false;
+    })
+  }
   const Consultar = async (value) => {
+    let existe_sede = await ExisteSede()
+
     await fetch(`<?php echo constant("URL");?>controller/c_comedor.php?ope=Consultar_comedor&id_comedor=${value}`)
     .then( response => response.json()).then( ({data}) => {
       const form = document.formulario;
@@ -89,6 +100,20 @@
       form.nom_comedor.value = data.nom_comedor;
       form.encargado_comedor.value = data.encargado_comedor;
       form.direccion_comedor.value = data.direccion_comedor;
+      form.if_sede.value = data.if_sede;
+
+      if(existe_sede){
+        if(parseInt(data.if_sede) == 1){
+          form.if_sede[0].disabled = false;
+          form.if_sede[1].disabled = false;
+        }else{
+          form.if_sede[0].disabled = true;
+          form.if_sede[1].disabled = false;
+        }
+      }else{
+        form.if_sede[0].disabled = false;
+        form.if_sede[1].disabled = false;
+      }
     })
     .catch( Err => {
       console.error(Err)
@@ -112,6 +137,10 @@
         {data: "status_comedor",
         render: function(data){
           return (data == 1) ? "Activo" : "Inactivo";
+        }},
+        {data: "if_sede",
+        render: function(data){
+          return (data == 1) ? "Si" : "No";
         }},
         {data: "created_comedor",
         render: function(data){

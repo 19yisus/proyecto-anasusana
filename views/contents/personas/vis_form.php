@@ -2,8 +2,11 @@
 <html lang="es">
   <?php $this->GetHeader(); ?>
   <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
-    <div class="wrapper">
+    <div class="wrapper" id="VueApp">
       <?php
+        require_once './models/m_marca.php';
+        $model_marca = new m_marca();
+        $marcas = $model_marca->Get_todos_marcas(1);
         $this->titleContent = "Registro de Personas";
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -30,9 +33,10 @@
                                             <label for="cedula_persona">Cédula o Documento(<span class="text-danger text-md">*</span>)</label>
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <select name="tipo_persona" id="" class="custom-select">
-                                                        <option value="V">V</option>
+                                                    <select v-model="tipo_persona" name="tipo_persona" id="" class="custom-select">
+                                                        <option selected value="V">V</option>
                                                         <option value="R">R</option>
+                                                        <option value="J">J</option>
                                                         <option value="E">E</option>
                                                     </select>
                                                 </div>
@@ -77,11 +81,11 @@
                                         <label for="if_proveedor">¿Es Proveedor?(<span class="text-danger text-md">*</span>)</label>
                                         <div class="row">
                                             <div class="form-check mx-3">
-                                                <input type="radio" name="if_proveedor" id="if_proveedor" value="1" class="form-check-input">
+                                                <input type="radio" v-model="es_proveedor" name="if_proveedor" id="if_proveedor" value="1" class="form-check-input">
                                                 <label for="if_proveedor" class="form-check-label">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" name="if_proveedor" id="if_proveedor" value="0" class="form-check-input">
+                                                <input type="radio" v-model="es_proveedor" checked name="if_proveedor" id="if_proveedor" value="0" class="form-check-input">
                                                 <label for="if_proveedor" class="form-check-label">No</label>
                                             </div>
                                         </div>
@@ -94,7 +98,7 @@
                                                 <label for="if_user" class="form-check-label">Sí</label>
                                             </div>
                                             <div class="form-check">
-                                                <input type="radio" name="if_user" id="if_user" value="0" class="form-check-input">
+                                                <input type="radio" checked name="if_user" id="if_user" value="0" class="form-check-input">
                                                 <label for="if_user" class="form-check-label">No</label>
                                             </div>
                                         </div>
@@ -114,7 +118,7 @@
                                     </div>
                                     <div class="col-5">
                                         <div class="form-group">
-                                            <label for="direccion_persona">Direccion de la Persona(<span class="text-danger text-md">*</span>)</label>
+                                            <label for="direccion_persona">Dirección de la Persona(<span class="text-danger text-md">*</span>)</label>
                                             <textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la Dirección de la Persona"></textarea>
                                         </div>
                                     </div>
@@ -132,6 +136,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row" v-show="validando_extra">
+                                    <div v-for="(item, index) in marcas" class="container d-flex align-items-center justify-content-between col-12">
+                                        <div class="col-5">
+                                            <label for="marcas_proveedor">Marcas que donará este proveedor(<span class="text-danger text-md">*</span>)</label>
+                                            <!-- v-bind:disabled="disabled_input" -->
+                                            <select v-bind:disabled="disabled_input" :data-index="index" name="id_marca[]" class="custom-select id_marcas" v-model="marcas[index].value" @click="validaRepetidos">
+                                                <option value="">Seleccione una opción</option>
+                                                <?php 
+                                                  foreach($marcas as $marca){
+                                                    ?>
+                                                     <option value="<?php echo $marca['id_marca'];?>"><?php echo $marca['nom_marca'];?></option>
+                                                    <?php
+                                                  }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
@@ -140,6 +163,9 @@
                                     <i class="fas fa-save"></i>
                                     Registrar
                                 </button>
+                                <button v-show="validando_extra" class="btn btn-success" @click="duplicar" type="button">Añadir Marcas <i class="fas fa-plus-square"></i></button>
+                                
+                                <button v-show="marcas.length > 1" class="btn btn-danger" @click="disminuir" type="button">Eliminar Marcas <i class="fas fa-trash"></i></button>
                             </div>
                         </form>
                     </div>
@@ -159,6 +185,59 @@
 <!-- ./wrapper -->
 <?php $this->GetComplement("scripts");?>
 <script>
+    // Vuejs
+    new Vue({
+        el: "#VueApp",
+        data:{
+            tipo_persona: "V",
+            es_proveedor: 0,
+            marcas:[{value: ''}],
+        },
+        methods:{
+            // TODO: 
+            // 1 - Agregar la validacion de marcas al validate
+            // 2 - Agregar esto de marcas a la vista de actualizar
+            validaRepetidos: function(e){
+                let contador = 0;
+                this.marcas.forEach( item => { if(parseInt(item.value) == parseInt(e.target.value)) contador += 1})
+                if(contador > 1){
+                    this.marcas[e.target.dataset.index].value = "";
+                    this.Fn_mensaje_error("No se pueden duplicar las marcas ya seleccionadas!");
+                }
+            },
+            duplicar: function(){
+                if(this.marcas[this.marcas.length -1 ].value != '') this.marcas.push({value: ''});
+                else this.Fn_mensaje_error("Selecciona una Marca primero");
+            },
+            disminuir: function(e){ 
+                if(this.marcas.length > 1){ 
+                    let indice = parseInt( this.marcas.length -1 );
+                    this.marcas.splice(indice, 1); 
+                } 
+            },
+            eliminacionSelectiva: function(e){ if(this.marcas.length > 1) this.marcas.splice(e.target.dataset.index, 1); },
+            Fn_mensaje_error: function(sms){
+                Toast.fire({
+                    icon: "error",
+                    title: `${sms}`
+                });
+            }
+        },
+        computed:{
+            validando_extra: function(){ 
+                if(this.tipo_persona == "J" && this.es_proveedor == 1){
+                    // $validator.methods
+                    $.validator.addClassRules('id_marcas',{ required: true });
+                    return true;
+                }else{
+                    $.validator.addClassRules('id_marcas',{ required: false });
+                    return false;
+                }
+            },disabled_input: function(){ if(this.validando_extra) return false; return true; }
+        }
+    })
+
+    // Validaciones
     $("#telefono_movil_persona").inputmask();
     $("#telefono_casa_persona").inputmask();
 
@@ -213,6 +292,9 @@
                 minlength: 5,
                 maxlength: 120,
             },
+            id_marcas: {
+                required: false,
+            },
             status_persona:{
                 required:true,
             }
@@ -261,6 +343,9 @@
           },
           status_persona:{
               required:"Seleccione una Opción",
+          },
+          id_marcas:{
+            required: "Seleccione una Opción"
           }
         },
         errorElement: "span",

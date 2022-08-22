@@ -37,7 +37,8 @@
                 VALUES(null,'$this->cedula_persona','$this->tipo_persona','$this->nom_persona', '$this->sexo_persona',
                 '$this->telefono_movil_persona','$this->telefono_casa_persona','$this->direccion_persona','$this->correo_persona',$this->if_proveedor,$this->if_user,$this->status_persona, NOW());";
                 $this->Query($sql);
-                
+
+                $this->id_persona = $this->Returning_id();                
                 if($this->Result_last_query()) return "msg/01DONE"; else return "err/01ERR";
             }
         }
@@ -54,8 +55,9 @@
                 if_proveedor = '$this->if_proveedor', if_user = '$this->if_user' WHERE id_person = $this->id_persona ;";
                 $this->Query($sql);
                 
-                if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-                else return ["code" => "error", "message" => "Operación Fallida"];
+                return ["code" => "success", "message" => "Operación Exitosa"];
+                // if($this->Result_last_query()) 
+                // else return ["code" => "error", "message" => "Operación Fallida"];
             }
         }
 
@@ -81,6 +83,23 @@
                 if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
                 else return ["code" => "error", "message" => "Operación Fallida"];
             }
+        }
+
+        public function RegistroMarcasProveedor($marcas){
+            $sql = "DELETE FROM proveedor_marca WHERE pro_id_persona =  $this->id_persona ;";
+            $this->Query($sql);
+            if(isset($marcas[0])){
+                foreach($marcas as $marca){
+                    $sqlInsert = "INSERT INTO proveedor_marca(pro_id_persona, pro_id_marca) VALUES($this->id_persona, $marca);";
+                    $this->Query($sqlInsert);
+                }
+            }
+        }
+
+        public function GetMarcasProveedor(){
+            $sql = "SELECT * FROM proveedor_marca INNER JOIN marca ON marca.id_marca = proveedor_marca.pro_id_marca WHERE proveedor_marca.pro_id_persona = $this->id_persona ;";
+            $results = $this->Query($sql);
+            return $this->Get_todos_array($results);
         }
 
         public function Get_todos_personas($status = ''){

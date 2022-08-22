@@ -37,15 +37,20 @@
     function fn_Registrar(){
         $model = new m_persona();
         $model->setDatos($_POST);
+        $marcas = isset($_POST['id_marca']) ? $_POST['id_marca'] : [];
+
         $mensaje = $model->Create();
-        
+        $model->RegistroMarcasProveedor($marcas);
         header("Location: ".constant("URL")."personas/form/$mensaje");
     }
 
     function fn_Actualizar(){
         $model = new m_persona();
         $model->setDatos($_POST);
+        $marcas = isset($_POST['id_marca']) ? $_POST['id_marca'] : [];
+
         $result = $model->Update();
+        $model->RegistroMarcasProveedor($marcas);
 
         print json_encode(["data" => $result]);
     }
@@ -77,7 +82,8 @@
         $model = new m_persona();
         $model->setDatos(["id_persona" => $_GET["id_persona"]]);
         $result = $model->Get_persona();
+        $result2 = $model->GetMarcasProveedor();
 
-        print json_encode(["data" => $result]);
+        print json_encode(["data" => $result, 'marcas' => $result2]);
     }
 ?>

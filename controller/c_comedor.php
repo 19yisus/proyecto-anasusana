@@ -1,7 +1,7 @@
 <?php
     require_once("../models/config.php");
     require_once("../models/m_comedor.php");
-    
+
     if(isset($_POST['ope'])){
         switch($_POST['ope']){
             case "Registrar":
@@ -30,6 +30,10 @@
 
             case "Consultar_comedor":
                 fn_Consultar_comedor();
+            break;
+
+            case 'Existe_sede':
+              fn_consultarSede();
             break;
         }
     }
@@ -79,5 +83,13 @@
         $result = $model->Get_comedor();
 
         print json_encode(["data" => $result]);
+    }
+
+    function fn_consultarSede(){
+      $model = new m_comedor();
+      $result = $model->ExisteSede();
+
+      print json_encode(["data" => $result]);
+
     }
 ?>

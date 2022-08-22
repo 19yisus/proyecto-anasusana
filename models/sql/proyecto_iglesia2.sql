@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-01-2022 a las 23:40:59
+-- Tiempo de generación: 19-07-2022 a las 16:31:11
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `proyecto_iglesia`
+-- Base de datos: `proyecto_iglesia2`
 --
 CREATE DATABASE IF NOT EXISTS `proyecto_iglesia2` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `proyecto_iglesia2`;
@@ -35,8 +35,17 @@ CREATE TABLE `comedor` (
   `encargado_comedor` int(11) NOT NULL,
   `direccion_comedor` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
   `status_comedor` tinyint(4) NOT NULL,
+  `if_sede` tinyint(1) NOT NULL,
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `comedor`
+--
+
+INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `encargado_comedor`, `direccion_comedor`, `status_comedor`, `if_sede`, `created_comedor`) VALUES
+(1, 'FAJSDFALSDFJKACTUALIZADO', 2, 'FADSFASDFASDFASDFS', 1, 0, '2022-05-25 09:59:11'),
+(2, 'FASDFASDFASDF', 2, 'ASDFASDFASDF', 1, 1, '2022-06-09 11:36:28');
 
 -- --------------------------------------------------------
 
@@ -53,7 +62,6 @@ CREATE TABLE `detalle_inventario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `inventario`
@@ -67,6 +75,7 @@ CREATE TABLE `inventario` (
   `created_invent` datetime DEFAULT NULL,
   `type_operacion_invent` enum('E','S') COLLATE utf8_spanish_ci NOT NULL,
   `concept_invent` enum('C','D','O','V','R') COLLATE utf8_spanish_ci DEFAULT NULL,
+  `if_credito` tinyint(1) DEFAULT NULL,
   `person_id_invent` int(11) DEFAULT NULL,
   `recibe_person_id_invent` int(11) DEFAULT NULL,
   `comedor_id_invent` int(11) NOT NULL,
@@ -86,6 +95,14 @@ CREATE TABLE `marca` (
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
+(1, 'NUAFASDFASDF', 1, '2022-05-10 22:16:56'),
+(2, 'Inventado', 1, '2022-06-14 13:08:09');
 
 -- --------------------------------------------------------
 
@@ -120,7 +137,15 @@ INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person
 (4, '27132642', 'V', 'JESUS MORALES', 'M', '0424 5198398', '', 'FASDFADSFADSFASDFASDFASDF', 'FASDFASDFASDF@GMAIL.COM', 1, 1, 1, '2021-12-14 21:56:01'),
 (5, '30400110', 'V', 'CARLOS TORRES', 'M', '0424 5198398', '', 'FASDFASDFASDFASDFASDF', 'FASDFASFASDFA@GMAIL.COM', 0, 1, 1, '2021-12-15 12:53:11'),
 (6, '29540849', 'V', 'JESUS RIVERO', 'F', '0424 4566646', '', 'FASDFASDFASDFASDFASDFASDF', 'FAFASFASDFASDFASDFASFADS@GMAIL.COM', 0, 0, 1, '2022-01-04 18:38:55'),
-(7, '26674045', 'V', 'AAFAFAFFAFAF', 'M', '2342 3423422', '4242 4242442', 'KJKJFKJKJFKJKFJF', 'CAFKLFALFAQ@EJKLQJE.COM', 1, 1, 1, '2022-01-10 17:28:30');
+(7, '26674045', 'V', 'AAFAFAFFAFAF', 'M', '2342 3423422', '4242 4242442', 'KJKJFKJKJFKJKFJF', 'CAFKLFALFAQ@EJKLQJE.COM', 1, 1, 1, '2022-01-10 17:28:30'),
+(9, '14542452', 'J', 'JOSESASDFASDFASDFASDF', 'M', '0424 5189965', '', 'FASDFADSFADSFASDF', 'FASDFADSFASDFASDFADSF@GMAIL.COM', 1, 0, 1, '2022-06-14 12:51:35'),
+(10, '14525246', 'J', 'FADLKJLKJKJKJKJKJ', 'F', '0424 5198556', '', 'FASDFADSFASDF', 'ASDFASDFASDFADF@GMAIL.COM', 1, 1, 1, '2022-06-14 12:53:46'),
+(11, '14145462', 'J', 'KHKJHJHJKHJKHJKH', 'M', '0424 5198398', '', 'FASDFASDFASDFADSFAS', 'KJHJKHJKHJKHLKHLJK@GMAIL.COM', 1, 0, 1, '2022-06-14 13:03:57'),
+(12, '46456987', 'J', 'JOSEE MORAS', 'M', '0424 5198399', '', 'FASDFASDFASDFASDF', 'ASDFADFASDFADFADSF@GMAIL.COM', 1, 0, 1, '2022-06-14 13:12:27'),
+(13, '45654512', 'J', 'FASDFASDFASDF', 'F', '0424 5198398', '', 'FASDFADSFASDFASD', 'FASDFASDFASDFASDF@GMAIL.COM', 1, 1, 1, '2022-06-14 13:13:30'),
+(14, '271645532', 'J', 'FASDFASDFASDFASDF', 'F', '0424 5198979', '', 'FASDFASDFADSFASDF', 'ASDFASDFASDFADSFASDF@GMAIL.COM', 1, 1, 1, '2022-06-14 13:16:52'),
+(15, '46545554', 'J', 'JOSEFAAAAAAA', 'F', '6406 5456405', '', 'FASDFADSFASDF', 'FASDFADFASDFASDF@GMAIL.COM', 1, 1, 1, '2022-06-14 13:18:29'),
+(16, '12123123', 'J', 'NOSFASDFASDFASDFASDF', 'M', '0460 4564065', '', 'FADFASDFASDFASDFDFASFASD', 'FASDFADSFADFASDFADSF@GMAIL.COM', 1, 0, 1, '2022-06-19 10:42:37');
 
 -- --------------------------------------------------------
 
@@ -155,8 +180,29 @@ CREATE TABLE `productos` (
   `status_product` tinyint(4) NOT NULL,
   `created_product` datetime NOT NULL,
   `stock_product` int(11) NOT NULL,
+  `stock_minimo_product` int(11) NOT NULL,
+  `stock_maximo_product` int(11) NOT NULL,
   `marca_id_product` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proveedor_marca`
+--
+
+CREATE TABLE `proveedor_marca` (
+  `pro_id_persona` int(11) NOT NULL,
+  `pro_id_marca` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `proveedor_marca`
+--
+
+INSERT INTO `proveedor_marca` (`pro_id_persona`, `pro_id_marca`) VALUES
+(15, 1),
+(16, 2);
 
 -- --------------------------------------------------------
 
@@ -227,7 +273,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_user`, `person_id_user`, `password_user`, `status_user`, `id_rol`, `created_user`, `pregun1_user`, `pregun2_user`, `respuesta1_user`, `respuesta2_user`) VALUES
-(1, 1, '$2y$12$tu6ib2eWHywHPEzQyDCjR.7R/Cfc6kb7f2ou8NDXf2Fer94BIQnqS', 1, 1, '2021-11-23 02:08:10', 1, 2, 1, 4),
+(1, 1, '$2y$12$ubs1WYLLAOCXirDYRzOF4.6a9UQvWx8jWET0ii9Kr0/gC8OzIZysK', 1, 1, '2021-11-23 02:08:10', 1, 2, 1, 4),
 (2, 3, '$2y$12$AGxghVHoNWTdArAy2NxoKuCRk6B74xAr9Wi.E1MUF3WAdTufZ6VC.', 1, 3, '2021-12-05 11:08:09', 2, 1, 3, 2),
 (4, 2, '$2y$12$D7e0XgYow5KmL.aQb5akGuOjzJt2/ZzURUPH.YarhL5VlXGwB8U.C', 1, 2, '2021-12-14 21:43:29', 1, 2, 1, 3),
 (5, 4, '$2y$12$si90t.l91IB4HFuaoWnsluU1sLxpu5yvoF5feoZnu2mKiIybgvuB.', 1, 3, '2021-12-14 21:56:41', 1, 2, 1, 4),
@@ -289,6 +335,13 @@ ALTER TABLE `productos`
   ADD KEY `marca_id_product` (`marca_id_product`);
 
 --
+-- Indices de la tabla `proveedor_marca`
+--
+ALTER TABLE `proveedor_marca`
+  ADD KEY `pro_id_marca` (`pro_id_marca`),
+  ADD KEY `pro_id_persona` (`pro_id_persona`);
+
+--
 -- Indices de la tabla `respuestas`
 --
 ALTER TABLE `respuestas`
@@ -321,19 +374,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -396,6 +449,13 @@ ALTER TABLE `inventario`
 --
 ALTER TABLE `productos`
   ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`marca_id_product`) REFERENCES `marca` (`id_marca`);
+
+--
+-- Filtros para la tabla `proveedor_marca`
+--
+ALTER TABLE `proveedor_marca`
+  ADD CONSTRAINT `pro_marca` FOREIGN KEY (`pro_id_marca`) REFERENCES `marca` (`id_marca`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pro_persona` FOREIGN KEY (`pro_id_persona`) REFERENCES `personas` (`id_person`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `respuestas`

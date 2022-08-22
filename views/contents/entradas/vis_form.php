@@ -79,7 +79,7 @@
 									<div class="col-3">
 										<div class="form-group">
 											<label for="concept_invent">Concepto de Operación(<span class="text-danger text-md">*</span>)</label>
-											<select name="concept_invent" id="concept_invent" class="custom-select">
+											<select name="concept_invent" v-model="concepto_operacion" id="concept_invent" class="custom-select">
 												<option value="">Seleccione un Proveedor</option>
 												<option value="C">Compra</option>
 												<option value="D">Donación</option>
@@ -92,6 +92,17 @@
 											<input type="datetime-local" name="fecha_invent" id="" class="form-control" max="<?php echo $this->thisDateMoreOneHour();?>" value="<?php echo $this->DateNow("Y-m-d H:i");?>" >
 										</div>
 									</div>
+									<div class="col-3" v-show="concepto_operacion == 'C'">
+										<div class="form-group">
+											<div class="form-check mt-4">
+                          <input type="radio" name="if_credito" v-model="if_credito" id="if_credito" value="1" class="form-check-input">
+                          <input type="hidden" name="if_credito" value="0" checked>
+                          <label for="if_credito" class="form-check-label">Compra por credito?(<span class="text-danger text-md">*</span>)</label>
+                      </div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
 									<div class="col-6">
 										<div class="form-group">
 											<input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
@@ -172,9 +183,11 @@
 	new Vue({
 		el: '#VueApp',
 		data: {
-		productos: [
-			// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: "", stock_maximo: 0},
-		],
+			productos: [
+				// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: "", stock_maximo: 0},
+			],
+			if_credito: "",
+			concepto_operacion: "",
 		},
 		methods: {
 			Duplicar: function () {
