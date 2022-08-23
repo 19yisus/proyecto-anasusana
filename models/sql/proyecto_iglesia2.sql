@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 19-07-2022 a las 16:31:11
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 7.4.22
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 23-08-2022 a las 21:55:51
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,6 +22,25 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `proyecto_iglesia2` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `proyecto_iglesia2`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cargo`
+--
+
+CREATE TABLE `cargo` (
+  `id_cargo` int(11) NOT NULL,
+  `des_cargo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `estatus_cargo` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`id_cargo`, `des_cargo`, `estatus_cargo`) VALUES
+(1, 'NUEVOOO', 1);
 
 -- --------------------------------------------------------
 
@@ -120,6 +139,7 @@ CREATE TABLE `personas` (
   `telefono_casa_person` varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
   `direccion_person` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
   `correo_person` varchar(130) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `cargo_id` int(11) DEFAULT NULL,
   `if_proveedor` tinyint(1) NOT NULL,
   `if_user` tinyint(1) NOT NULL,
   `status_person` tinyint(1) NOT NULL,
@@ -130,22 +150,23 @@ CREATE TABLE `personas` (
 -- Volcado de datos para la tabla `personas`
 --
 
-INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person`, `sexo_person`, `telefono_movil_person`, `telefono_casa_person`, `direccion_person`, `correo_person`, `if_proveedor`, `if_user`, `status_person`, `created_person`) VALUES
-(1, '26587969', 'V', 'ALFREDO MENDEZZ', 'M', '0424 5198398', '', 'GASGSDFGSDFGSDFGSDFGSDFGSFGD', 'MENDEZ23_FASDFASD@GMAIL.COM', 1, 1, 1, '2021-11-18 22:38:38'),
-(2, '14887889', 'V', 'ALFONSO MEDINA', 'M', '0424 5589669', '0255 6846698', 'FFASDFASDFASDFASDFASDFASDFASDFASDFASDF', 'ALFONSOMEDINA23@GMAIL.COM', 1, 1, 1, '2021-11-24 09:59:47'),
-(3, '30400100', 'V', 'RONALDO PEREZ', 'M', '0424 5198396', '', 'FASDFASDFASDFASDFASDFASDFASDF', 'FASDFASDFASDFADS@GMAIL.COM', 0, 1, 1, '2021-12-05 10:58:34'),
-(4, '27132642', 'V', 'JESUS MORALES', 'M', '0424 5198398', '', 'FASDFADSFADSFASDFASDFASDF', 'FASDFASDFASDF@GMAIL.COM', 1, 1, 1, '2021-12-14 21:56:01'),
-(5, '30400110', 'V', 'CARLOS TORRES', 'M', '0424 5198398', '', 'FASDFASDFASDFASDFASDF', 'FASDFASFASDFA@GMAIL.COM', 0, 1, 1, '2021-12-15 12:53:11'),
-(6, '29540849', 'V', 'JESUS RIVERO', 'F', '0424 4566646', '', 'FASDFASDFASDFASDFASDFASDF', 'FAFASFASDFASDFASDFASFADS@GMAIL.COM', 0, 0, 1, '2022-01-04 18:38:55'),
-(7, '26674045', 'V', 'AAFAFAFFAFAF', 'M', '2342 3423422', '4242 4242442', 'KJKJFKJKJFKJKFJF', 'CAFKLFALFAQ@EJKLQJE.COM', 1, 1, 1, '2022-01-10 17:28:30'),
-(9, '14542452', 'J', 'JOSESASDFASDFASDFASDF', 'M', '0424 5189965', '', 'FASDFADSFADSFASDF', 'FASDFADSFASDFASDFADSF@GMAIL.COM', 1, 0, 1, '2022-06-14 12:51:35'),
-(10, '14525246', 'J', 'FADLKJLKJKJKJKJKJ', 'F', '0424 5198556', '', 'FASDFADSFASDF', 'ASDFASDFASDFADF@GMAIL.COM', 1, 1, 1, '2022-06-14 12:53:46'),
-(11, '14145462', 'J', 'KHKJHJHJKHJKHJKH', 'M', '0424 5198398', '', 'FASDFASDFASDFADSFAS', 'KJHJKHJKHJKHLKHLJK@GMAIL.COM', 1, 0, 1, '2022-06-14 13:03:57'),
-(12, '46456987', 'J', 'JOSEE MORAS', 'M', '0424 5198399', '', 'FASDFASDFASDFASDF', 'ASDFADFASDFADFADSF@GMAIL.COM', 1, 0, 1, '2022-06-14 13:12:27'),
-(13, '45654512', 'J', 'FASDFASDFASDF', 'F', '0424 5198398', '', 'FASDFADSFASDFASD', 'FASDFASDFASDFASDF@GMAIL.COM', 1, 1, 1, '2022-06-14 13:13:30'),
-(14, '271645532', 'J', 'FASDFASDFASDFASDF', 'F', '0424 5198979', '', 'FASDFASDFADSFASDF', 'ASDFASDFASDFADSFASDF@GMAIL.COM', 1, 1, 1, '2022-06-14 13:16:52'),
-(15, '46545554', 'J', 'JOSEFAAAAAAA', 'F', '6406 5456405', '', 'FASDFADSFASDF', 'FASDFADFASDFASDF@GMAIL.COM', 1, 1, 1, '2022-06-14 13:18:29'),
-(16, '12123123', 'J', 'NOSFASDFASDFASDFASDF', 'M', '0460 4564065', '', 'FADFASDFASDFASDFDFASFASD', 'FASDFADSFADFASDFADSF@GMAIL.COM', 1, 0, 1, '2022-06-19 10:42:37');
+INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person`, `sexo_person`, `telefono_movil_person`, `telefono_casa_person`, `direccion_person`, `correo_person`, `cargo_id`, `if_proveedor`, `if_user`, `status_person`, `created_person`) VALUES
+(1, '26587969', 'V', 'ALFREDO MENDEZZ', 'M', '0424 5198398', '', 'GASGSDFGSDFGSDFGSDFGSDFGSFGD', 'MENDEZ23_FASDFASD@GMAIL.COM', NULL, 1, 1, 1, '2021-11-18 22:38:38'),
+(2, '14887889', 'V', 'ALFONSO MEDINA', 'M', '0424 5589669', '0255 6846698', 'FFASDFASDFASDFASDFASDFASDFASDFASDFASDF', 'ALFONSOMEDINA23@GMAIL.COM', NULL, 1, 1, 1, '2021-11-24 09:59:47'),
+(3, '30400100', 'V', 'RONALDO PEREZ', 'M', '0424 5198396', '', 'FASDFASDFASDFASDFASDFASDFASDF', 'FASDFASDFASDFADS@GMAIL.COM', NULL, 0, 1, 1, '2021-12-05 10:58:34'),
+(4, '27132642', 'V', 'JESUS MORALES', 'M', '0424 5198398', '', 'FASDFADSFADSFASDFASDFASDF', 'FASDFASDFASDF@GMAIL.COM', NULL, 1, 1, 1, '2021-12-14 21:56:01'),
+(5, '30400110', 'V', 'CARLOS TORRES', 'M', '0424 5198398', '', 'FASDFASDFASDFASDFASDF', 'FASDFASFASDFA@GMAIL.COM', NULL, 0, 1, 1, '2021-12-15 12:53:11'),
+(6, '29540849', 'V', 'JESUS RIVERO', 'F', '0424 4566646', '', 'FASDFASDFASDFASDFASDFASDF', 'FAFASFASDFASDFASDFASFADS@GMAIL.COM', NULL, 0, 0, 1, '2022-01-04 18:38:55'),
+(7, '26674045', 'V', 'AAFAFAFFAFAF', 'M', '2342 3423422', '4242 4242442', 'KJKJFKJKJFKJKFJF', 'CAFKLFALFAQ@EJKLQJE.COM', NULL, 1, 1, 1, '2022-01-10 17:28:30'),
+(9, '14542452', 'J', 'JOSESASDFASDFASDFASDF', 'M', '0424 5189965', '', 'FASDFADSFADSFASDF', 'FASDFADSFASDFASDFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 12:51:35'),
+(10, '14525246', 'J', 'FADLKJLKJKJKJKJKJ', 'F', '0424 5198556', '', 'FASDFADSFASDF', 'ASDFASDFASDFADF@GMAIL.COM', NULL, 1, 1, 1, '2022-06-14 12:53:46'),
+(11, '14145462', 'J', 'KHKJHJHJKHJKHJKH', 'M', '0424 5198398', '', 'FASDFASDFASDFADSFAS', 'KJHJKHJKHJKHLKHLJK@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 13:03:57'),
+(12, '46456987', 'J', 'JOSEE MORAS', 'M', '0424 5198399', '', 'FASDFASDFASDFASDF', 'ASDFADFASDFADFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 13:12:27'),
+(13, '45654512', 'J', 'FASDFASDFASDF', 'F', '0424 5198398', '', 'FASDFADSFASDFASD', 'FASDFASDFASDFASDF@GMAIL.COM', NULL, 1, 1, 1, '2022-06-14 13:13:30'),
+(14, '271645532', 'J', 'FASDFASDFASDFASDF', 'F', '0424 5198979', '', 'FASDFASDFADSFASDF', 'ASDFASDFASDFADSFASDF@GMAIL.COM', NULL, 1, 1, 1, '2022-06-14 13:16:52'),
+(15, '46545554', 'J', 'JOSEFAAAAAAA', 'F', '6406 5456405', '', 'FASDFADSFASDF', 'FASDFADFASDFASDF@GMAIL.COM', NULL, 1, 1, 1, '2022-06-14 13:18:29'),
+(16, '12123123', 'J', 'NOSFASDFASDFASDFASDF', 'M', '0460 4564065', '', 'FADFASDFASDFASDFDFASFASD', 'FASDFADSFADFASDFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-19 10:42:37'),
+(18, '12213123', 'V', 'FEEEEEEEEEEEEEEEEEEEEEEE', 'M', '0424 7837987', '', 'FASDFASDFASDFASD', 'FASDFASDFASDFASDF@GMAIL.COM', 1, 0, 0, 1, '2022-08-22 16:19:58');
 
 -- --------------------------------------------------------
 
@@ -184,6 +205,13 @@ CREATE TABLE `productos` (
   `stock_maximo_product` int(11) NOT NULL,
   `marca_id_product` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `stock_minimo_product`, `stock_maximo_product`, `marca_id_product`) VALUES
+(1, 'NEUVOOOO', 'KL', 1, 1, '2022-08-23 15:45:06', 0, 12, 15, 1);
 
 -- --------------------------------------------------------
 
@@ -285,6 +313,12 @@ INSERT INTO `usuarios` (`id_user`, `person_id_user`, `password_user`, `status_us
 --
 
 --
+-- Indices de la tabla `cargo`
+--
+ALTER TABLE `cargo`
+  ADD PRIMARY KEY (`id_cargo`);
+
+--
 -- Indices de la tabla `comedor`
 --
 ALTER TABLE `comedor`
@@ -319,7 +353,8 @@ ALTER TABLE `marca`
 --
 ALTER TABLE `personas`
   ADD PRIMARY KEY (`id_person`),
-  ADD UNIQUE KEY `cedula_person` (`cedula_person`);
+  ADD UNIQUE KEY `cedula_person` (`cedula_person`),
+  ADD KEY `cargos` (`cargo_id`);
 
 --
 -- Indices de la tabla `preguntas`
@@ -371,6 +406,12 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `cargo`
+--
+ALTER TABLE `cargo`
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
@@ -386,7 +427,7 @@ ALTER TABLE `marca`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -398,7 +439,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas`
@@ -443,6 +484,12 @@ ALTER TABLE `inventario`
   ADD CONSTRAINT `inventario_ibfk_2` FOREIGN KEY (`comedor_id_invent`) REFERENCES `comedor` (`id_comedor`),
   ADD CONSTRAINT `inventario_ibfk_3` FOREIGN KEY (`user_id_invent`) REFERENCES `usuarios` (`id_user`),
   ADD CONSTRAINT `persona_quien_recibe` FOREIGN KEY (`recibe_person_id_invent`) REFERENCES `personas` (`id_person`);
+
+--
+-- Filtros para la tabla `personas`
+--
+ALTER TABLE `personas`
+  ADD CONSTRAINT `cargos` FOREIGN KEY (`cargo_id`) REFERENCES `cargo` (`id_cargo`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `productos`

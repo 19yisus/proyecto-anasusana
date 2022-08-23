@@ -5,7 +5,10 @@
     <div class="wrapper" id="VueApp">
       <?php
         require_once './models/m_marca.php';
+        require_once './models/m_cargos.php';
         $model_marca = new m_marca();
+        $model_cargo = new m_cargos();
+        $cargos = $model_cargo->Get_todos_cargo(1);
         $marcas = $model_marca->Get_todos_marcas(1);
         $this->titleContent = "Registro de Personas";
         $this->GetComplement("navbar");
@@ -105,7 +108,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="correo_persona">Correo(<span class="text-danger text-md">*</span>)</label>
                                             <div class="input-group mb-3">
@@ -116,10 +119,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="direccion_persona">Dirección de la Persona(<span class="text-danger text-md">*</span>)</label>
                                             <textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la Dirección de la Persona"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="cargo_persona">Cargo</label>
+                                            <select name="cargo_id" id="" class="custom-select">
+                                                <option value="">Seleccione una opción</option>
+																								<?php 
+																									foreach($cargos as $cargo){
+																										?>
+																										<option value="<?php echo $cargo['id_cargo'];?>"><?php echo $cargo['des_cargo'];?></option>
+																										<?php
+																									}
+																								?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-3">
@@ -295,6 +313,9 @@
             id_marcas: {
                 required: false,
             },
+						cargo_id:{
+							required:false,
+						},
             status_persona:{
                 required:true,
             }
@@ -325,10 +346,10 @@
               minlength: "Mínimo de 11 caracteres numéricos",
           },
           if_proveedor:{
-              required:"Seleccione una Opción",
+              required:"Seleccione una opción",
           },
           if_user:{
-              required:"Seleccione una Opción",
+              required:"Seleccione una opción",
           },
           correo_persona:{
               required:"Este Campo NO puede estar Vacio",
@@ -342,11 +363,14 @@
               maxlength: "Máximo de 120 caracteres",
           },
           status_persona:{
-              required:"Seleccione una Opción",
+              required:"Seleccione una opción",
           },
           id_marcas:{
-            required: "Seleccione una Opción"
-          }
+            required: "Seleccione una opción"
+          },
+					cargo_id:{
+						required: "Seleccione una opción"
+					}
         },
         errorElement: "span",
         errorPlacement: function (error, element){

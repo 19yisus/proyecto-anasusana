@@ -110,6 +110,21 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-3">
+																					<div class="form-group">
+																						<label for="cargo_persona">Cargo</label>
+																						<select name="cargo_id" id="" class="custom-select">
+																								<option value="">Seleccione una opción</option>
+																								<?php 
+																									foreach($cargos as $cargo){
+																										?>
+																										<option value="<?php echo $cargo['id_cargo'];?>"><?php echo $cargo['des_cargo'];?></option>
+																										<?php
+																									}
+																								?>
+																						</select>
+																					</div>
+                                    		</div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
                                                 <label for="direccion_persona">Dirección de la Persona(<span class="text-danger text-md">*</span>)</label>

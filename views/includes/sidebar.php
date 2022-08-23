@@ -56,6 +56,14 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="<?php $this->SetURL('cargo/index');?>" class="nav-link <?php $this->IsActive("cargo/index"); ?>">
+                <i class="nav-icon fas fa-people-carry"></i>
+                <p>
+                  Cargos
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="<?php $this->SetURL('personas/index');?>" class="nav-link  <?php $this->IsActive("personas/index"); ?>">
                 <i class="nav-icon fas fa-users"></i>
                 <p>

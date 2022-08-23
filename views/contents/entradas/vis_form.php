@@ -103,6 +103,17 @@
 									</div>
 								</div>
 								<div class="row">
+									<div class="col-3">
+										<div class="form-group">
+											<label for="recibe_person_id_invent">¿Quién Recibe Esto?(<span class="text-danger text-md">*</span>)</label>
+											<select name="recibe_person_id_invent" id="recibe_person_id_invent" class="custom-select special_select2">
+												<option value="">Seleccione a una Persona</option>
+												<?php foreach($person2 as $persona){?>
+												<option value="<?php echo $persona['id_person'];?>"><?php echo $persona['tipo_person']."-".$persona['cedula_person']." ".$persona['nom_person'];?></option>
+												<?php }?>
+											</select>
+										</div>
+									</div>
 									<div class="col-6">
 										<div class="form-group">
 											<input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
@@ -233,8 +244,13 @@
 				return contador > 1;
 			},
       validarStockMaximo: function(index){
-        let input = index.target, value = parseInt(input.value), maximo = parseInt(input.max);
-        input.value = maximo;
+        let input = index.target, value = parseInt(input.value), maximo = parseInt(input.max), minimo = parseInt(input.min);
+        //input.value = ;
+				
+				if(value < minimo){
+					this.Fn_mensaje_error(`Este producto tiene un stock minimo de: (${minimo})`);
+					this.productos[input.dataset.index].cantidad = minimo;
+				}
         if(value > maximo){
           this.Fn_mensaje_error(`No se puede superar el Stock Maximo de este producto (${this.productos[input.dataset.index].stock_maximo})`);
           this.productos[input.dataset.index].cantidad = maximo;

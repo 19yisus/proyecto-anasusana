@@ -1,3 +1,3 @@
-Cedula: 26587696 Clave: Iglesia.2022. Rol: Super Amin Estado: Activo Pregunta1: color favorito (respuesta: azul) Pregunta2: animal favorito (respuesta: gato)
+Cedula: 26587969 Clave: Iglesia.2022. Rol: Super Amin Estado: Activo Pregunta1: color favorito (respuesta: azul) Pregunta2: animal favorito (respuesta: gato)
 Cedula: 30400100 Clave: Jesus.2021 Rol: General Estado: Activo Pregunta1: animal favorito (respuesta: perro) Pregunta2: color favorito (respuesta: rojo)
 Cedula: 14887889 Sin usuario

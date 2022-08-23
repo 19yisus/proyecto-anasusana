@@ -31,7 +31,7 @@
             $status_transaccion = true;
             $sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
             concept_invent,if_credito,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
-            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E','$this->concept_invent','$this->if_credito',$this->person_id_invent,NULL,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E','$this->concept_invent','$this->if_credito',$this->person_id_invent,$this->recibe_person_id_invent,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
             
             try{
                 $this->Start_transacction();

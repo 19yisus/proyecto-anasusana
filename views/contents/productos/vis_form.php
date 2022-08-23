@@ -143,10 +143,17 @@
             stock_minimo_producto:{
                 required: true,
                 number: true,
+                min: 1,
+                max: function(){
+                    return parseInt($("#stock_maximo_producto").val())
+                }
             },
             stock_maximo_producto:{
                 required: true,
                 number: true,
+                min: function(){
+                    return parseInt($("#stock_minimo_producto").val())
+                }
             },
             marca_id_producto:{
                 required: true
@@ -166,11 +173,19 @@
           },
           stock_minimo_producto:{
               required: "Este Campo NO puede estar Vacio",
-              number: "Sólo se Aceptan Números"
+              number: "Sólo se Aceptan Números",
+              max: function(){
+                console.log(parseInt($("#stock_maximo_producto").val()))
+                if(!parseInt($("#stock_maximo_producto").val()) > 0) return "Aun debes ingresar el stock maximo"; else "El maximo a ingresar es: "+parseInt($("#stock_maximo_producto").val())
+              }
           },
           stock_maximo_producto:{
               required: "Este Campo NO puede estar Vacio",
-              number: "Sólo se Aceptan Números"
+              number: "Sólo se Aceptan Números",
+              min: function(){
+                console.log(parseInt($("#stock_minimo_producto").val()))
+                if(!parseInt($("#stock_minimo_producto").val()) > 0) return "Aun debes ingresar el stock minimo"; else "El minimo a ingresar es: "+parseInt($("#stock_minimo_producto").val())
+              }
           },
           marca_id_producto:{
               required: "Debe de Seleccionar una Opción"

@@ -6,7 +6,10 @@
       <?php
         $this->titleContent = "Catálogo de Personas";
         require_once './models/m_marca.php';
+        require_once './models/m_cargos.php';
         $model_marca = new m_marca();
+        $model_cargo = new m_cargos();
+        $cargos = $model_cargo->Get_todos_cargo(1);
         $marcas = $model_marca->Get_todos_marcas(1);
         $this->GetComplement("navbar");
         $this->GetComplement("sidebar");
@@ -31,6 +34,7 @@
                           <th>Cédula</th>
                           <th>Nombre y Apellido</th>
                           <th>¿Es Proveedor?</th>
+                          <th>Cargo</th>
                           <th>Estado</th>
                           <th>Creación</th>
                           <th>Opciones</th>
@@ -174,6 +178,7 @@
       form.telefono_casa_persona.value = res.data.telefono_casa_person;
       form.correo_persona.value = res.data.correo_person;
       form.direccion_persona.value = res.data.direccion_person;
+      form.cargo_id.value = res.data.cargo_id;
       return res;
     })
     .catch( Err => {
@@ -194,6 +199,10 @@
         render: function(data){
           return (data === "1") ? "Sí es Proveedor" : "No es Proveedor";
         }},
+        {data: "des_cargo", 
+          render: function(data){
+            return (data != null) ? data : "No posee cargo"
+          }},
         {data: "status_person",
         render: function(data){
           return (data == "1") ? "Activo" : "Inactivo";
@@ -204,6 +213,7 @@
         }},
         {defaultContent: "",
         render: function(data, type, row, meta){
+          console.log(row)
           let btn_secondary;
           let estadoBtnEdit;
           if(row.status_person === "1"){

@@ -2,11 +2,11 @@
     require_once("m_db.php");
 
     class m_persona extends m_db{
-        private $id_persona, $nom_persona, $sexo_persona, $status_persona, $cedula_persona, $tipo_persona, $telefono_movil_persona, $telefono_casa_persona, $direccion_persona, $correo_persona, $if_proveedor, $if_user;
+        private $id_persona, $nom_persona, $sexo_persona, $status_persona, $cedula_persona, $tipo_persona, $telefono_movil_persona, $telefono_casa_persona, $direccion_persona, $correo_persona, $if_proveedor, $if_user, $cargo_id;
 
         public function __construct(){
             parent::__construct();
-            $this->id_persona = $this->nom_persona = $this->status_persona = $this->cedula_persona = $this->tipo_persona = "";
+            $this->id_persona = $this->nom_persona = $this->status_persona = $this->cedula_persona = $this->tipo_persona = $this->cargo_id = "";
             $this->telefono_movil_persona = $this->telefono_casa_persona = $this->direccion_persona = $this->correo_persona = $this->if_user = $this->status_persona = "";
         }
 
@@ -24,6 +24,7 @@
             $this->if_proveedor = isset($d['if_proveedor']) ? $d['if_proveedor'] : null;
             $this->if_user = isset($d['if_user']) ? $d['if_user'] : null;
             $this->status_persona =  isset($d['status_persona']) ? $d['status_persona'] : null;
+            $this->cargo_id = isset($d['cargo_id']) ? $d['cargo_id'] : null;
         }
 
         public function Create(){
@@ -33,9 +34,9 @@
             if($result->num_rows > 0){
                 return "err/02ERR";
             }else{
-                $sql = "INSERT INTO personas(id_person,cedula_person,tipo_person,nom_person,sexo_person,telefono_movil_person,telefono_casa_person,direccion_person,correo_person,if_proveedor,if_user,status_person,created_person) 
+                $sql = "INSERT INTO personas(id_person,cedula_person,tipo_person,nom_person,sexo_person,telefono_movil_person,telefono_casa_person,direccion_person,correo_person,cargo_id,if_proveedor,if_user,status_person,created_person) 
                 VALUES(null,'$this->cedula_persona','$this->tipo_persona','$this->nom_persona', '$this->sexo_persona',
-                '$this->telefono_movil_persona','$this->telefono_casa_persona','$this->direccion_persona','$this->correo_persona',$this->if_proveedor,$this->if_user,$this->status_persona, NOW());";
+                '$this->telefono_movil_persona','$this->telefono_casa_persona','$this->direccion_persona','$this->correo_persona','$this->cargo_id',$this->if_proveedor,$this->if_user,$this->status_persona, NOW());";
                 $this->Query($sql);
 
                 $this->id_persona = $this->Returning_id();                
@@ -52,7 +53,7 @@
                 $sql = "UPDATE personas SET nom_person = '$this->nom_persona', sexo_person = '$this->sexo_persona', 
                 telefono_movil_person = '$this->telefono_movil_persona', telefono_casa_person = '$this->telefono_casa_persona', 
                 direccion_person = '$this->direccion_persona', correo_person = '$this->correo_persona', 
-                if_proveedor = '$this->if_proveedor', if_user = '$this->if_user' WHERE id_person = $this->id_persona ;";
+                if_proveedor = '$this->if_proveedor', if_user = '$this->if_user', cargo_id = '$this->cargo_id' WHERE id_person = $this->id_persona ;";
                 $this->Query($sql);
                 
                 return ["code" => "success", "message" => "Operación Exitosa"];
@@ -103,7 +104,7 @@
         }
 
         public function Get_todos_personas($status = ''){
-            if($status != '') $sql = "SELECT * FROM personas WHERE status_person = '1';"; else $sql = "SELECT * FROM personas ;";            
+            if($status != '') $sql = "SELECT * FROM personas WHERE status_person = '1';"; else $sql = "SELECT * FROM personas LEFT JOIN cargo ON cargo.id_cargo = personas.cargo_id;";            
             $results = $this->query($sql);
             return $this->Get_todos_array($results);
         }
