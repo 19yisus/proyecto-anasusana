@@ -35,10 +35,9 @@
             <p>
               Registros
               <i class="fas fa-angle-left right"></i>
-              <!-- <span class="badge badge-info right">6</span> -->
             </p>
           </a>
-          <ul class="nav nav-treeview bg-primary">
+          <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="<?php $this->SetURL('marcas/index'); ?>" class="nav-link  <?php $this->IsActive("marcas/index"); ?>">
                 <i class="nav-icon fas fa-bullseye"></i>
@@ -89,7 +88,7 @@
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-          <ul class="nav nav-treeview bg-primary">
+          <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="<?php $this->SetURL('entradas/index');?>" class="nav-link <?php $this->IsActive("entradas"); ?>">
                 <i class="nav-item fas fa-hand-holding-medical"></i>
@@ -113,7 +112,7 @@
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
-          <ul class="nav nav-treeview bg-primary">
+          <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="<?php $this->SetURL('usuarios/index');?>" class="nav-link <?php $this->IsActive("usuarios"); ?>">
                 <i class="nav-icon fas fa-user-cog"></i>

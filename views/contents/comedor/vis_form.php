@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <?php $this->GetHeader(); ?>
-  <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
+  <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php
         require_once("./models/m_persona.php");
@@ -16,10 +16,7 @@
         $this->titleContent = "Registro de Comedor";
 
         $this->GetComplement("navbar");
-        $this->GetComplement("sidebar");
-
-        // var_dump($resultSede);
-        // die("fasdfa");
+        // $this->GetComplement("sidebar");
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">

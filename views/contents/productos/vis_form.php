@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
   <?php $this->GetHeader(); ?>
-  <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
+  <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php
         $this->titleContent = "Formulario de Registros de Productos";
 
         $this->GetComplement("navbar");
-        $this->GetComplement("sidebar");
+        // $this->GetComplement("sidebar");
         require_once("./models/m_marca.php");
 
         $model_marca = new m_marca();
@@ -80,6 +80,19 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-2">
+                                        <label for="">Peresedero?(<span class="text-danger text-md">*</span>)</label>
+                                        <div class="row">
+                                            <div class="form-check mx-3">
+                                                <input type="radio" name="peresedero_if" id="peresedero_if1" value="1" class="form-check-input" >
+                                                <label for="peresedero_if" class="form-check-label">Si</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" name="peresedero_if" id="peresedero_if2" value="0" class="form-check-input" checked>
+                                                <label for="peresedero_if" class="form-check-label">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-4">
                                         <label for="">Estado del Producto(<span class="text-danger text-md">*</span>)</label>
                                         <div class="row">
@@ -126,6 +139,13 @@
             if(res) $("#formulario").submit();
         }
     })
+
+    $("#peresedero_if1").click( () =>{
+        $("#marca_id_producto").val('');
+        $("#marca_id_producto").attr("disabled","true")
+    });
+    
+    $("#peresedero_if2").click( () => $("#marca_id_producto").removeAttr("disabled"));
 
     $("#formulario").validate({
         rules:{

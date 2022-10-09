@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <?php $this->GetHeader(); ?>
-  <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
+  <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
     <div class="wrapper" id="VueApp">
       <?php
         require_once './models/m_marca.php';
@@ -12,7 +12,7 @@
         $marcas = $model_marca->Get_todos_marcas(1);
         $this->titleContent = "Registro de Personas";
         $this->GetComplement("navbar");
-        $this->GetComplement("sidebar");
+        // $this->GetComplement("sidebar");
       ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">

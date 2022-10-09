@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <?php $this->GetHeader(); ?>
-  <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
+  <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
     <div class="wrapper">
 
       <!-- Content Wrapper. Contains page content -->

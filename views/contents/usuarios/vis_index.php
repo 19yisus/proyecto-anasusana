@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
   <?php $this->GetHeader(); ?>
-  <body class="hold-transition sidebar-mini sidebar-collapse layout-footer-fixed text-sm">
+  <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php
         $this->titleContent = "Catálogo de Usuarios";
 
         $this->GetComplement("navbar");
-        $this->GetComplement("sidebar");
+        // $this->GetComplement("sidebar");
         require_once("./models/m_db.php");
 
       ?>
@@ -28,7 +28,7 @@
                     <table id="dataTable" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Código</th>
+                          <th>Cédula</th>
                           <th>Nombre</th>
                           <th>Rol</th>
                           <th>Estado</th>
@@ -101,7 +101,7 @@
         dataSrc: "data",
       },
       columns: [
-        {data: "id_user"},
+        {data: "cedula_person"},
         {data: "nom_person"},
         {data: "nom_rol"},
         {data: "status_user",
@@ -114,6 +114,7 @@
         }},
         {defaultContent: "",
         render: function(data, type, row, meta){
+          
           let btn_secondary;
           let estadoBtnEdit;
           if(row.status_user === "1"){

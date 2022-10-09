@@ -224,7 +224,6 @@
             $sql_inventario = "SELECT * FROM inventario INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor WHERE inventario.id_invent = '$codigo' ;";
             $sql_productos = "SELECT * FROM detalle_inventario 
             INNER JOIN productos ON productos.id_product = detalle_inventario.product_id_ope 
-            INNER JOIN grupo ON grupo.id_grupo = productos.grupo_id_product
             WHERE detalle_inventario.invent_id_ope = '$codigo'";
 
             $datos_inventario = $this->Get_array($this->Query($sql_inventario));

@@ -4,12 +4,7 @@
     - agregar unidad e medidas
       - Agregar en el menu unidad de medida y valor de medida.
     - agregar tres medidas por si acaso (aceite de 0.50 - 1.00 - 0.75)
-    - valor de medida podria ser la presentacion
-    - agregar alerta arriba
-    - agregar opcion de aliemtentos peresederos
     - agregar catalogo de menu de comidas
-    - en lista de productos en cantidad arreglar en la parte de cantidad
-    - en salida en lista, debe haber un menu
    */
   require_once("./models/config.php");
   require_once("./controller/c_messages.php");

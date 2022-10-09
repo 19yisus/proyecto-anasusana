@@ -45,6 +45,11 @@
     $model = new m_entrada_salida();
     $d = $model->GetPdf($_POST['id_invent'])[0];
     $fecha = new DateTime($d['doc']['fecha']);
+
+    if(!isset($d['productos'][0][0])){
+      die("No hay información suficiente");
+    }
+    
     
     $pdf = new new_fpdf();
     $pdf->SetNombre("Entrada de productos");
@@ -65,23 +70,23 @@
     $pdf->cell(190,8,"Observacion: ".$d['doc']['observacion'],1,1,"C",1);
     $pdf->cell(190,8,"Descripcion general de los productos",1,1,"C",1);
     $pdf->cell(16,7,"Codigo",1,0,"C",1);
-    $pdf->cell(60,7,"Descripcion",1,0,"C",1);
+    $pdf->cell(80,7,"Descripcion",1,0,"C",1);
     // $pdf->cell(48,7,"Fecha de vencimiento",1,0,"C",1);
-    $pdf->cell(30,7,"Grupo",1,0,"C",1);
+    // $pdf->cell(30,7,"Grupo",1,0,"C",1);
     $pdf->cell(20,7,"Medida",1,0,"C",1);
     $pdf->cell(26,7,"Catidad",1,0,"C",1);
-    $pdf->cell(38,7,"Precio",1,1,"C",1);
+    $pdf->cell(48,7,"Precio",1,1,"C",1);
     $pdf->SetFillColor(255,255,255);
     $pdf->SetTextColor(0,0,0);
     $pdf->setFont('Arial','B',9);
     foreach($d['productos'][0] as $dato){
       $pdf->cell(16,7,$dato['id_product'],1,0,"C",1);
-      $pdf->cell(60,7,$dato['nom_product'],1,0,"C",1);
+      $pdf->cell(80,7,$dato['nom_product'],1,0,"C",1);
       // $pdf->cell(48,7,$dato['fecha_vencimiento_ope'],1,0,"C",1);
-      $pdf->cell(30,7,$dato['nom_grupo'],1,0,"C",1);
+      // $pdf->cell(30,7,$dato['nom_grupo'],1,0,"C",1);
       $pdf->cell(20,7,$dato['valor_product']." ".$dato['med_product'],1,0,"C",1);
       $pdf->cell(26,7,$dato['detalle_cantidad'],1,0,"C",1);
-      $pdf->cell(38,7,$dato['precio_product_ope']."Bs.",1,1,"C",1);
+      $pdf->cell(48,7,$dato['precio_product_ope']."Bs.",1,1,"C",1);
     }
     $pdf->Output();
   }
@@ -97,6 +102,10 @@
     $model = new m_entrada_salida();
     $d = $model->GetPdf($_POST['id_invent'])[0];
     $fecha = new DateTime($d['doc']['fecha']);
+
+    if(!isset($d['productos'][0][0])){
+      die("No hay información suficiente");
+    }
     
     $pdf = new new_fpdf();
     $pdf->SetNombre("Salida de productos");
@@ -117,23 +126,23 @@
     $pdf->cell(190,8,"Observacion: ".$d['doc']['observacion'],1,1,"C",1);
     $pdf->cell(190,8,"Descripcion general de los productos",1,1,"C",1);
     $pdf->cell(16,7,"Codigo",1,0,"C",1);
-    $pdf->cell(60,7,"Descripcion",1,0,"C",1);
+    $pdf->cell(80,7,"Descripcion",1,0,"C",1);
     // $pdf->cell(48,7,"Fecha de vencimiento",1,0,"C",1);
-    $pdf->cell(30,7,"Grupo",1,0,"C",1);
+    // $pdf->cell(30,7,"Grupo",1,0,"C",1);
     $pdf->cell(20,7,"Medida",1,0,"C",1);
     $pdf->cell(26,7,"Cantidad",1,0,"C",1);
-    $pdf->cell(38,7,"Precio",1,1,"C",1);
+    $pdf->cell(48,7,"Precio",1,1,"C",1);
     $pdf->SetFillColor(255,255,255);
     $pdf->SetTextColor(0,0,0);
     $pdf->setFont('Arial','B',9);
     foreach($d['productos'][0] as $dato){
       $pdf->cell(16,7,$dato['id_product'],1,0,"C",1);
-      $pdf->cell(60,7,$dato['nom_product'],1,0,"C",1);
+      $pdf->cell(80,7,$dato['nom_product'],1,0,"C",1);
       // $pdf->cell(48,7,$dato['fecha_vencimiento_ope'],1,0,"C",1);
-      $pdf->cell(30,7,$dato['nom_grupo'],1,0,"C",1);
+      // $pdf->cell(30,7,$dato['nom_grupo'],1,0,"C",1);
       $pdf->cell(20,7,$dato['valor_product']." ".$dato['med_product'],1,0,"C",1);
       $pdf->cell(26,7,$dato['detalle_cantidad'],1,0,"C",1);
-      $pdf->cell(38,7,$dato['precio_product_ope']."Bs.",1,1,"C",1);
+      $pdf->cell(48,7,$dato['precio_product_ope']."Bs.",1,1,"C",1);
     }
     $pdf->Output();
   }
