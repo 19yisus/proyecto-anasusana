@@ -101,9 +101,9 @@
                             
                         $sql_operacion = "INSERT INTO detalle_inventario(product_id_ope,invent_id_ope,fecha_vencimiento_ope,precio_product_ope,detalle_cantidad) 
                         VALUES ($id,'$this->id_invent',null,null,$stock)";
-        
-                        $sql_producto_stock = "UPDATE productos SET productos.stock_product =( 
-                            (SELECT productos.stock_product FROM productos WHERE productos.id_product = $id) - $stock) WHERE productos.id_product = $id;";
+
+                        $IN_stock = $this->Get_array($this->Query("SELECT productos.stock_product FROM productos WHERE productos.id_product = $id"))[0];
+                        $sql_producto_stock = "UPDATE productos SET productos.stock_product =( $IN_stock - $stock) WHERE productos.id_product = $id;";
                             
                         $results_operacion = $this->Query($sql_operacion);    
                         if(!$this->Result_last_query()){
@@ -154,7 +154,6 @@
 
             $sql_productos = "SELECT * FROM detalle_inventario 
             INNER JOIN productos ON productos.id_product = detalle_inventario.product_id_ope 
-            INNER JOIN grupo ON grupo.id_grupo = productos.grupo_id_product
             INNER JOIN marca ON marca.id_marca = productos.marca_id_product
             WHERE detalle_inventario.invent_id_ope = '$this->id_invent'";
 

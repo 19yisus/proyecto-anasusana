@@ -9,13 +9,13 @@
   <!-- /.navbar -->
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
-    <div class="container">
+  <nav class="main-header navbar navbar-expand-md navbar-dark">
+    <div class="container d-flex justify-content-between ">
       <a href="<?php $this->SetURL('inicio/index'); ?>" class="navbar-brand">
         <img src="<?php echo constant('URL');?>views/images/user-icon.png" class="brand-image img-circle elevation-1" style="opacity: .8" alt="User Image">
         <!-- <span class="brand-text font-weight-light">AdminLTE 3</span> -->
 
-        <a href="<?php $this->SetURL('inicio/index'); ?>" class="d-flex flex-column">
+        <a href="<?php $this->SetURL('inicio/index'); ?>" class="d-flex flex-column text-white text-bold">
           <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : "Desarrollando";?>
           <small class=""><?php echo $_SESSION['nom_rol']; ?></small>
         </a>

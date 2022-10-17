@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-10-2022 a las 18:46:45
+-- Tiempo de generación: 17-10-2022 a las 16:59:21
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `proyecto_iglesia2`
 --
-CREATE DATABASE IF NOT EXISTS `proyecto_iglesia2` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-USE `proyecto_iglesia2`;
 
 -- --------------------------------------------------------
 
@@ -34,6 +32,14 @@ CREATE TABLE `cargo` (
   `des_cargo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `estatus_cargo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`id_cargo`, `des_cargo`, `estatus_cargo`) VALUES
+(1, 'NUEVOO', 1),
+(2, 'COCINERO', 1);
 
 -- --------------------------------------------------------
 
@@ -50,6 +56,13 @@ CREATE TABLE `comedor` (
   `if_sede` tinyint(1) NOT NULL,
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `comedor`
+--
+
+INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `encargado_comedor`, `direccion_comedor`, `status_comedor`, `if_sede`, `created_comedor`) VALUES
+(1, 'PAN DE VIDA', 6, 'SDASDADADSDS', 1, 1, '2022-10-07 11:08:02');
 
 -- --------------------------------------------------------
 
@@ -134,7 +147,8 @@ INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person
 (6, '29540849', 'V', 'JESUS RIVERO', 'F', '0424 4566646', '', 'FASDFASDFASDFASDFASDFASDF', 'FAFASFASDFASDFASDFASFADS@GMAIL.COM', NULL, 0, 0, 1, '2022-01-04 18:38:55'),
 (7, '26674045', 'V', 'AAFAFAFFAFAF', 'M', '2342 3423422', '4242 4242442', 'KJKJFKJKJFKJKFJF', 'CAFKLFALFAQ@EJKLQJE.COM', NULL, 1, 1, 1, '2022-01-10 17:28:30'),
 (9, '14542452', 'J', 'JOSESASDFASDFASDFASDF', 'M', '0424 5189965', '', 'FASDFADSFADSFASDF', 'FASDFADSFASDFASDFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 12:51:35'),
-(12, '46456987', 'J', 'JOSEE MORAS', 'M', '0424 5198399', '', 'FASDFASDFASDFASDF', 'ASDFADFASDFADFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 13:12:27');
+(12, '46456987', 'J', 'JOSEE MORAS', 'M', '0424 5198399', '', 'FASDFASDFASDFASDF', 'ASDFADFASDFADFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 13:12:27'),
+(17, '26744045', 'V', 'CARLOS ORDO;EZ', 'M', '0424 5625680', '', 'AGUA LANCA', 'CARLOSORDONEZ@GMAIL.COM', 2, 0, 1, 1, '2022-10-17 09:43:42');
 
 -- --------------------------------------------------------
 
@@ -360,13 +374,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
@@ -378,7 +392,7 @@ ALTER TABLE `marca`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`

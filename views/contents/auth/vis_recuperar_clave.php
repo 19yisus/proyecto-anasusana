@@ -47,7 +47,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php $this->GetHeader(); ?>
-<body class="hold-transition login-page bg-primary">
+<body class="hold-transition login-page" id="fondo">
 	<div class="login-box">
 		<div class="login-logo">
 			<img src="<?php echo constant("URL");?>views/images/logo.jpeg" alt="Logo" class="img-fluid rounded mx-auto d-block">

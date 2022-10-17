@@ -120,7 +120,6 @@
       <th>Descripción</th>
       <th>Medidas</th>
       <th>Precio</th>
-      <th>Grupo</th>
       <th>Marca</th>
       <th>Cantidad</th>
     </tr>
@@ -132,7 +131,6 @@
         <td><?php echo $producto['nom_product'];?></td>
         <td><?php echo $producto['valor_product']." ".$producto['med_product'];?></td>
         <td><?php echo $producto['precio_product_ope'];?></td>
-        <td><?php echo $producto['nom_grupo'];?></td>
         <td><?php echo $producto['nom_marca'];?></td>
         <td><?php echo $producto['detalle_cantidad'];?></td>
       </tr>

@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <style>
         #fondo{
-            background-image: url('<?php echo constant("URL");?>views/images/cielo.jpg') !important;
+            background-image: url('<?php echo constant("URL");?>views/includes/fondo.jpg') !important;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;

@@ -50,7 +50,7 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="">Valor de Medida(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="number" name="valor_producto" step="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un Valor">
+                                            <input type="number" name="valor_producto" step="0.01" min="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un Valor">
                                         </div>
                                     </div>
                                 </div>
@@ -58,13 +58,13 @@
                                   <div class="col-3">
                                       <div class="form-group">
                                           <label for="">Stock Minimo(<span class="text-danger text-md">*</span>)</label>
-                                          <input type="number" name="stock_minimo_producto" step="0.01" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
+                                          <input type="number" name="stock_minimo_producto" step="1" min="1" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
                                       </div>
                                   </div>
                                   <div class="col-3">
                                       <div class="form-group">
                                           <label for="">Stock Maximo(<span class="text-danger text-md">*</span>)</label>
-                                          <input type="number" name="stock_maximo_producto" step="0.01" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
+                                          <input type="number" name="stock_maximo_producto" step="1" min="1" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
                                       </div>
                                   </div>
                                     <div class="col-4">
@@ -164,16 +164,12 @@
                 required: true,
                 number: true,
                 min: 1,
-                max: function(){
-                    return parseInt($("#stock_maximo_producto").val())
-                }
+                max: function(){ return parseInt($("#stock_maximo_producto").val()) }
             },
             stock_maximo_producto:{
                 required: true,
                 number: true,
-                min: function(){
-                    return parseInt($("#stock_minimo_producto").val())
-                }
+                min: function(){ return parseInt($("#stock_minimo_producto").val()) }
             },
             marca_id_producto:{
                 required: true
@@ -195,7 +191,6 @@
               required: "Este Campo NO puede estar Vacio",
               number: "Sólo se Aceptan Números",
               max: function(){
-                console.log(parseInt($("#stock_maximo_producto").val()))
                 if(!parseInt($("#stock_maximo_producto").val()) > 0) return "Aun debes ingresar el stock maximo"; else "El maximo a ingresar es: "+parseInt($("#stock_maximo_producto").val())
               }
           },
@@ -203,7 +198,6 @@
               required: "Este Campo NO puede estar Vacio",
               number: "Sólo se Aceptan Números",
               min: function(){
-                console.log(parseInt($("#stock_minimo_producto").val()))
                 if(!parseInt($("#stock_minimo_producto").val()) > 0) return "Aun debes ingresar el stock minimo"; else "El minimo a ingresar es: "+parseInt($("#stock_minimo_producto").val())
               }
           },

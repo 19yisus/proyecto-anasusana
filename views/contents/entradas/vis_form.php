@@ -59,7 +59,7 @@
 									</div>
 									<div class="col-3">
 										<div class="form-group">
-											<label for="orden_invent">N° Orden(<span class="text-danger text-md">*</span>)</label>
+											<label for="orden_invent">N° Orden</label>
 											<input type="text" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el Número de Orden" maxlength="20">
 										</div>
 									</div>
@@ -117,7 +117,7 @@
 									<div class="col-6">
 										<div class="form-group">
 											<input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
-											<label for="observacion_invent">Observación(<span class="text-danger text-md">*</span>)</label>
+											<label for="observacion_invent">Observación</label>
 											<textarea name="observacion_invent" minlength="4" maxlength="120" id="" cols="30" rows="2" class="form-control" placeholder="Ingrese una Observación para esta operación"></textarea>
 										</div>
 									</div>
@@ -294,14 +294,14 @@
 			},
 			orden_invent:{
 				number: true,
-				required: true,
+				required: false,
 				maxlength:20,
 			},
 			person_id_invent:{
 				required: true,
 			},
 			observacion_invent:{
-				required: true,
+				required: false,
 				minlength: 4,
 				maxlength: 120,
 			},
