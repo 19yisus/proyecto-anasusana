@@ -12,7 +12,7 @@
   $rutas_privadas = [
     "inicio/index","marcas/index","marcas/form","personas/index","personas/form",
     "productos/index","productos/form","entradas/index","entradas/form","salidas/index","salidas/form",
-    "usuarios/index","comedor/index","comedor/form","cargo/index","cargo/form"
+    "usuarios/index","comedor/index","comedor/form","cargo/index","cargo/form","platillo/index","platillo/form"
   ];
 
   define("URL", "http://$host_string:$port_string$string_url");

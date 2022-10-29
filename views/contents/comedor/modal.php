@@ -1,7 +1,7 @@
 <?php
-    require_once("./models/m_persona.php");
-    $model_person = new m_persona();
-    $person = $model_person->Get_Personas();
+require_once("./models/m_persona.php");
+$model_person = new m_persona();
+$person = $model_person->Get_Personas();
 ?>
 <div class="modal fade" id="modal-lg">
     <div class="modal-dialog modal-lg">
@@ -9,7 +9,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Consulta</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -21,7 +21,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_comedor.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                            <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_comedor.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
@@ -41,27 +41,27 @@
                                                 <label for="encargado_comedor">Selecione al Encargado(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="encargado_comedor" id="encargado_comedor" class="custom-select">
                                                     <option value="">Seleccione una Persona</option>
-                                                    <?php foreach($person as $persona){?>
-                                                    <option value="<?php echo $persona['id_person'];?>"><?php echo $persona['nom_person'];?></option>
-                                                    <?php }?>
+                                                    <?php foreach ($person as $persona) { ?>
+                                                        <option value="<?php echo $persona['id_person']; ?>"><?php echo $persona['nom_person']; ?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-3 col-sm-12">
-                                          <div class="form-group">
-                                            <label for="">Es sede principal?(<span class="text-danger text-md">*</span>)</label>
-                                            <div class="row">
-                                                <div class="form-check mx-3">
-                                                    <!-- <input type="hidden" name="if_sede" value=""> -->
-                                                    <input type="radio" name="if_sede" id="if_sede" value="1" class="form-check-input"  >
-                                                    <label for="if_sede" class="form-check-label">Si</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input type="radio" name="if_sede" id="if_sede" value="0" class="form-check-input"  >
-                                                    <label for="if_sede" class="form-check-label">No</label>
+                                            <div class="form-group">
+                                                <label for="">Es sede principal?(<span class="text-danger text-md">*</span>)</label>
+                                                <div class="row">
+                                                    <div class="form-check mx-3">
+                                                        <!-- <input type="hidden" name="if_sede" value=""> -->
+                                                        <input type="radio" name="if_sede" id="if_sede" value="1" class="form-check-input">
+                                                        <label for="if_sede" class="form-check-label">Si</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input type="radio" name="if_sede" id="if_sede" value="0" class="form-check-input">
+                                                        <label for="if_sede" class="form-check-label">No</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                          </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
@@ -90,67 +90,67 @@
 </div>
 <!-- /.modal -->
 <script>
-    $("#btn").click( async () =>{
-        if($("#formulario").valid()){
+    $("#btn").click(async () => {
+        if ($("#formulario").valid()) {
             let res = await Confirmar();
-            if(!res) return false;
+            if (!res) return false;
 
             let datos = new FormData(document.formulario);
-            fetch(`<?php echo constant("URL");?>controller/c_comedor.php`, {
-                method: "POST",
-                body: datos,
-            }).then( response => response.json())
-            .then( res =>{
-                FreshCatalogo();
-                document.formulario.reset();
-                $("#modal-lg").modal("hide");
+            fetch(`<?php echo constant("URL"); ?>controller/c_comedor.php`, {
+                    method: "POST",
+                    body: datos,
+                }).then(response => response.json())
+                .then(res => {
+                    FreshCatalogo();
+                    document.formulario.reset();
+                    $("#modal-lg").modal("hide");
 
-                Toast.fire({
-                    icon: `${res.data.code}`,
-                    title: `${res.data.message}`
-                });
-            }).catch( Err => console.log(Err))
+                    Toast.fire({
+                        icon: `${res.data.code}`,
+                        title: `${res.data.message}`
+                    });
+                }).catch(Err => console.log(Err))
         }
     })
 
     $("#formulario").validate({
-        rules:{
-            nom_comedor:{
+        rules: {
+            nom_comedor: {
                 required: true,
                 minlength: 3,
             },
-            encargado_comedor:{
+            encargado_comedor: {
                 required: true,
             },
-            direccion_comedor:{
+            direccion_comedor: {
                 required: true,
                 minlength: 5,
                 maxlength: 120,
             }
         },
-        messages:{
-            nom_comedor:{
+        messages: {
+            nom_comedor: {
                 required: "Este Campo NO Puede estar Vacio",
                 minlength: "Debe de Contener al Menos 3 caracteres",
             },
-            encargado_comedor:{
+            encargado_comedor: {
                 required: "Debes de Seleccionar al Encargado del Comedor",
             },
-            direccion_comedor:{
+            direccion_comedor: {
                 required: "La Dirección del Comedor es Requerida",
                 minlength: "Mínimo de 5 Letras",
                 maxlength: "Máximo de 120 Letras",
             }
         },
         errorElement: "span",
-        errorPlacement: function (error, element){
+        errorPlacement: function(error, element) {
             error.addClass("invalid-feedback");
             element.closest(".form-group").append(error);
         },
-        highlight: function (element, errorClass, validClass){
+        highlight: function(element, errorClass, validClass) {
             $(element).addClass('is-invalid');
         },
-        unhighlight: function (element, errorClass, validClass){
+        unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass('is-invalid');
         }
     });

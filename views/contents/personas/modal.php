@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Consulta</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -16,7 +16,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="formulario" action="<?php echo constant("URL");?>controller/c_persona.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                            <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_persona.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
@@ -111,20 +111,20 @@
                                             </div>
                                         </div>
                                         <div class="col-3">
-																					<div class="form-group">
-																						<label for="cargo_persona">Cargo</label>
-																						<select name="cargo_id" id="" class="custom-select">
-																								<option value="">Seleccione una opción</option>
-																								<?php 
-																									foreach($cargos as $cargo){
-																										?>
-																										<option value="<?php echo $cargo['id_cargo'];?>"><?php echo $cargo['des_cargo'];?></option>
-																										<?php
-																									}
-																								?>
-																						</select>
-																					</div>
-                                    		</div>
+                                            <div class="form-group">
+                                                <label for="cargo_persona">Cargo</label>
+                                                <select name="cargo_id" id="" class="custom-select">
+                                                    <option value="">Seleccione una opción</option>
+                                                    <?php
+                                                    foreach ($cargos as $cargo) {
+                                                    ?>
+                                                        <option value="<?php echo $cargo['id_cargo']; ?>"><?php echo $cargo['des_cargo']; ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
                                                 <label for="direccion_persona">Dirección de la Persona(<span class="text-danger text-md">*</span>)</label>
@@ -137,16 +137,16 @@
                                                     <label for="marcas_proveedor">Marcas ({{index+1}})</label>
                                                     <select name="id_marca[]" @click="validaRepetidos" v-model="marcas[index].id_marca" :data-index="index" id="" class="custom-select">
                                                         <option value="">Seleccione una opción</option>
-                                                        <?php 
-                                                          foreach($marcas as $marca){
-                                                            ?>
-                                                             <option v-model="marcas[index].id_marca" v-bind:selected="this.value == item.id_marcas" value="<?php echo $marca['id_marca'];?>"><?php echo $marca['nom_marca'];?></option>
-                                                            <?php
-                                                          }
+                                                        <?php
+                                                        foreach ($marcas as $marca) {
+                                                        ?>
+                                                            <option v-model="marcas[index].id_marca" v-bind:selected="this.value == item.id_marcas" value="<?php echo $marca['id_marca']; ?>"><?php echo $marca['nom_marca']; ?></option>
+                                                        <?php
+                                                        }
                                                         ?>
                                                     </select>
                                                 </div>
-                                                <button @click="eliminar(index)" type="button" class="btn btn-sm btn-danger my-auto">Eliminar</button>    
+                                                <button @click="eliminar(index)" type="button" class="btn btn-sm btn-danger my-auto">Eliminar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -171,7 +171,6 @@
 </div>
 <!-- /.modal -->
 <script>
-
     // $("#btn_actualizar").click( async () =>{
     //     console.log("CLick")
     //     if($("#formulario").valid()){
@@ -179,7 +178,8 @@
     //         if(!res) return false;
 
     //         let datos = new FormData(document.formulario);
-    //         fetch(`<?php //echo constant("URL");?>controller/c_persona.php`, {
+    //         fetch(`<?php //echo constant("URL");
+                        ?>controller/c_persona.php`, {
     //             method: "POST",
     //             body: datos,
     //         }).then( response => response.json())
@@ -199,108 +199,108 @@
     // })
 
     $("#formulario").validate({
-        rules:{
-            tipo_persona:{
-                required:true,
+        rules: {
+            tipo_persona: {
+                required: true,
             },
-            cedula_persona:{
-                required:true,
+            cedula_persona: {
+                required: true,
                 minlength: 7,
                 maxlength: 9,
                 number: true,
             },
-            nom_persona:{
-                required:true,
+            nom_persona: {
+                required: true,
                 minlength: 3,
                 maxlength: 60,
             },
-            sexo_persona:{
-                required:true,
+            sexo_persona: {
+                required: true,
             },
-            telefono_movil_persona:{
-                required:true,
+            telefono_movil_persona: {
+                required: true,
                 minlength: 11
             },
-            telefono_casa_persona:{
-                required:false,
+            telefono_casa_persona: {
+                required: false,
                 minlength: 11,
             },
-            if_proveedor:{
-                required:true,
+            if_proveedor: {
+                required: true,
             },
-            if_user:{
-                required:true,
+            if_user: {
+                required: true,
             },
-            correo_persona:{
-                required:true,
+            correo_persona: {
+                required: true,
                 minlength: 20,
                 maxlength: 120,
                 email: true,
             },
-            direccion_persona:{
-                required:true,
+            direccion_persona: {
+                required: true,
                 minlength: 5,
                 maxlength: 120,
             },
-            status_persona:{
-                required:true,
+            status_persona: {
+                required: true,
             }
         },
-        messages:{
-            tipo_persona:{
-                required:"Seleccione el Tipo de Persona",
+        messages: {
+            tipo_persona: {
+                required: "Seleccione el Tipo de Persona",
             },
-            cedula_persona:{
-                required:"La Cédula es Requerida",
+            cedula_persona: {
+                required: "La Cédula es Requerida",
                 minlength: "Mínimo de 7 caracteres",
                 maxlength: "Máximo de 9 caracteres",
                 number: "Sólo se Permiten Números",
             },
-            nom_persona:{
+            nom_persona: {
                 required: "Este Campo NO puede estar Vacio",
                 minlength: "Debe de Contener al menos 3 caracteres",
                 maxlength: "Máximo de 60 caracteres",
             },
-            sexo_persona:{
-                required:"Seleccione el Sexo de la Persona",
+            sexo_persona: {
+                required: "Seleccione el Sexo de la Persona",
             },
-            telefono_movil_persona:{
-                required:"Este Campo NO puede estar Vacio",
+            telefono_movil_persona: {
+                required: "Este Campo NO puede estar Vacio",
                 minlength: "Mínimo de 11 caracteres Numéricos"
             },
-            telefono_casa_persona:{
+            telefono_casa_persona: {
                 minlength: "Mínimo de 11 caracteres numéricos",
             },
-            if_proveedor:{
-                required:"Seleccione una Opción",
+            if_proveedor: {
+                required: "Seleccione una Opción",
             },
-            if_user:{
-                required:"Seleccione una Opción",
+            if_user: {
+                required: "Seleccione una Opción",
             },
-            correo_persona:{
-                required:"Este Campo NO puede estar Vacio",
+            correo_persona: {
+                required: "Este Campo NO puede estar Vacio",
                 minlength: "Mínimo de 20 caracteres",
                 maxlength: "Máximo de 120 caracteres",
                 email: "Ingrese un Correo Válido",
             },
-            direccion_persona:{
-                required:"Este Campo NO puede estar Vacio",
+            direccion_persona: {
+                required: "Este Campo NO puede estar Vacio",
                 minlength: "Mínimo de 5 caracteres",
                 maxlength: "Máximo de 120 caracteres",
             },
-            status_persona:{
-                required:"Seleccione una Opción",
+            status_persona: {
+                required: "Seleccione una Opción",
             }
         },
         errorElement: "span",
-        errorPlacement: function (error, element){
+        errorPlacement: function(error, element) {
             error.addClass("invalid-feedback");
             element.closest(".form-group").append(error);
         },
-        highlight: function (element, errorClass, validClass){
+        highlight: function(element, errorClass, validClass) {
             $(element).addClass('is-invalid');
         },
-        unhighlight: function (element, errorClass, validClass){
+        unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass('is-invalid');
         }
     });

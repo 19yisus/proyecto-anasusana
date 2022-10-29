@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-10-2022 a las 16:59:21
+-- Tiempo de generación: 29-10-2022 a las 20:33:31
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `proyecto_iglesia2`
 --
+CREATE DATABASE IF NOT EXISTS `proyecto_iglesia2` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+USE `proyecto_iglesia2`;
 
 -- --------------------------------------------------------
 
@@ -78,6 +80,22 @@ CREATE TABLE `detalle_inventario` (
   `detalle_cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `detalle_inventario`
+--
+
+INSERT INTO `detalle_inventario` (`product_id_ope`, `invent_id_ope`, `fecha_vencimiento_ope`, `precio_product_ope`, `detalle_cantidad`) VALUES
+(1, 'E-00000001', NULL, 2333, 30),
+(1, 'S-00000001', NULL, NULL, 23),
+(2, 'E-00000003', NULL, 0, 11),
+(2, 'E-00000004', NULL, 0, 24),
+(2, 'E-00000005', NULL, 0, 20),
+(2, 'S-00000002', NULL, NULL, 79),
+(2, 'E-00000006', NULL, 0, 24),
+(2, 'S-00000003', NULL, NULL, 23),
+(2, 'E-00000007', NULL, 0, 1),
+(2, 'S-00000004', NULL, NULL, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -93,6 +111,8 @@ CREATE TABLE `inventario` (
   `type_operacion_invent` enum('E','S') COLLATE utf8_spanish_ci NOT NULL,
   `concept_invent` enum('C','D','O','V','R') COLLATE utf8_spanish_ci DEFAULT NULL,
   `if_credito` tinyint(1) DEFAULT NULL,
+  `cant_platillo` int(11) DEFAULT NULL,
+  `platillo_id_inv` int(11) DEFAULT NULL,
   `person_id_invent` int(11) DEFAULT NULL,
   `recibe_person_id_invent` int(11) DEFAULT NULL,
   `comedor_id_invent` int(11) NOT NULL,
@@ -112,6 +132,14 @@ CREATE TABLE `marca` (
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `marca`
+--
+
+INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
+(1, 'GUKJ,M ', 1, '2022-10-07 11:01:13'),
+(2, 'POLAR', 1, '2022-10-17 09:39:24');
 
 -- --------------------------------------------------------
 
@@ -153,6 +181,45 @@ INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `platillo`
+--
+
+CREATE TABLE `platillo` (
+  `id_plat` int(11) NOT NULL,
+  `des_plat` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `status_plat` tinyint(1) NOT NULL,
+  `created_plat` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `platillo`
+--
+
+INSERT INTO `platillo` (`id_plat`, `des_plat`, `status_plat`, `created_plat`) VALUES
+(1, 'ASDFASD', 1, '2022-10-26 22:39:58');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `platillo_detalle`
+--
+
+CREATE TABLE `platillo_detalle` (
+  `product_id_plat_detalle` int(11) NOT NULL,
+  `plat_id_detalle` int(11) NOT NULL,
+  `consumo` decimal(6,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `platillo_detalle`
+--
+
+INSERT INTO `platillo_detalle` (`product_id_plat_detalle`, `plat_id_detalle`, `consumo`) VALUES
+(1, 1, '11.01');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `preguntas`
 --
 
@@ -187,6 +254,14 @@ CREATE TABLE `productos` (
   `stock_maximo_product` int(11) NOT NULL,
   `marca_id_product` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `stock_minimo_product`, `stock_maximo_product`, `marca_id_product`) VALUES
+(1, 'HARINA', 'KL', 1, 1, '2022-10-25 22:46:42', 0, 1, 50, 1),
+(2, 'LECHE', 'LT', 1, 1, '2022-10-26 20:16:06', 0, 1, 20, 2);
 
 -- --------------------------------------------------------
 
@@ -305,7 +380,8 @@ ALTER TABLE `inventario`
   ADD KEY `person_id_invent` (`person_id_invent`),
   ADD KEY `comedor_id_invent` (`comedor_id_invent`),
   ADD KEY `user_id_invent` (`user_id_invent`),
-  ADD KEY `recibe_person_id_invent` (`recibe_person_id_invent`);
+  ADD KEY `recibe_person_id_invent` (`recibe_person_id_invent`),
+  ADD KEY `platillo_id_inv` (`platillo_id_inv`);
 
 --
 -- Indices de la tabla `marca`
@@ -320,6 +396,19 @@ ALTER TABLE `personas`
   ADD PRIMARY KEY (`id_person`),
   ADD UNIQUE KEY `cedula_person` (`cedula_person`),
   ADD KEY `cargo_id` (`cargo_id`);
+
+--
+-- Indices de la tabla `platillo`
+--
+ALTER TABLE `platillo`
+  ADD PRIMARY KEY (`id_plat`);
+
+--
+-- Indices de la tabla `platillo_detalle`
+--
+ALTER TABLE `platillo_detalle`
+  ADD KEY `product_id_pldetalle` (`product_id_plat_detalle`),
+  ADD KEY `plat_id_detalle` (`plat_id_detalle`);
 
 --
 -- Indices de la tabla `preguntas`
@@ -386,13 +475,19 @@ ALTER TABLE `comedor`
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
   MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT de la tabla `platillo`
+--
+ALTER TABLE `platillo`
+  MODIFY `id_plat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -404,7 +499,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas`
@@ -448,6 +543,8 @@ ALTER TABLE `inventario`
   ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`person_id_invent`) REFERENCES `personas` (`id_person`),
   ADD CONSTRAINT `inventario_ibfk_2` FOREIGN KEY (`comedor_id_invent`) REFERENCES `comedor` (`id_comedor`),
   ADD CONSTRAINT `inventario_ibfk_3` FOREIGN KEY (`user_id_invent`) REFERENCES `usuarios` (`id_user`),
+  ADD CONSTRAINT `inventario_ibfk_4` FOREIGN KEY (`platillo_id_inv`) REFERENCES `platillo` (`id_plat`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `inventario_ibfk_5` FOREIGN KEY (`platillo_id_inv`) REFERENCES `platillo` (`id_plat`) ON UPDATE CASCADE,
   ADD CONSTRAINT `persona_quien_recibe` FOREIGN KEY (`recibe_person_id_invent`) REFERENCES `personas` (`id_person`);
 
 --
@@ -455,6 +552,13 @@ ALTER TABLE `inventario`
 --
 ALTER TABLE `personas`
   ADD CONSTRAINT `cargo` FOREIGN KEY (`cargo_id`) REFERENCES `cargo` (`id_cargo`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `platillo_detalle`
+--
+ALTER TABLE `platillo_detalle`
+  ADD CONSTRAINT `platillo_detalle_ibfk_1` FOREIGN KEY (`product_id_plat_detalle`) REFERENCES `productos` (`id_product`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `platillo_detalle_ibfk_2` FOREIGN KEY (`plat_id_detalle`) REFERENCES `platillo` (`id_plat`);
 
 --
 -- Filtros para la tabla `productos`

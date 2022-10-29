@@ -1,7 +1,7 @@
 <?php
-    require("./models/m_productos.php");
-    $model = new m_productos();
-    $productos = $model->Get_todos_productos(1);
+require("./models/m_productos.php");
+$model = new m_productos();
+$productos = $model->Get_todos_productos(1);
 ?>
 <div class="modal fade" id="modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -27,9 +27,9 @@
                                                 <!--  lo dejo aca por si acaso -->
                                                 <select name="id_product" v-model="productos[index].code" :data-index="index" value="" id="product" class="custom-select" v-on:change="ConsultarName">
                                                     <option value="">Seleccione un Producto</option>
-                                                    <?php foreach($productos as $item){?>
-                                                    <option value="<?php echo $item['id_product'];?>"><?php echo $item['nom_product'] ." - ". $item['nom_marca'] .' - '.$item['valor_product'].$item['med_product']; ?></option>
-                                                    <?php }?>
+                                                    <?php foreach ($productos as $item) { ?>
+                                                        <option value="<?php echo $item['id_product']; ?>"><?php echo $item['nom_product'] . " - " . $item['nom_marca'] . ' - ' . $item['valor_product'] . $item['med_product']; ?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -48,7 +48,7 @@
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="fecha_vencimiento">Fecha de Vencimiento</label>
-                                                <input type="date" name="fecha_vencimiento" min="<?php echo $this->DateNow();?>" v-model="productos[index].fecha" :value="item.fecha" id="fecha_vencimiento" placeholder="Ingrese Fecha de Vencimiento" class="form-control">
+                                                <input type="date" name="fecha_vencimiento" min="<?php echo $this->DateNow(); ?>" v-model="productos[index].fecha" :value="item.fecha" id="fecha_vencimiento" placeholder="Ingrese Fecha de Vencimiento" class="form-control">
                                             </div>
                                         </div>
                                         <button type="button" v-on:click="Disminuir(index)" class="btn btn-danger mt-3">-</button>

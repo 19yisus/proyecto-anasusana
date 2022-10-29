@@ -24,14 +24,17 @@
             $this->productos = isset($productos) ? $productos : null;
             $this->fecha_invent = isset($d['fecha_invent']) ? $d['fecha_invent'] : null;
             $this->if_credito = isset($d['if_credito']) ? $d['if_credito'] : null;
+            $this->cant_plat = 0;
+            $this->platillo_id = null;
         }
 
         public function Entrada_productos(){
             // TRANSACCTION
             $status_transaccion = true;
             $sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
-            concept_invent,if_credito,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
-            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E','$this->concept_invent','$this->if_credito',$this->person_id_invent,$this->recibe_person_id_invent,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+            concept_invent,if_credito,cant_platillo,platillo_id_inv,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
+            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E','$this->concept_invent',
+            '$this->if_credito',null,null,$this->person_id_invent,$this->recibe_person_id_invent,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
             
             try{
                 $this->Start_transacction();
@@ -86,8 +89,9 @@
             // TRANSACCTION
             $status_transaccion = true;
             $sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
-            concept_invent,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
-            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','S','$this->concept_invent',null,$this->recibe_person_id_invent,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+            concept_invent,if_credito,cant_platillo,platillo_id_inv,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
+            VALUES ('$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','S','$this->concept_invent',null, $this->cant_plat,
+            $this->platillo_id,$this->recibe_person_id_invent,$this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
             
             try{
                 $this->Start_transacction();
@@ -274,4 +278,3 @@
             return $this->Get_array($this->Query($sql));
         }
     }
-?>
