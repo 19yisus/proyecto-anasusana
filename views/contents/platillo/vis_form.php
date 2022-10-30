@@ -56,7 +56,7 @@ $productos = $model->Get_todos_productos(1);
                     <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
                       <div class="col-6">
                         <div class="form-group">
-                          <label for="">Producto {{indice}}</label>
+                          <label for="">Producto {{(indice+1)}}</label>
                           <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
                             <option value="">Seleccione una opción</option>
                             <option v-for="item in selectProductos" :key="item.id_product" :data-medida="item.med_product" :id="item.med_product" :value="item.id_product">{{item.nom_product}}</option>
@@ -67,7 +67,7 @@ $productos = $model->Get_todos_productos(1);
                         <div class="form-group">
                           <label for="">Cantidad</label>
                           <div class="input-group">
-                            <input type="number" step="00.01" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
+                            <input type="number" step="00.01" min="00.01" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
                             <div class="input-group-append">
                               <span class="input-group-text">{{itemx.medida}}</span>
                             </div>
@@ -83,6 +83,7 @@ $productos = $model->Get_todos_productos(1);
                         Registrar
                       </button>
                       <button class="btn btn-success" @click="duplicar" type="button">Añadir Comida <i class="fas fa-plus-square"></i></button>
+                      <button class="btn btn-danger" v-if="productos.length > 1" @click="disminuir" type="button">Eliminar Comida -</i></button>
                     </div>
                 </form>
               </div>
