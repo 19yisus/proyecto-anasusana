@@ -75,14 +75,14 @@
                 </p>
               </a>
             </li>
-            <li>
-              <a href="<?php $this->SetURL('platillo/index'); ?>" class="dropdown-item <?php $this->IsActive("platillo/index"); ?>">
+            <!-- <li>
+              <a href="<?php //$this->SetURL('platillo/index'); ?>" class="dropdown-item <?php //$this->IsActive("platillo/index"); ?>">
                 <p>
                   <i class="nav-icon fas fa-house-user"></i>
                   Platillos
                 </p>
               </a>
-            </li>
+            </li> -->
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -139,7 +139,7 @@
         </li>
       </ul>
       <div class="col-3">
-        <img src="<?php echo constant('URL'); ?>views/images/logo.jpeg" alt="AdminLTE Logo" class="w-50 float-right">
+        <img src="<?php echo constant('URL'); ?>views/images/logo.jpeg" alt="AdminLTE Logo" width="200" class="float-right">
       </div>
     </div>
   </div>

@@ -65,7 +65,7 @@
 											<div class="col-3">
 												<div class="form-group">
 													<label for="concept_invent">Concepto de Operación(<span class="text-danger text-md">*</span>)</label>
-													<select name="concept_invent" id="concept_invent" class="custom-select">
+													<select name="concept_invent" v-model="motivo_salida" id="concept_invent" class="custom-select">
 														<option value="">Seleccione una Opción</option>
 														<option value="O">Consumo</option>
 														<option value="V">Vencimiento</option>
@@ -99,6 +99,10 @@
 													<textarea name="observacion_invent" minlength="4" maxlength="120" id="" cols="30" rows="2" class="form-control" placeholder="Ingrese una Observacion para esta Operación"></textarea>
 												</div>
 											</div>
+											<input type="hidden" v-bind:disabled="motivo_salida != 'O'" name="des_comidas" v-model="des_menu">
+											<input type="hidden" v-bind:disabled="motivo_salida != 'O'" name="cantidad" v-model="cant_menu">
+											<input type="hidden" v-bind:disabled="motivo_salida != 'O'" name="nom_comidas" v-model="nom_menu">
+											
 											<div class="d-none" v-for="(item, index) in productos" :key="index">
 												<input type="hidden" class="id_input" name="id_product[]" :value="item.code">
 												<input type="hidden" class="cant_input" name="cantidad_product[]" :value="item.cantidad">
@@ -165,7 +169,11 @@
 			data: {
 				productos: [
 					// {code: "",nom_product: "", cantidad: 0, limite_stock: 0},
-				]
+				],
+				motivo_salida: "",
+				des_menu: "",
+				cant_menu: "",
+				nom_menu: ""
 			},
 			methods: {
 				Duplicar: function() {
@@ -270,9 +278,11 @@
 		$("#btn").click(async () => {
 			if ($("#formulario").valid()) {
 				let status_inputs = true;
+				
 				document.querySelectorAll(".id_input").forEach(item => {
 					if (item.value == "") status_inputs = false;
 				});
+
 				document.querySelectorAll(".cant_input").forEach(item => {
 					if (parseInt(item.value) == 0) status_inputs = false;
 				});
