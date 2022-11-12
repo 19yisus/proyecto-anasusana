@@ -134,7 +134,10 @@
             data: "id_invent"
           },
           {
-            data: "orden_invent"
+            data: "orden_invent",
+            render(data){
+              if(data) return data; else return "No-tiene"
+            }
           },
           {
             data: "cantidad_invent"

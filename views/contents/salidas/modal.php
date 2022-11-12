@@ -21,26 +21,6 @@ $productos = $model->Get_todos_productos(2);
 							<!-- form start -->
 							<form id="formulario" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
 								<div class="card-body" id="caja">
-									<div class="row" v-show="motivo_salida == 'O'">
-										<div class="col-6">
-											<div class="form-group">
-												<label for="">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
-												<input type="text" v-model="nom_menu" v-bind:required="motivo_salida != 'O'" v-bind:disabled="motivo_salida != 'O'" name="nom_comidas" id="" class="form-control" maxlength="30">
-											</div>
-										</div>
-										<div class="col-6">
-											<div class="form-group">
-												<label for="">Cantidad aproximada de platos(<span class="text-danger text-md">*</span>)</label>
-												<input type="number" v-model="cant_menu" v-bind:required="motivo_salida != 'O'" v-bind:disabled="motivo_salida != 'O'" name="cantidad" id="" class="form-control">
-											</div>
-										</div>
-										<div class="col-12">
-											<div class="form-group">
-												<label for="">Descripción del menú(<span class="text-danger text-md">*</span>)</label>
-												<textarea v-model="des_menu" v-bind:required="motivo_salida != 'O'" v-bind:disabled="motivo_salida != 'O'" name="des_comidas" class="form-control" maxlength="120"></textarea>
-											</div>
-										</div>
-									</div>
 									<div class="row d-flex align-items-center" v-for="(item, index) in productos" :key="index">
 										<div class="col-6">
 											<div class="form-group d-block">

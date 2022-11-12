@@ -75,14 +75,14 @@
                 </p>
               </a>
             </li>
-            <!-- <li>
-              <a href="<?php //$this->SetURL('platillo/index'); ?>" class="dropdown-item <?php //$this->IsActive("platillo/index"); ?>">
+            <li>
+              <a href="<?php $this->SetURL('jornada/index'); ?>" class="dropdown-item <?php $this->IsActive("jornada/index"); ?>">
                 <p>
                   <i class="nav-icon fas fa-house-user"></i>
-                  Platillos
+                  Jornada
                 </p>
               </a>
-            </li> -->
+            </li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -91,6 +91,14 @@
             Operaciones
           </a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <li>
+              <a href="<?php $this->SetURL('menu/index'); ?>" class="dropdown-item <?php $this->IsActive("menu"); ?>">
+                <p>
+                  <i class="nav-item fas fa-hand-holding-medical"></i>
+                  Menú de alimentos
+                </p>
+              </a>
+            </li>
             <li>
               <a href="<?php $this->SetURL('entradas/index'); ?>" class="dropdown-item <?php $this->IsActive("entradas"); ?>">
                 <p>

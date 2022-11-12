@@ -4,12 +4,12 @@ require_once("m_db.php");
 class m_entrada_salida extends m_db
 {
 	private $id_invent, $orden_invent, $status_invent, $cantidad_invent, $type_operation_invent, $concept_invent, $person_id_invent, $comedor_id_invent, $user_id_invent, $observacion_invent, $productos,
-		$fecha_invent, $recibe_person_id_invent, $if_credito, $des_comidas, $nom_comidas;
+		$fecha_invent, $recibe_person_id_invent, $if_credito, $jornada_id_invent;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->id_invent = $this->orden_invent = $this->nom_comidas = $this->status_invent = $this->cantidad_invent = $this->type_operation_invent = $this->concept_invent = $this->person_id_invent = $this->comedor_id_invent = $this->user_id_invent = $this->observacion_invent = $this->productos = $this->fecha_invent = $this->recibe_person_id_invent = $this->if_credito = "";
+		$this->id_invent = $this->orden_invent = $this->jornada_id_invent = $this->status_invent = $this->cantidad_invent = $this->type_operation_invent = $this->concept_invent = $this->person_id_invent = $this->comedor_id_invent = $this->user_id_invent = $this->observacion_invent = $this->productos = $this->fecha_invent = $this->recibe_person_id_invent = $this->if_credito = "";
 	}
 
 	public function setDatos($d, $productos = [])
@@ -28,11 +28,7 @@ class m_entrada_salida extends m_db
 		$this->productos = isset($productos) ? $productos : null;
 		$this->fecha_invent = isset($d['fecha_invent']) ? $d['fecha_invent'] : null;
 		$this->if_credito = isset($d['if_credito']) ? $d['if_credito'] : null;
-
-		$this->cant_plat = isset($d['cantidad']) ? $d['cantidad'] : 0;
-		$this->des_comidas = isset($d['des_comidas']) ? $d['des_comidas'] : "NULL";
-		$this->nom_comidas = isset($d['nom_comidas']) ? $d['nom_comidas'] : "NULL";
-
+		$this->jornada_id_invent = isset($d['jornada_id_invent']) ? $d['jornada_id_invent'] : "NULL";
 	}
 
 	public function Entrada_productos()
@@ -40,10 +36,10 @@ class m_entrada_salida extends m_db
 		// TRANSACCTION
 		$status_transaccion = true;
 		$sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
-            concept_invent,if_credito,des_comidas,nom_comidas,cant_platillo,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
+            concept_invent,if_credito,jornada_id_invent,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
             VALUES (
                 '$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E',
-                '$this->concept_invent','$this->if_credito',null,null,null,$this->person_id_invent,$this->recibe_person_id_invent,
+                '$this->concept_invent','$this->if_credito',null,$this->person_id_invent,$this->recibe_person_id_invent,
                 $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
 
 		try {
@@ -101,11 +97,11 @@ class m_entrada_salida extends m_db
 		$status_transaccion = true;
 		$sql_inventario_insert = "INSERT INTO inventario(
                 id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
-                concept_invent,if_credito,des_comidas,nom_comidas,cant_platillo,person_id_invent,recibe_person_id_invent,
+                concept_invent,if_credito,jornada_id_invent,person_id_invent,recibe_person_id_invent,
                 comedor_id_invent,user_id_invent,observacion_invent) 
             VALUES (
                 '$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','S',
-                '$this->concept_invent',null,'$this->des_comidas','$this->nom_comidas',$this->cant_plat,null,$this->recibe_person_id_invent,
+                '$this->concept_invent',null,'$this->jornada_id_invent',null,$this->recibe_person_id_invent,
                 $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
 
 		try {
@@ -159,7 +155,7 @@ class m_entrada_salida extends m_db
 		if ($type_operacion == "E") $second_inner = "INNER JOIN personas ON personas.id_person = inventario.person_id_invent";
 		if ($type_operacion == "E") $select_person = "personas.nom_person,";
 
-		$sql = "SELECT inventario.id_invent, inventario.orden_invent, inventario.status_invent, inventario.created_invent,
+		$sql = "SELECT inventario.id_invent, inventario.orden_invent, inventario.concept_invent, inventario.status_invent, inventario.created_invent,
             $select_person cantidad_invent FROM inventario 
             INNER JOIN detalle_inventario ON detalle_inventario.invent_id_ope = inventario.id_invent $second_inner WHERE
             inventario.type_operacion_invent = '$type_operacion' GROUP BY inventario.id_invent;";

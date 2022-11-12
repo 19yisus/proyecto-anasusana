@@ -34,6 +34,7 @@
                       <tr>
                         <th>Código</th>
                         <th>Número de Orden</th>
+                        <th>Procedencia</th>
                         <th>Proveedor</th>
                         <th>Cantidad de Productos</th>
                         <th>Estado</th>
@@ -136,7 +137,17 @@
             data: "id_invent"
           },
           {
-            data: "orden_invent"
+            data: "orden_invent",
+            render(data){
+              if(data) return data; else return "No-tiene";
+            }
+          },
+          {
+            data: "concept_invent",
+            render(data){
+              if(data == "D") return "Donación";
+              if(data == "C") return "Compra";
+            }
           },
           {
             data: "nom_person"
@@ -159,7 +170,7 @@
           {
             defaultContent: "",
             render: function(data, type, row, meta) {
-
+              
               let btn = `
             <form method="POST" id="formSecondary-${row.id_invent}" target="<?php echo constant("URL"); ?>controller/c_pdf.php" action="<?php echo constant('URL'); ?>controller/c_entrada_salida.php">
               <input type="hidden" name="id_invent" value="${row.id_invent}">

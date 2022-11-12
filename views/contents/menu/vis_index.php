@@ -5,7 +5,7 @@
 <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
   <div class="wrapper" id="VueApp">
     <?php
-    $this->titleContent = "Catálogo Platillos registrados";
+    $this->titleContent = "Catálogo Menú de alimentos";
 
     $this->GetComplement("navbar");
     // $this->GetComplement("sidebar");
@@ -21,7 +21,7 @@
             <div class="col-md-12">
               <div class="card card-warning">
                 <div class="card-header">
-                  <h3 class="card-title">Catálogo de Comidas</h3>
+                  <h3 class="card-title">Catálogo de Menú</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -51,7 +51,7 @@
     <?php
     $this->GetComplement("footer");
     $this->GetComplement("scripts");
-    require_once("./views/contents/platillo/modal.php");
+    require_once("./views/contents/menu/modal.php");
     ?>
   </div>
   <!-- ./wrapper -->
@@ -72,18 +72,18 @@
       },
       methods: {
         async Consult(value) {
-          await fetch(`<?php echo constant("URL"); ?>controller/c_platillos.php?ope=Consultar_platillo&id_plat=${value}`)
+          await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Consultar_menu&id_menu=${value}`)
             .then(response => response.json()).then(({
               data
             }) => {
               const form = document.formulario;
               console.log(data)
-              this.id = data[0].id_plat;
-              this.des = data[0].des_plat;
+              this.id = data[0].id_menu;
+              this.des = data[0].des_menu;
 
               let res = data[1].map(item => {
                 return {
-                  'id': item.product_id_plat_detalle,
+                  'id': item.product_id_menu_detalle,
                   'cantidad': item.consumo,
                   'medida': item.med_product
                 }
@@ -142,14 +142,14 @@
       const form = document.getElementById(`formSecondary-${id}`);
       if (value !== 2) {
         form.ope.value = "Desactivar";
-        form.estatus_plat.value = value;
+        form.estatus_menu.value = value;
       } else form.ope.value = "Eliminar";
 
       let res = await Confirmar();
       if (!res) return false;
 
       const data = new FormData(form);
-      await fetch(`<?php echo constant("URL"); ?>controller/c_platillos.php`, {
+      await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php`, {
           method: "POST",
           body: data
         }).then(response => response.json())
@@ -167,17 +167,17 @@
     $(() => {
       $('#dataTable').DataTable({
         ajax: {
-          url: "<?php echo constant("URL"); ?>controller/c_platillos.php?ope=Todos_platillo",
+          url: "<?php echo constant("URL"); ?>controller/c_menu.php?ope=Todos_menu",
           dataSrc: "data",
         },
         columns: [{
-            data: "id_plat"
+            data: "id_menu"
           },
           {
-            data: "des_plat"
+            data: "des_menu"
           },
           {
-            data: "status_plat",
+            data: "status_menu",
             render: function(data) {
               return (data == 1) ? "Activo" : "Inactivo";
             }
@@ -185,25 +185,25 @@
           {
             defaultContent: "",
             render: function(data, type, row, meta) {
-              // <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_plat})"></i></button>
+              // <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-trash" onclick="ChangeStatus(2,${row.id_menu})"></i></button>
               let btn_secondary;
               let estadoBtnEdit;
-              if (row.status_plat === "1") {
+              if (row.status_menu === "1") {
                 estadoBtnEdit = "";
-                btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_plat})"><i class="fas fa-power-off"></i></button>`;
+                btn_secondary = `<button class="btn btn-sm btn-success" onclick="ChangeStatus(0,${row.id_menu})"><i class="fas fa-power-off"></i></button>`;
               } else {
                 estadoBtnEdit = "disabled";
                 btn_secondary = `
-            <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_plat})"><i class="fas fa-power-off"></i></button>`;
+            <button type="button" class="btn btn-sm btn-danger" onclick="ChangeStatus(1,${row.id_menu})"><i class="fas fa-power-off"></i></button>`;
               }
               let btn = `
-            <form method="POST" id="formSecondary-${row.id_plat}" action="<?php echo constant('URL'); ?>controller/c_platillos.php">
-              <input type="hidden" name="id_plat" value="${row.id_plat}">
-              <input type="hidden" name="estatus_plat">
+            <form method="POST" id="formSecondary-${row.id_menu}" action="<?php echo constant('URL'); ?>controller/c_menu.php">
+              <input type="hidden" name="id_menu" value="${row.id_menu}">
+              <input type="hidden" name="estatus_menu">
               <input type="hidden" name="ope">
             </form>
             <div class="btn-group">
-              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_plat})"><i class="fas fa-edit"></i></button>${btn_secondary}
+              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_menu})"><i class="fas fa-edit"></i></button>${btn_secondary}
             </div>`;
 
               <?php if (isset($_SESSION['permisos'])) { ?>

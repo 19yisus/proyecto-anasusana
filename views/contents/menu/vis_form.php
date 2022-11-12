@@ -9,7 +9,7 @@ $productos = $model->Get_todos_productos(1);
 <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
   <div class="wrapper" id="VueApp">
     <?php
-    $this->titleContent = "Registro de Platillos";
+    $this->titleContent = "Registro de Menú de alimentos";
 
     $this->GetComplement("navbar");
     // $this->GetComplement("sidebar");
@@ -24,32 +24,40 @@ $productos = $model->Get_todos_productos(1);
             <div class="col-md-12">
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Formulario de Registro de Comidas</h3>
+                  <h3 class="card-title">Formulario de Registro de menú</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_platillos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+                <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_menu.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                   <div class="card-body">
                     <div class="row">
                       <div class="col-5">
                         <div class="form-group">
-                          <input type="hidden" name="id_plat">
-                          <label for="des_cargo">Nombre del Platillo(<span class="text-danger text-md">*</span>)</label>
-                          <input type="text" name="des_plat" id="des_plat" placeholder="Ingrese la descripción del cargo" class="form-control">
+                          <input type="hidden" name="id_menu">
+                          <label for="des_cargo">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
+                          <input type="text" name="des_menu" id="des_menu" placeholder="Ingrese la descripción del menú" class="form-control">
                         </div>
                       </div>
 
                       <div class="col-4">
-                        <label for="">Estado del Platillo(<span class="text-danger text-md">*</span>)</label>
+                        <label for="">Estado del Menú(<span class="text-danger text-md">*</span>)</label>
                         <div class="row">
                           <div class="form-check mx-3">
-                            <input type="radio" name="estatus_plat" id="estatus_plat" value="1" class="form-check-input" readonly checked>
-                            <label for="estatus_plat" class="form-check-label">Activo</label>
+                            <input type="radio" name="estatus_menu" id="estatus_menu" value="1" class="form-check-input" readonly checked>
+                            <label for="estatus_menu" class="form-check-label">Activo</label>
                           </div>
                           <div class="form-check">
-                            <input type="radio" name="estatus_plat" id="estatus_plat" value="0" class="form-check-input" disabled>
-                            <label for="estatus_plat" class="form-check-label">Inactivo</label>
+                            <input type="radio" name="estatus_menu" id="estatus_menu" value="0" class="form-check-input" disabled>
+                            <label for="estatus_menu" class="form-check-label">Inactivo</label>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="">Procedimientos</label>
+                          <textarea name="des_procedimiento" class="form-control" id="des_procedimiento" cols="30" rows="2"></textarea>
                         </div>
                       </div>
                     </div>
@@ -67,7 +75,7 @@ $productos = $model->Get_todos_productos(1);
                         <div class="form-group">
                           <label for="">Cantidad</label>
                           <div class="input-group">
-                            <input type="number" step="00.01" min="00.01" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
+                            <input type="number" step="1" min="1" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
                             <div class="input-group-append">
                               <span class="input-group-text">{{itemx.medida}}</span>
                             </div>
@@ -156,7 +164,7 @@ $productos = $model->Get_todos_productos(1);
         await this.GetAlimentos();
       }
     })
-    
+
     $("#btn").click(async () => {
       if ($("#formulario").valid()) {
         let res = await Confirmar();
@@ -166,17 +174,27 @@ $productos = $model->Get_todos_productos(1);
 
     $("#formulario").validate({
       rules: {
-        des_plat: {
+        des_menu: {
           required: true,
           minlength: 3,
           maxlength: 20
+        },
+        des_procedimiento: {
+          required: true,
+          minlength: 1,
+          maxlength: 120
         }
       },
       messages: {
-        des_plat: {
+        des_menu: {
           required: "Este Campo NO Puede estar Vacio",
           minlength: "Debe de Contener al menos 3 caracteres",
           maxlength: "Debe de contener menos de 20 caracteres"
+        },
+        des_procedimiento: {
+          required: "Este Campo NO Puede estar Vacio",
+          minlength: "Debe de Contener al menos 1 caracteres",
+          maxlength: "Debe de contener menos de 120 caracteres"
         }
       },
       errorElement: "span",

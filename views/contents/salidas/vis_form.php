@@ -12,6 +12,7 @@
 		require_once("./models/m_entrada_salida.php");
 		require_once("./models/m_persona.php");
 		require_once("./models/m_comedor.php");
+		require_once("./models/m_jornada.php");
 
 		$model_salida = new m_entrada_salida();
 		$NextId_inventario = $model_salida->NextId("S");
@@ -21,6 +22,10 @@
 
 		$model_person = new m_persona();
 		$person2 = $model_person->Get_Personas();
+
+		$model_jornada = new m_jornada();
+		$datos_jornada = $model_jornada->Get_jornada_hoy();
+
 		?>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -47,23 +52,6 @@
 											</div>
 											<div class="col-3">
 												<div class="form-group">
-													<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
-													<select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
-														<option value="">Seleccione una Opción</option>
-														<?php foreach ($datosComedor as $comedor) { ?>
-															<option value="<?php echo $comedor['id_comedor']; ?>"><?php echo $comedor['nom_comedor']; ?></option>
-														<?php } ?>
-													</select>
-												</div>
-											</div>
-											<div class="col-3">
-												<div class="form-group">
-													<label for="orden_invent">N° Orden</label>
-													<input type="text" maxlength="20" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el Número de Orden">
-												</div>
-											</div>
-											<div class="col-3">
-												<div class="form-group">
 													<label for="concept_invent">Concepto de Operación(<span class="text-danger text-md">*</span>)</label>
 													<select name="concept_invent" v-model="motivo_salida" id="concept_invent" class="custom-select">
 														<option value="">Seleccione una Opción</option>
@@ -73,12 +61,15 @@
 													</select>
 												</div>
 											</div>
-										</div>
-										<div class="row">
 											<div class="col-3">
 												<div class="form-group">
-													<label for="fecha_invent">Fecha de la Operación(<span class="text-danger text-md">*</span>)</label>
-													<input type="datetime-local" name="fecha_invent" id="" class="form-control" max="<?php echo $this->thisDateMoreOneHour(); ?>" value="<?php echo $this->DateNow("Y-m-d H:i"); ?>">
+													<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
+													<select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
+														<option value="">Seleccione una Opción</option>
+														<?php foreach ($datosComedor as $comedor) { ?>
+															<option value="<?php echo $comedor['id_comedor']; ?>"><?php echo $comedor['nom_comedor']; ?></option>
+														<?php } ?>
+													</select>
 												</div>
 											</div>
 											<div class="col-3">
@@ -92,6 +83,32 @@
 													</select>
 												</div>
 											</div>
+											<!-- <div class="col-3">
+												<div class="form-group">
+													<label for="orden_invent">N° Orden</label>
+													<input type="text" maxlength="20" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el Número de Orden">
+												</div>
+											</div> -->
+
+										</div>
+										<div class="row">
+											<div class="col-3" v-show="motivo_salida == 'O'">
+												<div class="form-group">
+													<label for="">Jornada(<span class="text-danger text-md">*</span>)</label>
+													<select v-bind:disabled="motivo_salida != 'O'" v-model="jornada_id" name="jornada_id_invent" id="" class="form-control" v-on:change="consultar_jornada">
+														<option value="">Seleccione una opción</option>
+														<?php foreach ($datos_jornada as $item) { ?>
+															<option value="<?php echo $item['id_jornada']; ?>"><?php echo $item['titulo_jornada']; ?></option>
+														<?php } ?>
+													</select>
+												</div>
+											</div>
+											<div class="col-3">
+												<div class="form-group">
+													<label for="fecha_invent">Fecha de la Operación(<span class="text-danger text-md">*</span>)</label>
+													<input type="datetime-local" name="fecha_invent" id="" class="form-control" max="<?php echo $this->thisDateMoreOneHour(); ?>" value="<?php echo $this->DateNow("Y-m-d H:i"); ?>">
+												</div>
+											</div>
 											<div class="col-6">
 												<div class="form-group">
 													<input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
@@ -102,7 +119,7 @@
 											<input type="hidden" v-bind:disabled="motivo_salida != 'O'" name="des_comidas" v-model="des_menu">
 											<input type="hidden" v-bind:disabled="motivo_salida != 'O'" name="cantidad" v-model="cant_menu">
 											<input type="hidden" v-bind:disabled="motivo_salida != 'O'" name="nom_comidas" v-model="nom_menu">
-											
+
 											<div class="d-none" v-for="(item, index) in productos" :key="index">
 												<input type="hidden" class="id_input" name="id_product[]" :value="item.code">
 												<input type="hidden" class="cant_input" name="cantidad_product[]" :value="item.cantidad">
@@ -139,8 +156,8 @@
 									<!-- /.card-body -->
 									<div class="card-footer">
 										<input type="hidden" name="ope">
-										<button type="button" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
+										<button type="button" v-bind:disabled="enviar_condicion == false" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
+										<button type="button" v-bind:disabled="jornada_id != '' " class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
 									</div>
 								</form>
 							</div>
@@ -170,13 +187,25 @@
 				productos: [
 					// {code: "",nom_product: "", cantidad: 0, limite_stock: 0},
 				],
+				enviar_condicion: true,
 				motivo_salida: "",
+				jornada_id: "",
 				des_menu: "",
 				cant_menu: "",
 				nom_menu: ""
 			},
 			methods: {
-				Duplicar: function() {
+				Duplicar: function(product = []) {
+					if (product['id_product'] != undefined) {
+						this.productos.push({
+							code: product['id_product'],
+							nom_product: product['nom_product'],
+							cantidad: product['consumo'],
+							limite_stock: (parseInt(product['stock_product']) - parseInt(product['stock_minimo_product']))
+						}, )
+						return false;
+					}
+
 					let datos = this.productos[this.productos.length - 1];
 					if (typeof datos == "undefined") {
 						this.productos.push({
@@ -201,6 +230,7 @@
 							title: "Selecciona un Producto y su Cantidad para Proceder"
 						});
 					}
+
 				},
 				Disminuir: function(codigo) {
 					this.productos[codigo].cantidad = parseInt(this.productos[codigo].cantidad);
@@ -211,6 +241,43 @@
 					let resultado = await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Consultar_producto&id_producto=${this.productos[e.target.dataset.index].code}`)
 						.then(response => response.json()).then(res => res.data).catch(Err => console.error(Err));
 					this.productos[e.target.dataset.index].limite_stock = (resultado.stock_product - resultado.stock_minimo_product);
+				},
+				async consultar_jornada() {
+					if(this.jornada_id == ''){
+						this.limpiarProductos();
+						return false;
+					}
+					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
+						.then(response => response.json())
+						.then(({
+							data
+						}) => {
+							this.limpiarProductos()
+							this.enviar_condicion = true;
+							let datos_menu = data[1];
+
+							datos_menu.forEach(item => {
+								let stock = parseInt(item.stock_product),
+									consumo = parseInt(item.consumo),
+									minimo_stock = parseInt(item.stock_minimo_product);
+
+								if (
+									consumo < stock && (stock - consumo) > minimo_stock
+								) {
+									this.Duplicar(item);
+								} else {
+									this.Fn_mensaje_error(`No se tiene la capacidad para cubrir esta jornada, no hay suficiente ${item.nom_product}!`);
+									this.enviar_condicion = false;
+									setTimeout( () => {
+										this.limpiarProductos()
+									},100)
+									return false;
+								}
+							})
+						}).catch(error => console.error(error));
+				},
+				limpiarProductos() { 
+					this.productos = []; 
 				},
 				resetProductos: function() {
 					while (this.productos.length > 0) {
@@ -261,7 +328,8 @@
 				Fn_mensaje_error: function(sms) {
 					Toast.fire({
 						icon: "error",
-						title: `${sms}`
+						title: `${sms}`,
+						timer: 3000
 					});
 				}
 			},
@@ -278,7 +346,7 @@
 		$("#btn").click(async () => {
 			if ($("#formulario").valid()) {
 				let status_inputs = true;
-				
+
 				document.querySelectorAll(".id_input").forEach(item => {
 					if (item.value == "") status_inputs = false;
 				});
