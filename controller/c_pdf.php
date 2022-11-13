@@ -134,6 +134,14 @@ function fn_pdf_salida()
   $pdf->SetFillColor(11, 63, 71);
   $pdf->SetDrawColor(88, 88, 88);
   $pdf->cell(190, 8, "Observacion: " . $d['doc']['observacion'], 1, 1, "C", 1);
+  // var_dump($d['doc']);
+  if ($d['doc']['id_jornada']) {
+    $pdf->cell(190, 8, "Jornada del dia: " . $d['doc']['titulo_jornada'], 1, 1, "C", 1);
+    $pdf->cell(190, 8, "Jornada del dia: " . $d['doc']['des_jornada'], 1, 1, "C", 1);
+    $pdf->cell(100, 8, "Menu del dia: " . $d['doc']['des_menu'], 1, 0, "C", 1);
+    $pdf->cell(90, 8, "Cantidad de platos aproximada: " . $d['doc']['cant_aproximada'], 1, 1, "C", 1);
+    // die("Hay jornada");
+  }
   $pdf->cell(190, 8, "Descripcion general de los productos", 1, 1, "C", 1);
   $pdf->cell(16, 7, "Codigo", 1, 0, "C", 1);
   $pdf->cell(80, 7, "Descripcion", 1, 0, "C", 1);
@@ -161,6 +169,7 @@ function fn_pdf_filtrado()
 {
   $model = new m_entrada_salida();
   $d = $model->GetPdfWithFiltros($_POST['filtro']);
+  // var_dump($d);
   $filtro = $_POST['filtro'];
 
   if (!isset($d[0])) {
@@ -181,9 +190,10 @@ function fn_pdf_filtrado()
   $pdf->SetNombre("Reporte de operaciones de $tipo por $des_tipo");
   $pdf->addPage();
   $pdf->Ln(10);
-  $pdf->setFont('Arial', 'B', 12);
-  $pdf->SetFillColor(255, 255, 255);
-  $pdf->SetTextColor(0, 0, 0);
+  $pdf->setFont('Arial', 'B', 10);
+  $pdf->SetTextColor(255, 255, 255);
+  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetDrawColor(88, 88, 88);
   foreach ($d as $dato) {
     $fecha = new DateTime($dato['invent']['created_invent']);
 
@@ -214,17 +224,26 @@ function fn_pdf_filtrado()
     }
 
     if ($filtro == "O") {
+      $pdf->cell(190, 7, 'Jornada del dia', 1, 0, "C", 1);
+      $pdf->Ln();
+      $pdf->cell(100, 7, "Nombre: " . ($dato['invent']['titulo_jornada'] !== "NULL") ? $dato['invent']['titulo_jornada'] : "Sin titulo", 1, 0, "C", 1);
+      $pdf->cell(90, 7, "Cantidad Aproximada de platos: " . $dato['invent']['cant_aproximada'], 1, 0, "C", 1);
+      $pdf->Ln();
+      $pdf->cell(190, 7, "Descripcion de la jornada: " . $dato['invent']['des_jornada'], 1, 0, "C", 1);
+      $pdf->Ln();
       $pdf->cell(190, 7, 'Menu del dia', 1, 0, "C", 1);
       $pdf->Ln();
-      $pdf->cell(100, 7, "Nombre: " . ($dato['invent']['nom_comidas'] !== "NULL") ? $dato['invent']['nom_comidas'] : "Sin titulo", 1, 0, "C", 1);
-      $pdf->cell(90, 7, "Cantidad Aproximada: " . $dato['invent']['cant_platillo'], 1, 0, "C", 1);
-      $pdf->Ln();
-      $pdf->cell(190, 7, "Descripcion del menu: " . $dato['invent']['nom_comidas'], 1, 0, "C", 1);
+      // $pdf->cell(100, 7, "Nombre: " . ($dato['invent']['des_menu'] !== "NULL") ? $dato['invent']['des_menu'] : "Sin titulo", 1, 0, "C", 1);
+      // $pdf->Ln();
+      $pdf->cell(190, 7, "Descripcion del menu: " . $dato['invent']['des_menu'], 1, 0, "C", 1);
       $pdf->Ln();
     }
 
     $pdf->cell(190, 7, 'Datos de los productos', 1, 0, "C", 1);
     $pdf->Ln();
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->setFont('Arial', 'B', 9);
     foreach ($dato['products'] as $prod) {
       $pdf->cell(50, 7, "Descripcion: " . $prod['nom_product'], 1, 0, "C", 1);
       $pdf->cell(15, 7, $prod['valor_product'] . " " . $prod['med_product'], 1, 0, "C", 1);

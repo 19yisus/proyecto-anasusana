@@ -241,7 +241,11 @@ class m_entrada_salida extends m_db
 	{
 		$datos_pdf = [];
 		$persona = [];
-		$sql_inventario = "SELECT * FROM inventario INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor WHERE inventario.id_invent = '$codigo' ;";
+		$sql_inventario = "SELECT * FROM inventario 
+		INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
+		LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
+		LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
+		WHERE inventario.id_invent = '$codigo' ;";
 		$sql_productos = "SELECT * FROM detalle_inventario 
             INNER JOIN productos ON productos.id_product = detalle_inventario.product_id_ope 
             WHERE detalle_inventario.invent_id_ope = '$codigo'";
@@ -278,6 +282,11 @@ class m_entrada_salida extends m_db
 				'orden' => $datos_inventario['orden_invent'],
 				'concepto' => $datos_inventario['concept_invent'],
 				'observacion' => $datos_inventario['observacion_invent'],
+				'id_jornada' => $datos_inventario['id_jornada'],
+				'titulo_jornada' => $datos_inventario['titulo_jornada'],
+				'des_jornada' => $datos_inventario['des_jornada'],
+				'cant_aproximada' => $datos_inventario['cant_aproximada'],
+				'des_menu' => $datos_inventario['des_menu'],
 			],
 			'comedor' => [
 				'nom' => $datos_inventario['nom_comedor'],
@@ -295,6 +304,8 @@ class m_entrada_salida extends m_db
 
 		$sql_inventario = "SELECT * FROM inventario 
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
+					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
+					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
 					WHERE inventario.concept_invent = '$filtro' GROUP BY inventario.id_invent;";
 
 		$datos_inventario = $this->Get_todos_array($this->Query($sql_inventario));

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-11-2022 a las 21:45:03
+-- Tiempo de generación: 13-11-2022 a las 16:23:50
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -95,14 +95,28 @@ CREATE TABLE `inventario` (
   `type_operacion_invent` enum('E','S') COLLATE utf8_spanish_ci NOT NULL,
   `concept_invent` enum('C','D','O','V','R') COLLATE utf8_spanish_ci DEFAULT NULL,
   `if_credito` tinyint(1) DEFAULT NULL,
-  `des_comidas` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `nom_comidas` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `cant_platillo` int(11) DEFAULT NULL,
+  `jornada_id_invent` int(11) DEFAULT NULL,
   `person_id_invent` int(11) DEFAULT NULL,
   `recibe_person_id_invent` int(11) DEFAULT NULL,
   `comedor_id_invent` int(11) NOT NULL,
   `user_id_invent` int(11) NOT NULL,
   `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jornada`
+--
+
+CREATE TABLE `jornada` (
+  `id_jornada` int(11) NOT NULL,
+  `titulo_jornada` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `des_jornada` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `cant_aproximada` int(11) NOT NULL,
+  `estatus_jornada` tinyint(1) NOT NULL,
+  `fecha_jornada` datetime NOT NULL,
+  `menu_id_jornada` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -116,6 +130,32 @@ CREATE TABLE `marca` (
   `nom_marca` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `menu`
+--
+
+CREATE TABLE `menu` (
+  `id_menu` int(11) NOT NULL,
+  `des_menu` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `des_procedimiento` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `status_menu` tinyint(1) NOT NULL,
+  `created_menu` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `menu_detalle`
+--
+
+CREATE TABLE `menu_detalle` (
+  `product_id_menu_detalle` int(11) NOT NULL,
+  `menu_id_detalle` int(11) NOT NULL,
+  `consumo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -310,13 +350,34 @@ ALTER TABLE `inventario`
   ADD KEY `person_id_invent` (`person_id_invent`),
   ADD KEY `comedor_id_invent` (`comedor_id_invent`),
   ADD KEY `user_id_invent` (`user_id_invent`),
-  ADD KEY `recibe_person_id_invent` (`recibe_person_id_invent`);
+  ADD KEY `recibe_person_id_invent` (`recibe_person_id_invent`),
+  ADD KEY `jornada_id_invent` (`jornada_id_invent`);
+
+--
+-- Indices de la tabla `jornada`
+--
+ALTER TABLE `jornada`
+  ADD PRIMARY KEY (`id_jornada`),
+  ADD KEY `menu_id_jornada` (`menu_id_jornada`);
 
 --
 -- Indices de la tabla `marca`
 --
 ALTER TABLE `marca`
   ADD PRIMARY KEY (`id_marca`);
+
+--
+-- Indices de la tabla `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id_menu`);
+
+--
+-- Indices de la tabla `menu_detalle`
+--
+ALTER TABLE `menu_detalle`
+  ADD KEY `product_id_menu_detalle` (`product_id_menu_detalle`),
+  ADD KEY `menu_id_detalle` (`menu_id_detalle`);
 
 --
 -- Indices de la tabla `personas`
@@ -388,10 +449,22 @@ ALTER TABLE `comedor`
   MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `jornada`
+--
+ALTER TABLE `jornada`
+  MODIFY `id_jornada` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
   MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
@@ -453,7 +526,21 @@ ALTER TABLE `inventario`
   ADD CONSTRAINT `inventario_ibfk_1` FOREIGN KEY (`person_id_invent`) REFERENCES `personas` (`id_person`),
   ADD CONSTRAINT `inventario_ibfk_2` FOREIGN KEY (`comedor_id_invent`) REFERENCES `comedor` (`id_comedor`),
   ADD CONSTRAINT `inventario_ibfk_3` FOREIGN KEY (`user_id_invent`) REFERENCES `usuarios` (`id_user`),
+  ADD CONSTRAINT `inventario_ibfk_4` FOREIGN KEY (`jornada_id_invent`) REFERENCES `jornada` (`id_jornada`),
   ADD CONSTRAINT `persona_quien_recibe` FOREIGN KEY (`recibe_person_id_invent`) REFERENCES `personas` (`id_person`);
+
+--
+-- Filtros para la tabla `jornada`
+--
+ALTER TABLE `jornada`
+  ADD CONSTRAINT `jornada_ibfk_1` FOREIGN KEY (`menu_id_jornada`) REFERENCES `menu` (`id_menu`);
+
+--
+-- Filtros para la tabla `menu_detalle`
+--
+ALTER TABLE `menu_detalle`
+  ADD CONSTRAINT `menu_detalle_ibfk_1` FOREIGN KEY (`product_id_menu_detalle`) REFERENCES `productos` (`id_product`),
+  ADD CONSTRAINT `menu_detalle_ibfk_2` FOREIGN KEY (`menu_id_detalle`) REFERENCES `menu` (`id_menu`);
 
 --
 -- Filtros para la tabla `personas`

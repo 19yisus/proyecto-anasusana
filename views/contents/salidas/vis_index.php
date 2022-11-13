@@ -29,6 +29,7 @@
                       <tr>
                         <th>Código</th>
                         <th>Numero de Orden</th>
+                        <th>Salida por</th>
                         <th>Cantidad de Productos</th>
                         <th>Estado</th>
                         <th>Creación</th>
@@ -137,6 +138,14 @@
             data: "orden_invent",
             render(data){
               if(data) return data; else return "No-tiene"
+            }
+          },
+          {
+            data: "concept_invent",
+            render(data){
+              if(data == "O") return "Consumo";
+              if(data == "R") return "Rechazo";
+              if(data == "V") return "Vencimiento";
             }
           },
           {

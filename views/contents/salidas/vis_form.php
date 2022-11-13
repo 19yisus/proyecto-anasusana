@@ -243,7 +243,8 @@
 					this.productos[e.target.dataset.index].limite_stock = (resultado.stock_product - resultado.stock_minimo_product);
 				},
 				async consultar_jornada() {
-					if(this.jornada_id == ''){
+					if (this.jornada_id == '') {
+						this.enviar_condicion = true;
 						this.limpiarProductos();
 						return false;
 					}
@@ -255,29 +256,38 @@
 							this.limpiarProductos()
 							this.enviar_condicion = true;
 							let datos_menu = data[1];
+							let datos_jornada = data[0];
 
 							datos_menu.forEach(item => {
 								let stock = parseInt(item.stock_product),
 									consumo = parseInt(item.consumo),
+									cant_proximada = parseInt(datos_jornada.cant_aproximada),
 									minimo_stock = parseInt(item.stock_minimo_product);
-
+								let consumo_real = (consumo * cant_proximada);
 								if (
-									consumo < stock && (stock - consumo) > minimo_stock
+									consumo_real < stock && (stock - consumo_real) > minimo_stock
 								) {
-									this.Duplicar(item);
+									let list = [];
+									list['id_product'] = item.id_product;
+									list['nom_product'] = item.nom_product;
+									list['consumo'] = consumo_real;
+									list['stock_minimo_product'] = item.stock_minimo_product;
+									list['stock_product'] = item.stock_product;
+
+									this.Duplicar(list);
 								} else {
 									this.Fn_mensaje_error(`No se tiene la capacidad para cubrir esta jornada, no hay suficiente ${item.nom_product}!`);
 									this.enviar_condicion = false;
-									setTimeout( () => {
+									setTimeout(() => {
 										this.limpiarProductos()
-									},100)
+									}, 100)
 									return false;
 								}
 							})
 						}).catch(error => console.error(error));
 				},
-				limpiarProductos() { 
-					this.productos = []; 
+				limpiarProductos() {
+					this.productos = [];
 				},
 				resetProductos: function() {
 					while (this.productos.length > 0) {

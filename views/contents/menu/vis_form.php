@@ -53,14 +53,6 @@ $productos = $model->Get_todos_productos(1);
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="form-group">
-                          <label for="">Procedimientos</label>
-                          <textarea name="des_procedimiento" class="form-control" id="des_procedimiento" cols="30" rows="2"></textarea>
-                        </div>
-                      </div>
-                    </div>
                     <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
                       <div class="col-6">
                         <div class="form-group">
@@ -80,6 +72,14 @@ $productos = $model->Get_todos_productos(1);
                               <span class="input-group-text">{{itemx.medida}}</span>
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label for="">Procedimientos</label>
+                          <textarea name="des_procedimiento" class="form-control" id="des_procedimiento" cols="30" rows="2"></textarea>
                         </div>
                       </div>
                     </div>
