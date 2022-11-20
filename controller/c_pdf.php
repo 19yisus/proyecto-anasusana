@@ -1,5 +1,6 @@
 <?php
 require_once("../models/m_entrada_salida.php");
+require_once("../models/m_productos.php");
 require_once("../models/fpdf/fpdf.php");
 class new_fpdf extends FPDF
 {
@@ -40,6 +41,10 @@ if (isset($_POST['ope'])) {
 
     case "ReporteFiltrado":
       fn_pdf_filtrado();
+      break;
+
+    case "ReporteProductos":
+      fn_pdf_productos();
       break;
   }
 }
@@ -169,7 +174,6 @@ function fn_pdf_filtrado()
 {
   $model = new m_entrada_salida();
   $d = $model->GetPdfWithFiltros($_POST['filtro']);
-  // var_dump($d);
   $filtro = $_POST['filtro'];
 
   if (!isset($d[0])) {
@@ -255,5 +259,45 @@ function fn_pdf_filtrado()
     $pdf->Ln(10);
   }
 
+  $pdf->Output();
+}
+
+function fn_pdf_productos()
+{
+  $model = new m_productos();
+  if(isset($_POST['id'])) $id =  $_POST['id']; else $id = "";
+  $dato = $model->GetPdf($_POST['filtro'],  $id);
+    
+  $pdf = new new_fpdf();
+  
+  if($_POST['filtro'] == "T") $des_report = "Todos los productos";
+  if($_POST['filtro'] == "M") $des_report = "Todos los productos segun su Marca";
+  if($_POST['filtro'] == "U") $des_report = "Todos los productos segun su precentacion";
+
+  $pdf->SetNombre($des_report);
+  $pdf->addPage();
+  $pdf->Ln(10);
+  $pdf->setFont('Arial', 'B', 10);
+  $pdf->SetTextColor(255, 255, 255);
+  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetDrawColor(88, 88, 88);
+  $pdf->cell(190, 7, 'Datos de los productos', 1, 0, "C", 1);
+  $pdf->Ln();
+  $pdf->cell(50, 7, 'Descripcion', 1, 0, "C", 1);
+  $pdf->cell(40, 7, 'Marca', 1, 0, "C", 1);
+  $pdf->cell(100, 7, 'Informacion del stock', 1, 0, "C", 1);
+  $pdf->Ln();
+  $pdf->SetFillColor(255, 255, 255);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->setFont('Arial', 'B', 9);
+  foreach ($dato as $prod) {
+    $pdf->cell(40, 7, $prod['nom_product'], 1, 0, "C", 1);
+    $pdf->cell(10, 7, $prod['valor_product'] . " " . $prod['med_product'], 1, 0, "C", 1);
+    $pdf->cell(40, 7, $prod['nom_marca'], 1, 0, "C", 1);
+    $pdf->cell(30, 7, "Stock minimo: " . $prod['stock_minimo_product'], 1, 0, "C", 1);
+    $pdf->cell(35, 7, "Stock maximo: " . $prod['stock_maximo_product'], 1, 0, "C", 1);
+    $pdf->cell(35, 7, "Stock en almacen: " . $prod['stock_product'], 1, 0, "C", 1); 
+    $pdf->Ln();
+  }
   $pdf->Output();
 }

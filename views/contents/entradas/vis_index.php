@@ -76,11 +76,11 @@
                           <label for="">Filtro(<span class="text-danger text-md">*</span>)</label>
                           <div class="row">
                             <div class="form-check mx-3">
-                              <input type="radio" name="filtro" id="filtro" value="C" class="form-check-input">
+                              <input type="radio" name="filtro" id="filtro" value="C" class="form-check-input" required>
                               <label for="filtro" class="form-check-label">Entrada por compra</label>
                             </div>
                             <div class="form-check mx-3">
-                              <input type="radio" name="filtro" id="filtro" value="D" class="form-check-input">
+                              <input type="radio" name="filtro" id="filtro" value="D" class="form-check-input" required>
                               <label for="filtro" class="form-check-label">Entrada por donación</label>
                             </div>
                           </div>
@@ -95,6 +95,7 @@
                       </div>
                     </div>
                   </div>
+                </form>
               </div>
             </div>
           </div>
