@@ -48,7 +48,7 @@ $productos = $model->Get_todos_productos(1);
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="fecha_vencimiento">Fecha de Vencimiento</label>
-                                                <input type="date" name="fecha_vencimiento" min="<?php echo $this->DateNow(); ?>" v-model="productos[index].fecha" :value="item.fecha" id="fecha_vencimiento" placeholder="Ingrese Fecha de Vencimiento" class="form-control">
+                                                <input type="date" name="fecha_vencimiento" min="<?php echo date('Y-m-d', strtotime('+1 days')); ?>" v-model="productos[index].fecha" :value="item.fecha" id="fecha_vencimiento" placeholder="Ingrese Fecha de Vencimiento" class="form-control">
                                             </div>
                                         </div>
                                         <button type="button" v-on:click="Disminuir(index)" class="btn btn-danger mt-3">-</button>

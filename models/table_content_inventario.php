@@ -122,6 +122,8 @@
       <th>Precio</th>
       <th>Marca</th>
       <th>Cantidad</th>
+      <th>Stock Min.</th>
+      <th>Stock Max.</th>
     </tr>
   </thead>
   <tbody>
@@ -133,6 +135,8 @@
         <td><?php echo $producto['precio_product_ope'];?></td>
         <td><?php echo $producto['nom_marca'];?></td>
         <td><?php echo $producto['detalle_cantidad'];?></td>
+        <td><?php echo $producto['stock_minimo_product'];?></td>
+        <td><?php echo $producto['stock_maximo_product'];?></td>
       </tr>
     <?php }?>
   </tbody>

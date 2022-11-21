@@ -28,7 +28,7 @@ class m_entrada_salida extends m_db
 		$this->productos = isset($productos) ? $productos : null;
 		$this->fecha_invent = isset($d['fecha_invent']) ? $d['fecha_invent'] : null;
 		$this->if_credito = isset($d['if_credito']) ? $d['if_credito'] : null;
-		$this->jornada_id_invent = isset($d['jornada_id_invent']) ? $d['jornada_id_invent'] : "NULL";
+		$this->jornada_id_invent = isset($d['jornada_id_invent']) ? $d['jornada_id_invent'] : NULL;
 	}
 
 	public function Entrada_productos()
@@ -43,6 +43,7 @@ class m_entrada_salida extends m_db
                 $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
 
 		try {
+
 			$this->Start_transacction();
 			$results_invent = $this->Query($sql_inventario_insert);
 
@@ -105,6 +106,7 @@ class m_entrada_salida extends m_db
                 $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
 
 		try {
+			$sql_inventario_insert = str_ireplace("''", "NULL", $sql_inventario_insert);
 			$this->Start_transacction();
 			$results_invent = $this->Query($sql_inventario_insert);
 
