@@ -21,21 +21,21 @@
                   <div class="row">
                     <div class="col-5 col-sm-12">
                       <div class="form-group">
-                        <label for="id_plat">Código del platillo(<span class="text-danger text-md">*</span>)</label>
-                        <input type="text" name="id_plat" v-model="id" id="id_plat" class="form-control" readonly>
+                        <label for="id_menu">Código del Menú(<span class="text-danger text-md">*</span>)</label>
+                        <input type="text" name="id_menu" v-model="id" id="id_menu" class="form-control" readonly>
                       </div>
                     </div>
                     <div class="col-7 col-sm-12">
                       <div class="form-group">
-                        <label for="des_plat">Descripción del platillos(<span class="text-danger text-md">*</span>)</label>
-                        <input type="text" name="des_plat" v-model="des" id="des_plat" placeholder="Ingrese la descripción del platillo" class="form-control">
+                        <label for="des_plat">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
+                        <input type="text" name="des_menu" v-model="des" id="des_menu" placeholder="Ingrese la nombre del menú" class="form-control">
                       </div>
                     </div>
                   </div>
                   <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
                     <div class="col-6">
                       <div class="form-group">
-                        <label for="">Producto {{indice}}</label>
+                        <label for="">Ingrediente {{indice}}</label>
                         <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
                           <option value="">Seleccione una opción</option>
                           <option v-for="item in selectProductos" :key="item.id_product" :data-medida="item.med_product" :id="item.med_product" :value="item.id_product">{{item.nom_product}}</option>
