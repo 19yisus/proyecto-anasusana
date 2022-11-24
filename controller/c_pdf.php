@@ -181,8 +181,14 @@ function fn_pdf_salida()
 function fn_pdf_filtrado()
 {
   $model = new m_entrada_salida();
-  $d = $model->GetPdfWithFiltros($_POST['filtro']);
   $filtro = $_POST['filtro'];
+  if($filtro == "Compra") $f = "C";
+  if($filtro == "Donacion") $f = "D";
+  if($filtro == "Consumo") $f = "O";
+  if($filtro == "Vencimiento") $f = "V";
+  if($filtro == "Rechazo") $f = "R";
+  $d = $model->GetPdfWithFiltros($f);
+  
   $des_tipo = $filtro;
 
   if (!isset($d[0])) {

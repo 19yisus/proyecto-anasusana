@@ -37,7 +37,7 @@
 						<div class="col-md-12">
 							<div class="card card-primary">
 								<div class="card-header">
-									<h3 class="card-title">Formulario de Registro de Salidas {{mensaje}} </h3>
+									<h3 class="card-title">Formulario de Registro de Salidas </h3>
 								</div>
 								<!-- /.card-header -->
 								<!-- form start -->
@@ -163,7 +163,7 @@
 											<div class="col-12">
 												<div class="card card-dark">
 													<div class="card-header">
-														<h4 class="card-title">Productos en esta Operación {{motivo_salida}}</h4>
+														<h4 class="card-title">Productos en esta Operación </h4>
 													</div>
 													<div class="card-body">
 														<table id="dataTable" class="table table-bordered table-striped">
@@ -236,10 +236,11 @@
 				calculo(c, u) {
 					let res = (parseInt(c) * parseInt(this.cant_aproximada))
 
-					if (res > 999) {
-						if (u == "GM") u = "KL"
-					}
-					return `${res} ${u}`;
+					// if (res > 999) {
+					// 	if (u == "GM") u = "KL"
+					// }
+					
+					return `${Math.round(res)} ${u}`;
 				},
 				Duplicar: function() {
 					// if (product['id_product'] != undefined) {

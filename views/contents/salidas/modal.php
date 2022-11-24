@@ -15,7 +15,7 @@ $productos = $model->Get_todos_productos(2);
 					<div class="col-12">
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 class="card-title">Productos para esta Transacción {{mensaje}}</h3>
+								<h3 class="card-title">Productos para esta Transacción </h3>
 							</div>
 							<!-- /.card-header -->
 							<!-- form start -->

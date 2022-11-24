@@ -113,8 +113,8 @@ class m_jornada extends m_db
   }
 
   public function Get_jornada_hoy(){
-    // $fecha = date("Y-m-d");
-    $fecha = '2022-11-23';
+    $fecha = date("Y-m-d");
+    // $fecha = '2022-11-23';
     $sql = "SELECT * FROM jornada WHERE fecha_jornada = '$fecha' AND estatus_jornada = 1";
     // die($sql);
     $results = $this->query($sql);
