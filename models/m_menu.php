@@ -5,13 +5,13 @@ if (!class_exists("m_db")) require("m_db.php");
 class m_menu extends m_db
 {
   private $id_menu, $des_menu, $des_procedimiento, $estatus_menu;
-  private $product_id_menu_detalle, $menu_id_detalle, $consumo;
+  private $des_comida_detalle, $med_comida_detalle, $menu_id_detalle, $consumo;
 
   public function __construct()
   {
     parent::__construct();
     $this->id_menu = $this->des_menu = $this->estatus_menu = $this->des_procedimiento = null;
-    $this->product_id_menu_detalle = $this->menu_id_detalle = $this->consumo = null;
+    $this->des_comida_detalle = $this->med_comida_detalle = $this->menu_id_detalle = $this->consumo = null;
   }
 
   public function setDatos($d)
@@ -20,7 +20,8 @@ class m_menu extends m_db
     $this->des_menu = isset($d["des_menu"]) ? $this->Clean($d["des_menu"]) : null;
     $this->des_procedimiento = isset($d['des_procedimiento']) ? $this->Clean($d['des_procedimiento']) : null;
     $this->estatus_menu = isset($d["estatus_menu"]) ? $this->Clean($d["estatus_menu"]) : null;
-    $this->product_id_menu_detalle = isset($d['comidas']) ? $d['comidas']  : null;
+    $this->des_comida_detalle = isset($d['des_comida_detalle']) ? $d['des_comida_detalle']  : null;
+    $this->med_comida_detalle = isset($d['med_comida_detalle']) ? $d['med_comida_detalle']  : null;
     $this->menu_id_detalle = isset($d["menu_id_detalle"]) ? $this->Clean(intval($d["menu_id_detalle"]))  : null;
     $this->consumo = isset($d["consumo"]) ? $d["consumo"]  : null;
   }
@@ -39,11 +40,14 @@ class m_menu extends m_db
 
       if ($this->Result_last_query()) {
         $id = $this->Returning_id();
-        $count = sizeof($this->product_id_menu_detalle);
+        $count = sizeof($this->des_comida_detalle);
         for ($i = 0; $i < $count; $i++) {
-          $item = $this->product_id_menu_detalle[$i];
+          // $item = $this->product_id_menu_detalle[$i];
           $consumo = $this->consumo[$i];
-          $sql2 = "INSERT INTO menu_detalle(product_id_menu_detalle, menu_id_detalle, consumo) VALUES($item,$id,$consumo)";
+          $des = $this->des_comida_detalle[$i];
+          $med = $this->med_comida_detalle[$i];
+          $sql2 = "INSERT INTO menu_detalle(menu_id_detalle, consumo, des_comida_detalle, med_comida_detalle) VALUES($id,$consumo,'$des','$med')";
+
           $this->Query($sql2);
 
           if (!$this->Result_last_query()) {
@@ -123,7 +127,7 @@ class m_menu extends m_db
   public function Get_menu()
   {
     $sql = "SELECT * FROM menu WHERE id_menu = $this->id_menu ;";
-    $sql2 = "SELECT * FROM menu_detalle INNER JOIN productos ON id_product = product_id_menu_detalle WHERE menu_id_detalle = $this->id_menu";
+    $sql2 = "SELECT * FROM menu_detalle WHERE menu_id_detalle = $this->id_menu";
     $results = $this->Query($sql);
     $result2 = $this->Query($sql2);
     $datos_generales = $this->Get_array($results);

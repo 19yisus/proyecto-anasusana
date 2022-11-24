@@ -39,11 +39,15 @@ if (isset($_POST['ope'])) {
       fn_pdf_salida();
       break;
 
-    case "ReporteFiltrado":
+    case "Entrada":
       fn_pdf_filtrado();
       break;
 
-    case "ReporteProductos":
+    case "Salida":
+        fn_pdf_filtrado();
+        break;
+
+    case "Productos":
       fn_pdf_productos();
       break;
   }
@@ -175,20 +179,21 @@ function fn_pdf_filtrado()
   $model = new m_entrada_salida();
   $d = $model->GetPdfWithFiltros($_POST['filtro']);
   $filtro = $_POST['filtro'];
+  $des_tipo = $filtro;
 
   if (!isset($d[0])) {
     echo "<script>alert('No hay suficientes datos para generar este reporte!');</script>";
     exit;
   }
   // Entradas
-  if ($filtro == "C") $des_tipo = "Compra";
-  if ($filtro == "D") $des_tipo = "Donacion";
-  if ($filtro == "C" || $filtro == "D") $tipo = "Entradas";
+  // if ($filtro == "Compra") $des_tipo = "Compra";
+  // if ($filtro == "D") $des_tipo = "Donacion";
+  if ($filtro == "Compra" || $filtro == "Donacion") $tipo = "Entradas";
   // Salidas
-  if ($filtro == "O") $des_tipo = "Consumo";
-  if ($filtro == "V") $des_tipo = "Vencimiento";
-  if ($filtro == "R") $des_tipo = "Rechazo";
-  if ($filtro == "O" || $filtro == "V" || $filtro == "R") $tipo = "Salidas";
+  // if ($filtro == "O") $des_tipo = "Consumo";
+  // if ($filtro == "V") $des_tipo = "Vencimiento";
+  // if ($filtro == "R") $des_tipo = "Rechazo";
+  if ($filtro == "Consumo" || $filtro == "Vencimiento" || $filtro == "Rechazo") $tipo = "Salidas";
 
   $pdf = new new_fpdf();
   $pdf->SetNombre("Reporte de operaciones de $tipo por $des_tipo");
@@ -270,9 +275,9 @@ function fn_pdf_productos()
     
   $pdf = new new_fpdf();
   
-  if($_POST['filtro'] == "T") $des_report = "Todos los productos";
-  if($_POST['filtro'] == "M") $des_report = "Todos los productos segun su Marca";
-  if($_POST['filtro'] == "U") $des_report = "Todos los productos segun su precentacion";
+  if($_POST['filtro'] == "Todos") $des_report = "Todos los productos";
+  if($_POST['filtro'] == "Marcas") $des_report = "Todos los productos segun su Marca";
+  if($_POST['filtro'] == "Unidades") $des_report = "Todos los productos segun su precentacion";
 
   $pdf->SetNombre($des_report);
   $pdf->addPage();

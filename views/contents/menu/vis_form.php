@@ -53,14 +53,19 @@ $productos = $model->Get_todos_productos(1);
                         </div>
                       </div>
                     </div>
+                    <div class="row text-center">
+                      <h3>Ingredientes</h3>
+                    </div>
                     <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
                       <div class="col-6">
                         <div class="form-group">
+                          <!-- COLOCAR DE LIBRE ESCRITURA -->
                           <label for="">Ingrediente {{(indice+1)}}</label>
-                          <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
+                          <input type="text" name="des_comida_detalle[]" id="" class="form-control" v-model="productos[indice].des">
+                          <!-- <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
                             <option value="">Seleccione una opción</option>
                             <option v-for="item in selectProductos" :key="item.id_product" :data-medida="item.med_product" :id="item.med_product" :value="item.id_product">{{item.nom_product}}</option>
-                          </select>
+                          </select> -->
                         </div>
                       </div>
                       <div class="col-5">
@@ -69,7 +74,13 @@ $productos = $model->Get_todos_productos(1);
                           <div class="input-group">
                             <input type="number" step="1" min="1" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
                             <div class="input-group-append">
-                              <span class="input-group-text">{{itemx.medida}}</span>
+                              <select name="med_comida_detalle[]" id="med_comida_detalle" class="input-group-text custom-select" v-model="productos[indice].medida">
+                                <option value="">Medidas</option>
+                                <option value="KL">KL</option>
+                                <option value="LT">LT</option>
+                                <option value="GM">GM</option>
+                              </select>
+                              <!-- <span class="input-group-text">{{itemx.medida}}</span> -->
                             </div>
                           </div>
                         </div>
@@ -116,6 +127,7 @@ $productos = $model->Get_todos_productos(1);
       data: {
         productos: [{
           id: '',
+          des: '',
           medida: '',
           cantidad: ''
         }],

@@ -108,9 +108,9 @@ class m_productos extends m_db
 	}
 	public function GetPdf($filtro, $id = "")
 	{
-		if ($filtro == "T") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product";
-		if ($filtro == "M") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE marca.id_marca = $id;";
-		if ($filtro == "U") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE productos.med_product = '$id';";
+		if ($filtro == "Todos") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product";
+		if ($filtro == "Marcas") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE marca.id_marca = $id;";
+		if ($filtro == "Unidades") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE productos.med_product = '$id';";
 		$results = $this->query($sql);
 		if ($results->num_rows > 0) return $this->Get_todos_array($results);
 		else return [];

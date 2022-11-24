@@ -2,8 +2,13 @@
 <html lang="es">
 <?php $this->GetHeader();
 require("./models/m_productos.php");
+require_once("./models/m_persona.php");
+
 $model = new m_productos();
 $productos = $model->Get_todos_productos(1);
+
+$model_person = new m_persona();
+$person2 = $model_person->Get_Personas();
 ?>
 
 <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
@@ -40,8 +45,8 @@ $productos = $model->Get_todos_productos(1);
                       </div>
                       <div class="col-4">
                         <div class="form-group">
-                          <label for="titulo_jornada">Cantidad aproximada de platos(<span class="text-danger text-md">*</span>)</label>
-                          <input type="number" name="cant_aproximada" id="cant_aproximada" placeholder="Ingrese una cantidad aproximadas de platos" class="form-control">
+                          <label for="titulo_jornada">Cantidad aproximada de beneficiados(<span class="text-danger text-md">*</span>)</label>
+                          <input type="number" name="cant_aproximada" id="cant_aproximada" placeholder="Ingrese una cantidad aproximadas de beneficiados" class="form-control">
                         </div>
                       </div>
                       <div class="col-3">
@@ -58,19 +63,31 @@ $productos = $model->Get_todos_productos(1);
                         </div>
                       </div>
                     </div>
+                    <!-- Agregar responsable -->
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="form-group">
                           <label for="titulo_jornada">Fecha para la jornada(<span class="text-danger text-md">*</span>)</label>
                           <input type="date" name="fecha_jornada" id="fecha_jornada" class="form-control">
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="form-group">
                           <label for="">Menú(<span class="text-danger text-md">*</span>)</label>
                           <select name="menu_id_jornada" id="" class="custom-select" v-model="menu_id_jornada">
                             <option value="">Seleccione una opción</option>
                             <option v-for="item in selectMenu" :key="item.id_menu" :value="item.id_menu">{{item.des_menu}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="form-group">
+                          <label for="responsable">responsable de esta jornada(<span class="text-danger text-md">*</span>)</label>
+                          <select name="responsable" id="responsable" class="custom-select special_select2">
+                            <option value="">Seleccione a una Persona</option>
+                            <?php foreach ($person2 as $persona) { ?>
+                              <option value="<?php echo $persona['id_person']; ?>"><?php echo $persona['tipo_person'] . "-" . $persona['cedula_person'] . " " . $persona['nom_person']; ?></option>
+                            <?php } ?>
                           </select>
                         </div>
                       </div>

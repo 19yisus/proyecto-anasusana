@@ -5,13 +5,13 @@ if (!class_exists("m_db")) require("m_db.php");
 class m_jornada extends m_db
 {
   private $id_jornada, $des_jornada, $titulo_jornada, $estatus_jornada;
-  private $cant_aproximada, $menu_id_jornada, $fecha_jornada;
+  private $cant_aproximada, $menu_id_jornada, $fecha_jornada, $responsable;
 
   public function __construct()
   {
     parent::__construct();
     $this->id_jornada = $this->des_jornada = $this->estatus_jornada = $this->titulo_jornada = null;
-    $this->cant_aproximada = $this->menu_id_jornada = $this->fecha_jornada = null;
+    $this->cant_aproximada = $this->menu_id_jornada = $this->fecha_jornada = $this->responsable = null;
   }
 
   public function setDatos($d)
@@ -23,6 +23,7 @@ class m_jornada extends m_db
     $this->cant_aproximada = isset($d['cant_aproximada']) ? $this->Clean($d['cant_aproximada'])  : null;
     $this->menu_id_jornada = isset($d["menu_id_jornada"]) ? $this->Clean(intval($d["menu_id_jornada"]))  : null;
     $this->fecha_jornada = isset($d["fecha_jornada"]) ? $d["fecha_jornada"] : null;
+    $this->responsable = isset($d["responsable"]) ? $this->Clean(intval($d["responsable"]))  : null;
   }
 
   public function Create()
@@ -34,7 +35,8 @@ class m_jornada extends m_db
         cant_aproximada, 
         estatus_jornada, 
         fecha_jornada,
-        menu_id_jornada) 
+        menu_id_jornada,
+        person_id_responsable) 
         
         VALUES(
           '$this->titulo_jornada',
@@ -42,7 +44,8 @@ class m_jornada extends m_db
           $this->cant_aproximada, 
           1, 
           '$this->fecha_jornada',
-          $this->menu_id_jornada);";
+          $this->menu_id_jornada,
+          $this->responsable);";
       $this->Query($sql1);
 
       if ($this->Result_last_query()) return "msg/01DONE";
@@ -89,7 +92,7 @@ class m_jornada extends m_db
   public function Get_todos_jornada($status = '')
   {
     if ($status != '') $sql = "SELECT * FROM jornada WHERE estatus_jornada = $status";
-    else $sql = "SELECT * FROM jornada ";
+    else $sql = "SELECT * FROM jornada INNER JOIN personas ON personas.id_person = jornada.person_id_responsable";
     $results = $this->query($sql);
     return $this->Get_todos_array($results);
   }
@@ -103,17 +106,17 @@ class m_jornada extends m_db
     $id = $datos_jornada['menu_id_jornada'];
 
     $sql2 = "SELECT * FROM menu 
-      INNER JOIN menu_detalle ON menu_detalle.menu_id_detalle = menu.id_menu 
-      INNER JOIN productos ON productos.id_product = menu_detalle.product_id_menu_detalle
-      WHERE id_menu = $id";
+      INNER JOIN menu_detalle ON menu_detalle.menu_id_detalle = menu.id_menu WHERE id_menu = $id";
     $results2 = $this->Query($sql2);
     $datos_menu = $this->Get_todos_array($results2);
     return [$datos_jornada, $datos_menu];
   }
 
   public function Get_jornada_hoy(){
-    $fecha = date("Y-m-d");
+    // $fecha = date("Y-m-d");
+    $fecha = '2022-11-23';
     $sql = "SELECT * FROM jornada WHERE fecha_jornada = '$fecha' AND estatus_jornada = 1";
+    // die($sql);
     $results = $this->query($sql);
     return $this->Get_todos_array($results);
   }

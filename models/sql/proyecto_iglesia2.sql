@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-11-2022 a las 11:27:12
+-- Tiempo de generación: 24-11-2022 a las 05:07:56
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -59,6 +59,13 @@ CREATE TABLE `comedor` (
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `comedor`
+--
+
+INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `encargado_comedor`, `direccion_comedor`, `status_comedor`, `if_sede`, `created_comedor`) VALUES
+(1, 'PAN DE VIDA', 6, 'SDASDADADSDS', 1, 1, '2022-10-07 11:08:02');
+
 -- --------------------------------------------------------
 
 --
@@ -109,7 +116,8 @@ CREATE TABLE `jornada` (
   `cant_aproximada` int(11) NOT NULL,
   `estatus_jornada` tinyint(1) NOT NULL,
   `fecha_jornada` datetime NOT NULL,
-  `menu_id_jornada` int(11) DEFAULT NULL
+  `menu_id_jornada` int(11) DEFAULT NULL,
+  `person_id_responsable` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -146,9 +154,10 @@ CREATE TABLE `menu` (
 --
 
 CREATE TABLE `menu_detalle` (
-  `product_id_menu_detalle` int(11) NOT NULL,
   `menu_id_detalle` int(11) NOT NULL,
-  `consumo` int(11) NOT NULL
+  `consumo` int(11) NOT NULL,
+  `des_comida_detalle` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  `med_comida_detalle` char(2) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -351,7 +360,8 @@ ALTER TABLE `inventario`
 --
 ALTER TABLE `jornada`
   ADD PRIMARY KEY (`id_jornada`),
-  ADD KEY `menu_id_jornada` (`menu_id_jornada`);
+  ADD KEY `menu_id_jornada` (`menu_id_jornada`),
+  ADD KEY `person_id_responsable` (`person_id_responsable`);
 
 --
 -- Indices de la tabla `marca`
@@ -369,7 +379,6 @@ ALTER TABLE `menu`
 -- Indices de la tabla `menu_detalle`
 --
 ALTER TABLE `menu_detalle`
-  ADD KEY `product_id_menu_detalle` (`product_id_menu_detalle`),
   ADD KEY `menu_id_detalle` (`menu_id_detalle`);
 
 --
@@ -439,7 +448,7 @@ ALTER TABLE `cargo`
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `jornada`
@@ -526,14 +535,14 @@ ALTER TABLE `inventario`
 -- Filtros para la tabla `jornada`
 --
 ALTER TABLE `jornada`
+  ADD CONSTRAINT `id_responsables` FOREIGN KEY (`person_id_responsable`) REFERENCES `personas` (`id_person`),
   ADD CONSTRAINT `jornada_ibfk_1` FOREIGN KEY (`menu_id_jornada`) REFERENCES `menu` (`id_menu`);
 
 --
 -- Filtros para la tabla `menu_detalle`
 --
 ALTER TABLE `menu_detalle`
-  ADD CONSTRAINT `menu_detalle_ibfk_1` FOREIGN KEY (`product_id_menu_detalle`) REFERENCES `productos` (`id_product`),
-  ADD CONSTRAINT `menu_detalle_ibfk_2` FOREIGN KEY (`menu_id_detalle`) REFERENCES `menu` (`id_menu`);
+  ADD CONSTRAINT `menu_detalle_ibfk_1` FOREIGN KEY (`menu_id_detalle`) REFERENCES `menu` (`id_menu`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `personas`

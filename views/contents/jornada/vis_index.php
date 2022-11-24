@@ -30,8 +30,9 @@
                       <tr>
                         <th>Código</th>
                         <th>Titulo</th>
-                        <th>Cantidad aproximada de platos</th>
+                        <th>Cantidad aproximada de beneficiados</th>
                         <th>Fecha para esta jornada</th>
+                        <th>Responsable</th>
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
@@ -149,6 +150,12 @@
             data: "fecha_jornada",
             render(data){
               return moment(data).format("DD/MM/YYYY h:mm A")
+            }
+          },
+          {
+            data: "cedula_person",
+            render(data, type, row){
+              return `${row.tipo_person}-${data} ${row.nom_person}`
             }
           },
           {

@@ -103,6 +103,7 @@
 													</select>
 												</div>
 											</div>
+											
 											<div class="col-3">
 												<div class="form-group">
 													<label for="fecha_invent">Fecha de la Operación(<span class="text-danger text-md">*</span>)</label>
@@ -125,11 +126,13 @@
 												<input type="hidden" class="cant_input" name="cantidad_product[]" :value="item.cantidad">
 											</div>
 										</div>
+										<!-- INFORMACIÓN GENERAL DEL MENU AL SELECCIONAR LA JORNADA -->
+										
 										<div class="row">
 											<div class="col-12">
 												<div class="card card-dark">
 													<div class="card-header">
-														<h4 class="card-title">Productos en esta Operación</h4>
+														<h4 class="card-title">Productos en esta Operación {{motivo_salida}}</h4>
 													</div>
 													<div class="card-body">
 														<table id="dataTable" class="table table-bordered table-striped">
@@ -153,31 +156,33 @@
 											</div>
 										</div>
 									</div>
-									<!-- /.card-body -->
-									<div class="card-footer">
-										<input type="hidden" name="ope">
-										<button type="button" v-bind:disabled="enviar_condicion == false" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
-										<button type="button" v-bind:disabled="jornada_id != '' " class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
-									</div>
-								</form>
-							</div>
-							<!-- /.card -->
-						</div>
-						<!--/.col (left) -->
-						<!--/.col (right) -->
-					</div>
-					<!-- /.row -->
-				</div><!-- /.container-fluid -->
-			</section>
-			<!-- /.content -->
-		</div>
-		<!-- /.content-wrapper -->
 
-		<?php
-		$this->GetComplement("footer");
-		$this->GetComplement("scripts");
-		require_once("./views/contents/salidas/modal.php");
-		?>
+							</div>
+							<!-- /.card-body -->
+							<div class="card-footer">
+								<input type="hidden" name="ope">
+								<button type="button" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
+								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
+							</div>
+							</form>
+						</div>
+						<!-- /.card -->
+					</div>
+					<!--/.col (left) -->
+					<!--/.col (right) -->
+				</div>
+				<!-- /.row -->
+		</div><!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+
+	<?php
+	$this->GetComplement("footer");
+	$this->GetComplement("scripts");
+	require_once("./views/contents/salidas/modal.php");
+	?>
 	</div>
 	<!-- ./wrapper -->
 	<script>
@@ -185,26 +190,38 @@
 			el: '#VueApp',
 			data: {
 				productos: [
-					// {code: "",nom_product: "", cantidad: 0, limite_stock: 0},
+					{code: "",nom_product: "", cantidad: 0, limite_stock: 0},
 				],
-				enviar_condicion: true,
 				motivo_salida: "",
 				jornada_id: "",
 				des_menu: "",
 				cant_menu: "",
-				nom_menu: ""
+				nom_menu: "",
+
+				titulo_jornada: "",
+				titulo_menu: "",
+				cant_aproximada: 0,
+				ingrediente: []
 			},
 			methods: {
-				Duplicar: function(product = []) {
-					if (product['id_product'] != undefined) {
-						this.productos.push({
-							code: product['id_product'],
-							nom_product: product['nom_product'],
-							cantidad: product['consumo'],
-							limite_stock: (parseInt(product['stock_product']) - parseInt(product['stock_minimo_product']))
-						}, )
-						return false;
+				calculo(c, u) {
+					let res = (parseInt(c) * parseInt(this.cant_aproximada))
+
+					if (res > 999) {
+						if (u == "GM") u = "KL"
 					}
+					return `${res} ${u}`;
+				},
+				Duplicar: function() {
+					// if (product['id_product'] != undefined) {
+					// 	this.productos.push({
+					// 		code: product['id_product'],
+					// 		nom_product: product['nom_product'],
+					// 		cantidad: product['consumo'],
+					// 		limite_stock: (parseInt(product['stock_product']) - parseInt(product['stock_minimo_product']))
+					// 	}, )
+					// 	return false;
+					// }
 
 					let datos = this.productos[this.productos.length - 1];
 					if (typeof datos == "undefined") {
@@ -243,47 +260,51 @@
 					this.productos[e.target.dataset.index].limite_stock = (resultado.stock_product - resultado.stock_minimo_product);
 				},
 				async consultar_jornada() {
-					if (this.jornada_id == '') {
-						this.enviar_condicion = true;
-						this.limpiarProductos();
-						return false;
-					}
+					// if (this.jornada_id == '') {
+					// 	this.enviar_condicion = true;
+					// 	this.limpiarProductos();
+					// 	return false;
+					// }
 					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
 						.then(response => response.json())
 						.then(({
 							data
 						}) => {
-							this.limpiarProductos()
-							this.enviar_condicion = true;
-							let datos_menu = data[1];
-							let datos_jornada = data[0];
+							this.titulo_jornada = data[0].titulo_jornada;
+							this.titulo_menu = data[0].des_menu;
+							this.cant_aproximada = data[0].cant_aproximada;
+							this.ingrediente = data[1];
+							// this.limpiarProductos()
+							// this.enviar_condicion = true;
+							// let datos_menu = data[1];
+							// let datos_jornada = data[0];
 
-							datos_menu.forEach(item => {
-								let stock = parseInt(item.stock_product),
-									consumo = parseInt(item.consumo),
-									cant_proximada = parseInt(datos_jornada.cant_aproximada),
-									minimo_stock = parseInt(item.stock_minimo_product);
-								let consumo_real = (consumo * cant_proximada);
-								if (
-									consumo_real < stock && (stock - consumo_real) > minimo_stock
-								) {
-									let list = [];
-									list['id_product'] = item.id_product;
-									list['nom_product'] = item.nom_product;
-									list['consumo'] = consumo_real;
-									list['stock_minimo_product'] = item.stock_minimo_product;
-									list['stock_product'] = item.stock_product;
+							// datos_menu.forEach(item => {
+							// 	let stock = parseInt(item.stock_product),
+							// 		consumo = parseInt(item.consumo),
+							// 		cant_proximada = parseInt(datos_jornada.cant_aproximada),
+							// 		minimo_stock = parseInt(item.stock_minimo_product);
+							// 	let consumo_real = (consumo * cant_proximada);
+							// 	if (
+							// 		consumo_real < stock && (stock - consumo_real) > minimo_stock
+							// 	) {
+							// 		let list = [];
+							// 		list['id_product'] = item.id_product;
+							// 		list['nom_product'] = item.nom_product;
+							// 		list['consumo'] = consumo_real;
+							// 		list['stock_minimo_product'] = item.stock_minimo_product;
+							// 		list['stock_product'] = item.stock_product;
 
-									this.Duplicar(list);
-								} else {
-									this.Fn_mensaje_error(`No se tiene la capacidad para cubrir esta jornada, no hay suficiente ${item.nom_product}!`);
-									this.enviar_condicion = false;
-									setTimeout(() => {
-										this.limpiarProductos()
-									}, 100)
-									return false;
-								}
-							})
+							// 		this.Duplicar(list);
+							// 	} else {
+							// 		this.Fn_mensaje_error(`No se tiene la capacidad para cubrir esta jornada, no hay suficiente ${item.nom_product}!`);
+							// 		this.enviar_condicion = false;
+							// 		setTimeout(() => {
+							// 			this.limpiarProductos()
+							// 		}, 100)
+							// 		return false;
+							// 	}
+							// })
 						}).catch(error => console.error(error));
 				},
 				limpiarProductos() {

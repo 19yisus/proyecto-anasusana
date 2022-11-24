@@ -37,8 +37,6 @@
     function fn_Registrar(){
         $model = new m_menu();
         $model->setDatos($_POST);
-        // var_dump($_POST);
-        // die("FF");
         $mensaje = $model->Create();
 
         header("Location: ".constant("URL")."menu/form/$mensaje");
