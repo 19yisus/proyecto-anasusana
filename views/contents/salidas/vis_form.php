@@ -37,7 +37,7 @@
 						<div class="col-md-12">
 							<div class="card card-primary">
 								<div class="card-header">
-									<h3 class="card-title">Formulario de Registro de Salidas </h3>
+									<h3 class="card-title">Formulario de Registro de Salidas {{mensaje}} </h3>
 								</div>
 								<!-- /.card-header -->
 								<!-- form start -->
@@ -103,7 +103,7 @@
 													</select>
 												</div>
 											</div>
-											
+
 											<div class="col-3">
 												<div class="form-group">
 													<label for="fecha_invent">Fecha de la Operación(<span class="text-danger text-md">*</span>)</label>
@@ -127,7 +127,38 @@
 											</div>
 										</div>
 										<!-- INFORMACIÓN GENERAL DEL MENU AL SELECCIONAR LA JORNADA -->
-										
+										<!-- {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0}, -->
+										<div class="row" v-show="jornada_id != ''">
+											<div class="col-12">
+												<div class="card card-success">
+													<div class="card-header">
+														<h4 class="card-title">
+															Información de la jornada | 
+															Jornada "{{titulo_jornada}} | 
+															Menú del dia "{{titulo_menu}}" | 
+															Cantidad aproximada de beneficiados: {{cant_aproximada}}</h4>
+													</div>
+													<div class="card-body">
+														<table id="dataTable" class="table table-bordered table-striped">
+															<thead>
+																<tr>
+																	<th>Ingredientes</th>
+																	<th>Consumo</th>
+																	<th>Total</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr v-for="(item, index) in ingrediente" :key="index">
+																	<td>{{ item.des_comida_detalle }}</td>
+																	<td>{{ item.consumo }} {{ item.med_comida_detalle }}</td>
+																	<td>{{ calculo(item.consumo,item.med_comida_detalle) }}</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
 										<div class="row">
 											<div class="col-12">
 												<div class="card card-dark">
@@ -156,15 +187,14 @@
 											</div>
 										</div>
 									</div>
-
+									<!-- /.card-body -->
+									<div class="card-footer">
+										<input type="hidden" name="ope">
+										<button type="button" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
+										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
+									</div>
+								</form>
 							</div>
-							<!-- /.card-body -->
-							<div class="card-footer">
-								<input type="hidden" name="ope">
-								<button type="button" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
-								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
-							</div>
-							</form>
 						</div>
 						<!-- /.card -->
 					</div>
@@ -172,12 +202,10 @@
 					<!--/.col (right) -->
 				</div>
 				<!-- /.row -->
+			</section>
 		</div><!-- /.container-fluid -->
-		</section>
 		<!-- /.content -->
-	</div>
 	<!-- /.content-wrapper -->
-
 	<?php
 	$this->GetComplement("footer");
 	$this->GetComplement("scripts");
@@ -190,8 +218,9 @@
 			el: '#VueApp',
 			data: {
 				productos: [
-					{code: "",nom_product: "", cantidad: 0, limite_stock: 0},
+					// {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0},
 				],
+				mensaje: "fasdfasdfsad",
 				motivo_salida: "",
 				jornada_id: "",
 				des_menu: "",
@@ -222,7 +251,6 @@
 					// 	}, )
 					// 	return false;
 					// }
-
 					let datos = this.productos[this.productos.length - 1];
 					if (typeof datos == "undefined") {
 						this.productos.push({
@@ -233,6 +261,8 @@
 						}, );
 						return false;
 					}
+
+					console.log(datos);
 
 					if (datos.cantidad > 0 && datos.code != "") {
 						this.productos.push({

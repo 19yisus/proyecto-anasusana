@@ -139,8 +139,10 @@ function fn_pdf_salida()
   $pdf->cell(80, 5, "Comedor: " . $d['comedor']['nom'], 0, 1, 'L');
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 11);
-  $pdf->SetTextColor(255, 255, 255);
-  $pdf->SetFillColor(11, 63, 71);
+  // $pdf->SetTextColor(255, 255, 255);
+  // $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetFillColor(255, 255, 255);
+  $pdf->SetTextColor(0, 0, 0);
   $pdf->SetDrawColor(88, 88, 88);
   $pdf->cell(190, 8, "Observacion: " . $d['doc']['observacion'], 1, 1, "C", 1);
   // var_dump($d['doc']);
@@ -151,6 +153,8 @@ function fn_pdf_salida()
     $pdf->cell(90, 8, "Cantidad de platos aproximada: " . $d['doc']['cant_aproximada'], 1, 1, "C", 1);
     // die("Hay jornada");
   }
+  $pdf->SetTextColor(255, 255, 255);
+  $pdf->SetFillColor(11, 63, 71);
   $pdf->cell(190, 8, "Descripcion general de los productos", 1, 1, "C", 1);
   $pdf->cell(16, 7, "Codigo", 1, 0, "C", 1);
   $pdf->cell(80, 7, "Descripcion", 1, 0, "C", 1);
