@@ -112,11 +112,16 @@ class m_jornada extends m_db
     return [$datos_jornada, $datos_menu];
   }
 
-  public function Get_jornada_hoy(){
-    $fecha = date("Y-m-d");
-    // $fecha = '2022-11-23';
+  public function Get_jornada_hoy()
+  {
+    $unixTime = time();
+    $timeZone = new \DateTimeZone('America/Caracas');
+
+    $time = new \DateTime();
+    $time->setTimestamp($unixTime)->setTimezone($timeZone);
+    $fecha = $time->format('Y-m-d');
     $sql = "SELECT * FROM jornada WHERE fecha_jornada = '$fecha' AND estatus_jornada = 1";
-    // die($sql);
+    
     $results = $this->query($sql);
     return $this->Get_todos_array($results);
   }

@@ -4,7 +4,7 @@ if (!class_exists("m_db")) require("m_db.php");
 
 class m_menu extends m_db
 {
-  private $id_menu, $des_menu, $des_procedimiento, $estatus_menu;
+  private $id_menu, $des_menu, $des_procedimiento, $estatus_menu, $porcion;
   private $des_comida_detalle, $med_comida_detalle, $menu_id_detalle, $consumo;
 
   public function __construct()
@@ -20,6 +20,7 @@ class m_menu extends m_db
     $this->des_menu = isset($d["des_menu"]) ? $this->Clean($d["des_menu"]) : null;
     $this->des_procedimiento = isset($d['des_procedimiento']) ? $this->Clean($d['des_procedimiento']) : null;
     $this->estatus_menu = isset($d["estatus_menu"]) ? $this->Clean($d["estatus_menu"]) : null;
+    $this->porcion = isset($d["porcion"]) ? $this->Clean($d["porcion"]) : null;
     $this->des_comida_detalle = isset($d['des_comida_detalle']) ? $d['des_comida_detalle']  : null;
     $this->med_comida_detalle = isset($d['med_comida_detalle']) ? $d['med_comida_detalle']  : null;
     $this->menu_id_detalle = isset($d["menu_id_detalle"]) ? $this->Clean(intval($d["menu_id_detalle"]))  : null;
@@ -35,7 +36,8 @@ class m_menu extends m_db
       if ($result->num_rows > 0) return "err/02ERR";
 
       $this->Start_transacction();
-      $sql1 = "INSERT INTO menu(des_menu, des_procedimiento, status_menu, created_menu) VALUES('$this->des_menu', '$this->des_procedimiento', 1, NOW());";
+      $sql1 = "INSERT INTO menu(des_menu, des_procedimiento, porcion, status_menu, created_menu) 
+      VALUES('$this->des_menu', '$this->des_procedimiento', $this->porcion, 1, NOW());";
       $this->Query($sql1);
 
       if ($this->Result_last_query()) {
@@ -79,17 +81,19 @@ class m_menu extends m_db
     $result = $this->Query("SELECT * FROM menu WHERE des_menu = '$this->des_menu' AND id_menu != $this->id_menu ;");
     if ($result->num_rows > 0) return ["code" => "error", "message" => "Los datos no se pueden duplicar"];
 
-    $sql = "UPDATE menu SET des_menu = '$this->des_menu', des_procedimiento = '$this->des_procedimiento' WHERE id_menu = $this->id_menu ;";
+    $sql = "UPDATE menu SET des_menu = '$this->des_menu', des_procedimiento = '$this->des_procedimiento',
+    porcion = $this->porcion WHERE id_menu = $this->id_menu ;";
     $this->Query($sql);
 
     $sqlDelete = "DELETE FROM menu_detalle WHERE menu_id_detalle = $this->id_menu";
     $this->Query($sqlDelete);
 
-    $count = sizeof($this->product_id_menu_detalle);
+    $count = sizeof($this->des_comida_detalle);
     for ($i = 0; $i < $count; $i++) {
-      $item = $this->product_id_menu_detalle[$i];
       $consumo = $this->consumo[$i];
-      $sql2 = "INSERT INTO menu_detalle(product_id_menu_detalle, menu_id_detalle, consumo) VALUES($item,$this->id_menu,$consumo)";
+      $des = $this->des_comida_detalle[$i];
+      $med = $this->med_comida_detalle[$i];
+      $sql2 = "INSERT INTO menu_detalle(menu_id_detalle, consumo, des_comida_detalle, med_comida_detalle) VALUES($this->id_menu,$consumo,'$des','$med')";
       $this->Query($sql2);
     }
 

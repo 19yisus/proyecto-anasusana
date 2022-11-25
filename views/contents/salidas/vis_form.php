@@ -83,13 +83,6 @@
 													</select>
 												</div>
 											</div>
-											<!-- <div class="col-3">
-												<div class="form-group">
-													<label for="orden_invent">N° Orden</label>
-													<input type="text" maxlength="20" name="orden_invent" id="orden_invent" class="form-control" placeholder="Ingrese el Número de Orden">
-												</div>
-											</div> -->
-
 										</div>
 										<div class="row">
 											<div class="col-3" v-show="motivo_salida == 'O'">
@@ -133,10 +126,13 @@
 												<div class="card card-success">
 													<div class="card-header">
 														<h4 class="card-title">
-															Información de la jornada | 
-															Jornada "{{titulo_jornada}} | 
-															Menú del dia "{{titulo_menu}}" | 
-															Cantidad aproximada de beneficiados: {{cant_aproximada}}</h4>
+															Información de la jornada |
+															Jornada "{{titulo_jornada}} |
+															Menú del dia "{{titulo_menu}}" |
+															<br>
+															Cantidad aproximada de beneficiados: {{cant_aproximada}} | 
+															Cantidad de porciones del menú: {{porciones}}
+														</h4>
 													</div>
 													<div class="card-body">
 														<table id="dataTable" class="table table-bordered table-striped">
@@ -144,6 +140,7 @@
 																<tr>
 																	<th>Ingredientes</th>
 																	<th>Consumo</th>
+																	<th>Calculo</th>
 																	<th>Total</th>
 																</tr>
 															</thead>
@@ -151,6 +148,7 @@
 																<tr v-for="(item, index) in ingrediente" :key="index">
 																	<td>{{ item.des_comida_detalle }}</td>
 																	<td>{{ item.consumo }} {{ item.med_comida_detalle }}</td>
+																	<td>{{cant_aproximada}} beneficiados / {{porciones}} Porciones * {{item.consumo}} de consumo => </td>
 																	<td>{{ calculo(item.consumo,item.med_comida_detalle) }}</td>
 																</tr>
 															</tbody>
@@ -172,6 +170,7 @@
 																	<th>Código</th>
 																	<th>Descripción</th>
 																	<th>Cantidad</th>
+																	<th>En Stock</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -179,6 +178,7 @@
 																	<td>{{ item.code }}</td>
 																	<td>{{ item.nom_product }}</td>
 																	<td>{{ item.cantidad }}</td>
+																	<td>{{ calculo_stock(item.stock,item.cantidad)}}</td>
 																</tr>
 															</tbody>
 														</table>
@@ -205,12 +205,12 @@
 			</section>
 		</div><!-- /.container-fluid -->
 		<!-- /.content -->
-	<!-- /.content-wrapper -->
-	<?php
-	$this->GetComplement("footer");
-	$this->GetComplement("scripts");
-	require_once("./views/contents/salidas/modal.php");
-	?>
+		<!-- /.content-wrapper -->
+		<?php
+		$this->GetComplement("footer");
+		$this->GetComplement("scripts");
+		require_once("./views/contents/salidas/modal.php");
+		?>
 	</div>
 	<!-- ./wrapper -->
 	<script>
@@ -226,7 +226,7 @@
 				des_menu: "",
 				cant_menu: "",
 				nom_menu: "",
-
+				porciones: 0,
 				titulo_jornada: "",
 				titulo_menu: "",
 				cant_aproximada: 0,
@@ -234,24 +234,15 @@
 			},
 			methods: {
 				calculo(c, u) {
-					let res = (parseInt(c) * parseInt(this.cant_aproximada))
-
-					// if (res > 999) {
-					// 	if (u == "GM") u = "KL"
-					// }
-					
-					return `${Math.round(res)} ${u}`;
+					let cantidad = parseInt(this.cant_aproximada) / parseInt(this.porciones);
+					let total = parseInt(c) * (cantidad);
+					return `${total} ${u}`;
+				},
+				calculo_stock(cantidad, stock){
+					let total = parseInt(cantidad) - parseInt(stock);
+					return total;
 				},
 				Duplicar: function() {
-					// if (product['id_product'] != undefined) {
-					// 	this.productos.push({
-					// 		code: product['id_product'],
-					// 		nom_product: product['nom_product'],
-					// 		cantidad: product['consumo'],
-					// 		limite_stock: (parseInt(product['stock_product']) - parseInt(product['stock_minimo_product']))
-					// 	}, )
-					// 	return false;
-					// }
 					let datos = this.productos[this.productos.length - 1];
 					if (typeof datos == "undefined") {
 						this.productos.push({
@@ -262,8 +253,6 @@
 						}, );
 						return false;
 					}
-
-					console.log(datos);
 
 					if (datos.cantidad > 0 && datos.code != "") {
 						this.productos.push({
@@ -291,11 +280,6 @@
 					this.productos[e.target.dataset.index].limite_stock = (resultado.stock_product - resultado.stock_minimo_product);
 				},
 				async consultar_jornada() {
-					// if (this.jornada_id == '') {
-					// 	this.enviar_condicion = true;
-					// 	this.limpiarProductos();
-					// 	return false;
-					// }
 					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
 						.then(response => response.json())
 						.then(({
@@ -304,38 +288,8 @@
 							this.titulo_jornada = data[0].titulo_jornada;
 							this.titulo_menu = data[0].des_menu;
 							this.cant_aproximada = data[0].cant_aproximada;
+							this.porciones = data[0].porcion;
 							this.ingrediente = data[1];
-							// this.limpiarProductos()
-							// this.enviar_condicion = true;
-							// let datos_menu = data[1];
-							// let datos_jornada = data[0];
-
-							// datos_menu.forEach(item => {
-							// 	let stock = parseInt(item.stock_product),
-							// 		consumo = parseInt(item.consumo),
-							// 		cant_proximada = parseInt(datos_jornada.cant_aproximada),
-							// 		minimo_stock = parseInt(item.stock_minimo_product);
-							// 	let consumo_real = (consumo * cant_proximada);
-							// 	if (
-							// 		consumo_real < stock && (stock - consumo_real) > minimo_stock
-							// 	) {
-							// 		let list = [];
-							// 		list['id_product'] = item.id_product;
-							// 		list['nom_product'] = item.nom_product;
-							// 		list['consumo'] = consumo_real;
-							// 		list['stock_minimo_product'] = item.stock_minimo_product;
-							// 		list['stock_product'] = item.stock_product;
-
-							// 		this.Duplicar(list);
-							// 	} else {
-							// 		this.Fn_mensaje_error(`No se tiene la capacidad para cubrir esta jornada, no hay suficiente ${item.nom_product}!`);
-							// 		this.enviar_condicion = false;
-							// 		setTimeout(() => {
-							// 			this.limpiarProductos()
-							// 		}, 100)
-							// 		return false;
-							// 	}
-							// })
 						}).catch(error => console.error(error));
 				},
 				limpiarProductos() {
@@ -358,6 +312,7 @@
 						.then(response => response.json()).then(data => {
 							this.productos[e.target.dataset.index].nom_product = data.data.nom_product;
 							this.productos[e.target.dataset.index].cantidad = 0;
+							this.productos[e.target.dataset.index].stock = data.data.stock_product;
 						}).catch(error => console.error(error));
 				},
 				CodigosDuplicados(element) {

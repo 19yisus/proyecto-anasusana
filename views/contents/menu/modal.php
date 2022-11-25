@@ -19,36 +19,52 @@
               <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_platillos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-5 col-sm-12">
+                    <div class="col-3 col-sm-12">
                       <div class="form-group">
                         <label for="id_menu">Código del Menú(<span class="text-danger text-md">*</span>)</label>
                         <input type="text" name="id_menu" v-model="id" id="id_menu" class="form-control" readonly>
                       </div>
                     </div>
-                    <div class="col-7 col-sm-12">
+                    <div class="col-4 col-sm-12">
                       <div class="form-group">
-                        <label for="des_plat">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
-                        <input type="text" name="des_menu" v-model="des" id="des_menu" placeholder="Ingrese la nombre del menú" class="form-control">
+                        <label for="des_cargo">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
+                        <input type="text" name="des_menu" id="des_menu" v-model="des_menu" placeholder="Ingrese la descripción del menú" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-4 col-sm-12">
+                      <div class="form-group">
+                        <label for="">Porciones</label>
+                        <input type="number" name="porcion" id="porcion" v-model="porcion" placeholder="Ingrese la porción" class="form-control" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-12">
+                      <div class="form-group">
+                        <label for="">Procedimientos</label>
+                        <textarea name="des_procedimiento" class="form-control" v-model="des_procedimiento" id="des_procedimiento" cols="30" rows="2"></textarea>
                       </div>
                     </div>
                   </div>
                   <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
                     <div class="col-6">
                       <div class="form-group">
-                        <label for="">Ingrediente {{indice}}</label>
-                        <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
-                          <option value="">Seleccione una opción</option>
-                          <option v-for="item in selectProductos" :key="item.id_product" :data-medida="item.med_product" :id="item.med_product" :value="item.id_product">{{item.nom_product}}</option>
-                        </select>
+                        <label for="">Ingrediente {{(indice+1)}}</label>
+                        <input type="text" name="des_comida_detalle[]" id="" class="form-control" v-model="productos[indice].des">
                       </div>
                     </div>
                     <div class="col-5">
                       <div class="form-group">
                         <label for="">Cantidad</label>
                         <div class="input-group">
-                          <input type="number" step="00.01" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
+                          <input type="number" step="1" min="1" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
                           <div class="input-group-append">
-                            <span class="input-group-text">{{itemx.medida}}</span>
+                            <select name="med_comida_detalle[]" id="med_comida_detalle" class="input-group-text custom-select" v-model="productos[indice].medida">
+                              <option value="">Medidas</option>
+                              <option value="KL">KL</option>
+                              <option value="LT">LT</option>
+                              <option value="GM">GM</option>
+                            </select>
                           </div>
                         </div>
                       </div>

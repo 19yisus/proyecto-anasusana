@@ -60,14 +60,12 @@
       el: "#VueApp",
       data: {
         id: "",
-        des: "",
         productos: [
-          // {
-          //   id: '',
-          //   medida: '',
-          //   cantidad: ''
-          // }
+          // {des: '',medida: '',cantidad: ''}
         ],
+        des_menu: "",
+        porcion: "",
+        des_procedimiento: "",
         selectProductos: [{}]
       },
       methods: {
@@ -76,33 +74,19 @@
             .then(response => response.json()).then(({
               data
             }) => {
-              const form = document.formulario;
-              console.log(data)
               this.id = data[0].id_menu;
-              this.des = data[0].des_menu;
-
-              let res = data[1].map(item => {
-                return {
-                  'id': item.product_id_menu_detalle,
-                  'cantidad': item.consumo,
-                  'medida': item.med_product
-                }
-              });
-
-              this.productos = res;
+              this.des_menu = data[0].des_menu;
+              this.porcion = data[0].porcion;
+              this.des_procedimiento = data[0].des_procedimiento;
+              data[1].forEach( item => {
+                this.productos.push({des: item.des_comida_detalle, medida: item.med_comida_detalle, cantidad: item.consumo})
+              })
+              console.log(data)
+              // this.productos = data[1];
             })
             .catch(Err => {
               console.error(Err)
             });
-        },
-        async GetAlimentos() {
-          await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Get_alimentos`)
-            .then(response => response.json())
-            .then(({
-              data
-            }) => {
-              this.selectProductos = data;
-            }).catch(error => console.error(error));
         },
         cambio(e) {
           let contador = 0;
@@ -132,9 +116,6 @@
         disminuir() {
           this.productos.pop();
         }
-      },
-      async mounted() {
-        await this.GetAlimentos();
       }
     })
 

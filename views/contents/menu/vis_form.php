@@ -34,11 +34,11 @@ $productos = $model->Get_todos_productos(1);
                       <div class="col-5">
                         <div class="form-group">
                           <input type="hidden" name="id_menu">
-                          <label for="des_cargo">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
+                          <label for="des_menu">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
                           <input type="text" name="des_menu" id="des_menu" placeholder="Ingrese la descripción del menú" class="form-control">
                         </div>
                       </div>
-
+                      
                       <div class="col-4">
                         <label for="">Estado del Menú(<span class="text-danger text-md">*</span>)</label>
                         <div class="row">
@@ -80,14 +80,19 @@ $productos = $model->Get_todos_productos(1);
                                 <option value="LT">LT</option>
                                 <option value="GM">GM</option>
                               </select>
-                              <!-- <span class="input-group-text">{{itemx.medida}}</span> -->
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-12">
+                      <div class="col-3">
+                        <div class="form-group">
+                          <label for="">Porciones</label>
+                          <input type="number" name="porcion" id="porcion" placeholder="Ingrese la porción" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="col-9">
                         <div class="form-group">
                           <label for="">Procedimientos</label>
                           <textarea name="des_procedimiento" class="form-control" id="des_procedimiento" cols="30" rows="2"></textarea>
@@ -126,11 +131,13 @@ $productos = $model->Get_todos_productos(1);
       el: "#VueApp",
       data: {
         productos: [{
-          id: '',
           des: '',
           medida: '',
           cantidad: ''
         }],
+        des_menu:"",
+        porcion:"",
+        des_procedimiento:"",
         selectProductos: [{}]
       },
       methods: {
@@ -195,6 +202,12 @@ $productos = $model->Get_todos_productos(1);
           required: true,
           minlength: 1,
           maxlength: 120
+        },
+        porcion:{
+          required: true,
+          minlength: 1,
+          maxlength: 2,
+          min: 1,
         }
       },
       messages: {
@@ -207,6 +220,12 @@ $productos = $model->Get_todos_productos(1);
           required: "Este Campo NO Puede estar Vacio",
           minlength: "Debe de Contener al menos 1 caracteres",
           maxlength: "Debe de contener menos de 120 caracteres"
+        },
+        porcion:{
+          required: "Este Campo NO Puede estar Vacio",
+          minlength: "Debe de Contener al menos 1 caracteres numericos",
+          maxlength: "Debe de contener menos de 2 caracteres numericos",
+          min: "Minimo 1",
         }
       },
       errorElement: "span",

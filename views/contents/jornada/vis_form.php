@@ -46,7 +46,7 @@ $person2 = $model_person->Get_Personas();
                       <div class="col-4">
                         <div class="form-group">
                           <label for="titulo_jornada">Cantidad aproximada de beneficiados(<span class="text-danger text-md">*</span>)</label>
-                          <input type="number" name="cant_aproximada" id="cant_aproximada" placeholder="Ingrese una cantidad aproximadas de beneficiados" class="form-control">
+                          <input type="number" name="cant_aproximada" v-model="cant_aproximada" :min="porciones" id="cant_aproximada" placeholder="Ingrese una cantidad aproximadas de beneficiados" class="form-control">
                         </div>
                       </div>
                       <div class="col-3">
@@ -63,18 +63,17 @@ $person2 = $model_person->Get_Personas();
                         </div>
                       </div>
                     </div>
-                    <!-- Agregar responsable -->
                     <div class="row">
                       <div class="col-3">
                         <div class="form-group">
                           <label for="titulo_jornada">Fecha para la jornada(<span class="text-danger text-md">*</span>)</label>
-                          <input type="date" name="fecha_jornada" id="fecha_jornada" class="form-control">
+                          <input type="date" min="<?php echo $this->DateNow();?>" name="fecha_jornada" id="fecha_jornada" class="form-control">
                         </div>
                       </div>
                       <div class="col-3">
                         <div class="form-group">
                           <label for="">Menú(<span class="text-danger text-md">*</span>)</label>
-                          <select name="menu_id_jornada" id="" class="custom-select" v-model="menu_id_jornada">
+                          <select name="menu_id_jornada" id="" class="custom-select" v-model="menu_id_jornada" v-on:change="consultar_menu">
                             <option value="">Seleccione una opción</option>
                             <option v-for="item in selectMenu" :key="item.id_menu" :value="item.id_menu">{{item.des_menu}}</option>
                           </select>
@@ -97,6 +96,36 @@ $person2 = $model_person->Get_Personas();
                         <div class="form-group">
                           <label for="">Descripción de la jornada</label>
                           <textarea name="des_jornada" maxlength="120" class="form-control" id="des_jornada" cols="30" rows="2"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" v-show="menu_id_jornada != ''">
+                      <div class="col-12">
+                        <div class="card card-success">
+                          <div class="card-header">
+                            <h4 class="card-title">
+                              Información del Menú |
+                              Descripción "{{titulo_menu}}" |
+                              Cantidad de porciones: {{porciones}}</h4>
+                          </div>
+                          <div class="card-body">
+                            <table id="dataTable" class="table table-bordered table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Ingredientes</th>
+                                  <th>Consumo</th>
+                                  <th>Aproximado a gastar</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="(item, index) in ingrediente" :key="index">
+                                  <td>{{ item.des_comida_detalle }}</td>
+                                  <td>{{ item.consumo }} {{ item.med_comida_detalle }}</td>
+                                  <td>{{ calculo(item.consumo, item.med_comida_detalle) }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -134,10 +163,19 @@ $person2 = $model_person->Get_Personas();
           medida: '',
           cantidad: '',
         }],
+        cant_aproximada:0,
+        ingrediente: [],
         menu_id_jornada: '',
+        titulo_menu: '',
+        porciones: 0,
         selectMenu: [{}]
       },
       methods: {
+        calculo(consumo, medida){
+          let cantidad = parseInt(this.cant_aproximada) / parseInt(this.porciones);
+          let total = parseInt(consumo) * (cantidad);          
+          return `${total} ${medida}`;
+        },
         async GetMenu() {
           await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Todos_menu`)
             .then(response => response.json())
@@ -145,6 +183,20 @@ $person2 = $model_person->Get_Personas();
               data
             }) => {
               this.selectMenu = data;
+            }).catch(error => console.error(error));
+        },
+        async consultar_menu() {
+          await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Consultar_menu&id_menu=${this.menu_id_jornada}`)
+            .then(response => response.json())
+            .then(({
+              data
+            }) => {
+              this.titulo_menu = data[0].des_menu;
+              this.porciones = data[0].porcion;
+              this.cant_aproximada = data[0].porcion;
+              this.ingrediente = data[1];
+
+              console.log(data)
             }).catch(error => console.error(error));
         },
       },
@@ -162,27 +214,53 @@ $person2 = $model_person->Get_Personas();
 
     $("#formulario").validate({
       rules: {
-        des_menu: {
+        titulo_jornada: {
           required: true,
           minlength: 3,
           maxlength: 20
         },
-        des_procedimiento: {
+        cant_aproximada:{
           required: true,
-          minlength: 1,
+          number: true,
+        },
+        fecha_jornada:{
+          required: true,
+        },
+        des_jornada:{
+          required: true,
+          minlength: 3,
           maxlength: 120
+        },
+        menu_id_jornada:{
+          required: true,
+        },
+        responsable: {
+          required: true,
         }
       },
       messages: {
-        des_menu: {
+        titulo_jornada: {
           required: "Este Campo NO Puede estar Vacio",
           minlength: "Debe de Contener al menos 3 caracteres",
           maxlength: "Debe de contener menos de 20 caracteres"
         },
-        des_procedimiento: {
+        cant_aproximada:{
           required: "Este Campo NO Puede estar Vacio",
-          minlength: "Debe de Contener al menos 1 caracteres",
+          number: "Solo de aceptan numeros"
+        },
+        fecha_jornada:{
+          required: "Este Campo NO Puede estar Vacio",
+        },
+        des_jornada:{
+          required: "Este Campo NO Puede estar Vacio",
+          minlength: "Debe de Contener al menos 3 caracteres",
           maxlength: "Debe de contener menos de 120 caracteres"
+        },
+        menu_id_jornada:{
+          required: "Este Campo NO Puede estar Vacio",
+        },
+        responsable: {
+          required: "Este Campo NO Puede estar Vacio",
         }
       },
       errorElement: "span",
