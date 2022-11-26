@@ -30,12 +30,20 @@
                 <form action="<?php echo constant("URL"); ?>controller/c_pdf.php" method="POST" target="<?php echo constant("URL"); ?>controller/c_pdf.php" class="">
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-3">
+                      <div class="col-4">
                         <label for="">Tipo de reporte(<span class="text-danger text-md">*</span>)</label>
                         <div class="row">
                           <div class="form-check mx-3">
                             <input type="radio" v-model="tipo_reporte" name="tipo_reporte" id="tipo_reporte" value="Productos" class="form-check-input">
                             <label for="tipo_reporte" class="form-check-label">Productos</label>
+                          </div>
+                          <div class="form-check mx-3">
+                            <input type="radio" v-model="tipo_reporte" name="tipo_reporte" id="tipo_reporte" value="Menu" class="form-check-input">
+                            <label for="tipo_reporte" class="form-check-label">Menú</label>
+                          </div>
+                          <div class="form-check mx-3">
+                            <input type="radio" v-model="tipo_reporte" name="tipo_reporte" id="tipo_reporte" value="Jornada" class="form-check-input">
+                            <label for="tipo_reporte" class="form-check-label">Jornadas</label>
                           </div>
                           <div class="form-check mx-3">
                             <input type="radio" v-model="tipo_reporte" name="tipo_reporte" id="tipo_reporte" value="Entrada" class="form-check-input">
@@ -60,6 +68,26 @@
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Donacion" class="form-check-input" v-bind:disabled="tipo_reporte != 'Entrada'" required>
                               <label for="filtro" class="form-check-label">Entrada por donación</label>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4" v-show="tipo_reporte == 'Menu' || tipo_reporte == 'Jornada'">
+                        <div class="form-group">
+                          <label for="">Filtro(<span class="text-danger text-md">*</span>)</label>
+                          <div class="row">
+                            <div class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Fecha_registro" class="form-check-input" v-bind:disabled="tipo_reporte != 'Menu' && tipo_reporte != 'Jornada'" required>
+                              <label for="filtro" class="form-check-label">Por fecha de registro</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4" v-show="filtro == 'Fecha_registro' && tipo_reporte == 'Menu' || filtro == 'Fecha_registro' && tipo_reporte == 'Jornada'">
+                        <div class="form-group">
+                          <label for="">Fechas(<span class="text-danger text-md">*</span>)</label>
+                          <div class="input-group">
+                            <input type="date" max="<?php echo $this->DateNow();?>" v-bind:disabled="filtro != 'Fecha_registro' || tipo_reporte != 'Menu' && tipo_reporte != 'Jornada'" name="desde" aria-label="desde" id="" class="form-control">
+                            <input type="date" max="<?php echo $this->DateNow();?>" v-bind:disabled="filtro != 'Fecha_registro' || tipo_reporte != 'Menu' && tipo_reporte != 'Jornada'" name="hasta" aria-label="hasta" id="" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -99,6 +127,14 @@
                             <div class="form-check mx-3">
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Unidades" class="form-check-input" v-bind:disabled="tipo_reporte != 'Productos'" required>
                               <label for="filtro" class="form-check-label">Por Unidad de Medida</label>
+                            </div>
+                            <div class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Stock_max" class="form-check-input" v-bind:disabled="tipo_reporte != 'Productos'" required>
+                              <label for="filtro" class="form-check-label">Por Stock maximo</label>
+                            </div>
+                            <div class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Stock_min" class="form-check-input" v-bind:disabled="tipo_reporte != 'Productos'" required>
+                              <label for="filtro" class="form-check-label">Por Stock minimo</label>
                             </div>
                           </div>
                         </div>

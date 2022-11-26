@@ -170,7 +170,7 @@
 																	<th>Código</th>
 																	<th>Descripción</th>
 																	<th>Cantidad</th>
-																	<th>En Stock</th>
+																	<th>Restante en stock</th>
 																</tr>
 															</thead>
 															<tbody>

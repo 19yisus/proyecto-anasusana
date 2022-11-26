@@ -70,6 +70,7 @@
       },
       methods: {
         async Consult(value) {
+          this.productos = [];
           await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Consultar_menu&id_menu=${value}`)
             .then(response => response.json()).then(({
               data
@@ -81,8 +82,6 @@
               data[1].forEach( item => {
                 this.productos.push({des: item.des_comida_detalle, medida: item.med_comida_detalle, cantidad: item.consumo})
               })
-              console.log(data)
-              // this.productos = data[1];
             })
             .catch(Err => {
               console.error(Err)

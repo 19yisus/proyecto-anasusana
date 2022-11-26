@@ -24,33 +24,45 @@
               <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_jornada.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-5 col-sm-12">
+                    <div class="col-12 col-sm-12">
                       <div class="form-group">
-                        <input type="hidden" name="id_jornada">
+                        <input type="hidden" name="id_jornada" v-model="id">
                         <label for="titulo_jornada">Titulo de la jornada(<span class="text-danger text-md">*</span>)</label>
                         <input type="text" v-model="titulo" maxlength="30" name="titulo_jornada" id="titulo_jornada" placeholder="Ingrese el titulo de la jornada" class="form-control">
                       </div>
                     </div>
-                    <div class="col-4 col-sm-12">
+                    <div class="col-4 col-sm-6">
                       <div class="form-group">
-                        <label for="titulo_jornada">Cantidad aproximada de platos(<span class="text-danger text-md">*</span>)</label>
+                        <label for="titulo_jornada">Cantidad aproximada de beneficiados(<span class="text-danger text-md">*</span>)</label>
                         <input type="number" v-model="cant" name="cant_aproximada" id="cant_aproximada" placeholder="Ingrese una cantidad aproximadas de platos" class="form-control">
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-6 col-sm-6">
-                      <div class="form-group">
-                        <label for="titulo_jornada">Fecha para la jornada(<span class="text-danger text-md">*</span>)</label>
-                        <input type="date" v-model="fecha" name="fecha_jornada" id="fecha_jornada" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-6 col-sm-6">
+                    <div class="col-4 col-sm-6">
                       <div class="form-group col-sm-12">
                         <label for="">Menú(<span class="text-danger text-md">*</span>)</label>
                         <select name="menu_id_jornada" id="menu_id_jornada" class="custom-select" v-model="menu_id_jornada">
                           <option value="">Seleccione una opción</option>
                           <option v-for="item in selectMenu" :key="item.id_menu" :value="item.id_menu">{{item.des_menu}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6 col-sm-6">
+                      <div class="form-group">
+                        <label for="titulo_jornada">Fecha para la jornada(<span class="text-danger text-md">*</span>)</label>
+                        <input type="date" v-model="fecha" min="<?php echo $this->DateNow(); ?>" name="fecha_jornada" id="fecha_jornada" class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-6 col-sm-6">
+                      <div class="form-group">
+                        <label for="responsable">responsable de esta jornada(<span class="text-danger text-md">*</span>)</label>
+                        <select name="responsable" id="responsable" class="custom-select special_select2" v-model="responsable">
+                          <option value="">Seleccione a una Persona</option>
+                          <?php foreach ($person2 as $persona) { ?>
+                            <option value="<?php echo $persona['id_person']; ?>"><?php echo $persona['tipo_person'] . "-" . $persona['cedula_person'] . " " . $persona['nom_person']; ?></option>
+                          <?php } ?>
                         </select>
                       </div>
                     </div>
@@ -66,8 +78,8 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <input type="hidden" name="ope">
-                  <button type="button" id="btn" onclick="ope.value = this.value" value="Actualizar" class="btn btn-primary"><i class="fas fa-edit"></i> Actualizar</button>
+                  <input type="hidden" name="ope" value="Actualizar">
+                  <button type="button" id="btn" onclick="envio()" class="btn btn-primary"><i class="fas fa-edit"></i> Actualizar</button>
                 </div>
               </form>
             </div>
@@ -83,7 +95,7 @@
 </div>
 <!-- /.modal -->
 <script>
-  $("#btn").click(async () => {
+  const envio = async () => {
     if ($("#formulario").valid()) {
       let res = await Confirmar();
       if (!res) return false;
@@ -104,35 +116,58 @@
           });
         }).catch(Err => console.log(Err))
     }
-  })
+  }
 
   $("#formulario").validate({
     rules: {
-      nom_comedor: {
+      titulo_jornada: {
         required: true,
         minlength: 3,
+        maxlength: 20
       },
-      encargado_comedor: {
+      cant_aproximada: {
+        required: true,
+        number: true,
+      },
+      fecha_jornada: {
         required: true,
       },
-      direccion_comedor: {
+      des_jornada: {
         required: true,
-        minlength: 5,
-        maxlength: 120,
+        minlength: 3,
+        maxlength: 120
+      },
+      menu_id_jornada: {
+        required: true,
+      },
+      responsable: {
+        required: true,
       }
     },
     messages: {
-      nom_comedor: {
+      titulo_jornada: {
         required: "Este Campo NO Puede estar Vacio",
-        minlength: "Debe de Contener al Menos 3 caracteres",
+        minlength: "Debe de Contener al menos 3 caracteres",
+        maxlength: "Debe de contener menos de 20 caracteres"
       },
-      encargado_comedor: {
-        required: "Debes de Seleccionar al Encargado del Comedor",
+      cant_aproximada: {
+        required: "Este Campo NO Puede estar Vacio",
+        number: "Solo de aceptan numeros"
       },
-      direccion_comedor: {
-        required: "La Dirección del Comedor es Requerida",
-        minlength: "Mínimo de 5 Letras",
-        maxlength: "Máximo de 120 Letras",
+      fecha_jornada: {
+        required: "Este Campo NO Puede estar Vacio",
+        min: "Debe de ser superior a la fecha actual"
+      },
+      des_jornada: {
+        required: "Este Campo NO Puede estar Vacio",
+        minlength: "Debe de Contener al menos 3 caracteres",
+        maxlength: "Debe de contener menos de 120 caracteres"
+      },
+      menu_id_jornada: {
+        required: "Este Campo NO Puede estar Vacio",
+      },
+      responsable: {
+        required: "Este Campo NO Puede estar Vacio",
       }
     },
     errorElement: "span",

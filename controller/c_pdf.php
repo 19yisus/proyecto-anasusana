@@ -1,6 +1,8 @@
 <?php
 require_once("../models/m_entrada_salida.php");
 require_once("../models/m_productos.php");
+require_once("../models/m_menu.php");
+require_once("../models/m_jornada.php");
 require_once("../models/fpdf/fpdf.php");
 class new_fpdf extends FPDF
 {
@@ -44,11 +46,19 @@ if (isset($_POST['ope'])) {
       break;
 
     case "Salida":
-        fn_pdf_filtrado();
-        break;
+      fn_pdf_filtrado();
+      break;
 
     case "Productos":
       fn_pdf_productos();
+      break;
+
+    case "Menu":
+      fn_pdf_menu();
+      break;
+
+    case "Jornada":
+      fn_pdf_Jornada();
       break;
   }
 }
@@ -182,13 +192,13 @@ function fn_pdf_filtrado()
 {
   $model = new m_entrada_salida();
   $filtro = $_POST['filtro'];
-  if($filtro == "Compra") $f = "C";
-  if($filtro == "Donacion") $f = "D";
-  if($filtro == "Consumo") $f = "O";
-  if($filtro == "Vencimiento") $f = "V";
-  if($filtro == "Rechazo") $f = "R";
+  if ($filtro == "Compra") $f = "C";
+  if ($filtro == "Donacion") $f = "D";
+  if ($filtro == "Consumo") $f = "O";
+  if ($filtro == "Vencimiento") $f = "V";
+  if ($filtro == "Rechazo") $f = "R";
   $d = $model->GetPdfWithFiltros($f);
-  
+
   $des_tipo = $filtro;
 
   if (!isset($d[0])) {
@@ -280,14 +290,17 @@ function fn_pdf_filtrado()
 function fn_pdf_productos()
 {
   $model = new m_productos();
-  if(isset($_POST['id'])) $id =  $_POST['id']; else $id = "";
+  if (isset($_POST['id'])) $id =  $_POST['id'];
+  else $id = "";
   $dato = $model->GetPdf($_POST['filtro'],  $id);
-    
+
   $pdf = new new_fpdf();
-  
-  if($_POST['filtro'] == "Todos") $des_report = "Todos los productos";
-  if($_POST['filtro'] == "Marcas") $des_report = "Todos los productos segun su Marca";
-  if($_POST['filtro'] == "Unidades") $des_report = "Todos los productos segun su precentacion";
+
+  if ($_POST['filtro'] == "Todos") $des_report = "Todos los productos";
+  if ($_POST['filtro'] == "Marcas") $des_report = "Todos los productos segun su Marca";
+  if ($_POST['filtro'] == "Unidades") $des_report = "Todos los productos segun su precentacion";
+  if ($_POST['filtro'] == "Stock_max") $des_report = "Todos los productos segun su stock maximo";
+  if ($_POST['filtro'] == "Stock_min") $des_report = "Todos los productos segun su stock minimo";
 
   $pdf->SetNombre($des_report);
   $pdf->addPage();
@@ -311,8 +324,110 @@ function fn_pdf_productos()
     $pdf->cell(40, 7, $prod['nom_marca'], 1, 0, "C", 1);
     $pdf->cell(30, 7, "Stock minimo: " . $prod['stock_minimo_product'], 1, 0, "C", 1);
     $pdf->cell(35, 7, "Stock maximo: " . $prod['stock_maximo_product'], 1, 0, "C", 1);
-    $pdf->cell(35, 7, "Stock en almacen: " . $prod['stock_product'], 1, 0, "C", 1); 
+    $pdf->cell(35, 7, "Stock en almacen: " . $prod['stock_product'], 1, 0, "C", 1);
     $pdf->Ln();
+  }
+  $pdf->Output();
+}
+
+function fn_pdf_menu()
+{
+  $model = new m_menu();
+  $menu = $model->GetPdf($_POST);
+  $pdf = new new_fpdf();
+
+  if ($_POST['filtro'] == "Fecha_registro") $des_report = "Todos los menus por fecha de registro";
+
+  $pdf->SetNombre($des_report);
+  $pdf->addPage();
+  $pdf->Ln(10);
+  $pdf->setFont('Arial', 'B', 10);
+  $pdf->SetTextColor(255, 255, 255);
+  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetDrawColor(88, 88, 88);
+
+  foreach ($menu as $item_menu) {
+    $fecha = new DateTime($item_menu['menu']['created_menu']);
+    $pdf->cell(190, 7, 'Datos de los menus', 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, 'Descripcion del menu: ' . $item_menu['menu']['des_menu'], 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(80, 7, "Porcion: " . $item_menu['menu']['porcion'], 1, 0, "C", 1);
+    $pdf->cell(110, 7, "Fecha de creacion: " . $fecha->format("d-m-Y h:i a"), 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, "Procedimiento: " . $item_menu['menu']['des_procedimiento'], 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, 'Detalles del menu', 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(150, 7, 'Descripcion del ingrediente', 1, 0, "C", 1);
+    $pdf->cell(40, 7, 'Consumo', 1, 0, "C", 1);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->setFont('Arial', 'B', 9);
+    $pdf->Ln();
+    foreach ($item_menu['detalle'] as $item_detalle) {
+      $pdf->cell(150, 7, $item_detalle['des_comida_detalle'], 1, 0, "C", 1);
+      $pdf->cell(40, 7, $item_detalle['consumo'] . " " . $item_detalle['med_comida_detalle'], 1, 0, "C", 1);
+    }
+    $pdf->Ln(10);
+  }
+  $pdf->Output();
+}
+
+function fn_pdf_Jornada()
+{
+  $model = new m_jornada();
+  $datos = $model->GetPdf($_POST);
+  $pdf = new new_fpdf();
+
+  if ($_POST['filtro'] == "Fecha_registro") $des_report = "Todos las jornada por fecha";
+
+  $pdf->SetNombre($des_report);
+  $pdf->addPage();
+  $pdf->Ln(10);
+  $pdf->setFont('Arial', 'B', 10);
+  $pdf->SetTextColor(255, 255, 255);
+  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetDrawColor(88, 88, 88);
+
+  foreach ($datos as $item_jornada_menu) {
+    $fecha = new DateTime($item_jornada_menu['jornada_menu']['created_menu']);
+    $fecha2 = new DateTime($item_jornada_menu['jornada_menu']['fecha_jornada']);
+    // INFORMACIÓN DE LA JORNADA
+    $pdf->cell(190, 7, 'Datos de la jornada', 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, "Titulo: " . $item_jornada_menu['jornada_menu']['titulo_jornada'], 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, 'Descripcion del jornada: ' . $item_jornada_menu['jornada_menu']['des_jornada'], 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(80, 7, "Cantidad aproximada de benecifiados: " . $item_jornada_menu['jornada_menu']['cant_aproximada'], 1, 0, "C", 1);
+    $pdf->cell(110, 7, "Fecha de creacion: " . $fecha2->format("d-m-Y h:i a"), 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, 'Detalles del menu', 1, 0, "C", 1);
+    $pdf->Ln();
+    // INFORMACIÓN DEL MENU
+    $pdf->cell(190, 7, 'Datos de los menus', 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, 'Descripcion del menu: ' . $item_jornada_menu['jornada_menu']['des_menu'], 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(80, 7, "Porcion: " . $item_jornada_menu['jornada_menu']['porcion'], 1, 0, "C", 1);
+    $pdf->cell(110, 7, "Fecha de creacion: " . $fecha->format("d-m-Y h:i a"), 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, "Procedimiento: " . $item_jornada_menu['jornada_menu']['des_procedimiento'], 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(190, 7, 'Detalles del menu', 1, 0, "C", 1);
+    $pdf->Ln();
+    $pdf->cell(150, 7, 'Descripcion del ingrediente', 1, 0, "C", 1);
+    $pdf->cell(40, 7, 'Consumo', 1, 0, "C", 1);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->setFont('Arial', 'B', 9);
+    $pdf->Ln();
+    foreach ($item_jornada_menu['detalle_menu'] as $item_detalle) {
+      $pdf->cell(150, 7, $item_detalle['des_comida_detalle'], 1, 0, "C", 1);
+      $pdf->cell(40, 7, $item_detalle['consumo'] . " " . $item_detalle['med_comida_detalle'], 1, 0, "C", 1);
+    }
+    $pdf->Ln(10);
   }
   $pdf->Output();
 }

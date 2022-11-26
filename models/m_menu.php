@@ -94,6 +94,7 @@ class m_menu extends m_db
       $des = $this->des_comida_detalle[$i];
       $med = $this->med_comida_detalle[$i];
       $sql2 = "INSERT INTO menu_detalle(menu_id_detalle, consumo, des_comida_detalle, med_comida_detalle) VALUES($this->id_menu,$consumo,'$des','$med')";
+
       $this->Query($sql2);
     }
 
@@ -137,5 +138,23 @@ class m_menu extends m_db
     $datos_generales = $this->Get_array($results);
     $datos_comidas = $this->Get_todos_array($result2);
     return [$datos_generales, $datos_comidas];
+  }
+
+  public function GetPdf($post)
+  {
+    $menu = [];
+    $desde = $post['desde'];
+    $hasta = $post['hasta'];
+    $sql = "SELECT * FROM menu WHERE created_menu BETWEEN '$desde' AND '$hasta';";
+    $datos_menu = $this->Get_todos_array($this->Query($sql));
+
+    foreach ($datos_menu as $item) {
+      $id = $item['id_menu'];
+      $sql2 = "SELECT * FROM menu_detalle WHERE menu_id_detalle = $id";
+      $datos_menu_detalle = $this->Get_todos_array($this->Query($sql2));
+      array_push($menu, ['menu' => $item,'detalle' => $datos_menu_detalle]);
+    }
+
+    return $menu;
   }
 }

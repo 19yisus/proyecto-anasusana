@@ -6,6 +6,10 @@
   <div class="wrapper" id="VueApp">
     <?php
     $this->titleContent = "Catálogo Jornadas";
+    require_once("./models/m_persona.php");
+
+    $model_person = new m_persona();
+    $person2 = $model_person->Get_Personas();
 
     $this->GetComplement("navbar");
     // $this->GetComplement("sidebar");
@@ -68,6 +72,7 @@
         cant: "",
         menu_id_jornada: "",
         fecha: "",
+        responsable: '',
         selectMenu: [{}]
       },
       methods: {
@@ -77,11 +82,11 @@
               data
             }) => {
               const form = document.formulario;
-              console.log(data)
               this.id = data[0].id_jornada;
               this.des = data[0].des_jornada;
               this.cant = data[0].cant_aproximada;
               this.titulo = data[0].titulo_jornada;
+              this.responsable = data[0].person_id_responsable
               this.fecha = data[0].fecha_jornada;
               this.menu_id_jornada = data[0].menu_id_jornada;
 
@@ -148,13 +153,13 @@
           },
           {
             data: "fecha_jornada",
-            render(data){
+            render(data) {
               return moment(data).format("DD/MM/YYYY h:mm A")
             }
           },
           {
             data: "cedula_person",
-            render(data, type, row){
+            render(data, type, row) {
               return `${row.tipo_person}-${data} ${row.nom_person}`
             }
           },

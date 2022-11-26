@@ -28,6 +28,7 @@ class m_jornada extends m_db
 
   public function Create()
   {
+    $this->verificarJornadas();
     try {
       $sql1 = "INSERT INTO jornada(
         titulo_jornada,
@@ -57,40 +58,47 @@ class m_jornada extends m_db
 
   public function Update()
   {
-    $result = $this->Query("SELECT * FROM jornada WHERE des_jornada = '$this->des_jornada' AND id_jornada != $this->id_jornada ;");
-    if ($result->num_rows > 0) return ["code" => "error", "message" => "Los datos no se pueden duplicar"];
+    $this->verificarJornadas();
+    $result = $this->Get_todos_array($this->Query("SELECT * FROM jornada WHERE titulo = '$this->titulo_jornada' AND id_jornada != $this->id_jornada AND fecha_jornada = '$this->fecha_jornada';"));
+    if (isset($result[0])) return ["code" => "error", "message" => "Los datos no se pueden duplicar"];
 
-    $sql = "UPDATE jornada SET des_jornada = '$this->des_jornada', des_procedimiento = '$this->des_procedimiento' WHERE id_jornada = $this->id_jornada ;";
-    $this->Query($sql);
+    $sql = "UPDATE jornada SET 
+    des_jornada = '$this->des_jornada', 
+    fecha_jornada = '$this->fecha_jornada',
+    cant_aproximada = '$this->cant_aproximada',
+    titulo_jornada = '$this->titulo_jornada',
+    menu_id_jornada = $this->menu_id_jornada,
+    person_id_responsable = $this->responsable
+    WHERE id_jornada = $this->id_jornada ;";
 
-    $sqlDelete = "DELETE FROM jornada_detalle WHERE jornada_id_detalle = $this->id_jornada";
-    $this->Query($sqlDelete);
-
-    if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-    else return ["code" => "error", "message" => "Operación Fallida"];
-  }
-
-  public function Disable()
-  {
-
-    $sql = "UPDATE jornada SET status_jornada = $this->estatus_jornada WHERE id_jornada = $this->id_jornada ;";
     $this->Query($sql);
 
     if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
     else return ["code" => "error", "message" => "Operación Fallida"];
   }
 
-  public function Delete()
-  {
-    $sql = "DELETE FROM jornada WHERE id_jornada = $this->id_jornada AND estatus_jornada = '0' ;";
-    $this->Query($sql);
+  // public function Disable()
+  // {
 
-    if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-    else return ["code" => "error", "message" => "Operación Fallida"];
-  }
+  //   $sql = "UPDATE jornada SET status_jornada = $this->estatus_jornada WHERE id_jornada = $this->id_jornada ;";
+  //   $this->Query($sql);
+
+  //   if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+  //   else return ["code" => "error", "message" => "Operación Fallida"];
+  // }
+
+  // public function Delete()
+  // {
+  //   $sql = "DELETE FROM jornada WHERE id_jornada = $this->id_jornada AND estatus_jornada = '0' ;";
+  //   $this->Query($sql);
+
+  //   if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+  //   else return ["code" => "error", "message" => "Operación Fallida"];
+  // }
 
   public function Get_todos_jornada($status = '')
   {
+    $this->verificarJornadas();
     if ($status != '') $sql = "SELECT * FROM jornada WHERE estatus_jornada = $status";
     else $sql = "SELECT * FROM jornada INNER JOIN personas ON personas.id_person = jornada.person_id_responsable";
     $results = $this->query($sql);
@@ -99,6 +107,7 @@ class m_jornada extends m_db
 
   public function Get_jornada()
   {
+    $this->verificarJornadas();
     $sql = "SELECT * FROM jornada INNER JOIN menu ON menu.id_menu = jornada.menu_id_jornada WHERE jornada.id_jornada = $this->id_jornada ;";
     $results = $this->Query($sql);
     $datos_jornada = $this->Get_array($results);
@@ -114,6 +123,7 @@ class m_jornada extends m_db
 
   public function Get_jornada_hoy()
   {
+    $this->verificarJornadas();
     $unixTime = time();
     $timeZone = new \DateTimeZone('America/Caracas');
 
@@ -121,8 +131,32 @@ class m_jornada extends m_db
     $time->setTimestamp($unixTime)->setTimezone($timeZone);
     $fecha = $time->format('Y-m-d');
     $sql = "SELECT * FROM jornada WHERE fecha_jornada = '$fecha' AND estatus_jornada = 1";
-    
+
     $results = $this->query($sql);
     return $this->Get_todos_array($results);
+  }
+
+  public function verificarJornadas()
+  {
+    $this->Query("UPDATE jornada SET estatus_jornada = 0 WHERE fecha_jornada < NOW();");
+  }
+
+  public function GetPdf($post)
+  {
+    $menu = [];
+    $desde = $post['desde'];
+    $hasta = $post['hasta'];
+    $sql = "SELECT * FROM jornada 
+    INNER JOIN menu ON menu.id_menu = jornada.menu_id_jornada WHERE jornada.fecha_jornada BETWEEN '$desde' AND '$hasta';";
+    $datos_menu = $this->Get_todos_array($this->Query($sql));
+
+    foreach ($datos_menu as $item) {
+      $id = $item['id_menu'];
+      $sql2 = "SELECT * FROM menu_detalle WHERE menu_id_detalle = $id";
+      $datos_menu_detalle = $this->Get_todos_array($this->Query($sql2));
+      array_push($menu, ['jornada_menu' => $item, 'detalle_menu' => $datos_menu_detalle]);
+    }
+
+    return $menu;
   }
 }

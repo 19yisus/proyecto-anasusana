@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-11-2022 a las 05:07:56
+-- Tiempo de generación: 26-11-2022 a las 05:58:39
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -59,13 +59,6 @@ CREATE TABLE `comedor` (
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `comedor`
---
-
-INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `encargado_comedor`, `direccion_comedor`, `status_comedor`, `if_sede`, `created_comedor`) VALUES
-(1, 'PAN DE VIDA', 6, 'SDASDADADSDS', 1, 1, '2022-10-07 11:08:02');
-
 -- --------------------------------------------------------
 
 --
@@ -115,7 +108,7 @@ CREATE TABLE `jornada` (
   `des_jornada` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
   `cant_aproximada` int(11) NOT NULL,
   `estatus_jornada` tinyint(1) NOT NULL,
-  `fecha_jornada` datetime NOT NULL,
+  `fecha_jornada` date NOT NULL,
   `menu_id_jornada` int(11) DEFAULT NULL,
   `person_id_responsable` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -143,6 +136,7 @@ CREATE TABLE `menu` (
   `id_menu` int(11) NOT NULL,
   `des_menu` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `des_procedimiento` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `porcion` int(11) NOT NULL,
   `status_menu` tinyint(1) NOT NULL,
   `created_menu` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -448,7 +442,7 @@ ALTER TABLE `cargo`
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `jornada`

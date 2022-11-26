@@ -16,7 +16,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_platillos.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+              <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_menu.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-3 col-sm-12">
@@ -91,13 +91,12 @@
 <!-- /.modal -->
 <script>
   const envio = async () => {
-    console.log("DSDSD");
     if ($("#formulario").valid()) {
       let res = await Confirmar();
       if (!res) return false;
 
       let datos = new FormData(document.formulario);
-      fetch(`<?php echo constant("URL"); ?>controller/c_platillos.php`, {
+      fetch(`<?php echo constant("URL"); ?>controller/c_menu.php`, {
           method: "POST",
           body: datos,
         }).then(response => response.json())
@@ -116,17 +115,39 @@
 
   $("#formulario").validate({
     rules: {
-      des_plat: {
+      des_menu: {
         required: true,
         minlength: 3,
-        maxlength: 20,
+        maxlength: 20
       },
+      des_procedimiento: {
+        required: true,
+        minlength: 1,
+        maxlength: 120
+      },
+      porcion: {
+        required: true,
+        minlength: 1,
+        maxlength: 2,
+        min: 1,
+      }
     },
     messages: {
-      des_plat: {
+      des_menu: {
         required: "Este Campo NO Puede estar Vacio",
-        minlength: "Debe de Contener al Menos 3 caracteres",
+        minlength: "Debe de Contener al menos 3 caracteres",
         maxlength: "Debe de contener menos de 20 caracteres"
+      },
+      des_procedimiento: {
+        required: "Este Campo NO Puede estar Vacio",
+        minlength: "Debe de Contener al menos 1 caracteres",
+        maxlength: "Debe de contener menos de 120 caracteres"
+      },
+      porcion: {
+        required: "Este Campo NO Puede estar Vacio",
+        minlength: "Debe de Contener al menos 1 caracteres numericos",
+        maxlength: "Debe de contener menos de 2 caracteres numericos",
+        min: "Minimo 1",
       }
     },
     errorElement: "span",
