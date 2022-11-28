@@ -138,7 +138,13 @@ class m_jornada extends m_db
 
   public function verificarJornadas()
   {
-    $this->Query("UPDATE jornada SET estatus_jornada = 0 WHERE fecha_jornada < NOW();");
+    $unixTime = time();
+    $timeZone = new \DateTimeZone('America/Caracas');
+
+    $time = new \DateTime();
+    $time->setTimestamp($unixTime)->setTimezone($timeZone);
+    $fecha = $time->format('Y-m-d');
+    $this->Query("UPDATE jornada SET estatus_jornada = 0 WHERE fecha_jornada < '$fecha';");
   }
 
   public function GetPdf($post)

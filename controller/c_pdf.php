@@ -236,7 +236,7 @@ function fn_pdf_filtrado()
     $pdf->Cell(190, 7, "Observacion: " . $dato['invent']['observacion_invent'], 1, 0, "C", 1);
     $pdf->Ln();
 
-    if ($filtro == "C" || $filtro == "D") {
+    if ($filtro == "Compra" || $filtro == "Donacion") {
       $pdf->cell(190, 7, 'Datos del proveedor', 1, 0, "C", 1);
       $pdf->Ln();
       $pdf->cell(35, 7, $dato['persona']['proveedor']['tipo_persona'] . "-" . $dato['persona']['proveedor']['cedula'], 1, 0, "C", 1);
@@ -252,7 +252,7 @@ function fn_pdf_filtrado()
       $pdf->Ln();
     }
 
-    if ($filtro == "O") {
+    if ($filtro == "Consumo") {
       $pdf->cell(190, 7, 'Jornada del dia', 1, 0, "C", 1);
       $pdf->Ln();
       $pdf->cell(100, 7, "Nombre: " . ($dato['invent']['titulo_jornada'] !== "NULL") ? $dato['invent']['titulo_jornada'] : "Sin titulo", 1, 0, "C", 1);
@@ -290,6 +290,7 @@ function fn_pdf_filtrado()
 function fn_pdf_productos()
 {
   $model = new m_productos();
+  
   if (isset($_POST['id'])) $id =  $_POST['id'];
   else $id = "";
   $dato = $model->GetPdf($_POST['filtro'],  $id);
