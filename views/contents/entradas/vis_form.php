@@ -197,7 +197,7 @@
 			el: '#VueApp',
 			data: {
 				productos: [
-					// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: "", stock_maximo: 0},
+					// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: "", stock_maximo: 0, stock_minimo: 0},
 				],
 				if_credito: "",
 				concepto_operacion: "",
@@ -212,7 +212,8 @@
 							precio: 0,
 							cantidad: 1,
 							fecha: "",
-							stock_maximo: 1
+							stock_maximo: 1,
+							stock_minimo: 1
 						});
 						return false;
 					}
@@ -223,7 +224,8 @@
 						precio: 0,
 						cantidad: 1,
 						fecha: "",
-						stock_maximo: 1
+						stock_maximo: 1,
+						stock_minimo: 1
 					});
 					else this.Fn_mensaje_error("Completa los campos antes de agregar otro producto!");
 				},
@@ -249,7 +251,8 @@
 						}) => {
 							this.productos[e.target.dataset.index].nom_product = data.nom_product;
 							this.productos[e.target.dataset.index].cantidad = parseInt(this.productos[e.target.dataset.index].cantidad);
-							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product);
+							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product) - parseInt(data.stock_product);
+							this.productos[e.target.dataset.index].stock_minimo = parseInt(data.stock_minimo_product);
 						}).catch(error => console.error(error));
 				},
 				CodigosDuplicados(element) {

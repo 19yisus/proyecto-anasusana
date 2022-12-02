@@ -14,6 +14,8 @@
 		require_once("./models/m_comedor.php");
 		require_once("./models/m_jornada.php");
 
+		require_once("./models/m_persona.php");
+
 		$model_salida = new m_entrada_salida();
 		$NextId_inventario = $model_salida->NextId("S");
 
@@ -130,8 +132,7 @@
 															Jornada "{{titulo_jornada}} |
 															Menú del dia "{{titulo_menu}}" |
 															<br>
-															Cantidad aproximada de beneficiados: {{cant_aproximada}} | 
-															Cantidad de porciones del menú: {{porciones}}
+															Cantidad aproximada de beneficiados: {{cant_aproximada}}
 														</h4>
 													</div>
 													<div class="card-body">
@@ -146,9 +147,9 @@
 															</thead>
 															<tbody>
 																<tr v-for="(item, index) in ingrediente" :key="index">
-																	<td>{{ item.des_comida_detalle }}</td>
+																	<td>{{ item.nom_product }}</td>
 																	<td>{{ item.consumo }} {{ item.med_comida_detalle }}</td>
-																	<td>{{cant_aproximada}} beneficiados / {{porciones}} Porciones * {{item.consumo}} de consumo => </td>
+																	<td>{{cant_aproximada}} beneficiados * {{item.consumo}} {{item.med_comida_detalle}} de consumo => </td>
 																	<td>{{ calculo(item.consumo,item.med_comida_detalle) }}</td>
 																</tr>
 															</tbody>
@@ -170,7 +171,7 @@
 																	<th>Código</th>
 																	<th>Descripción</th>
 																	<th>Cantidad</th>
-																	<th>Restante en stock</th>
+																	<th>Existencia restante en stock</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -190,8 +191,10 @@
 									<!-- /.card-body -->
 									<div class="card-footer">
 										<input type="hidden" name="ope">
-										<button type="button" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
-										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
+										<button type="button" v-bind:disabled="save_condicion" id="btn" onclick="ope.value = this.value" value="Salida" class="btn btn-primary"><i class="fas fa-save"></i> Registrar Salida</button>
+										<button type="button" v-bind:disabled="enviar_condicion" class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
+										<button type="button" v-show="save_condicion" @click="Get_jornada()" class="btn btn-info" data-toggle="modal" data-target="#modal-lg_jornada"><i class="fas fa-plus-square"></i> Editar Jornada</button>
+										<button type="button" v-show="save_condicion" @click="Get_menu()" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg_menu"><i class="fas fa-plus-square"></i> Editar Menú</button>
 									</div>
 								</form>
 							</div>
@@ -210,11 +213,13 @@
 		$this->GetComplement("footer");
 		$this->GetComplement("scripts");
 		require_once("./views/contents/salidas/modal.php");
+		require_once("./views/contents/salidas/modal_jornada.php");
+		require_once("./views/contents/salidas/modal_menu.php");
 		?>
 	</div>
 	<!-- ./wrapper -->
 	<script>
-		new Vue({
+		const app = new Vue({
 			el: '#VueApp',
 			data: {
 				productos: [
@@ -222,34 +227,163 @@
 				],
 				mensaje: "fasdfasdfsad",
 				motivo_salida: "",
-				jornada_id: "",
-				des_menu: "",
+
 				cant_menu: "",
 				nom_menu: "",
-				porciones: 0,
 				titulo_jornada: "",
 				titulo_menu: "",
+
+				// DATOS DE LA JORNADA
+				jornada_id: "",
+				jornada_titulo: "",
+				jornada_des: "",
+				jornada_cant: "",
+				menu_id_jornada: "",
+				jornada_fecha: "",
+				responsable: '',
+				selectMenu: [{}],
+
+				// DATOS DEL MENÚ
+				id_menu: "",
+				productos_menu: [],
+				des_menu: "",
+				selectProductos: [{}],
+
 				cant_aproximada: 0,
+				enviar_condicion: false,
+				save_condicion: false,
 				ingrediente: []
 			},
 			methods: {
 				calculo(c, u) {
-					let cantidad = parseInt(this.cant_aproximada) / parseInt(this.porciones);
-					let total = parseInt(c) * (cantidad);
-					return `${total} ${u}`;
+					if (this.cant_aproximada != 0) {
+						let simplificado, med;
+						let total = parseInt(c) * parseInt(this.cant_aproximada);
+						if (total > 999 && u == "GM") {
+							simplificado = total / 1000;
+							if (u == "GM") med = "KL";
+							if (u == "LT") med = "LT";
+							if (u == "kL") med = "KL";
+
+							if (!Number.isInteger(simplificado)) simplificado = Math.round(simplificado)
+							return `${total} ${u} Ó ${simplificado} ${med}`;
+						}
+						return `${total} ${u}`;
+					}
+					return '';
 				},
-				calculo_stock(cantidad, stock){
+				calculo_stock(cantidad, stock) {
 					let total = parseInt(cantidad) - parseInt(stock);
 					return total;
 				},
-				Duplicar: function() {
+				async get_menus() {
+					await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Todos_menu`)
+						.then(response => response.json())
+						.then(({
+							data
+						}) => {
+							this.selectMenu = data;
+						}).catch(error => console.error(error));
+				},
+				async GetAlimentos() {
+          await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Get_alimentos`)
+            .then(response => response.json())
+            .then(({
+              data
+            }) => {
+              this.selectProductos = data;
+            }).catch(error => console.error(error));
+        },
+				async Get_jornada() {
+					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
+						.then(response => response.json()).then(({
+							data
+						}) => {
+							this.jornada_id = data[0].id_jornada
+							this.jornada_titulo = data[0].titulo_jornada;
+							this.jornada_des = data[0].des_jornada;
+							this.jornada_cant = data[0].cant_aproximada;
+							this.menu_id_jornada = data[0].menu_id_jornada;
+							this.jornada_fecha = data[0].fecha_jornada;
+							this.responsable = data[0].person_id_responsable
+						})
+						.catch(Err => {
+							console.error(Err)
+						});
+				},
+				async Get_menu() {
+					await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Consultar_menu&id_menu=${this.id_menu}`)
+						.then(response => response.json()).then(({
+							data
+						}) => {
+							console.log(data)
+							this.id_menu = data[0].id_menu;
+							this.des_menu = data[0].des_menu;
+
+							data[1].forEach(item => {
+								this.productos_menu.push({
+									id: item.product_id_menu_detalle,
+									des: item.nom_product,
+									medida: item.med_comida_detalle,
+									cantidad: item.consumo
+								})
+							})
+						})
+						.catch(Err => {
+							console.error(Err)
+						});
+				},
+				duplicar() {
+					this.productos_menu.push({
+						id: '',
+						des: '',
+						medida: '',
+						cantidad: ''
+					})
+				},
+				disminuir() {
+					this.productos_menu.pop();
+				},
+				cambio_menu_modal(e) {
+					let contador = 0;
+					this.productos.forEach(item => {
+						if (item.id == e.target.value) contador += 1
+					})
+					if (contador > 1) {
+						$(`#${e.target.id} option[value='']`).attr('selected', true);
+						alert("No se pueden duplicar los alimentos")
+						return false;
+					}
+					if(e.target.value == "") return false;
+					let {
+						med_product
+					} = this.selectProductos.filter(item => item.id_product == e.target.value)[0];
+					this.productos = this.productos.map(item => {
+						if (item.id == e.target.value) item.medida = med_product;
+						return item;
+					})
+				},
+				Duplicar: function(item = []) {
+
+					if (item["code"]) {
+						this.productos.push({
+							code: item['code'],
+							nom_product: item['nom'],
+							cantidad: item['cantidad'],
+							limite_stock: item['limite_stock'],
+							stock: item['stock']
+						});
+						return false;
+					}
+
 					let datos = this.productos[this.productos.length - 1];
 					if (typeof datos == "undefined") {
 						this.productos.push({
 							code: "",
 							nom_product: "",
 							cantidad: 0,
-							limite_stock: 0
+							limite_stock: 0,
+							stock: 0
 						}, );
 						return false;
 					}
@@ -259,7 +393,8 @@
 							code: "",
 							nom_product: "",
 							cantidad: 0,
-							limite_stock: 0
+							limite_stock: 0,
+							stock: 0
 						}, )
 					} else {
 						Toast.fire({
@@ -277,23 +412,79 @@
 				consulta_limite_stock: async function(e) {
 					let resultado = await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Consultar_producto&id_producto=${this.productos[e.target.dataset.index].code}`)
 						.then(response => response.json()).then(res => res.data).catch(Err => console.error(Err));
-					this.productos[e.target.dataset.index].limite_stock = (resultado.stock_product - resultado.stock_minimo_product);
+					this.productos[e.target.dataset.index].limite_stock = (parseInt(resultado.stock_product) - parseInt(resultado.stock_minimo_product));
 				},
 				async consultar_jornada() {
+					if (this.jornada_id == '') {
+						this.enviar_condicion = true;
+						this.limpiarProductos();
+						return false;
+					}
 					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
 						.then(response => response.json())
 						.then(({
 							data
 						}) => {
-							this.titulo_jornada = data[0].titulo_jornada;
-							this.titulo_menu = data[0].des_menu;
-							this.cant_aproximada = data[0].cant_aproximada;
-							this.porciones = data[0].porcion;
+							this.limpiarProductos()
+							this.enviar_condicion = true;
+							let datos_menu = data[1];
+							let datos_jornada = data[0];
+							this.titulo_jornada = datos_jornada.titulo_jornada;
+							this.titulo_menu = datos_jornada.des_menu;
+							this.cant_aproximada = datos_jornada.cant_aproximada;
 							this.ingrediente = data[1];
+							this.id_menu = datos_jornada.id_menu;
+							console.log(datos_jornada)
+							let si_sobrePasa = false;
+
+							datos_menu.forEach(item => {
+								let stock = parseInt(item.stock_product)
+								let consumo = parseInt(item.consumo)
+								let cant_proximada = parseInt(this.cant_aproximada)
+								let minimo_stock = parseInt(item.stock_minimo_product)
+								let total = (consumo * cant_proximada);
+								let consumo_total;
+
+								if (total > 999 && item.med_comida_detalle != item.med_product) {
+									consumo_total = total / 1000;
+									if (!Number.isInteger(consumo_total)) consumo_total = Math.round(consumo_total)
+								} else {
+									if (item.med_comida_detalle == "GM") {
+										consumo_total = 1;
+									} else consumo_total = total;
+									console.log("No sobre pasamos los kilos o litros")
+								}
+
+								let producto = [];
+								producto["code"] = item.id_product;
+								producto["nom"] = item.nom_product;
+								producto["cantidad"] = consumo_total;
+								producto["stock"] = parseInt(item.stock_product);
+								producto["limite_stock"] = parseInt(item.stock_product) - parseInt(item.stock_minimo_product);
+
+								console.log(producto['cantidad'], producto['stock'])
+								this.Duplicar(producto);
+
+								if (producto['cantidad'] > producto['stock']) {
+									si_sobrePasa = true;
+								}
+							});
+
+							if (si_sobrePasa) {
+								this.save_condicion = true;
+								this.Fn_mensaje_error("No coincide la cantidad requerida!");
+							}else{
+								this.save_condicion = false;
+							}
+
 						}).catch(error => console.error(error));
 				},
 				limpiarProductos() {
 					this.productos = [];
+					this.ingrediente = [];
+					this.titulo_jornada = '';
+					this.titulo_menu = '';
+					this.cant_aproximada = 0;
 				},
 				resetProductos: function() {
 					while (this.productos.length > 0) {
@@ -302,7 +493,6 @@
 				},
 				ConsultarName: async function(e) {
 					if (e.target.value == ".") return;
-
 					if (this.CodigosDuplicados(e.target)) {
 						this.Fn_mensaje_error("No se puede Seleccionar un Producto Dos veces en la Misma Operación!");
 						return;
@@ -357,6 +547,10 @@
 					let total = array.reduce((item1, item2) => item1 + item2, 0);
 					return total;
 				}
+			},
+			async mounted() {
+				await this.get_menus()
+				await this.GetAlimentos()
 			}
 		});
 

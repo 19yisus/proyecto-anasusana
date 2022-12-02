@@ -67,7 +67,7 @@ $person2 = $model_person->Get_Personas();
                       <div class="col-3">
                         <div class="form-group">
                           <label for="titulo_jornada">Fecha para la jornada(<span class="text-danger text-md">*</span>)</label>
-                          <input type="date" min="<?php echo $this->DateNow();?>" name="fecha_jornada" id="fecha_jornada" class="form-control">
+                          <input type="date" min="<?php echo $this->DateNow(); ?>" name="fecha_jornada" id="fecha_jornada" class="form-control">
                         </div>
                       </div>
                       <div class="col-3">
@@ -105,8 +105,7 @@ $person2 = $model_person->Get_Personas();
                           <div class="card-header">
                             <h4 class="card-title">
                               Información del Menú |
-                              Descripción "{{titulo_menu}}" |
-                              Cantidad de porciones: {{porciones}}</h4>
+                              Descripción "{{titulo_menu}}"</h4>
                           </div>
                           <div class="card-body">
                             <table id="dataTable" class="table table-bordered table-striped">
@@ -119,7 +118,7 @@ $person2 = $model_person->Get_Personas();
                               </thead>
                               <tbody>
                                 <tr v-for="(item, index) in ingrediente" :key="index">
-                                  <td>{{ item.des_comida_detalle }}</td>
+                                  <td>{{ item.nom_product }}</td>
                                   <td>{{ item.consumo }} {{ item.med_comida_detalle }}</td>
                                   <td>{{ calculo(item.consumo, item.med_comida_detalle) }}</td>
                                 </tr>
@@ -163,7 +162,7 @@ $person2 = $model_person->Get_Personas();
           medida: '',
           cantidad: '',
         }],
-        cant_aproximada:0,
+        cant_aproximada: 0,
         ingrediente: [],
         menu_id_jornada: '',
         titulo_menu: '',
@@ -171,10 +170,23 @@ $person2 = $model_person->Get_Personas();
         selectMenu: [{}]
       },
       methods: {
-        calculo(consumo, medida){
-          let cantidad = parseInt(this.cant_aproximada) / parseInt(this.porciones);
-          let total = parseInt(consumo) * (cantidad);          
-          return `${total} ${medida}`;
+        calculo(consumo, medida) {
+          // let cantidad = parseInt(this.cant_aproximada) / parseInt(this.porciones);
+
+          if (this.cant_aproximada != 0) {
+            let simplificado, med;
+            let total = parseInt(consumo) * parseInt(this.cant_aproximada);
+            if (total > 999 && medida == "GM") {
+              simplificado = total / 1000;
+              if (medida == "GM") med = "KL";
+              if (medida == "LT") med = "LT";
+              if (medida == "kL") med = "KL";
+              return `${total} ${medida} Ó ${simplificado} ${med}`;
+            }
+            return `${total} ${medida}`;
+            // let total = parseInt(consumo) * parseInt(this.cant_aproximada);
+          }
+          return '';
         },
         async GetMenu() {
           await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Todos_menu`)
@@ -192,10 +204,7 @@ $person2 = $model_person->Get_Personas();
               data
             }) => {
               this.titulo_menu = data[0].des_menu;
-              this.porciones = data[0].porcion;
-              this.cant_aproximada = data[0].porcion;
               this.ingrediente = data[1];
-
               console.log(data)
             }).catch(error => console.error(error));
         },
@@ -219,19 +228,19 @@ $person2 = $model_person->Get_Personas();
           minlength: 3,
           maxlength: 20
         },
-        cant_aproximada:{
+        cant_aproximada: {
           required: true,
           number: true,
         },
-        fecha_jornada:{
+        fecha_jornada: {
           required: true,
         },
-        des_jornada:{
+        des_jornada: {
           required: true,
           minlength: 3,
           maxlength: 120
         },
-        menu_id_jornada:{
+        menu_id_jornada: {
           required: true,
         },
         responsable: {
@@ -244,19 +253,19 @@ $person2 = $model_person->Get_Personas();
           minlength: "Debe de Contener al menos 3 caracteres",
           maxlength: "Debe de contener menos de 20 caracteres"
         },
-        cant_aproximada:{
+        cant_aproximada: {
           required: "Este Campo NO Puede estar Vacio",
           number: "Solo de aceptan numeros"
         },
-        fecha_jornada:{
+        fecha_jornada: {
           required: "Este Campo NO Puede estar Vacio",
         },
-        des_jornada:{
+        des_jornada: {
           required: "Este Campo NO Puede estar Vacio",
           minlength: "Debe de Contener al menos 3 caracteres",
           maxlength: "Debe de contener menos de 120 caracteres"
         },
-        menu_id_jornada:{
+        menu_id_jornada: {
           required: "Este Campo NO Puede estar Vacio",
         },
         responsable: {

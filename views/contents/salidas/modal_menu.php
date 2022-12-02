@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-lg">
+<div class="modal fade" id="modal-lg_menu">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -16,35 +16,21 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="formulario" action="<?php echo constant("URL"); ?>controller/c_menu.php" name="formulario" method="POST" autocomplete="off" class="needs-validation" novalidate>
+              <form id="formulario_menu" action="<?php echo constant("URL"); ?>controller/c_menu.php" name="formulario_menu" method="POST" autocomplete="off" class="needs-validation" novalidate>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-3 col-sm-12">
-                      <div class="form-group">
-                        <label for="id_menu">Código del Menú(<span class="text-danger text-md">*</span>)</label>
-                        <input type="text" name="id_menu" v-model="id" id="id_menu" class="form-control" readonly>
-                      </div>
-                    </div>
                     <div class="col-4 col-sm-12">
                       <div class="form-group">
                         <label for="des_cargo">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
-                        <input type="text" name="des_menu" id="des_menu" v-model="des_menu" placeholder="Ingrese la descripción del menú" class="form-control">
+                        <input type="text" readonly name="des_menu" id="des_menu" v-model="des_menu" placeholder="Ingrese la descripción del menú" class="form-control">
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-12 col-sm-12">
-                      <div class="form-group">
-                        <label for="">Procedimientos</label>
-                        <textarea name="des_procedimiento" class="form-control" v-model="des_procedimiento" id="des_procedimiento" cols="30" rows="2"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
+                  <div class="row" v-for="(itemx, indice) in productos_menu" :key="itemx.id">
                     <div class="col-6">
                       <div class="form-group">
                         <label for="">Ingrediente {{(indice+1)}}</label>
-                        <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
+                        <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos_menu[indice].id" @change="cambio_menu_modal">
                           <option value="">Seleccione una opción</option>
                           <option v-for="item in selectProductos" :key="item.id_product" :data-medida="item.med_product" :id="item.med_product" :value="item.id_product">{{item.nom_product}}</option>
                         </select>
@@ -55,9 +41,9 @@
                       <div class="form-group">
                         <label for="">Cantidad</label>
                         <div class="input-group">
-                          <input type="number" step="1" min="1" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
+                          <input type="number" step="1" min="1" class="form-control" name="consumo[]" v-model="productos_menu[indice].cantidad" id="" placeholder="Cantidad">
                           <div class="input-group-append">
-                            <select name="med_comida_detalle[]" id="med_comida_detalle" class="input-group-text custom-select" v-model="productos[indice].medida">
+                            <select name="med_comida_detalle[]" id="med_comida_detalle" class="input-group-text custom-select" v-model="productos_menu[indice].medida">
                               <option value="">Medidas</option>
                               <option value="KL">KL</option>
                               <option value="LT">LT</option>
@@ -70,7 +56,8 @@
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer">
-                    <input type="hidden" name="ope" value="Actualizar">
+                    <input type="hidden" name="id_menu" v-model="id_menu" id="id_menu" class="form-control" readonly>
+                    <input type="hidden" name="ope" value="Actualizar_cantidad">
                     <button type="button" id="btn" onclick="envio()" value="Actualizar" class="btn btn-primary"><i class="fas fa-edit"></i> Actualizar</button>
                     <button class="btn btn-success" @click="duplicar" type="button">Añadir Comida <i class="fas fa-plus-square"></i></button>
                   </div>
@@ -89,19 +76,34 @@
 <!-- /.modal -->
 <script>
   const envio = async () => {
-    if ($("#formulario").valid()) {
+    if ($("#formulario_menu").valid()) {
+      let condicion = true;
+      app.productos_menu.forEach(item =>{
+        if(item.id == "") condicion = false;
+        if(item.cantidad == "") condicion = false;
+        if(item.medida == "") condicion = false;
+      })
+
+      if(!condicion){
+        app.Fn_mensaje_error("Debes de llenar los campos")
+        return false;
+      }
+
       let res = await Confirmar();
       if (!res) return false;
 
-      let datos = new FormData(document.formulario);
+      
+
+      let datos = new FormData(document.formulario_menu);
       fetch(`<?php echo constant("URL"); ?>controller/c_menu.php`, {
           method: "POST",
           body: datos,
         }).then(response => response.json())
         .then(res => {
-          FreshCatalogo();
-          document.formulario.reset();
-          $("#modal-lg").modal("hide");
+          // FreshCatalogo();
+          // document.formulario_menu.reset();
+          app.consultar_jornada();
+          $("#modal-lg_menu").modal("hide");
 
           Toast.fire({
             icon: `${res.data.code}`,
@@ -118,16 +120,11 @@
         minlength: 3,
         maxlength: 20
       },
-      des_procedimiento: {
+      comidas:{
         required: true,
-        minlength: 1,
-        maxlength: 120
       },
-      porcion: {
-        required: true,
-        minlength: 1,
-        maxlength: 2,
-        min: 1,
+      consumo:{
+        required: true
       }
     },
     messages: {
@@ -135,17 +132,6 @@
         required: "Este Campo NO Puede estar Vacio",
         minlength: "Debe de Contener al menos 3 caracteres",
         maxlength: "Debe de contener menos de 20 caracteres"
-      },
-      des_procedimiento: {
-        required: "Este Campo NO Puede estar Vacio",
-        minlength: "Debe de Contener al menos 1 caracteres",
-        maxlength: "Debe de contener menos de 120 caracteres"
-      },
-      porcion: {
-        required: "Este Campo NO Puede estar Vacio",
-        minlength: "Debe de Contener al menos 1 caracteres numericos",
-        maxlength: "Debe de contener menos de 2 caracteres numericos",
-        min: "Minimo 1",
       }
     },
     errorElement: "span",

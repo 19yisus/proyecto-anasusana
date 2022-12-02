@@ -8,6 +8,7 @@
     $this->titleContent = "Catálogo de Salida de Productos";
 
     $this->GetComplement("navbar");
+
     // $this->GetComplement("sidebar");
     ?>
     <!-- Content Wrapper. Contains page content -->
@@ -137,16 +138,17 @@
           },
           {
             data: "orden_invent",
-            render(data){
-              if(data) return data; else return "No-tiene"
+            render(data) {
+              if (data) return data;
+              else return "No-tiene"
             }
           },
           {
             data: "concept_invent",
-            render(data){
-              if(data == "O") return "Consumo";
-              if(data == "R") return "Rechazo";
-              if(data == "V") return "Vencimiento";
+            render(data) {
+              if (data == "O") return "Consumo";
+              if (data == "R") return "Rechazo";
+              if (data == "V") return "Vencimiento";
             }
           },
           {

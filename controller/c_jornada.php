@@ -12,12 +12,16 @@
                 fn_Actualizar();
             break;
 
-            case "Desactivar":
-                fn_Desactivar();
-            break;
+            // case "Desactivar":
+            //     fn_Desactivar();
+            // break;
 
-            case "Eliminar":
-                fn_Eliminar();
+            // case "Eliminar":
+            //     fn_Eliminar();
+            // break;
+
+            case "Actualizar_cantidades":
+                fn_Actualizar_Cantidad();
             break;
         }
     }
@@ -50,21 +54,29 @@
         print json_encode(["data" => $result]);
     }
 
-    function fn_Desactivar(){
+    function fn_Actualizar_Cantidad(){
         $model = new m_jornada();
         $model->setDatos($_POST);
-        $result = $model->Disable();
+        $result = $model->Update_cantidad();
 
         print json_encode(["data" => $result]);
     }
 
-    function fn_Eliminar(){
-        $model = new m_jornada();
-        $model->setDatos($_POST);
-        $result = $model->Delete();
+    // function fn_Desactivar(){
+    //     $model = new m_jornada();
+    //     $model->setDatos($_POST);
+    //     $result = $model->Disable();
 
-        print json_encode(["data" => $result]);
-    }
+    //     print json_encode(["data" => $result]);
+    // }
+
+    // function fn_Eliminar(){
+    //     $model = new m_jornada();
+    //     $model->setDatos($_POST);
+    //     $result = $model->Delete();
+
+    //     print json_encode(["data" => $result]);
+    // }
 
     function fn_Consultar_todos(){
         $model = new m_jornada();

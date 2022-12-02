@@ -77,6 +77,19 @@ class m_jornada extends m_db
     else return ["code" => "error", "message" => "Operación Fallida"];
   }
 
+  public function Update_cantidad()
+  {
+    $this->verificarJornadas();
+    $sql = "UPDATE jornada SET 
+    cant_aproximada = '$this->cant_aproximada',
+    menu_id_jornada = $this->menu_id_jornada
+    WHERE id_jornada = $this->id_jornada ;";
+
+    $this->Query($sql);
+    if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+    else return ["code" => "error", "message" => "Operación Fallida"];
+  }
+
   // public function Disable()
   // {
 
@@ -115,7 +128,9 @@ class m_jornada extends m_db
     $id = $datos_jornada['menu_id_jornada'];
 
     $sql2 = "SELECT * FROM menu 
-      INNER JOIN menu_detalle ON menu_detalle.menu_id_detalle = menu.id_menu WHERE id_menu = $id";
+      INNER JOIN menu_detalle ON menu_detalle.menu_id_detalle = menu.id_menu 
+      INNER JOIN productos ON productos.id_product = menu_detalle.product_id_menu_detalle
+      WHERE id_menu = $id";
     $results2 = $this->Query($sql2);
     $datos_menu = $this->Get_todos_array($results2);
     return [$datos_jornada, $datos_menu];
@@ -158,7 +173,7 @@ class m_jornada extends m_db
 
     foreach ($datos_menu as $item) {
       $id = $item['id_menu'];
-      $sql2 = "SELECT * FROM menu_detalle WHERE menu_id_detalle = $id";
+      $sql2 = "SELECT * FROM menu_detalle INNER JOIN productos ON productos.id_product = menu_detalle.product_id_menu_detalle WHERE menu_id_detalle = $id";
       $datos_menu_detalle = $this->Get_todos_array($this->Query($sql2));
       array_push($menu, ['jornada_menu' => $item, 'detalle_menu' => $datos_menu_detalle]);
     }

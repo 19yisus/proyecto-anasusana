@@ -64,11 +64,19 @@
           // {des: '',medida: '',cantidad: ''}
         ],
         des_menu: "",
-        porcion: "",
         des_procedimiento: "",
         selectProductos: [{}]
       },
       methods: {
+        async GetAlimentos() {
+          await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Get_alimentos`)
+            .then(response => response.json())
+            .then(({
+              data
+            }) => {
+              this.selectProductos = data;
+            }).catch(error => console.error(error));
+        },
         async Consult(value) {
           this.productos = [];
           await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Consultar_menu&id_menu=${value}`)
@@ -77,10 +85,10 @@
             }) => {
               this.id = data[0].id_menu;
               this.des_menu = data[0].des_menu;
-              this.porcion = data[0].porcion;
               this.des_procedimiento = data[0].des_procedimiento;
+              
               data[1].forEach( item => {
-                this.productos.push({des: item.des_comida_detalle, medida: item.med_comida_detalle, cantidad: item.consumo})
+                this.productos.push({id: item.product_id_menu_detalle,des: item.nom_product, medida: item.med_comida_detalle, cantidad: item.consumo})
               })
             })
             .catch(Err => {
@@ -115,6 +123,9 @@
         disminuir() {
           this.productos.pop();
         }
+      },
+      async mounted() {
+        await this.GetAlimentos();
       }
     })
 

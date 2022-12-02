@@ -353,7 +353,7 @@ function fn_pdf_menu()
     $pdf->Ln();
     $pdf->cell(190, 7, 'Descripcion del menu: ' . $item_menu['menu']['des_menu'], 1, 0, "C", 1);
     $pdf->Ln();
-    $pdf->cell(80, 7, "Porcion: " . $item_menu['menu']['porcion'], 1, 0, "C", 1);
+    // $pdf->cell(80, 7, "Porcion: " . $item_menu['menu']['porcion'], 1, 0, "C", 1);
     $pdf->cell(110, 7, "Fecha de creacion: " . $fecha->format("d-m-Y h:i a"), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, "Procedimiento: " . $item_menu['menu']['des_procedimiento'], 1, 0, "C", 1);
@@ -367,7 +367,7 @@ function fn_pdf_menu()
     $pdf->setFont('Arial', 'B', 9);
     $pdf->Ln();
     foreach ($item_menu['detalle'] as $item_detalle) {
-      $pdf->cell(150, 7, $item_detalle['des_comida_detalle'], 1, 0, "C", 1);
+      $pdf->cell(150, 7, $item_detalle['nom_product'], 1, 0, "C", 1);
       $pdf->cell(40, 7, $item_detalle['consumo'] . " " . $item_detalle['med_comida_detalle'], 1, 0, "C", 1);
     }
     $pdf->Ln(10);
@@ -411,7 +411,7 @@ function fn_pdf_Jornada()
     $pdf->Ln();
     $pdf->cell(190, 7, 'Descripcion del menu: ' . $item_jornada_menu['jornada_menu']['des_menu'], 1, 0, "C", 1);
     $pdf->Ln();
-    $pdf->cell(80, 7, "Porcion: " . $item_jornada_menu['jornada_menu']['porcion'], 1, 0, "C", 1);
+    // $pdf->cell(80, 7, "Porcion: " . $item_jornada_menu['jornada_menu']['porcion'], 1, 0, "C", 1);
     $pdf->cell(110, 7, "Fecha de creacion: " . $fecha->format("d-m-Y h:i a"), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, "Procedimiento: " . $item_jornada_menu['jornada_menu']['des_procedimiento'], 1, 0, "C", 1);
@@ -425,7 +425,7 @@ function fn_pdf_Jornada()
     $pdf->setFont('Arial', 'B', 9);
     $pdf->Ln();
     foreach ($item_jornada_menu['detalle_menu'] as $item_detalle) {
-      $pdf->cell(150, 7, $item_detalle['des_comida_detalle'], 1, 0, "C", 1);
+      $pdf->cell(150, 7, $item_detalle['nom_product'], 1, 0, "C", 1);
       $pdf->cell(40, 7, $item_detalle['consumo'] . " " . $item_detalle['med_comida_detalle'], 1, 0, "C", 1);
     }
     $pdf->Ln(10);
