@@ -14,8 +14,6 @@
 		require_once("./models/m_comedor.php");
 		require_once("./models/m_jornada.php");
 
-		require_once("./models/m_persona.php");
-
 		$model_salida = new m_entrada_salida();
 		$NextId_inventario = $model_salida->NextId("S");
 
@@ -24,6 +22,8 @@
 
 		$model_person = new m_persona();
 		$person2 = $model_person->Get_Personas();
+
+		$person = $model_person->Get_proveedor();
 
 		$model_jornada = new m_jornada();
 		$datos_jornada = $model_jornada->Get_jornada_hoy();
@@ -179,7 +179,7 @@
 																	<td>{{ item.code }}</td>
 																	<td>{{ item.nom_product }}</td>
 																	<td>{{ item.cantidad }}</td>
-																	<td>{{ calculo_stock(item.stock,item.cantidad)}}</td>
+																	<td>{{ calculo_stock(item.stock,item.cantidad,item.stock_minimo)}}</td>
 																</tr>
 															</tbody>
 														</table>
@@ -195,6 +195,7 @@
 										<button type="button" v-bind:disabled="enviar_condicion" class="btn btn-success" data-toggle="modal" data-target="#modal-lg"><i class="fas fa-plus-square"></i> Agregar Productos</button>
 										<button type="button" v-show="save_condicion" @click="Get_jornada()" class="btn btn-info" data-toggle="modal" data-target="#modal-lg_jornada"><i class="fas fa-plus-square"></i> Editar Jornada</button>
 										<button type="button" v-show="save_condicion" @click="Get_menu()" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg_menu"><i class="fas fa-plus-square"></i> Editar Menú</button>
+										<button type="button" v-show="save_condicion" @click="next_entrada()" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg_entrada"><i class="fas fa-plus-square"></i> Entrada de productos</button>
 									</div>
 								</form>
 							</div>
@@ -213,8 +214,10 @@
 		$this->GetComplement("footer");
 		$this->GetComplement("scripts");
 		require_once("./views/contents/salidas/modal.php");
+		require_once("./views/contents/salidas/modal_entrada.php");
 		require_once("./views/contents/salidas/modal_jornada.php");
 		require_once("./views/contents/salidas/modal_menu.php");
+		
 		?>
 	</div>
 	<!-- ./wrapper -->
@@ -223,7 +226,7 @@
 			el: '#VueApp',
 			data: {
 				productos: [
-					// {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0},
+					// {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0, stock_minimo: 0, stock_maximo: 0, nuevo_stock, if_entrada},
 				],
 				mensaje: "fasdfasdfsad",
 				motivo_salida: "",
@@ -249,32 +252,26 @@
 				des_menu: "",
 				selectProductos: [{}],
 
+				// DATOS DE LA ENTRADA
+				next_id_entrada: '',
+				concepto_operacion:'',
+				id_comedor: '',
+
 				cant_aproximada: 0,
 				enviar_condicion: false,
 				save_condicion: false,
 				ingrediente: []
 			},
 			methods: {
-				calculo(c, u) {
-					if (this.cant_aproximada != 0) {
-						let simplificado, med;
-						let total = parseInt(c) * parseInt(this.cant_aproximada);
-						if (total > 999 && u == "GM") {
-							simplificado = total / 1000;
-							if (u == "GM") med = "KL";
-							if (u == "LT") med = "LT";
-							if (u == "kL") med = "KL";
-
-							if (!Number.isInteger(simplificado)) simplificado = Math.round(simplificado)
-							return `${total} ${u} Ó ${simplificado} ${med}`;
-						}
-						return `${total} ${u}`;
-					}
-					return '';
-				},
-				calculo_stock(cantidad, stock) {
-					let total = parseInt(cantidad) - parseInt(stock);
-					return total;
+				async next_entrada() {
+					await fetch(`<?php echo constant("URL"); ?>controller/c_entrada_salida.php?ope=next_ope&&type=E`)
+						.then(response => response.json())
+						.then(({
+							data
+						}) => {
+							console.log(data)
+							this.next_id_entrada = data;
+						}).catch(error => console.error(error));
 				},
 				async get_menus() {
 					await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Todos_menu`)
@@ -286,14 +283,14 @@
 						}).catch(error => console.error(error));
 				},
 				async GetAlimentos() {
-          await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Get_alimentos`)
-            .then(response => response.json())
-            .then(({
-              data
-            }) => {
-              this.selectProductos = data;
-            }).catch(error => console.error(error));
-        },
+					await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Get_alimentos`)
+						.then(response => response.json())
+						.then(({
+							data
+						}) => {
+							this.selectProductos = data;
+						}).catch(error => console.error(error));
+				},
 				async Get_jornada() {
 					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
 						.then(response => response.json()).then(({
@@ -333,6 +330,95 @@
 							console.error(Err)
 						});
 				},
+				async consultar_jornada() {
+					if (this.jornada_id == '') {
+						this.enviar_condicion = true;
+						this.limpiarProductos();
+						return false;
+					}
+					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
+						.then(response => response.json())
+						.then(({
+							data
+						}) => {
+							this.limpiarProductos()
+							this.enviar_condicion = true;
+							let datos_menu = data[1];
+							let datos_jornada = data[0];
+							this.titulo_jornada = datos_jornada.titulo_jornada;
+							this.titulo_menu = datos_jornada.des_menu;
+							this.cant_aproximada = datos_jornada.cant_aproximada;
+							this.ingrediente = data[1];
+							this.id_menu = datos_jornada.id_menu;
+							let si_sobrePasa = false;
+
+							datos_menu.forEach(item => {
+								let stock = parseInt(item.stock_product)
+								let consumo = parseInt(item.consumo)
+								let cant_proximada = parseInt(this.cant_aproximada)
+								let minimo_stock = parseInt(item.stock_minimo_product)
+								let total = (consumo * cant_proximada);
+								let consumo_total;
+
+								if (total > 999 && item.med_comida_detalle != item.med_product) {
+									consumo_total = total / 1000;
+									if (!Number.isInteger(consumo_total)) consumo_total = Math.round(consumo_total)
+								} else {
+									if (item.med_comida_detalle == "GM") {
+										consumo_total = 1;
+									} else consumo_total = total;
+								}								
+								let restante = (item.stock_product - item.stock_minimo_product ) - consumo_total;
+								let if_entrada;
+								let producto = [];
+								producto["code"] = item.id_product;
+								producto["nom"] = item.nom_product;
+								producto["cantidad"] = consumo_total;
+								producto["stock"] = parseInt(item.stock_product);
+								producto["limite_stock"] = parseInt(item.stock_product) - parseInt(item.stock_minimo_product);
+								producto["maximo_stock"] = parseInt(item.stock_maximo_product) - parseInt(item.stock_product);
+								producto["minimo_stock"] = parseInt(item.stock_minimo_product);
+								producto["nuevo_stock"] = 0;
+								if(restante <= 0) if_entrada = "SI"; else if_entrada = "NO";
+								producto["if_entrada"] = if_entrada;
+
+								this.Duplicar(producto);
+								if (producto['cantidad'] > producto['limite_stock']) {
+									si_sobrePasa = true;
+								}
+							});
+
+							if (si_sobrePasa) {
+								this.save_condicion = true;
+								this.Fn_mensaje_error("No coincide la cantidad requerida!");
+							} else {
+								this.save_condicion = false;
+							}
+
+						}).catch(error => console.error(error));
+				},
+				calculo(c, u) {
+					if (this.cant_aproximada != 0) {
+						let simplificado, med;
+						let total = parseInt(c) * parseInt(this.cant_aproximada);
+						if (total > 999 && u == "GM") {
+							simplificado = total / 1000;
+							if (u == "GM") med = "KL";
+							if (u == "LT") med = "LT";
+							if (u == "kL") med = "KL";
+
+							if (!Number.isInteger(simplificado)) simplificado = Math.round(simplificado)
+							return `${total} ${u} Ó ${simplificado} ${med}`;
+						}
+						return `${total} ${u}`;
+					}
+					return '';
+				},
+				calculo_stock(stock, cantidad, minimo) {
+					let stock_min = parseInt(stock) - parseInt(minimo)
+					let total = parseInt(stock_min) - parseInt(cantidad);
+					return total;
+				},
 				duplicar() {
 					this.productos_menu.push({
 						id: '',
@@ -354,7 +440,7 @@
 						alert("No se pueden duplicar los alimentos")
 						return false;
 					}
-					if(e.target.value == "") return false;
+					if (e.target.value == "") return false;
 					let {
 						med_product
 					} = this.selectProductos.filter(item => item.id_product == e.target.value)[0];
@@ -371,7 +457,11 @@
 							nom_product: item['nom'],
 							cantidad: item['cantidad'],
 							limite_stock: item['limite_stock'],
-							stock: item['stock']
+							stock: item['stock'],
+							stock_minimo: item['minimo_stock'],
+							stock_maximo: item['maximo_stock'],
+							nuevo_stock: item['nuevo_stock'],
+							if_entrada: item['if_entrada']
 						});
 						return false;
 					}
@@ -383,7 +473,11 @@
 							nom_product: "",
 							cantidad: 0,
 							limite_stock: 0,
-							stock: 0
+							stock: 0,
+							stock_minimo: 0,
+							stock_maximo: 0,
+							nuevo_stock: 0,
+							if_entrada: "NO"
 						}, );
 						return false;
 					}
@@ -394,7 +488,11 @@
 							nom_product: "",
 							cantidad: 0,
 							limite_stock: 0,
-							stock: 0
+							stock: 0,
+							stock_minimo: 0,
+							stock_maximo: 0,
+							nuevo_stock: 0,
+							if_entrada: "NO"
 						}, )
 					} else {
 						Toast.fire({
@@ -413,71 +511,6 @@
 					let resultado = await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Consultar_producto&id_producto=${this.productos[e.target.dataset.index].code}`)
 						.then(response => response.json()).then(res => res.data).catch(Err => console.error(Err));
 					this.productos[e.target.dataset.index].limite_stock = (parseInt(resultado.stock_product) - parseInt(resultado.stock_minimo_product));
-				},
-				async consultar_jornada() {
-					if (this.jornada_id == '') {
-						this.enviar_condicion = true;
-						this.limpiarProductos();
-						return false;
-					}
-					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
-						.then(response => response.json())
-						.then(({
-							data
-						}) => {
-							this.limpiarProductos()
-							this.enviar_condicion = true;
-							let datos_menu = data[1];
-							let datos_jornada = data[0];
-							this.titulo_jornada = datos_jornada.titulo_jornada;
-							this.titulo_menu = datos_jornada.des_menu;
-							this.cant_aproximada = datos_jornada.cant_aproximada;
-							this.ingrediente = data[1];
-							this.id_menu = datos_jornada.id_menu;
-							console.log(datos_jornada)
-							let si_sobrePasa = false;
-
-							datos_menu.forEach(item => {
-								let stock = parseInt(item.stock_product)
-								let consumo = parseInt(item.consumo)
-								let cant_proximada = parseInt(this.cant_aproximada)
-								let minimo_stock = parseInt(item.stock_minimo_product)
-								let total = (consumo * cant_proximada);
-								let consumo_total;
-
-								if (total > 999 && item.med_comida_detalle != item.med_product) {
-									consumo_total = total / 1000;
-									if (!Number.isInteger(consumo_total)) consumo_total = Math.round(consumo_total)
-								} else {
-									if (item.med_comida_detalle == "GM") {
-										consumo_total = 1;
-									} else consumo_total = total;
-									console.log("No sobre pasamos los kilos o litros")
-								}
-
-								let producto = [];
-								producto["code"] = item.id_product;
-								producto["nom"] = item.nom_product;
-								producto["cantidad"] = consumo_total;
-								producto["stock"] = parseInt(item.stock_product);
-								producto["limite_stock"] = parseInt(item.stock_product) - parseInt(item.stock_minimo_product);
-
-								console.log(producto['cantidad'], producto['stock'])
-								this.Duplicar(producto);
-
-								if (producto['cantidad'] > producto['stock']) {
-									si_sobrePasa = true;
-								}
-							});
-
-							if (si_sobrePasa) {
-								this.save_condicion = true;
-								this.Fn_mensaje_error("No coincide la cantidad requerida!");
-							}else{
-								this.save_condicion = false;
-							}
-
-						}).catch(error => console.error(error));
 				},
 				limpiarProductos() {
 					this.productos = [];
@@ -503,6 +536,9 @@
 							this.productos[e.target.dataset.index].nom_product = data.data.nom_product;
 							this.productos[e.target.dataset.index].cantidad = 0;
 							this.productos[e.target.dataset.index].stock = data.data.stock_product;
+							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product) - parseInt(data.stock_product);
+							this.productos[e.target.dataset.index].stock_minimo = parseInt(data.stock_minimo_product);
+							this.productos[e.target.dataset.index].nuevo_stock = parseInt(0);
 						}).catch(error => console.error(error));
 				},
 				CodigosDuplicados(element) {
@@ -530,6 +566,21 @@
 					if (parseInt(element.target.value) > parseInt(element.target.max)) {
 						this.productos[element.target.dataset.index].cantidad = this.productos[element.target.dataset.index].limite_stock;
 						this.Fn_mensaje_error("No puedes Sobrepasar la cantidad en Stock de este Producto");
+					}
+				},
+				validarStockMaximo: function(index) {
+					let input = index.target,
+						value = parseInt(input.value),
+						maximo = parseInt(input.max),
+						minimo = parseInt(input.min);
+
+					if (value < minimo) {
+						this.Fn_mensaje_error(`Este producto tiene un stock minimo de: (${minimo})`);
+						this.productos[input.dataset.index].nuevo_stock = minimo;
+					}
+					if (value > maximo) {
+						this.Fn_mensaje_error(`No se puede superar el Stock Maximo de este producto (${this.productos[input.dataset.index].stock_maximo})`);
+						this.productos[input.dataset.index].nuevo_stock = maximo;
 					}
 				},
 				Fn_mensaje_error: function(sms) {

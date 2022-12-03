@@ -300,15 +300,23 @@ class m_entrada_salida extends m_db
 
 		return $datos_pdf;
 	}
-	public function GetPdfWithFiltros($filtro)
+	public function GetPdfWithFiltros($filtro, $desde = '', $hasta = '')
 	{
 		$persona = [];
 
-		$sql_inventario = "SELECT * FROM inventario 
+		if ($desde == '') {
+			$sql_inventario = "SELECT * FROM inventario 
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
 					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
 					WHERE inventario.concept_invent = '$filtro' GROUP BY inventario.id_invent;";
+		} else {
+			$sql_inventario = "SELECT * FROM inventario 
+					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
+					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
+					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
+					WHERE inventario.concept_invent = '$filtro'AND inventario.created_invent BETWEEN '$desde' AND '$hasta' GROUP BY inventario.id_invent;";
+		}
 
 		$datos_inventario = $this->Get_todos_array($this->Query($sql_inventario));
 		$datos = [];

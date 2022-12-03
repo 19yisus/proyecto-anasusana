@@ -51,13 +51,13 @@
                                         <div class="col-7 col-sm-12">
                                           <div class="form-group">
                                               <label for="">Stock Minimo(<span class="text-danger text-md">*</span>)</label>
-                                              <input type="number" name="stock_minimo_producto" step="0.01" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
+                                              <input type="number" name="stock_minimo_producto" step="1" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
                                           </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                           <div class="form-group">
                                             <label for="">Stock Maximo(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="number" name="stock_maximo_producto" step="0.01" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
+                                            <input type="number" name="stock_maximo_producto" step="1" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
                                           </div>
                                         </div>
                                         <div class="col-7 col-sm-12">

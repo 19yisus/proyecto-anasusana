@@ -271,7 +271,6 @@
 						value = parseInt(input.value),
 						maximo = parseInt(input.max),
 						minimo = parseInt(input.min);
-					//input.value = ;
 
 					if (value < minimo) {
 						this.Fn_mensaje_error(`Este producto tiene un stock minimo de: (${minimo})`);

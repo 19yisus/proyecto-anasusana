@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 02-12-2022 a las 04:58:14
+-- Tiempo de generación: 03-12-2022 a las 02:39:37
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.4.22
 
@@ -81,16 +81,6 @@ CREATE TABLE `detalle_inventario` (
   `detalle_cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `detalle_inventario`
---
-
-INSERT INTO `detalle_inventario` (`product_id_ope`, `invent_id_ope`, `fecha_vencimiento_ope`, `precio_product_ope`, `detalle_cantidad`) VALUES
-(1, 'E-00000001', NULL, 0, 45),
-(2, 'E-00000001', NULL, 0, 4),
-(1, 'S-00000001', NULL, NULL, 1),
-(1, 'S-00000002', NULL, NULL, 42);
-
 -- --------------------------------------------------------
 
 --
@@ -114,15 +104,6 @@ CREATE TABLE `inventario` (
   `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `inventario`
---
-
-INSERT INTO `inventario` (`id_invent`, `orden_invent`, `cantidad_invent`, `status_invent`, `created_invent`, `type_operacion_invent`, `concept_invent`, `if_credito`, `jornada_id_invent`, `person_id_invent`, `recibe_person_id_invent`, `comedor_id_invent`, `user_id_invent`, `observacion_invent`) VALUES
-('E-00000001', '', 49, 1, '2022-11-30 10:48:00', 'E', 'D', 0, NULL, 1, 3, 1, 1, ''),
-('S-00000001', NULL, 1, 1, '2022-11-30 19:13:00', 'S', 'O', NULL, 1, NULL, 6, 1, 1, 'FASDFADF'),
-('S-00000002', NULL, 42, 1, '2022-12-01 23:55:00', 'S', 'O', NULL, 2, NULL, 6, 1, 1, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -139,14 +120,6 @@ CREATE TABLE `jornada` (
   `menu_id_jornada` int(11) DEFAULT NULL,
   `person_id_responsable` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `jornada`
---
-
-INSERT INTO `jornada` (`id_jornada`, `titulo_jornada`, `des_jornada`, `cant_aproximada`, `estatus_jornada`, `fecha_jornada`, `menu_id_jornada`, `person_id_responsable`) VALUES
-(1, 'PARA HOYY', 'ASDFASDFADFADSFSDF', 5, 0, '2022-11-30', 12, 3),
-(2, 'FAFDAFDSFASDF', 'FASDFASDFASDFASD', 77, 1, '2022-12-01', 12, 1);
 
 -- --------------------------------------------------------
 
@@ -168,7 +141,11 @@ CREATE TABLE `marca` (
 INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
 (1, 'GUKJ,M ', 1, '2022-10-07 11:01:13'),
 (2, 'POLAR', 1, '2022-10-17 09:39:24'),
-(3, 'MACEITE', 1, '2022-11-28 07:44:55');
+(3, 'MACEITE', 1, '2022-11-28 07:44:55'),
+(4, 'PAN', 1, '2022-12-02 13:58:32'),
+(5, 'MARY', 1, '2022-12-02 14:01:18'),
+(6, 'AGUA BLANCA', 1, '2022-12-02 14:21:56'),
+(7, 'DEL MAR', 1, '2022-12-02 14:36:15');
 
 -- --------------------------------------------------------
 
@@ -181,20 +158,8 @@ CREATE TABLE `menu` (
   `des_menu` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
   `des_procedimiento` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
   `status_menu` tinyint(1) NOT NULL,
-  `created_menu` datetime NOT NULL
+  `created_menu` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `menu`
---
-
-INSERT INTO `menu` (`id_menu`, `des_menu`, `des_procedimiento`, `status_menu`, `created_menu`) VALUES
-(5, 'TITUTTUTUT', 'FADFADSFASDFASDFASDFSADFSDFSDFSDFASDFDASDFSDFAFDF', 1, '2022-11-30 17:19:15'),
-(6, 'FASDFASDFA', 'FASDFADFASDF', 1, '2022-11-30 17:33:00'),
-(7, 'ASDASADS', 'ASDFADFADSF', 1, '2022-11-30 17:34:51'),
-(8, 'FFGDFGFDG', 'SDFGSDFGSFDG', 1, '2022-11-30 17:35:56'),
-(9, 'GDFGFHGFHGFHGF', 'FASDFASDFASDFASD', 1, '2022-11-30 17:36:24'),
-(12, 'ADFFDDDDD', 'ASDFADFADSFADF', 1, '2022-11-30 17:38:35');
 
 -- --------------------------------------------------------
 
@@ -208,14 +173,6 @@ CREATE TABLE `menu_detalle` (
   `consumo` int(11) NOT NULL,
   `med_comida_detalle` char(2) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `menu_detalle`
---
-
-INSERT INTO `menu_detalle` (`menu_id_detalle`, `product_id_menu_detalle`, `consumo`, `med_comida_detalle`) VALUES
-(5, 1, 100, NULL),
-(12, 1, 550, 'GM');
 
 -- --------------------------------------------------------
 
@@ -292,14 +249,6 @@ CREATE TABLE `productos` (
   `stock_maximo_product` int(11) NOT NULL,
   `marca_id_product` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `productos`
---
-
-INSERT INTO `productos` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `stock_minimo_product`, `stock_maximo_product`, `marca_id_product`) VALUES
-(1, 'HARINA', 'KL', 1, 1, '2022-11-30 10:13:44', 2, 1, 50, 1),
-(2, 'POLLO', 'KL', 1, 1, '2022-11-30 10:14:07', 4, 1, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -521,19 +470,19 @@ ALTER TABLE `comedor`
 -- AUTO_INCREMENT de la tabla `jornada`
 --
 ALTER TABLE `jornada`
-  MODIFY `id_jornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_jornada` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
@@ -551,7 +500,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas`

@@ -56,44 +56,49 @@
                         </div>
                       </div>
                       <!-- FILTROS PARA ENTRADAS -->
-                      <div class="col-4" v-show="tipo_reporte == 'Entrada'">
+                      <div class="col-4" v-show="tipo_reporte == 'Entrada' || tipo_reporte == 'Salida'">
                         <div class="form-group">
                           <label for="">Filtro(<span class="text-danger text-md">*</span>)</label>
                           <div class="row">
-                            <div class="form-check mx-3">
+                            <!-- FILTROS ESPECIFICOS PARA ENTRADAS -->
+                            <div v-show="tipo_reporte == 'Entrada'" class="form-check mx-3">
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Compra" class="form-check-input" v-bind:checked="filtro == 'Compra'" v-bind:disabled="tipo_reporte != 'Entrada'" required>
                               <label for="filtro" class="form-check-label">Entrada por compra</label>
                             </div>
-                            <div class="form-check mx-3">
+                            <div v-show="tipo_reporte == 'Entrada'" class="form-check mx-3">
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Donacion" class="form-check-input" v-bind:checked="filtro == 'Donacion'" v-bind:disabled="tipo_reporte != 'Entrada'" required>
                               <label for="filtro" class="form-check-label">Entrada por donación</label>
+                            </div>
+                            <!-- FILTROS ESPECIFICOS PARA SALIDAS -->
+                            <div v-show="tipo_reporte == 'Salida'" class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Consumo" class="form-check-input" v-bind:checked="filtro == 'Consumo'" v-bind:disabled="tipo_reporte != 'Salida'" required>
+                              <label for="filtro" class="form-check-label">Salidas por consumo</label>
+                            </div>
+                            <div v-show="tipo_reporte == 'Salida'" class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Vencimiento" class="form-check-input" v-bind:checked="filtro == 'Vencimiento'" v-bind:disabled="tipo_reporte != 'Salida'" required>
+                              <label for="filtro" class="form-check-label">Salidas por vencimiento</label>
+                            </div>
+                            <div v-show="tipo_reporte == 'Salida'" class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Rechazo" class="form-check-input" v-bind:checked="filtro == 'Rechazo'" v-bind:disabled="tipo_reporte != 'Salida'" required>
+                              <label for="filtro" class="form-check-label">Salidas por rechazo</label>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-4" v-show="tipo_reporte == 'Menu' || tipo_reporte == 'Jornada'">
+                      <div class="col-4" v-show="tipo_reporte == 'Menu' || tipo_reporte == 'Jornada' || tipo_reporte == 'Entrada' || tipo_reporte == 'Salida'">
                         <div class="form-group">
-                          <label for="">Filtro(<span class="text-danger text-md">*</span>)</label>
+                          <label for="">Filtro de fechas(<span class="text-danger text-md">*</span>)</label>
                           <div class="row">
-                            <div class="form-check mx-3">
-                              <input type="radio" v-model="filtro" name="filtro" required id="filtro" v-bind:checked="filtro == 'Fecha_registro'" value="Fecha_registro" class="form-check-input" v-bind:disabled="tipo_reporte != 'Menu' && tipo_reporte != 'Jornada'" required>
+                            <!-- FILTROS PARA ENTRADA, SALIDA, JORNADA Y MENU -->
+                            <div v-show="tipo_reporte == 'Menu' || tipo_reporte == 'Jornada' || tipo_reporte == 'Entrada' || tipo_reporte == 'Salida'" class="form-check mx-3">
+                            <input type="radio" v-model="filtro_extra" name="filtro_extra" required id="filtro_extra" v-bind:checked="filtro_extra == 'Fecha_registro'" value="Fecha_registro" class="form-check-input" v-bind:disabled="tipo_reporte != 'Menu' && tipo_reporte != 'Jornada' && tipo_reporte != 'Entrada' && tipo_reporte != 'Salida'" required>
                               <label for="filtro" class="form-check-label">Por fecha de registro</label>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-4" v-show="filtro == 'Fecha_registro' && tipo_reporte == 'Menu' || filtro == 'Fecha_registro' && tipo_reporte == 'Jornada'">
-                        <div class="form-group">
-                          <label for="">Fechas(<span class="text-danger text-md">*</span>)</label>
-                          <div class="input-group">
-                            <input type="date" max="<?php echo $this->DateNow(); ?>" required name="desde" aria-label="desde" id="" class="form-control" v-bind:disabled="valid">
-
-                            <input type="date" max="<?php echo $this->DateNow(); ?>" required name="hasta" aria-label="hasta" id="" class="form-control" v-bind:disabled="valid">
-                          </div>
-                        </div>
-                      </div>
                       <!-- FILTROS PARA SALIDAS -->
-                      <div class="col-4" v-show="tipo_reporte == 'Salida'">
+                      <!-- <div class="col-4" v-show="tipo_reporte == 'Salida'">
                         <div class="form-group">
                           <label for="">Filtro(<span class="text-danger text-md">*</span>)</label>
                           <div class="row">
@@ -111,7 +116,7 @@
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <!-- FILTROS PARA PRODUCTOS -->
                       <div class="col-4" v-show="tipo_reporte == 'Productos'">
                         <div class="form-group">
@@ -150,6 +155,17 @@
                             <option value="LT">Litros (L)</option>
                             <option value="GM">Gramos (G)</option>
                           </select>
+                        </div>
+                      </div>
+                      <!-- FILTROS DE FECHAS -->
+                      <div class="col-4" v-show="filtro_extra != '' && tipo_reporte == 'Menu' || filtro_extra != '' && tipo_reporte == 'Jornada' || filtro_extra != '' && tipo_reporte == 'Entrada' || filtro_extra != '' && tipo_reporte == 'Salida' ">
+                        <div class="form-group">
+                          <label for="">Fechas(<span class="text-danger text-md">*</span>)</label>
+                          <div class="input-group">
+                            <input type="date" max="<?php echo $this->DateNow(); ?>" required name="desde" aria-label="desde" id="" class="form-control" v-bind:disabled="valid">
+
+                            <input type="date" max="<?php echo $this->DateNow(); ?>" required name="hasta" aria-label="hasta" id="" class="form-control" v-bind:disabled="valid">
+                          </div>
                         </div>
                       </div>
                       <!-- FILTROS DE MARCAS PARA PRODUCTOS -->
@@ -203,17 +219,21 @@
       el: "#VueApp",
       data: {
         tipo_reporte: "",
-        filtro: ""
+        filtro: "",
+        filtro_extra: ""
       },
       computed: {
         valid() {
-          if (this.filtro != 'Fecha_registro' || this.tipo_reporte != 'Menu' && this.tipo_reporte != 'Jornada') {
+          if (this.filtro_extra == '' || this.tipo_reporte != 'Menu' && this.tipo_reporte != 'Jornada' && this.tipo_reporte != 'Entrada' && this.tipo_reporte != 'Salida') {
             return true
           } else return false;
         }
       },
       watch: {
-        tipo_reporte() { this.filtro = "";},
+        tipo_reporte() {
+          this.filtro = "";
+          this.filtro_extra = "";
+        },
       }
     })
   </script>

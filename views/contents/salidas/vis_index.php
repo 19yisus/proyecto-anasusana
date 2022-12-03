@@ -5,11 +5,16 @@
 <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
   <div class="wrapper">
     <?php
+    // require_once("./models/m_persona.php");
+    // require_once("./models/m_comedor.php");
     $this->titleContent = "Catálogo de Salida de Productos";
-
     $this->GetComplement("navbar");
 
     // $this->GetComplement("sidebar");
+
+    // $model_comedor = new m_comedor();
+    // $datosComedor = $model_comedor->Get_todos_comedor(1);
+
     ?>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

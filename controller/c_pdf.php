@@ -8,9 +8,10 @@ class new_fpdf extends FPDF
 {
   private $nombre;
 
-  public function SetNombre($name)
+  public function SetNombre($name, $des = '')
   {
     $this->nombre = $name;
+    $this->des = $des;
   }
   public function Header()
   {
@@ -18,7 +19,9 @@ class new_fpdf extends FPDF
     $this->write(5, "Comunidad Cristiana, Iglesia Pan de Vida");
     $this->Image("../views/images/logo.jpeg", 150, 5, 45, 20, "JPEG");
     $this->Ln();
-    $this->write(5, "Reporte: $this->nombre");
+    $this->write(5, "$this->nombre");
+    $this->Ln();
+    $this->write(5, "$this->des");
     $this->Ln(10);
   }
 
@@ -197,26 +200,41 @@ function fn_pdf_filtrado()
   if ($filtro == "Consumo") $f = "O";
   if ($filtro == "Vencimiento") $f = "V";
   if ($filtro == "Rechazo") $f = "R";
-  $d = $model->GetPdfWithFiltros($f);
 
-  $des_tipo = $filtro;
+  if (isset($_POST['filtro_extra']) && $_POST['filtro_extra'] != '') {
+    $d = $model->GetPdfWithFiltros($f, $_POST['desde'], $_POST['hasta']);
+  } else $d = $model->GetPdfWithFiltros($f);
 
   if (!isset($d[0])) {
-    echo "<script>alert('No hay suficientes datos para generar este reporte!');</script>";
+    echo "<script>
+      alert('No hay suficientes datos para generar este reporte!');
+      window.close();
+    </script>";
     exit;
   }
   // Entradas
   // if ($filtro == "Compra") $des_tipo = "Compra";
   // if ($filtro == "D") $des_tipo = "Donacion";
-  if ($filtro == "Compra" || $filtro == "Donacion") $tipo = "Entradas";
+  if ($_POST['tipo_reporte'] == "Entrada") $tipo = "Entradas";
   // Salidas
   // if ($filtro == "O") $des_tipo = "Consumo";
   // if ($filtro == "V") $des_tipo = "Vencimiento";
   // if ($filtro == "R") $des_tipo = "Rechazo";
-  if ($filtro == "Consumo" || $filtro == "Vencimiento" || $filtro == "Rechazo") $tipo = "Salidas";
+  if ($_POST['tipo_reporte'] == "Salida") $tipo = "Salidas";
 
   $pdf = new new_fpdf();
-  $pdf->SetNombre("Reporte de operaciones de $tipo por $des_tipo");
+  if (isset($_POST['filtro_extra']) && $_POST['filtro_extra'] != '') {
+    $date_desde = new DateTime($_POST['desde']);
+    $date_hasta = new DateTime($_POST['hasta']);
+    $desde_ = $date_desde->format('d-m-Y');
+    $hasta_ = $date_hasta->format('d-m-Y');
+    // echo $date_desde->format("d-m-Y");
+    // echo $date_hasta->format('d-m-Y');
+    $pdf->SetNombre("Reporte de operaciones de $tipo por $filtro", "Entre las fechas ($desde_ y $hasta_)");
+  } else {
+    $pdf->SetNombre("Reporte de operaciones de $tipo por $filtro");
+  }
+
   $pdf->addPage();
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 10);
@@ -290,7 +308,7 @@ function fn_pdf_filtrado()
 function fn_pdf_productos()
 {
   $model = new m_productos();
-  
+
   if (isset($_POST['id'])) $id =  $_POST['id'];
   else $id = "";
   $dato = $model->GetPdf($_POST['filtro'],  $id);
@@ -337,7 +355,7 @@ function fn_pdf_menu()
   $menu = $model->GetPdf($_POST);
   $pdf = new new_fpdf();
 
-  if ($_POST['filtro'] == "Fecha_registro") $des_report = "Todos los menus por fecha de registro";
+  if ($_POST['filtro_extra'] == "Fecha_registro") $des_report = "Todos los menus por fecha de registro";
 
   $pdf->SetNombre($des_report);
   $pdf->addPage();
@@ -351,10 +369,8 @@ function fn_pdf_menu()
     $fecha = new DateTime($item_menu['menu']['created_menu']);
     $pdf->cell(190, 7, 'Datos de los menus', 1, 0, "C", 1);
     $pdf->Ln();
-    $pdf->cell(190, 7, 'Descripcion del menu: ' . $item_menu['menu']['des_menu'], 1, 0, "C", 1);
-    $pdf->Ln();
-    // $pdf->cell(80, 7, "Porcion: " . $item_menu['menu']['porcion'], 1, 0, "C", 1);
-    $pdf->cell(110, 7, "Fecha de creacion: " . $fecha->format("d-m-Y h:i a"), 1, 0, "C", 1);
+    $pdf->cell(100, 7, 'Descripcion del menu: ' . $item_menu['menu']['des_menu'], 1, 0, "C", 1);
+    $pdf->cell(90, 7, "Fecha de creacion: " . $fecha->format("d-m-Y"), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, "Procedimiento: " . $item_menu['menu']['des_procedimiento'], 1, 0, "C", 1);
     $pdf->Ln();
@@ -369,6 +385,7 @@ function fn_pdf_menu()
     foreach ($item_menu['detalle'] as $item_detalle) {
       $pdf->cell(150, 7, $item_detalle['nom_product'], 1, 0, "C", 1);
       $pdf->cell(40, 7, $item_detalle['consumo'] . " " . $item_detalle['med_comida_detalle'], 1, 0, "C", 1);
+      $pdf->Ln();
     }
     $pdf->Ln(10);
   }
@@ -381,7 +398,7 @@ function fn_pdf_Jornada()
   $datos = $model->GetPdf($_POST);
   $pdf = new new_fpdf();
 
-  if ($_POST['filtro'] == "Fecha_registro") $des_report = "Todos las jornada por fecha";
+  if ($_POST['filtro_extra'] == "Fecha_registro") $des_report = "Todos las jornada por fecha";
 
   $pdf->SetNombre($des_report);
   $pdf->addPage();
@@ -402,17 +419,16 @@ function fn_pdf_Jornada()
     $pdf->cell(190, 7, 'Descripcion del jornada: ' . $item_jornada_menu['jornada_menu']['des_jornada'], 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(80, 7, "Cantidad aproximada de benecifiados: " . $item_jornada_menu['jornada_menu']['cant_aproximada'], 1, 0, "C", 1);
-    $pdf->cell(110, 7, "Fecha de creacion: " . $fecha2->format("d-m-Y h:i a"), 1, 0, "C", 1);
+    $pdf->cell(110, 7, "Fecha de creacion: " . $fecha2->format("d-m-Y"), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, 'Detalles del menu', 1, 0, "C", 1);
     $pdf->Ln();
     // INFORMACIÓN DEL MENU
     $pdf->cell(190, 7, 'Datos de los menus', 1, 0, "C", 1);
     $pdf->Ln();
-    $pdf->cell(190, 7, 'Descripcion del menu: ' . $item_jornada_menu['jornada_menu']['des_menu'], 1, 0, "C", 1);
-    $pdf->Ln();
+    $pdf->cell(100, 7, 'Descripcion del menu: ' . $item_jornada_menu['jornada_menu']['des_menu'], 1, 0, "C", 1);
     // $pdf->cell(80, 7, "Porcion: " . $item_jornada_menu['jornada_menu']['porcion'], 1, 0, "C", 1);
-    $pdf->cell(110, 7, "Fecha de creacion: " . $fecha->format("d-m-Y h:i a"), 1, 0, "C", 1);
+    $pdf->cell(90, 7, "Fecha de creacion: " . $fecha->format("d-m-Y"), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, "Procedimiento: " . $item_jornada_menu['jornada_menu']['des_procedimiento'], 1, 0, "C", 1);
     $pdf->Ln();
@@ -427,6 +443,7 @@ function fn_pdf_Jornada()
     foreach ($item_jornada_menu['detalle_menu'] as $item_detalle) {
       $pdf->cell(150, 7, $item_detalle['nom_product'], 1, 0, "C", 1);
       $pdf->cell(40, 7, $item_detalle['consumo'] . " " . $item_detalle['med_comida_detalle'], 1, 0, "C", 1);
+      $pdf->Ln();
     }
     $pdf->Ln(10);
   }
