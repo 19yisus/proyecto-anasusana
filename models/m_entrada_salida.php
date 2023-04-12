@@ -33,6 +33,7 @@ class m_entrada_salida extends m_db
 
 	public function Entrada_productos()
 	{
+		if(!isset($_SESSION['user_id'])) session_start();
 		// TRANSACCTION
 		$status_transaccion = true;
 		$sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
@@ -82,6 +83,11 @@ class m_entrada_salida extends m_db
 
 			if ($status_transaccion) {
 				$this->End_transacction();
+				$this->reg_bitacora([
+					'user_id' => $_SESSION['user_id'],
+					'table_name'=> "INVENTARIO - DETALLE_INVENTARIO",
+					'des' => "TRANSACCIÓN DE ENTRADA DE PRODUCTOS| ID INVENTARIO: $this->id_invent, CANTIDAD: $this->cantidad_invent, OBSERVACIÓN: $this->observacion_invent"
+				]);
 				return "msg/01DONE";
 			} else {
 				$this->Rollback();
@@ -141,6 +147,11 @@ class m_entrada_salida extends m_db
 
 			if ($status_transaccion) {
 				$this->End_transacction();
+				$this->reg_bitacora([
+					'user_id' => $_SESSION['user_id'],
+					'table_name'=> "INVENTARIO - DETALLE_INVENTARIO",
+					'des' => "TRANSACCIÓN DE SALIDA DE PRODUCTOS| ID INVENTARIO: $this->id_invent, CANTIDAD: $this->cantidad_invent, OBSERVACIÓN: $this->observacion_invent"
+				]);
 				return "msg/01DONE";
 			} else {
 				$this->Rollback();

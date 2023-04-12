@@ -22,7 +22,18 @@
 
       $sql = "INSERT INTO cargo(des_cargo, estatus_cargo) VALUES('$this->des_cargo', 1);";
       $this->Query($sql);
-      if($this->Result_last_query()) return "msg/01DONE"; else return "err/01ERR";
+
+      if(!isset($_SESSION['user_id'])) session_start();
+            
+      if($this->Result_last_query()){
+        $this->reg_bitacora([
+          'user_id' => $_SESSION['user_id'],
+          'table_name'=> "CARGO",
+          'des' => "REGISTRO DE NUEVO CARGO: $this->des_cargo"
+        ]);
+        return "msg/01DONE";
+      }
+      else return "err/01ERR";
     }
 
     public function Update(){
@@ -32,8 +43,18 @@
       $sql = "UPDATE cargo SET des_cargo = '$this->des_cargo' WHERE id_cargo = $this->id_cargo ;";
       $this->Query($sql);
 
-      if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-      else return ["code" => "error", "message" => "Operación Fallida"];
+      if(!isset($_SESSION['user_id'])) session_start();
+            
+      if($this->Result_last_query()){
+        $this->reg_bitacora([
+          'user_id' => $_SESSION['user_id'],
+          'table_name'=> "CARGO",
+          'des' => "ACTUALIZACIÓN DE CARGO: $this->des_cargo"
+        ]);
+
+        return ["code" => "success", "message" => "Operación Exitosa"];
+      }
+      else return ["code" => "error", "message" => "Operación Fallida"];      
     }
 
     public function Disable(){
@@ -41,16 +62,37 @@
       $sql = "UPDATE cargo SET estatus_cargo = $this->estatus_cargo WHERE id_cargo = $this->id_cargo ;";
       $this->Query($sql);
 
-      if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-      else return ["code" => "error", "message" => "Operación Fallida"];
+      if(!isset($_SESSION['user_id'])) session_start();
+            
+      if($this->Result_last_query()){
+        if($this->estatus_cargo == 0) $des_estatus = "DESACTIVACIÓN"; else $des_estatus = "ACTIVACIÓN";
+        $this->reg_bitacora([
+          'user_id' => $_SESSION['user_id'],
+          'table_name'=> "CARGO",
+          'des' => "$des_estatus DEL CARGO: ID => $this->id_cargo "
+        ]);
+
+        return ["code" => "success", "message" => "Operación Exitosa"];
+      }
+      else return ["code" => "error", "message" => "Operación Fallida"];      
     }
 
     public function Delete(){
       $sql = "DELETE FROM cargo WHERE id_cargo = $this->id_cargo AND estatus_cargo = '0' ;";
       $this->Query($sql);
 
-      if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-      else return ["code" => "error", "message" => "Operación Fallida"];
+      if(!isset($_SESSION['user_id'])) session_start();
+            
+      if($this->Result_last_query()){
+        $this->reg_bitacora([
+          'user_id' => $_SESSION['user_id'],
+          'table_name'=> "CARGO",
+          'des' => "ELIMINACIÓN DEL CARGO: ID => $this->id_cargo"
+        ]);
+
+        return ["code" => "success", "message" => "Operación Exitosa"];
+      }
+      else return ["code" => "error", "message" => "Operación Fallida"]; 
     }
 
     public function Get_todos_cargo($status = ''){

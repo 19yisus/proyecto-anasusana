@@ -1,11 +1,4 @@
 <?php
-  /* 
-    TODO
-    - agregar unidad e medidas
-      - Agregar en el menu unidad de medida y valor de medida.
-    - agregar tres medidas por si acaso (aceite de 0.50 - 1.00 - 0.75)
-    - agregar catalogo de menu de comidas
-   */
   require_once("./models/config.php");
   require_once("./controller/c_messages.php");
 

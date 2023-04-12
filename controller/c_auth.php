@@ -31,7 +31,7 @@
   }
 
   function fn_Login(){
-    $model = new m_auth();
+    $model = new m_auth();    
     
     $model->setDatos($_POST);
     $mensaje = $model->Login();

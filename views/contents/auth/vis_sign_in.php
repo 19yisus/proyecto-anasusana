@@ -29,9 +29,9 @@
 <html lang="en">
 <?php $this->GetHeader(); ?>
 <body class="hold-transition login-page" id="fondo">
-	<div class="login-box">
+	<div class="">
 		<div class="login-logo">
-			<img src="<?php echo constant("URL");?>views/images/logo.jpeg" alt="Logo" class="img-fluid rounded mx-auto d-block">
+			<!-- <img src="<?php //echo constant("URL");?>views/images/logo.jpeg" alt="Logo" class="img-fluid rounded mx-auto d-block"> -->
 		</div>
 		<!-- /.login-logo -->
 		<div class="card">
@@ -55,68 +55,84 @@
 				</form>
 				<?php }else if($status_form == 2){?>
 				<form action="<?php echo constant("URL");?>controller/c_auth.php" id="formulario" method="post" class="needs-validation" novalidate>
-					<div class="input-group mb-3">
-						<input type="hidden" name="user_id" value="<?php echo $id;?>">
-						<input type="number" name="cedula" class="form-control" placeholder="Cédula" value="<?php echo $cedula; ?>" readonly>
-						<div class="input-group-append">
-							<div class="input-group-text">
-								<span class="fas fa-user"></span>
+					<div class="row">
+						<div class="col-6">
+							<div class="form-group">
+								<label for="">Cédula del usuario(<span class="text-danger text-md">*</span>)</label>
+								<div class="input-group mb-3">
+									<input type="hidden" name="user_id" value="<?php echo $id;?>">	
+									<input type="number" name="cedula" class="form-control" placeholder="Cédula" value="<?php echo $cedula; ?>" readonly>
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fas fa-user"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="">Contraseña(<span class="text-danger text-md">*</span>)</label>
+								<div class="input-group mb-3">	
+									<input type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@#$%^&*_=+-]).{8,20}$" id="password" class="form-control" placeholder="Contraseña">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fas fa-lock"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="">Confirme su contraseña(<span class="text-danger text-md">*</span>)</label>
+								<div class="input-group mb-3">
+									<input type="password" name="password2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@#$%^&*_=+-]).{8,20}$" class="form-control" placeholder="Confirmar Contraseña">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fas fa-lock"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="">Todos los campos con (<span class="text-danger text-md">*</span>), obligatorios</label>
 							</div>
 						</div>
-					</div>
-					<div class="input-group mb-3">
-						<input type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@#$%^&*_=+-]).{8,20}$" id="password" class="form-control" placeholder="Contraseña">
-						<div class="input-group-append">
-							<div class="input-group-text">
-								<span class="fas fa-lock"></span>
+						<div class="col-6">
+							<div class="mb-3 form-group">
+								<label for="">Primera Pregunta de Seguridad(<span class="text-danger text-md">*</span>)</label>
+								<select name="pregunta1" class="custom-select" id="" onchange="Get_respuestas('#respues_1', this.value)">
+									<option value="">Seleccione una Pregunta</option>
+									<?php foreach($preguntas as $pregunta1){
+										$id_pregun1 = $pregunta1['id_pregun'];
+										?>
+										<option value="<?php echo $id_pregun1; ?>"><?php echo $pregunta1['des_pregun'];?></option>
+									<?php }?>
+								</select>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="">Primera Respuesta(<span class="text-danger text-md">*</span>)</label>
+								<input type="text" name="respuesta1" id="" class="form-control" placeholder="Escriba su respuesta">
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="">Segunda Pregunta de Seguridad(<span class="text-danger text-md">*</span>)</label>
+								<select name="pregunta2" id="pregun2" class="custom-select" id="">
+									<option value="">Seleccione una Pregunta</option>
+									<?php foreach($preguntas as $pregunta2){
+										$id_pregun2 = $pregunta2['id_pregun'];
+										?>
+										<option value="<?php echo $id_pregun2; ?>"><?php echo $pregunta2['des_pregun'];?></option>
+									<?php }?>
+								</select>
+							</div>
+
+							<div class="mb-3 form-group">
+								<label for="">Segunda Respuesta(<span class="text-danger text-md">*</span>)</label>
+								<input type="text" name="respuesta2" id="" class="form-control" placeholder="Escriba su respuesta">
 							</div>
 						</div>
-					</div>
-					<div class="input-group mb-3">
-						<input type="password" name="password2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@#$%^&*_=+-]).{8,20}$" class="form-control" placeholder="Confirmar Contraseña">
-						<div class="input-group-append">
-							<div class="input-group-text">
-								<span class="fas fa-lock"></span>
-							</div>
-						</div>
-					</div>
-
-					<div class="mb-3 form-group">
-						<label for="">Primera Pregunta de Seguridad</label>
-						<select name="pregunta1" class="custom-select" id="" onchange="Get_respuestas('#respues_1', this.value)">
-							<option value="">Seleccione una Pregunta</option>
-							<?php foreach($preguntas as $pregunta1){
-								$id_pregun1 = $pregunta1['id_pregun'];
-								?>
-								<option value="<?php echo $id_pregun1; ?>"><?php echo $pregunta1['des_pregun'];?></option>
-							<?php }?>
-						</select>
-					</div>
-
-					<div class="mb-3 form-group">
-						<label for="">Primera Respuesta</label>
-						<select name="respuesta1" class="custom-select" id="respues_1">
-							<option value="">Seleccione una Respuesta</option>
-						</select>
-					</div>
-
-					<div class="mb-3 form-group">
-						<label for="">Segunda Pregunta de Seguridad</label>
-						<select name="pregunta2" id="pregun2" class="custom-select" id="">
-							<option value="">Seleccione una Pregunta</option>
-							<?php foreach($preguntas as $pregunta2){
-								$id_pregun2 = $pregunta2['id_pregun'];
-								?>
-								<option value="<?php echo $id_pregun2; ?>"><?php echo $pregunta2['des_pregun'];?></option>
-							<?php }?>
-						</select>
-					</div>
-
-					<div class="mb-3 form-group">
-						<label for="">Segunda Respuesta</label>
-						<select name="respuesta2" class="custom-select" id="respues_2">
-							<option value="">Seleccione una Respuesta</option>
-						</select>
 					</div>
 
 					<div class="row">
@@ -143,25 +159,11 @@
 		$("#btn").click( async () =>{ if($("#formulario").valid()){ $("#formulario").submit(); }})
 
 		const Get_respuestas = (id_element, id_pregun) => {
-			fetch(`<?php echo constant("URL");?>controller/c_auth.php?ope=Get_respuesta&id=${id_pregun}`)
-			.then( response => response.json())
-			.then( datos => {
-
-				$(`${id_element} option[value!='']`).remove();
-
-				datos.data.forEach( dato => {
-					$(id_element).append(`<option value='${dato.id_respues}'>${dato.des_respues}</option>`)
-				})
-
-				if(id_element != "#respues_2"){
-					$(`#pregun2 option[value!='${id_pregun}']`).attr("selected", true);
-					$(`#pregun2 option[value!='${id_pregun}']`).attr("disabled", false);
-					$(`#pregun2 option[value='${id_pregun}']`).attr("disabled", true);
-
-					Get_respuestas('#respues_2', $('#pregun2').val())
-				}
-
-			}).catch( Err => console.error(Err))
+			if(id_element != "#respues_2"){
+				$(`#pregun2 option[value!='${id_pregun}']`).attr("disabled", false);
+				$(`#pregun2 option[value='${id_pregun}']`).attr("disabled", true);
+				Get_respuestas('#respues_2', $('#pregun2').val())
+			}
 		}
 
 		$("#formulario").validate({
@@ -182,6 +184,16 @@
 					minlength: 8,
 					maxlength: 20,
 					equalTo: "#password",
+				},
+				respuesta1:{
+					required: true,
+					minlength: 5,
+					maxlength: 60,
+				},
+				respuesta2:{
+					required: true,
+					minlength: 5,
+					maxlength: 60,
 				}
 			},
 			messages:{
@@ -203,7 +215,17 @@
 					maxlength: "Máximo de 20 caracteres para una Contraseña",
 					pattern: "Se debe de Ingresar una Clave más Segura (1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
 					equalTo: "Las Contraseñas Ingresadas NO Conciden"
-				}
+				},
+				respuesta1:{
+					required: "Este campo es Obligatorio",
+					minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
+					maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
+				},
+				respuesta2:{
+					required: "Este campo es Obligatorio",
+					minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
+					maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
+				},
 			},
 			errorElement: "span",
 			errorPlacement: function (error, element){

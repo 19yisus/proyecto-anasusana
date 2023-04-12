@@ -1,6 +1,7 @@
 <?php
 	$status_form = 1;
-	$cedula = null;
+	$cedula = $_GET['id'];
+  $email = null;
 	$id = null;
 	$pregun1 = null;
 	$pregun2 = null;
@@ -13,26 +14,23 @@
 		switch($_POST['ope']){
 			case 'form1':
 
-				$result = $model->FindUser($_POST['cedula']);
+				$result = $model->VerificarCorreo($_POST['cedula'],$_POST['email']);
 				if(isset($result['view']) && $result['view'] == "sign_in") $this->Redirect("auth/login","err/05AUTH");
 
 				if($result['status']){
 					$status_form = $result['next'];
-					$cedula = $result['cedula'];
-					$id = $result['id'];
-					$pregun1 = $result['pregun1'];
-					$pregun2 = $result['pregun2'];
-					$respues1 = $result['respues1'];
-					$respues2 = $result['respues2'];
+					$cedula = $_POST['cedula'];
+					$email = $_POST['email'];
+					$id = $result['id_user'];
 				}
 			break;
 
 			case 'form2':
 
-				$result = $model->ValidarRespuestas($_POST);
+				$result = $model->ValidacionCodigo($_POST);
 				if($result['status']){
-					$cedula = $result['cedula'];
-					$id = $result['id'];
+					$cedula = $cedula;
+					$id = $result['id_user'];
 					$status_form = $result['next'];
 				}
 			break;
@@ -55,12 +53,20 @@
 		<!-- /.login-logo -->
 		<div class="card">
 			<div class="card-body login-card-body rounded">
-				<p class="login-box-msg">Recuperación de Contraseña</p>
-
+				<p class="login-box-msg">Recuperación de Contraseña por Email</p>
 				<?php if($status_form == 1){?>
+          <!-- Se requiere el correo para confirmar que sea correcto -->
 				<form action="#" method="post">
 					<div class="input-group mb-3">
-						<input type="number" class="form-control" maxlength="8" name="cedula" placeholder="Cédula de la Persona" require>
+						<input type="number" class="form-control" maxlength="8" value="<?php echo $cedula;?>" name="cedula" placeholder="Cédula de la Persona" readonly>
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-user"></span>
+							</div>
+						</div>
+					</div>
+          <div class="input-group mb-3">
+						<input type="email" class="form-control" name="email" placeholder="Ingrese su correo para confirmarlo">
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
@@ -74,62 +80,28 @@
 					</div>
 				</form>
 				<?php }else if($status_form == 2){?>
+          <!-- Se requiere el código enviado al correo para recuperar contraseña -->
 				<form action="#" method="post">
-					<div class="input-group mb-3">
-						<input type="hidden" name="user_id" readonly value="<?php echo $id;?>">
-						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cédula de la Persona" readonly>
+          <div class="input-group mb-3">
+						<input type="hidden" name="id" value="<?php echo $id; ?>">
+						<input type="number" class="form-control" maxlength="8" value="<?php echo $cedula;?>" name="cedula" placeholder="Cédula de la Persona" readonly>
 						<div class="input-group-append">
 							<div class="input-group-text">
 								<span class="fas fa-user"></span>
 							</div>
 						</div>
 					</div>
-					<div class="mb-3 form-group">
-						<label for="">Primera Pregunta de Seguridad</label>
-						<select name="pregunta1" id="" class="custom-select" required>
-							<option value="<?php echo $pregun1['id_pregun']; ?>"><?php echo $pregun1['des_pregun'];?></option>
-						</select>
+          <div class="input-group mb-3">
+						<input type="password" class="form-control" name="code" maxlength="8" minlength="8" placeholder="Ingrese su código de seguridad">
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-user"></span>
+							</div>
+						</div>
 					</div>
-
-					<div class="mb-3 form-group">
-						<label for="">Primera Respuesta(<span class="text-danger text-md">*</span>)</label>
-						<input type="text" name="respuesta1" id="" class="form-control" placeholder="Escriba su respuesta">
-					</div>
-
-					<!-- <div class="mb-3 form-group">
-						<label for="">Primera Respuesta</label>
-						<select name="respuesta1" id="respues_1" class="custom-select" required>
-							<option value="">Seleccione una Respuesta</option>
-							<?php //foreach($respues1 as $respues){?>
-								<option value="<?php //echo $respues['id_respues'];?>"><?php //echo $respues['des_respues'];?></option>
-							<?php //}?>
-						</select>
-					</div> -->
-
-					<div class="mb-3 form-group">
-						<label for="">Segunda Pregunta de Seguridad</label>
-						<select name="pregunta2" id="" class="custom-select" required>
-							<option value="<?php echo $pregun2['id_pregun']; ?>"><?php echo $pregun2['des_pregun'];?></option>
-						</select>
-					</div>
-
-					<div class="mb-3 form-group">
-						<label for="">Segunda Respuesta(<span class="text-danger text-md">*</span>)</label>
-						<input type="text" name="respuesta2" id="" class="form-control" placeholder="Escriba su respuesta">
-					</div>
-
-					<!-- <div class="mb-3 form-group">
-						<label for="">Segunda Respuesta</label>
-						<select name="respuesta2" id="respues_2" class="custom-select" required>
-							<option value="">Seleccione una Respuesta</option>
-							<?php //foreach($respues2 as $respues){?>
-								<option value="<?php //echo $respues['id_respues'];?>"><?php //echo $respues['des_respues'];?></option>
-							<?php //}?>
-						</select>
-					</div> -->
 					<div class="row mb-2">
 						<div class="col-12">
-							<button type="submit" name="ope" value="form2" class="btn btn-warning btn-block">Enviar Respuestas</button>
+							<button type="submit" name="ope" value="form2" class="btn btn-warning btn-block">Enviar</button>
 						</div>
 					</div>
 				</form>
@@ -173,13 +145,6 @@
 				<p class="mb-0">
 					<a href="<?php echo constant("URL");?>auth/sign_in" class="text-center">Registro de Nuevo Usuario</a>
 				</p>
-				<?php 
-					if(isset($_POST['cedula'])){
-				?>
-				<p class="mb-0">
-					<a href="<?php echo constant("URL");?>auth/email_recovery?id=<?php echo $_POST['cedula'];?>" class="text-center">Recuperación por Email</a>
-				</p>
-				<?php }?>
 			</div>
 		</div>
 	</div>

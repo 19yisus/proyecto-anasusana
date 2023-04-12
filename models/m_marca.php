@@ -22,7 +22,17 @@
             $sql = "INSERT INTO marca(id_marca, nom_marca, status_marca, created_marca) VALUES(null,'$this->nom_marca', $this->status_marca, NOW());";
             $this->Query($sql);
             
-            if($this->Result_last_query()) return "msg/01DONE"; else return "err/01ERR";
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "MARCA",
+                'des' => "REGISTRO DE NUEVO MARCA: $this->nom_marca"
+              ]);
+              return "msg/01DONE";
+            }
+            else return "err/01ERR";
         }
 
         public function Update(){
@@ -32,7 +42,17 @@
             $sql = "UPDATE marca SET nom_marca = '$this->nom_marca' WHERE id_marca = $this->id_marca ;";
             $this->Query($sql);
             
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "MARCA",
+                'des' => "ACTUALIZACIÓN DE MARCA: $this->nom_marca, ID => $this->id_marca"
+              ]);
+      
+              return ["code" => "success", "message" => "Operación Exitosa"];
+            }
             else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
@@ -46,8 +66,19 @@
                 $sql = "UPDATE marca SET status_marca = $this->status_marca WHERE id_marca = $this->id_marca ;";
                 $this->Query($sql);
 
-                if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-                else return ["code" => "error", "message" => "Operación Fallida"];
+                if(!isset($_SESSION['user_id'])) session_start();
+            
+                if($this->Result_last_query()){
+                  if($this->estatus_marca == 0) $des_estatus = "DESACTIVACIÓN"; else $des_estatus = "ACTIVACIÓN";
+                  $this->reg_bitacora([
+                    'user_id' => $_SESSION['user_id'],
+                    'table_name'=> "MARCA",
+                    'des' => "$des_estatus DEL MARCA: ID => $this->id_marca"
+                  ]);
+          
+                  return ["code" => "success", "message" => "Operación Exitosa"];
+                }
+                else return ["code" => "error", "message" => "Operación Fallida"];  
             }            
         }
 
@@ -55,8 +86,18 @@
             $sql = "DELETE FROM marca WHERE id_marca = $this->id_marca AND status_marca = '0' ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-            else return ["code" => "error", "message" => "Operación Fallida"];
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "MARCA",
+                'des' => "ELIMINACIÓN DEL MARCA: ID => $this->id_marca"
+              ]);
+      
+              return ["code" => "success", "message" => "Operación Exitosa"];
+            }
+            else return ["code" => "error", "message" => "Operación Fallida"]; 
         }
 
         public function Get_todos_marcas($status = ''){

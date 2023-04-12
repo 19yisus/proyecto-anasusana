@@ -57,6 +57,45 @@
     }
 </script>
 <?php
-    if(isset($this->code_error)) $this->ObjMessage->printError($this->code_error);
-    if(isset($this->code_done)) $this->ObjMessage->printMessage($this->code_done);
+	if(isset($this->code_error)) $this->ObjMessage->printError($this->code_error);
+	if(isset($this->code_done)) $this->ObjMessage->printMessage($this->code_done);
+
+	if(isset($_SESSION['user_id']) && constant("DEV") == false){
+		?>
+			<script>
+				let tiempo_inactividad = 0;
+				let tiempo_final = 60; 
+				// 3 minutos de inactividad
+								
+				window.setInterval(() => {
+					contador("sum")
+					show_alerta();
+					if(tiempo_inactividad > tiempo_final) CerrarSession.submit();
+				}, 1000);
+				window.onblur = window.onmousemove = () =>{
+					if(!Swal.isVisible()) contador("clear");
+				}
+
+				function contador(orden){
+					if(orden == "clear") tiempo_inactividad = 0;
+					if(orden == "sum") tiempo_inactividad++;
+				}
+
+				function show_alerta(){
+					if(tiempo_inactividad > 40 && !Swal.isVisible()){
+						Swal.fire({
+							title: `Se cerrará la sesión, ¿desea extender la?`,
+							showDenyButton: true,
+							confirmButtonText: 'Si!',
+							denyButtonText: `No`,
+						}).then((result) => {
+
+							if (result.isConfirmed) contador("clear");
+							if (result.isDenied) CerrarSession.submit();
+						})
+					}
+				}
+			</script>
+		<?php
+	}
 ?>

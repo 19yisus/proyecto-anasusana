@@ -11,11 +11,11 @@
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand-md navbar-dark">
   <div class="container d-flex flex-wrap justify-content-between col-12">
-    <a href="<?php $this->SetURL('inicio/index'); ?>" class="navbar-brand">
+    <a href="<?php $this->SetURL('usuarios/profile'); ?>" class="navbar-brand">
       <img src="<?php echo constant('URL'); ?>views/images/user-icon.png" class="brand-image img-circle elevation-1" style="opacity: .8" alt="User Image">
       <!-- <span class="brand-text font-weight-light">AdminLTE 3</span> -->
 
-      <a href="<?php $this->SetURL('inicio/index'); ?>" class="d-flex flex-column text-white text-bold">
+      <a href="<?php $this->SetURL('usuarios/profile'); ?>" class="d-flex flex-column text-white text-bold">
         <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : "Desarrollando"; ?>
         <small class=""><?php echo $_SESSION['nom_rol']; ?></small>
       </a>
@@ -135,13 +135,28 @@
               <i class="nav-icon fas fa-cog"></i>
               Configuración
             </a>
-
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
               <li>
                 <a href="<?php $this->SetURL('usuarios/index'); ?>" class="dropdown-item <?php $this->IsActive("usuarios"); ?>">
                   <p>
                     <i class="nav-icon fas fa-user-cog"></i>
                     usuarios
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a href="<?php $this->SetURL('usuarios/preguntas'); ?>" class="dropdown-item <?php $this->IsActive("usuarios"); ?>">
+                  <p>
+                    <i class="nav-icon fas fa-cog"></i>
+                    Preguntas de seguridad
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a href="<?php $this->SetURL('sistem/index'); ?>" class="dropdown-item <?php $this->IsActive("sistem"); ?>">
+                  <p>
+                    <i class="nav-icon fas fa-list"></i>
+                    Bitacora
                   </p>
                 </a>
               </li>
@@ -158,9 +173,9 @@
           </a>
         </li>
       </ul>
-      <div class="col-3">
-        <img src="<?php echo constant('URL'); ?>views/images/logo.jpeg" alt="AdminLTE Logo" width="200" class="float-right">
-      </div>
+      <!-- <div class="col-3">
+        <img src="<?php //echo constant('URL'); ?>views/images/logo.jpeg" alt="AdminLTE Logo" width="200" class="float-right">
+      </div> -->
     </div>
   </div>
 </nav>

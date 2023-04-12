@@ -25,7 +25,17 @@
             $sql = "INSERT INTO comedor(id_comedor, nom_comedor, encargado_comedor, direccion_comedor, if_sede, status_comedor, created_comedor) VALUES(null,'$this->nom_comedor',$this->encargado_comedor,'$this->direccion_comedor', $this->if_sede ,$this->status_comedor, NOW());";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return "msg/01DONE"; else return "err/01ERR";
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "COMEDOR",
+                'des' => "REGISTRO DE NUEVO COMEDOR: $this->nom_comedor, DIRECCIÓN: $this->direccion_comedor"
+              ]);
+              return "msg/01DONE";
+            }
+            else return "err/01ERR";
         }
 
         public function ExisteSede(){
@@ -41,7 +51,17 @@
             WHERE id_comedor = $this->id_comedor ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "COMEDOR",
+                'des' => "ACTUALIZACIÓN DE COMEDOR: $this->nom_comedor, ID DEL COMEDOR: $this->id_comedor, DIRECCIÓN: $this->direccion_comedor"
+              ]);
+      
+              return ["code" => "success", "message" => "Operación Exitosa"];
+            }
             else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
@@ -50,16 +70,37 @@
             $sql = "UPDATE comedor SET status_comedor = $this->status_comedor WHERE id_comedor = $this->id_comedor ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-            else return ["code" => "error", "message" => "Operación Fallida"];
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              if($this->status_comedor == 0) $des_estatus = "DESACTIVACIÓN"; else $des_estatus = "ACTIVACIÓN";
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "COMEDOR",
+                'des' => "$des_estatus DEL COMEDOR: ID => $this->id_comedor"
+              ]);
+      
+              return ["code" => "success", "message" => "Operación Exitosa"];
+            }
+            else return ["code" => "error", "message" => "Operación Fallida"];  
         }
 
         public function Delete(){
             $sql = "DELETE FROM comedor WHERE id_comedor = $this->id_comedor AND status_comedor = '0' ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-            else return ["code" => "error", "message" => "Operación Fallida"];
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "COMEDOR",
+                'des' => "ELIMINACIÓN DEL COMEDOR: ID => $this->id_comedor"
+              ]);
+      
+              return ["code" => "success", "message" => "Operación Exitosa"];
+            }
+            else return ["code" => "error", "message" => "Operación Fallida"]; 
         }
 
         public function Get_todos_comedor($status = ''){

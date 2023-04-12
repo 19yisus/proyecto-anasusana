@@ -40,7 +40,17 @@
                 $this->Query($sql);
 
                 $this->id_persona = $this->Returning_id();                
-                if($this->Result_last_query()) return "msg/01DONE"; else return "err/01ERR";
+                
+                if(!isset($_SESSION['user_id'])) session_start();
+                if($this->Result_last_query()){
+                    $this->reg_bitacora([
+                        'user_id' => $_SESSION['user_id'],
+                        'table_name'=> "PERSONAS",
+                        'des' => "REGISTRO DE NUEVO PERSONAS: $this->cedula_persona, NOMBRE: $this->nom_persona, TELEFONO: $this->telefono_movil_persona"
+                    ]);
+                    return "msg/01DONE";
+                }
+                else return "err/01ERR";
             }
         }
 
@@ -56,6 +66,13 @@
                 if_proveedor = '$this->if_proveedor', if_user = '$this->if_user', cargo_id = '$this->cargo_id' WHERE id_person = $this->id_persona ;";
                 $this->Query($sql);
                 
+                if(!isset($_SESSION['user_id'])) session_start();
+
+                $this->reg_bitacora([
+                    'user_id' => $_SESSION['user_id'],
+                    'table_name'=> "PERSONAS",
+                    'des' => "ACTUALIZACIÓN DE PERSONAS: $this->nom_persona, ID DEL CARGO: $this->cargo_id, TELEFONO: $this->telefono_movil_persona"
+                ]);
                 return ["code" => "success", "message" => "Operación Exitosa"];
                 // if($this->Result_last_query()) 
                 // else return ["code" => "error", "message" => "Operación Fallida"];
@@ -67,8 +84,19 @@
             $sql = "UPDATE personas SET status_person = $this->status_persona WHERE id_person = $this->id_persona ;";
             $this->Query($sql);
 
-            if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-            else return ["code" => "error", "message" => "Operación Fallida"];       
+            if(!isset($_SESSION['user_id'])) session_start();
+            
+            if($this->Result_last_query()){
+              if($this->status_persona == 0) $des_estatus = "DESACTIVACIÓN"; else $des_estatus = "ACTIVACIÓN";
+              $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "PERSONAS",
+                'des' => "$des_estatus DEL PERSONAS: ID => $this->id_persona"
+              ]);
+      
+              return ["code" => "success", "message" => "Operación Exitosa"];
+            }
+            else return ["code" => "error", "message" => "Operación Fallida"];
         }
 
         public function Delete(){
@@ -81,8 +109,18 @@
                 $sql = "DELETE FROM personas WHERE id_person = $this->id_persona AND status_person = '0' ;";
                 $this->Query($sql);
 
-                if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-                else return ["code" => "error", "message" => "Operación Fallida"];
+                if(!isset($_SESSION['user_id'])) session_start();
+            
+                if($this->Result_last_query()){
+                  $this->reg_bitacora([
+                    'user_id' => $_SESSION['user_id'],
+                    'table_name'=> "PERSONAS",
+                    'des' => "ELIMINACIÓN DEL PERSONAS: ID => $this->id_persona"
+                  ]);
+          
+                  return ["code" => "success", "message" => "Operación Exitosa"];
+                }
+                else return ["code" => "error", "message" => "Operación Fallida"]; 
             }
         }
 
@@ -95,6 +133,15 @@
                     $this->Query($sqlInsert);
                 }
             }
+
+            if(!isset($_SESSION['user_id'])) session_start();
+            $count = sizeof($marcas);
+
+            $this->reg_bitacora([
+                'user_id' => $_SESSION['user_id'],
+                'table_name'=> "PROOVEDOR_MARCA",
+                'des' => "REGISTRO NUEVO PROOVEDOR_MARCA: ID DE LA PERSONA => $this->id_persona, $count MARCAS"
+            ]);
         }
 
         public function GetMarcasProveedor(){

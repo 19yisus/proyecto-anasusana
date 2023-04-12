@@ -1,8 +1,11 @@
 <?php
     require_once("../models/config.php");
+    
     require_once("../models/m_usuarios.php");
+    require_once("../models/m_auth.php");
     
     if(isset($_POST['ope'])){
+                
         switch($_POST['ope']){
             // case "Registrar":
             //     fn_Registrar();
@@ -14,6 +17,14 @@
 
             case "Desactivar":
                 fn_Desactivar();
+            break;
+
+            case "Save":
+                fn_Save_pregunta();
+            break;
+
+            case "Actualizar_preguntas":
+                fn_Update_pregunta();
             break;
 
             // case "Eliminar":
@@ -30,6 +41,18 @@
 
             case "Consultar_user":
                 fn_Consultar_user();
+            break;
+
+            case "Todos_preguntas":
+                fn_Consultar_preguntas();
+            break;
+
+            case "Consultar_pregunta":
+                fn_Consultar_pregunta();
+            break;
+
+            case "All_bitacora":
+                fn_bitacora_all();
             break;
         }
     }
@@ -79,5 +102,36 @@
         $result = $model->Get_user();
 
         print json_encode(["data" => $result]);
+    }
+
+    function fn_Consultar_preguntas(){
+        $model = new m_auth();
+        $result = $model->Get_Preguntas();
+        print json_encode(["data" => $result]);
+    }
+
+    function fn_Consultar_pregunta(){
+        $model = new m_usuarios();
+        $result = $model->Get_Pregunta($_GET['id_pregun']);
+        print json_encode(["data" => $result]);
+    }
+
+    function fn_Save_pregunta(){
+        $model = new m_usuarios();
+        $mensaje = $model->Save_pregunta($_POST['des_pregun']);
+        print json_encode(["data" => $result]);
+    }
+
+    function fn_Update_pregunta(){
+        $model = new m_usuarios();
+        $mensaje = $model->Update_pregunta($_POST);
+        print json_encode(["data" => $result]);
+    }
+
+    function fn_bitacora_all(){
+        $model = new m_usuarios();
+        $results = $model->Get_All_bitacora();
+
+        print json_encode(["data" => $results]);
     }
 ?>

@@ -16,6 +16,16 @@
             if(mysqli_connect_error()) die("NO SE PUEDO CONECTAR A LA BASE DE DATOS: ".mysqli_connect_error());
         }
 
+        protected function reg_bitacora($datos_array){
+            $descripcion = $datos_array['des'];
+            $id_user = $datos_array['user_id'];
+            $table_name = $datos_array['table_name'];
+            
+            $sql = "INSERT INTO bitacora(descripcion, tabla_change, hora_fecha, id_usuario)
+                VALUES('$descripcion','$table_name',NOW(),$id_user)";
+            $this->Query($sql);
+        }
+
         protected function Query($sql){ $this->Connect(); return mysqli_query($this->conexion, $sql); }
         protected function Start_transacction(){ mysqli_autocommit($this->conexion, false); }
         protected function End_transacction(){ mysqli_commit($this->conexion); }

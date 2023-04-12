@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-12-2022 a las 02:39:37
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 7.4.22
+-- Tiempo de generación: 11-04-2023 a las 01:23:42
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -26,12 +26,37 @@ USE `proyecto_iglesia2`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `bitacora`
+--
+
+CREATE TABLE `bitacora` (
+  `id_operacion` int(11) NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
+  `tabla_change` varchar(30) NOT NULL,
+  `hora_fecha` datetime DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `bitacora`
+--
+
+INSERT INTO `bitacora` (`id_operacion`, `descripcion`, `tabla_change`, `hora_fecha`, `id_usuario`) VALUES
+(1, 'REGISTRO DE NUEVO CARGO: ASASDFASDFA', 'CARGO', '2023-04-01 17:36:12', 1),
+(2, 'REGISTRO DE NUEVO CARGO: ASASDFASDFA', 'CARGO', '2023-04-01 17:37:57', 1),
+(3, 'REGISTRO DE NUEVO CARGO: JHJGHJGHJH', 'CARGO', '2023-04-01 17:39:22', 1),
+(4, 'REGISTRO DE NUEVO PERSONAS: 12341234, NOMBRE: MESSI RONALDO, TELEFONO: 1231 3231312', 'PERSONAS', '2023-04-10 19:13:11', 1),
+(5, 'REGISTRO NUEVO PROOVEDOR_MARCA: ID DE LA PERSONA => 20, 0 MARCAS', 'PROOVEDOR_MARCA', '2023-04-10 19:13:11', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `cargo`
 --
 
 CREATE TABLE `cargo` (
   `id_cargo` int(11) NOT NULL,
-  `des_cargo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `des_cargo` varchar(20) NOT NULL,
   `estatus_cargo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -42,7 +67,51 @@ CREATE TABLE `cargo` (
 INSERT INTO `cargo` (`id_cargo`, `des_cargo`, `estatus_cargo`) VALUES
 (1, 'NUEVOO', 1),
 (2, 'COCINERO', 1),
-(3, 'CONTROLE', 1);
+(3, 'CONTROLE', 1),
+(4, 'FASDFASDFSDF', 1),
+(5, 'FASDFSSSSSSS', 1),
+(6, 'AAAAAAAA', 1),
+(7, 'ASASDFASDFA', 1),
+(8, 'ASASDFASDFA', 1),
+(9, 'ASASDFASDFA', 1),
+(10, 'ASASDFASDFA', 1),
+(11, 'JHJGHJGHJH', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `codigos_recuperacion`
+--
+
+CREATE TABLE `codigos_recuperacion` (
+  `id_cod` int(11) NOT NULL,
+  `date_cod` datetime NOT NULL,
+  `status_code` tinyint(1) NOT NULL,
+  `char_code` char(8) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `codigos_recuperacion`
+--
+
+INSERT INTO `codigos_recuperacion` (`id_cod`, `date_cod`, `status_code`, `char_code`, `id_user`) VALUES
+(1, '2023-04-03 23:26:25', 0, 'zL3ktmFG', 8),
+(2, '2023-04-03 23:26:56', 0, 'y3ntgSWA', 8),
+(3, '2023-04-04 00:09:40', 0, '5jqeJXv7', 8),
+(4, '2023-04-04 00:11:41', 0, 'yENZ23vM', 8),
+(5, '2023-04-04 00:12:13', 0, 'aM8dV1cb', 8),
+(6, '2023-04-04 00:12:23', 0, '6z4Suhtd', 8),
+(7, '2023-04-04 00:13:48', 0, 'hA7eUTgO', 8),
+(8, '2023-04-04 00:20:25', 0, 'WDl9hZjN', 8),
+(9, '2023-04-04 00:20:44', 0, 'VMd2jo3E', 8),
+(10, '2023-04-04 00:22:09', 0, 'R8ZNbBHJ', 8),
+(11, '2023-04-04 00:22:30', 0, '5Cvc6uhO', 8),
+(12, '2023-04-04 00:27:49', 0, 'V6SDMcNv', 8),
+(13, '2023-04-04 16:49:21', 0, 'MU0fc9yK', 8),
+(14, '2023-04-04 17:01:41', 0, 'Y0OTpg3w', 8),
+(15, '2023-04-10 18:42:17', 1, 'djnf8LXp', 8),
+(16, '2023-04-10 19:15:42', 1, 'l9BAIiaz', 9);
 
 -- --------------------------------------------------------
 
@@ -52,9 +121,9 @@ INSERT INTO `cargo` (`id_cargo`, `des_cargo`, `estatus_cargo`) VALUES
 
 CREATE TABLE `comedor` (
   `id_comedor` int(11) NOT NULL,
-  `nom_comedor` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  `nom_comedor` varchar(40) NOT NULL,
   `encargado_comedor` int(11) NOT NULL,
-  `direccion_comedor` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
+  `direccion_comedor` varchar(120) NOT NULL,
   `status_comedor` tinyint(4) NOT NULL,
   `if_sede` tinyint(1) NOT NULL,
   `created_comedor` datetime NOT NULL
@@ -75,7 +144,7 @@ INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `encargado_comedor`, `direcc
 
 CREATE TABLE `detalle_inventario` (
   `product_id_ope` int(11) NOT NULL,
-  `invent_id_ope` char(10) COLLATE utf8_spanish_ci NOT NULL,
+  `invent_id_ope` char(10) NOT NULL,
   `fecha_vencimiento_ope` datetime DEFAULT NULL,
   `precio_product_ope` double DEFAULT NULL,
   `detalle_cantidad` int(11) NOT NULL
@@ -88,20 +157,20 @@ CREATE TABLE `detalle_inventario` (
 --
 
 CREATE TABLE `inventario` (
-  `id_invent` char(10) COLLATE utf8_spanish_ci NOT NULL,
-  `orden_invent` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `id_invent` char(10) NOT NULL,
+  `orden_invent` varchar(20) DEFAULT NULL,
   `cantidad_invent` int(11) NOT NULL,
   `status_invent` tinyint(4) NOT NULL,
   `created_invent` datetime DEFAULT NULL,
-  `type_operacion_invent` enum('E','S') COLLATE utf8_spanish_ci NOT NULL,
-  `concept_invent` enum('C','D','O','V','R') COLLATE utf8_spanish_ci DEFAULT NULL,
+  `type_operacion_invent` enum('E','S') NOT NULL,
+  `concept_invent` enum('C','D','O','V','R') DEFAULT NULL,
   `if_credito` tinyint(1) DEFAULT NULL,
   `jornada_id_invent` int(11) DEFAULT NULL,
   `person_id_invent` int(11) DEFAULT NULL,
   `recibe_person_id_invent` int(11) DEFAULT NULL,
   `comedor_id_invent` int(11) NOT NULL,
   `user_id_invent` int(11) NOT NULL,
-  `observacion_invent` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL
+  `observacion_invent` varchar(120) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -112,8 +181,8 @@ CREATE TABLE `inventario` (
 
 CREATE TABLE `jornada` (
   `id_jornada` int(11) NOT NULL,
-  `titulo_jornada` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-  `des_jornada` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `titulo_jornada` varchar(30) NOT NULL,
+  `des_jornada` varchar(120) DEFAULT NULL,
   `cant_aproximada` int(11) NOT NULL,
   `estatus_jornada` tinyint(1) NOT NULL,
   `fecha_jornada` date NOT NULL,
@@ -129,7 +198,7 @@ CREATE TABLE `jornada` (
 
 CREATE TABLE `marca` (
   `id_marca` int(11) NOT NULL,
-  `nom_marca` varchar(40) COLLATE utf8_spanish_ci NOT NULL,
+  `nom_marca` varchar(40) NOT NULL,
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -145,7 +214,8 @@ INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) V
 (4, 'PAN', 1, '2022-12-02 13:58:32'),
 (5, 'MARY', 1, '2022-12-02 14:01:18'),
 (6, 'AGUA BLANCA', 1, '2022-12-02 14:21:56'),
-(7, 'DEL MAR', 1, '2022-12-02 14:36:15');
+(7, 'DEL MAR', 1, '2022-12-02 14:36:15'),
+(8, 'GDFGSDFGSDFG', 1, '2023-03-28 09:24:40');
 
 -- --------------------------------------------------------
 
@@ -155,8 +225,8 @@ INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) V
 
 CREATE TABLE `menu` (
   `id_menu` int(11) NOT NULL,
-  `des_menu` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-  `des_procedimiento` varchar(120) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `des_menu` varchar(30) NOT NULL,
+  `des_procedimiento` varchar(120) DEFAULT NULL,
   `status_menu` tinyint(1) NOT NULL,
   `created_menu` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -171,7 +241,7 @@ CREATE TABLE `menu_detalle` (
   `menu_id_detalle` int(11) NOT NULL,
   `product_id_menu_detalle` int(11) NOT NULL,
   `consumo` int(11) NOT NULL,
-  `med_comida_detalle` char(2) COLLATE utf8_spanish_ci DEFAULT NULL
+  `med_comida_detalle` char(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -182,14 +252,14 @@ CREATE TABLE `menu_detalle` (
 
 CREATE TABLE `personas` (
   `id_person` int(11) NOT NULL,
-  `cedula_person` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
-  `tipo_person` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `nom_person` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
-  `sexo_person` enum('F','M') COLLATE utf8_spanish_ci DEFAULT NULL,
-  `telefono_movil_person` varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `telefono_casa_person` varchar(12) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `direccion_person` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
-  `correo_person` varchar(130) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `cedula_person` varchar(9) NOT NULL,
+  `tipo_person` char(1) DEFAULT NULL,
+  `nom_person` varchar(60) NOT NULL,
+  `sexo_person` enum('F','M') DEFAULT NULL,
+  `telefono_movil_person` varchar(12) DEFAULT NULL,
+  `telefono_casa_person` varchar(12) DEFAULT NULL,
+  `direccion_person` varchar(120) NOT NULL,
+  `correo_person` varchar(130) DEFAULT NULL,
   `cargo_id` int(11) DEFAULT NULL,
   `if_proveedor` tinyint(1) NOT NULL,
   `if_user` tinyint(1) NOT NULL,
@@ -210,7 +280,9 @@ INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person
 (9, '14542452', 'J', 'JOSESASDFASDFASDFASDF', 'M', '0424 5189965', '', 'FASDFADSFADSFASDF', 'FASDFADSFASDFASDFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 12:51:35'),
 (12, '46456987', 'J', 'JOSEE MORAS', 'M', '0424 5198399', '', 'FASDFASDFASDFASDF', 'ASDFADFASDFADFADSF@GMAIL.COM', NULL, 1, 0, 1, '2022-06-14 13:12:27'),
 (17, '26744045', 'V', 'CARLOS ORDO;EZ', 'M', '0424 5625680', '', 'AGUA LANCA', 'CARLOSORDONEZ@GMAIL.COM', 2, 0, 1, 1, '2022-10-17 09:43:42'),
-(18, '8659318', 'V', 'JESUS', 'M', '3092 3523333', '3___ ___4234', 'AFWADVSV', 'KCASN34243KANC@GMAIL.COM', 2, 1, 1, 1, '2022-11-28 07:53:14');
+(18, '8659318', 'V', 'JESUSSSSS', 'M', '3092 3523333', '3___ ___4234', 'AFWADVSV', 'KCASN34243KANC@GMAIL.COM', 2, 1, 1, 1, '2022-11-28 07:53:14'),
+(19, '27132666', 'V', 'FASDFASDFASDFASDF', 'M', '0424 5616546', '', 'FASDFASDFASDFASDFASDFASDF', 'JESUSITOMORALES70@GMAIL.COM', 2, 0, 1, 1, '2023-03-28 09:28:13'),
+(20, '12341234', 'V', 'MESSI RONALDO', 'M', '1231 3231312', '', 'ADSFFAFAFA', 'CEORMUSICPRODUCER@GMAIL.COM', 1, 0, 1, 1, '2023-04-10 19:13:11');
 
 -- --------------------------------------------------------
 
@@ -220,7 +292,7 @@ INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person
 
 CREATE TABLE `preguntas` (
   `id_pregun` int(11) NOT NULL,
-  `des_pregun` varchar(30) COLLATE utf8_spanish_ci NOT NULL
+  `des_pregun` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -229,7 +301,10 @@ CREATE TABLE `preguntas` (
 
 INSERT INTO `preguntas` (`id_pregun`, `des_pregun`) VALUES
 (1, 'Color favorito'),
-(2, 'Animal favorito');
+(2, 'Animal favorito'),
+(3, 'SSSSSSSSSS'),
+(4, 'EQUIPO FAVORITO DE FUTBOL'),
+(5, 'MESSI O CRISTIANO?');
 
 -- --------------------------------------------------------
 
@@ -239,8 +314,8 @@ INSERT INTO `preguntas` (`id_pregun`, `des_pregun`) VALUES
 
 CREATE TABLE `productos` (
   `id_product` int(11) NOT NULL,
-  `nom_product` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `med_product` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `nom_product` varchar(50) NOT NULL,
+  `med_product` varchar(20) NOT NULL,
   `valor_product` double NOT NULL,
   `status_product` tinyint(4) NOT NULL,
   `created_product` datetime NOT NULL,
@@ -264,34 +339,12 @@ CREATE TABLE `proveedor_marca` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `respuestas`
---
-
-CREATE TABLE `respuestas` (
-  `id_respues` int(11) NOT NULL,
-  `des_respues` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-  `pregun_id_respues` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `respuestas`
---
-
-INSERT INTO `respuestas` (`id_respues`, `des_respues`, `pregun_id_respues`) VALUES
-(1, 'azul', 1),
-(2, 'rojo', 1),
-(3, 'perro', 2),
-(4, 'gato', 2);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `roles_usuario`
 --
 
 CREATE TABLE `roles_usuario` (
   `id` int(11) NOT NULL,
-  `nom_rol` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
+  `nom_rol` varchar(12) NOT NULL,
   `nivel_permisos_rol` int(11) NOT NULL,
   `status_rol` tinyint(1) NOT NULL,
   `created_rol` datetime NOT NULL
@@ -315,14 +368,14 @@ INSERT INTO `roles_usuario` (`id`, `nom_rol`, `nivel_permisos_rol`, `status_rol`
 CREATE TABLE `usuarios` (
   `id_user` int(11) NOT NULL,
   `person_id_user` int(11) NOT NULL,
-  `password_user` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
+  `password_user` varchar(120) NOT NULL,
   `status_user` tinyint(1) NOT NULL,
   `id_rol` int(11) NOT NULL,
   `created_user` datetime NOT NULL,
   `pregun1_user` int(11) NOT NULL,
   `pregun2_user` int(11) NOT NULL,
-  `respuesta1_user` int(11) NOT NULL,
-  `respuesta2_user` int(11) NOT NULL
+  `respuesta1_user` varchar(60) NOT NULL,
+  `respuesta2_user` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -330,20 +383,37 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_user`, `person_id_user`, `password_user`, `status_user`, `id_rol`, `created_user`, `pregun1_user`, `pregun2_user`, `respuesta1_user`, `respuesta2_user`) VALUES
-(1, 1, '$2y$12$ubs1WYLLAOCXirDYRzOF4.6a9UQvWx8jWET0ii9Kr0/gC8OzIZysK', 1, 1, '2021-11-23 02:08:10', 1, 2, 1, 4),
-(2, 3, '$2y$12$AGxghVHoNWTdArAy2NxoKuCRk6B74xAr9Wi.E1MUF3WAdTufZ6VC.', 1, 3, '2021-12-05 11:08:09', 2, 1, 3, 2),
-(4, 2, '$2y$12$D7e0XgYow5KmL.aQb5akGuOjzJt2/ZzURUPH.YarhL5VlXGwB8U.C', 1, 2, '2021-12-14 21:43:29', 1, 2, 1, 3),
-(7, 7, '$2y$12$7IgPN.1MtDRnZsJghBdObePaDgepj1xCaGLmKtsbtAYmNKBg8B3w2', 1, 3, '2022-01-10 17:30:30', 1, 2, 1, 3);
+(1, 1, '$2y$12$ubs1WYLLAOCXirDYRzOF4.6a9UQvWx8jWET0ii9Kr0/gC8OzIZysK', 1, 1, '2021-11-23 02:08:10', 1, 2, 'NADA', 'NADA'),
+(2, 3, '$2y$12$AGxghVHoNWTdArAy2NxoKuCRk6B74xAr9Wi.E1MUF3WAdTufZ6VC.', 1, 3, '2021-12-05 11:08:09', 2, 1, 'NADA', 'NADA'),
+(4, 2, '$2y$12$D7e0XgYow5KmL.aQb5akGuOjzJt2/ZzURUPH.YarhL5VlXGwB8U.C', 1, 2, '2021-12-14 21:43:29', 1, 2, 'NADA', 'NADA'),
+(7, 7, '$2y$12$7IgPN.1MtDRnZsJghBdObePaDgepj1xCaGLmKtsbtAYmNKBg8B3w2', 1, 3, '2022-01-10 17:30:30', 1, 2, 'NADA', 'NADA'),
+(8, 19, '$2y$12$938Bagi2rVlHRHI6.x6cqOQS0FQJ28Hv2vtD2HhAVDr9S4P2Yy9Hu', 1, 3, '2023-03-28 10:21:47', 1, 2, 'NADA', 'NADA'),
+(9, 20, '$2y$12$9.6VUrf.eyTE65zUqxO7z.YksNB5pukfDnkmD5Njpt.mYYiekHN1u', 1, 3, '2023-04-10 19:14:03', 4, 5, 'BARCELONA', 'MESSI');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
+-- Indices de la tabla `bitacora`
+--
+ALTER TABLE `bitacora`
+  ADD PRIMARY KEY (`id_operacion`),
+  ADD KEY `fk_usuarios` (`id_usuario`);
+
+--
 -- Indices de la tabla `cargo`
 --
 ALTER TABLE `cargo`
   ADD PRIMARY KEY (`id_cargo`);
+
+--
+-- Indices de la tabla `codigos_recuperacion`
+--
+ALTER TABLE `codigos_recuperacion`
+  ADD PRIMARY KEY (`id_cod`),
+  ADD UNIQUE KEY `char_code` (`char_code`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indices de la tabla `comedor`
@@ -426,13 +496,6 @@ ALTER TABLE `proveedor_marca`
   ADD KEY `pro_id_persona` (`pro_id_persona`);
 
 --
--- Indices de la tabla `respuestas`
---
-ALTER TABLE `respuestas`
-  ADD PRIMARY KEY (`id_respues`),
-  ADD KEY `pregun_id_respues` (`pregun_id_respues`);
-
---
 -- Indices de la tabla `roles_usuario`
 --
 ALTER TABLE `roles_usuario`
@@ -446,19 +509,29 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `person_id_user` (`person_id_user`),
   ADD KEY `id_rol` (`id_rol`),
   ADD KEY `usuarios_preguntas1` (`pregun1_user`),
-  ADD KEY `usuarios_preguntas2` (`pregun2_user`),
-  ADD KEY `usuarios_respuestas1` (`respuesta1_user`),
-  ADD KEY `usuarios_respuestas2` (`respuesta2_user`);
+  ADD KEY `usuarios_preguntas2` (`pregun2_user`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
+-- AUTO_INCREMENT de la tabla `bitacora`
+--
+ALTER TABLE `bitacora`
+  MODIFY `id_operacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `codigos_recuperacion`
+--
+ALTER TABLE `codigos_recuperacion`
+  MODIFY `id_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `comedor`
@@ -476,7 +549,7 @@ ALTER TABLE `jornada`
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
@@ -488,25 +561,19 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id_pregun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pregun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `respuestas`
---
-ALTER TABLE `respuestas`
-  MODIFY `id_respues` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `roles_usuario`
@@ -518,11 +585,23 @@ ALTER TABLE `roles_usuario`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `bitacora`
+--
+ALTER TABLE `bitacora`
+  ADD CONSTRAINT `fk_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_user`);
+
+--
+-- Filtros para la tabla `codigos_recuperacion`
+--
+ALTER TABLE `codigos_recuperacion`
+  ADD CONSTRAINT `codigos_recuperacion_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `usuarios` (`id_user`);
 
 --
 -- Filtros para la tabla `comedor`
@@ -581,21 +660,13 @@ ALTER TABLE `proveedor_marca`
   ADD CONSTRAINT `pro_persona` FOREIGN KEY (`pro_id_persona`) REFERENCES `personas` (`id_person`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `respuestas`
---
-ALTER TABLE `respuestas`
-  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`pregun_id_respues`) REFERENCES `preguntas` (`id_pregun`) ON UPDATE CASCADE;
-
---
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `roles_fk` FOREIGN KEY (`id_rol`) REFERENCES `roles_usuario` (`id`),
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`person_id_user`) REFERENCES `personas` (`id_person`),
   ADD CONSTRAINT `usuarios_preguntas1` FOREIGN KEY (`pregun1_user`) REFERENCES `preguntas` (`id_pregun`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `usuarios_preguntas2` FOREIGN KEY (`pregun2_user`) REFERENCES `preguntas` (`id_pregun`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `usuarios_respuestas1` FOREIGN KEY (`respuesta1_user`) REFERENCES `respuestas` (`id_respues`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `usuarios_respuestas2` FOREIGN KEY (`respuesta2_user`) REFERENCES `respuestas` (`id_respues`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `usuarios_preguntas2` FOREIGN KEY (`pregun2_user`) REFERENCES `preguntas` (`id_pregun`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

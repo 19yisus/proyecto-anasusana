@@ -65,6 +65,13 @@ class m_menu extends m_db
 
       if ($status_transaccion) {
         $this->End_transacction();
+        if(!isset($_SESSION['user_id'])) session_start();
+        $this->reg_bitacora([
+          'user_id' => $_SESSION['user_id'],
+          'table_name'=> "MENU - MENU_DETALE",
+          'des' => "TRANSACIÓN DE REGISTRO DEL MENÚ: $this->des_menu, ID DEL MENÚ: $id"
+        ]);
+
         return "msg/01DONE";
       } else {
         $this->Rollback();
@@ -97,7 +104,17 @@ class m_menu extends m_db
       $this->Query($sql2);
     }
 
-    if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+    if(!isset($_SESSION['user_id'])) session_start();
+            
+    if($this->Result_last_query()){
+      $this->reg_bitacora([
+        'user_id' => $_SESSION['user_id'],
+        'table_name'=> "MENU - MENU_DETALLE",
+        'des' => "ACTUALIZACIÓN DE MENÚ Y DETALLES DEL MENÚ: $this->des_menu, ID DEL MENU: $this->id_menu"
+      ]);
+
+      return ["code" => "success", "message" => "Operación Exitosa"];
+    }
     else return ["code" => "error", "message" => "Operación Fallida"];
   }
 
@@ -116,7 +133,17 @@ class m_menu extends m_db
       $this->Query($sql2);
     }
 
-    if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
+    if(!isset($_SESSION['user_id'])) session_start();
+            
+    if($this->Result_last_query()){
+      $this->reg_bitacora([
+        'user_id' => $_SESSION['user_id'],
+        'table_name'=> "MENU - MENU_DETALLE",
+        'des' => "ACTUALIZACIÓN DETALLES DEL MENÚ => ID DEL MENU: $this->id_menu"
+      ]);
+
+      return ["code" => "success", "message" => "Operación Exitosa"];
+    }
     else return ["code" => "error", "message" => "Operación Fallida"];
   }
 
@@ -126,8 +153,19 @@ class m_menu extends m_db
     $sql = "UPDATE menu SET status_menu = $this->estatus_menu WHERE id_menu = $this->id_menu ;";
     $this->Query($sql);
 
-    if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-    else return ["code" => "error", "message" => "Operación Fallida"];
+    if(!isset($_SESSION['user_id'])) session_start();
+            
+    if($this->Result_last_query()){
+      if($this->estatus_menu == 0) $des_estatus = "DESACTIVACIÓN"; else $des_estatus = "ACTIVACIÓN";
+      $this->reg_bitacora([
+        'user_id' => $_SESSION['user_id'],
+        'table_name'=> "MENU",
+        'des' => "$des_estatus DEL MENU: ID => $this->id_menu"
+      ]);
+
+      return ["code" => "success", "message" => "Operación Exitosa"];
+    }
+    else return ["code" => "error", "message" => "Operación Fallida"];  
   }
 
   public function Delete()
@@ -135,8 +173,18 @@ class m_menu extends m_db
     $sql = "DELETE FROM menu WHERE id_menu = $this->id_menu AND estatus_menu = '0' ;";
     $this->Query($sql);
 
-    if ($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];
-    else return ["code" => "error", "message" => "Operación Fallida"];
+    if(!isset($_SESSION['user_id'])) session_start();
+            
+    if($this->Result_last_query()){
+      $this->reg_bitacora([
+        'user_id' => $_SESSION['user_id'],
+        'table_name'=> "MENÚ",
+        'des' => "ELIMINACIÓN DEL MENÚ: ID => $this->id_menu"
+      ]);
+
+      return ["code" => "success", "message" => "Operación Exitosa"];
+    }
+    else return ["code" => "error", "message" => "Operación Fallida"]; 
   }
 
   public function Get_todos_menu($status = '')
