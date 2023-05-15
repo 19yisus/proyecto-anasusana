@@ -121,7 +121,7 @@
     function fn_Save_pregunta(){
         $model = new m_usuarios();
         $mensaje = $model->Save_pregunta($_POST['des_pregun']);
-        print json_encode(["data" => $result]);
+        print json_encode(["data" => $mensaje]);
     }
 
     function fn_Update_pregunta(){

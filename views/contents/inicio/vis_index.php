@@ -26,31 +26,36 @@
                   <div class="col-6">
                     <div class="d-flex flex-column">
                       <h3 class="">Bienvenid@</h3>
-                      <!-- <h4 class="text-muted">Software de Inventario y Control de Alimentos para el Comedor de la “Iglesia Cristiana Pan de Vida”</h4> -->
+                      <h4 class="text-muted">Software de Inventario y Control de Alimentos para la escuela Ana Susana de Ousset</h4>
                     </div>
                   </div>
                   <div class="col-6">
-                    <!-- <img src="<?php //echo constant('URL');?>views/images/logo.jpeg" alt="AdminLTE Logo" class="w-50 float-right"> -->
+                     <img src="<?php echo constant('URL');?>views/images/logo.jpg" alt="AdminLTE Logo" style="width:10rem !important;" class="w-12 float-right"> 
                   </div>
                 </div>
                 <hr>
-                <!-- <div class="row">
+                <div class="row">
                   <div class="mx-1">
-                    <h4>Misión de la Escuela Dominical para Niños:</h4>
-                    <h6 class="text-justify">Enseñar, instruir e incentivar a los niños a que aprendan la palabra de Dios y sean buenos cuidadanos en todo lugar.
-                      También, crear estrategias para hacer crecer la matrícula, y luego que formen parte de la Iglesia.
+                    <h4>Reseña historica de la escuela Ana Susana de Ousset:</h4>
+                    <h6 class="text-justify">La institución fue fundada en el año 1963, en una casa de paredes de bahareque y techo de zinc bajo el nombre de Escuela Pimpinela, para ese entonces contaba con cuatro maestros, entre los cuales se conocen los nombres de Carlina de Rodríguez, Luisa Graterol de Pérez y Alicia de Gavidea; y un obrero. Haciendo una mención especial a la señora Guadalupe Colmenárez, quien fue pionera de la fundación de la escuela.</h6>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="mx-1">
+                    <h4>Misión de la escuela Ana Susana de Ousset</h4>
+                    <h6 class="text-justify">Brindar una educación a los niños, niñas y adolescentes de la educación inicial y primaria con una práctica pedagógica abierta, reflexiva, holística, cualitativa y constructiva; que atienda a los intereses y necesidades de los educandos, permitiendo el desarrollo de su personalidad y fortaleciendo los valores de convivencia, solidaridad, trabajo y responsabilidad.
                     </h6>
                   </div>
                 </div>
                 <hr>
                 <div class="row">
                   <div class="mx-1">
-                    <h4>Visión de la Escuela Dominical para Niños:</h4>
-                    <h6 class="text-justify">Consolidar la masa total de los niños a una motivación de conocer las Santas Escrituras y mantener una conducta integra
-                      en la iglesia, hogar, escuela y comunidad; con el fin de convertir a los niños en futuros Adultos Responsables, educados, respetados y honorables.
+                    <h4>Visión de la escuela Ana Susana de Ousset</h4>
+                    <h6 class="text-justify">Lograr la formación de un educando responsable, con conciencia nacional, soberana; que aprecie los valores patrios, sus tradiciones y costumbres ancestrales, en el marco de un enfoque geohistórico, en pro y para el trabajo liberador, que se apropie del desarrollo humanístico y sociable.
                     </h6>
                   </div>
-                </div> -->
+                </div>
               </div>
             </div>
           </div><!-- /.container-fluid -->

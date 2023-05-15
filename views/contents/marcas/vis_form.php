@@ -51,8 +51,8 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <input type="hidden" name="ope">
-                                <button type="button" id="btn" onclick="ope.value = this.value" value="Registrar" class="btn btn-primary">
+                                <input type="hidden" name="ope" id="ope" value="Registrar">
+                                <button type="button" id="btn" value="Registrar" class="btn btn-primary">
                                     <i class="fas fa-save"></i>
                                     Registrar
                                 </button>
@@ -81,7 +81,7 @@
             if(res) $("#formulario").submit();
         }
     })
-
+    
     $("#formulario").validate({
         rules:{
             nom_marca:{

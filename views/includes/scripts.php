@@ -41,6 +41,12 @@
         timer: 3000
     });
 
+		window.addEventListener("keypress", function(event){
+				if (event.keyCode == 13){
+						event.preventDefault();
+				}
+		}, false);
+
     const Confirmar = async () => {
         return await Swal.fire({
             title: "Estas seguro de realizar esta operación?",

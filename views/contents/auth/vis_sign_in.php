@@ -38,7 +38,7 @@
 			<div class="card-body login-card-body rounded">
 				<p class="login-box-msg">Registro de Nuevo Usuario</p>
 				<?php if($status_form == 1){?>
-				<form action="#" method="post">
+				<form action="#" method="post" autocomplete="off">
 					<div class="input-group mb-3">
 						<input type="number" class="form-control" name="cedula" placeholder="Cédula de la Persona" required>
 						<div class="input-group-append">
@@ -54,7 +54,7 @@
 					</div>
 				</form>
 				<?php }else if($status_form == 2){?>
-				<form action="<?php echo constant("URL");?>controller/c_auth.php" id="formulario" method="post" class="needs-validation" novalidate>
+				<form action="<?php echo constant("URL");?>controller/c_auth.php" autocomplete="off" id="formulario" method="post" class="needs-validation" novalidate>
 					<div class="row">
 						<div class="col-6">
 							<div class="form-group">
@@ -207,13 +207,13 @@
 					required: "Este campo es Obligatorio",
 					minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 					maxlength: "Máximo de 20 caracteres para una Contraseña",
-					pattern: "Se debe de Ingresar una Clave más Segura (1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+					pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
 				},
 				password2:{
 					required: "Este campo es Obligatorio",
 					minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 					maxlength: "Máximo de 20 caracteres para una Contraseña",
-					pattern: "Se debe de Ingresar una Clave más Segura (1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+					pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
 					equalTo: "Las Contraseñas Ingresadas NO Conciden"
 				},
 				respuesta1:{

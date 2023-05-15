@@ -83,6 +83,7 @@
       public function Save_pregunta($pregunta){
         $pregunta = isset($pregunta) ? strtoupper($pregunta) : null;
         $sql = "INSERT INTO preguntas(des_pregun) VALUES('$pregunta');";
+        // var_dump($sql);
         $result = $this->Query($sql);
         
         if($this->Result_last_query()) return ["code" => "success", "message" => "Operación Exitosa"];

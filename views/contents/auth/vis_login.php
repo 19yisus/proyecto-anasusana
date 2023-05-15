@@ -10,7 +10,7 @@
     <div class="card align-middle">
       <div class="card-body login-card-body rounded">
         <p class="login-box-msg">Inicio de Sesión</p>
-        <form action="<?php echo constant("URL");?>controller/c_auth.php" method="post" id="formulario" class="needs-validation" novalidate>
+        <form action="<?php echo constant("URL");?>controller/c_auth.php" autocomplete="off" method="post" id="formulario" class="needs-validation" novalidate>
           <div class="input-group mb-3">
             <input type="number" class="form-control" name="cedula" placeholder="Cédula de la Persona">
             <div class="input-group-append">
@@ -73,7 +73,7 @@
           required: "Este Campo es Obligatorio",
           minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
           maxlength: "Máximo de 50 caracteres para una Contraseña",
-          pattern: "Se debe de ingresar una Clave mas segura (1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo)",
+          pattern: "Se debe de ingresar una Clave mas segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo)",
         }
         },
         errorElement: "span",

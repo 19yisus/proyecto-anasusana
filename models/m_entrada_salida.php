@@ -309,6 +309,8 @@ class m_entrada_salida extends m_db
 			'persona' => [$persona],
 		]);
 
+		// var_dump($datos_pdf[0]['productos']);
+
 		return $datos_pdf;
 	}
 	public function GetPdfWithFiltros($filtro, $desde = '', $hasta = '')
@@ -323,7 +325,7 @@ class m_entrada_salida extends m_db
 					WHERE inventario.concept_invent = '$filtro' GROUP BY inventario.id_invent;";
 		} else {
 			$hasta = date("Y-m-d h:i:s",strtotime($hasta. "+ 1 days"));
-			$desde = date("Y-m-d h:i:s",strtotime($desde));
+			$desde = date("Y-m-d h:i:s",strtotime($desde. "- 1 days"));
 			$sql_inventario = "SELECT * FROM inventario 
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
@@ -339,7 +341,8 @@ class m_entrada_salida extends m_db
 			$sql_productos = "SELECT * FROM detalle_inventario 
 					INNER JOIN productos ON productos.id_product = detalle_inventario.product_id_ope 
 					INNER JOIN marca ON marca.id_marca = productos.marca_id_product
-					WHERE detalle_inventario.invent_id_ope = '$code' GROUP BY detalle_inventario.invent_id_ope;";
+					WHERE detalle_inventario.invent_id_ope = '$code';";
+			// GROUP BY detalle_inventario.invent_id_ope					
 
 			$datos_productos = $this->Get_todos_array($this->Query($sql_productos));
 

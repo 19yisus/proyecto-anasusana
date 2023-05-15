@@ -56,7 +56,7 @@
 				<p class="login-box-msg">Recuperación de Contraseña por Email</p>
 				<?php if($status_form == 1){?>
           <!-- Se requiere el correo para confirmar que sea correcto -->
-				<form action="#" method="post">
+				<form action="#" method="post" autocomplete="off">
 					<div class="input-group mb-3">
 						<input type="number" class="form-control" maxlength="8" value="<?php echo $cedula;?>" name="cedula" placeholder="Cédula de la Persona" readonly>
 						<div class="input-group-append">
@@ -81,7 +81,7 @@
 				</form>
 				<?php }else if($status_form == 2){?>
           <!-- Se requiere el código enviado al correo para recuperar contraseña -->
-				<form action="#" method="post">
+				<form action="#" method="post" autocomplete="off">
           <div class="input-group mb-3">
 						<input type="hidden" name="id" value="<?php echo $id; ?>">
 						<input type="number" class="form-control" maxlength="8" value="<?php echo $cedula;?>" name="cedula" placeholder="Cédula de la Persona" readonly>
@@ -106,7 +106,7 @@
 					</div>
 				</form>
 				<?php }else if($status_form == 3){?>
-				<form action="#" id="formulario" method="post" class="needs-validation" novalidate>
+				<form action="#" id="formulario" method="post" class="needs-validation" autocomplete="off" novalidate>
 					<div class="input-group mb-3">
 						<input type="hidden" name="user_id" readonly value="<?php echo $id;?>">
 						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cédula de la persona" readonly>

@@ -36,7 +36,7 @@
           </a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
           <?php 
-            if(isset($_SESSION['vistas_permitidas']) && in_array("marcas",$_SESSION['vistas_permitidas'])){
+            if(isset($_SESSION['vistas_permitidas']) && in_array("marcas",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
           ?>
             <li>
               <a href="<?php $this->SetURL('marcas/index'); ?>" class="dropdown-item  <?php $this->IsActive("marcas/index"); ?>">
@@ -48,7 +48,7 @@
             </li>
           <?php 
             }
-            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("productos",$_SESSION['vistas_permitidas'])){
+            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("productos",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
           ?>
             <li>
               <a href="<?php $this->SetURL('productos/index'); ?>" class="dropdown-item <?php $this->IsActive("productos/index"); ?>">
@@ -60,7 +60,7 @@
             </li>
           <?php 
             }
-            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("cargos",$_SESSION['vistas_permitidas'])){
+            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("cargos",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
           ?>
             <li>
               <a href="<?php $this->SetURL('cargo/index'); ?>" class="dropdown-item <?php $this->IsActive("cargo/index"); ?>">
@@ -75,7 +75,7 @@
             </li>
             <?php 
               }
-              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("personas",$_SESSION['vistas_permitidas'])){
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("personas",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
             ?>
             <li>
               <a href="<?php $this->SetURL('personas/index'); ?>" class="dropdown-item  <?php $this->IsActive("personas/index"); ?>">
@@ -87,7 +87,7 @@
             </li>
             <?php 
               }
-              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("comedor",$_SESSION['vistas_permitidas'])){
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("comedor",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
             ?>
             <li>
               <a href="<?php $this->SetURL('comedor/index'); ?>" class="dropdown-item <?php $this->IsActive("comedor/index"); ?>">
@@ -99,7 +99,7 @@
             </li>
             <?php 
               }
-              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("menu",$_SESSION['vistas_permitidas'])){
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("menu",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
             ?>
             <li>
               <a href="<?php $this->SetURL('menu/index'); ?>" class="dropdown-item <?php $this->IsActive("menu"); ?>">
@@ -111,7 +111,7 @@
             </li>
             <?php 
               }
-              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("jornada",$_SESSION['vistas_permitidas'])){
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("jornada",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
             ?>
             <li>
               <a href="<?php $this->SetURL('jornada/index'); ?>" class="dropdown-item <?php $this->IsActive("jornada/index"); ?>">
@@ -130,7 +130,8 @@
         <?php 
           if(
             isset($_SESSION['vistas_permitidas'][0]) && in_array("entradas",$_SESSION['vistas_permitidas']) ||
-            isset($_SESSION['vistas_permitidas'][0]) && in_array("salidas",$_SESSION['vistas_permitidas'])
+            isset($_SESSION['vistas_permitidas'][0]) && in_array("salidas",$_SESSION['vistas_permitidas'])  || 
+            $_SESSION['permisos'] == '3'
           ){
         ?>
         <li class="nav-item dropdown">
@@ -140,7 +141,7 @@
           </a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <?php 
-              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("entradas",$_SESSION['vistas_permitidas'])){
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("entradas",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
             ?>
             <li>
               <a href="<?php $this->SetURL('entradas/index'); ?>" class="dropdown-item <?php $this->IsActive("entradas"); ?>">
@@ -152,7 +153,7 @@
             </li>
             <?php 
               }
-              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("salidas",$_SESSION['vistas_permitidas'])){
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("salidas",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
             ?>
             <li>
               <a href="<?php $this->SetURL('salidas/index'); ?>" class="dropdown-item <?php $this->IsActive("salidas"); ?>">
@@ -169,7 +170,7 @@
         </li>
         <?php 
           }
-          if(isset($_SESSION['vistas_permitidas'][0]) && in_array("reportes",$_SESSION['vistas_permitidas'])){
+          if(isset($_SESSION['vistas_permitidas'][0]) && in_array("reportes",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
         ?>
         <li class="nav-item">
           <a href="<?php $this->SetURL('reportes/index'); ?>" class="nav-link <?php $this->IsActive("reportes"); ?>">

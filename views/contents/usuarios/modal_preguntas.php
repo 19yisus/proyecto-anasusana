@@ -19,12 +19,12 @@
                             <form id="formulario_2" action="<?php echo constant("URL");?>controller/c_usuario.php" name="formulario_2" method="POST" autocomplete="off" class="needs-validation" novalidate>
                                 <div class="card-body">
                                   <div class="row">
-                                    <div class="col-5 col-sm-12">
+                                    <!-- <div class="col-5 col-sm-12">
                                       <div class="form-group">
                                         <label for="id_pregun">Id pregunta(<span class="text-danger text-md">*</span>)</label>
                                         <input type="text" name="id_pregun" id="id_pregun" class="form-control" readonly>
                                       </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-7 col-sm-12">
                                       <div class="form-group">
                                         <label for="des_pregun">Descripción(<span class="text-danger text-md">*</span>)</label>
@@ -37,7 +37,7 @@
                                 <div class="card-footer">
                                     <!-- Actualizar_preguntas -->
                                     <!-- Save -->
-                                    <input type="hidden" name="ope">
+                                    <input type="hidden" name="ope" value="Save">
                                     <button type="button" id="btn_2" class="btn btn-primary">Actualizar</button>
                                 </div>
                             </form>

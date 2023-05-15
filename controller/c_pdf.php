@@ -16,7 +16,7 @@ class new_fpdf extends FPDF
   public function Header()
   {
     $this->SetFont("Arial", "B", 14);
-    $this->write(5, "ANA SUSSANA DE OUSET, Acarigua - Portuguesa");
+    $this->write(5, "ANA SUSSANA DE OUSSET, Acarigua - Portuguesa");
     $this->Image("../views/images/logo.jpg", 150, 5, 45, 20, "JPG");
     $this->Ln();
     $this->write(5, "$this->nombre");
@@ -75,6 +75,8 @@ function fn_pdf_entrada()
 
   $model = new m_entrada_salida();
   $d = $model->GetPdf($_POST['id_invent'])[0];
+  
+  // die("DFD"); 
   $fecha = new DateTime($d['doc']['fecha']);
 
   if (!isset($d['productos'][0][0])) {

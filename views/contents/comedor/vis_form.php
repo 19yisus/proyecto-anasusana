@@ -93,7 +93,7 @@
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
-                                        <input type="hidden" name="ope">
+                                        <input type="hidden" name="ope" value="Registrar">
                                         <button type="button" id="btn" onclick="ope.value = this.value" value="Registrar" class="btn btn-primary">
                                             <i class="fas fa-save"></i>
                                             Registrar

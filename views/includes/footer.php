@@ -1,5 +1,5 @@
 <footer class="main-footer text-sm">
-  <strong>Copyright &copy; 2021-2022 Comunidad cristiana, <a href="<?php echo constant("URL");?>">Iglesia Pan de vida</a>.</strong>
+  <strong>Copyright &copy; 2022-2023 Unidad Educativa, <a href="<?php echo constant("URL");?>">Ana Susana de Ousset</a>.</strong>
   All rights reserved.
 </footer>
 <!-- Control Sidebar -->

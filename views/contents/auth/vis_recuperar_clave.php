@@ -55,7 +55,7 @@
 				<p class="login-box-msg">Recuperación de Contraseña</p>
 
 				<?php if($status_form == 1){?>
-				<form action="#" method="post">
+				<form action="#" method="post" autocomplete="off">
 					<div class="input-group mb-3">
 						<input type="number" class="form-control" maxlength="8" name="cedula" placeholder="Cédula de la Persona" require>
 						<div class="input-group-append">
@@ -71,7 +71,7 @@
 					</div>
 				</form>
 				<?php }else if($status_form == 2){?>
-				<form action="#" method="post">
+				<form action="#" method="post" autocomplete="off">
 					<div class="input-group mb-3">
 						<input type="hidden" name="user_id" readonly value="<?php echo $id;?>">
 						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cédula de la Persona" readonly>
@@ -131,7 +131,7 @@
 					</div>
 				</form>
 				<?php }else if($status_form == 3){?>
-				<form action="#" id="formulario" method="post" class="needs-validation" novalidate>
+				<form action="#" id="formulario" method="post" class="needs-validation" novalidate autocomplete="off">
 					<div class="input-group mb-3">
 						<input type="hidden" name="user_id" readonly value="<?php echo $id;?>">
 						<input type="number" class="form-control" name="cedula" value="<?php echo $cedula;?>" placeholder="Cédula de la persona" readonly>
@@ -216,13 +216,13 @@
 						required: "Este campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
-						pattern: "Se debe de Ingresar una Clave más segura (1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+						pattern: "Se debe de Ingresar una Clave más segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
 					},
 					password2:{
 						required: "Este campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
-						pattern: "Se debe de Ingresar una Clave más Segura (1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres Mínimo)",
+						pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres Mínimo)",
 						equalTo: "Las Contraseñas Ingresadas NO Coinciden"
 					},
 					respuesta1:{

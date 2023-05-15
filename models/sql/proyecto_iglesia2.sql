@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-05-2023 a las 01:20:05
+-- Tiempo de generación: 16-05-2023 a las 01:03:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -37,94 +37,6 @@ CREATE TABLE `bitacora` (
   `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `bitacora`
---
-
-INSERT INTO `bitacora` (`id_operacion`, `descripcion`, `tabla_change`, `hora_fecha`, `id_usuario`) VALUES
-(1, 'REGISTRO DE NUEVO CARGO: ASASDFASDFA', 'CARGO', '2023-04-01 17:36:12', 1),
-(2, 'REGISTRO DE NUEVO CARGO: ASASDFASDFA', 'CARGO', '2023-04-01 17:37:57', 1),
-(3, 'REGISTRO DE NUEVO CARGO: JHJGHJGHJH', 'CARGO', '2023-04-01 17:39:22', 1),
-(4, 'REGISTRO DE NUEVO PERSONAS: 12341234, NOMBRE: MESSI RONALDO, TELEFONO: 1231 3231312', 'PERSONAS', '2023-04-10 19:13:11', 1),
-(5, 'REGISTRO NUEVO PROOVEDOR_MARCA: ID DE LA PERSONA => 20, 0 MARCAS', 'PROOVEDOR_MARCA', '2023-04-10 19:13:11', 1),
-(6, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-06 09:08:15', 2),
-(7, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-06 09:10:03', 2),
-(8, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-06 09:10:09', 1),
-(9, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-06 09:11:27', 1),
-(10, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-06 09:14:58', 1),
-(11, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-06 09:18:38', 1),
-(12, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-06 09:21:35', 1),
-(13, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-06 09:22:45', 1),
-(14, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 03:04:01', 1),
-(15, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 03:14:57', 1),
-(16, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 03:15:05', 1),
-(17, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 03:16:51', 1),
-(18, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-08 03:17:47', 2),
-(19, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-08 03:17:51', 2),
-(20, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-08 03:18:40', 2),
-(21, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-08 03:18:48', 2),
-(22, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 03:18:53', 1),
-(23, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 03:24:02', 1),
-(24, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 09:37:19', 1),
-(25, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 09:39:28', 1),
-(26, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 09:47:24', 1),
-(27, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 09:49:40', 1),
-(28, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 09:49:44', 1),
-(29, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-08 09:50:42', 1),
-(30, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:04:51', 1),
-(31, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:04:57', 1),
-(32, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:05:03', 1),
-(33, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:05:47', 1),
-(34, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:05:55', 1),
-(35, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:07:39', 1),
-(36, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:07:43', 1),
-(37, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:09:33', 1),
-(38, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:09:40', 1),
-(39, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:22:42', 1),
-(40, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:22:46', 1),
-(41, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:24:12', 1),
-(42, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:26:21', 1),
-(43, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:27:39', 1),
-(44, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:28:04', 1),
-(45, 'REGISTRO DE NUEVO PRODUCTO: MORTADELA, UNIDAD: KL, VALOR: 1, STOCK MINIMO: 1, STOCK MAXIMO: 100', 'PRODUCTOS', '2023-05-13 14:28:57', 1),
-(46, 'REGISTRO DE NUEVO MARCA: SABOR', 'MARCA', '2023-05-13 14:29:42', 1),
-(47, 'REGISTRO NUEVO PROOVEDOR_MARCA: ID DE LA PERSONA => , 0 MARCAS', 'PROOVEDOR_MARCA', '2023-05-13 14:31:38', 1),
-(48, 'REGISTRO DE NUEVO COMEDOR: ANA SUSANA DE OUSSET, DIRECCIÓN: AFAFAFAF', 'COMEDOR', '2023-05-13 14:32:01', 1),
-(49, 'TRANSACIÓN DE REGISTRO DEL MENÚ: MORTADELA CRUDA, ID DEL MENÚ: 1', 'MENU - MENU_DETALE', '2023-05-13 14:32:39', 1),
-(50, 'REGISTRO DE NUEVA JORNADA: MORTADELA PUES, DESCRIPCIÓN: JORNADA DE HOY\r\n, CANTIDAD APROXIMADA DE BENEFICIADOS: 10', 'JORNADA', '2023-05-13 14:33:19', 1),
-(51, 'TRANSACCIÓN DE ENTRADA DE PRODUCTOS| ID INVENTARIO: E-00000001, CANTIDAD: 40, OBSERVACIÓN: QUE LOCOOOOOOO\r\n', 'INVENTARIO - DETALLE_INVENTARI', '2023-05-13 14:34:02', 1),
-(52, 'TRANSACCIÓN DE SALIDA DE PRODUCTOS| ID INVENTARIO: S-00000001, CANTIDAD: 5, OBSERVACIÓN: MORTADELA SE VA', 'INVENTARIO - DETALLE_INVENTARI', '2023-05-13 14:34:52', 1),
-(53, 'TRANSACCIÓN DE SALIDA DE PRODUCTOS| ID INVENTARIO: S-00000002, CANTIDAD: 10, OBSERVACIÓN: SEE LLEVARON 10', 'INVENTARIO - DETALLE_INVENTARI', '2023-05-13 14:35:22', 1),
-(54, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:38:01', 1),
-(55, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:38:07', 1),
-(56, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:43:13', 1),
-(57, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:52:18', 1),
-(58, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:54:02', 1),
-(59, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:55:21', 1),
-(60, 'REGISTRO DE NUEVO MARCA: HPPP', 'MARCA', '2023-05-13 14:56:26', 1),
-(61, 'REGISTRO DE NUEVO MARCA: HOLA COMO', 'MARCA', '2023-05-13 14:56:34', 1),
-(62, 'REGISTRO DE NUEVO CARGO: ALONSO', 'CARGO', '2023-05-13 14:56:58', 1),
-(63, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:59:15', 1),
-(64, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 14:59:45', 1),
-(65, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 15:01:00', 1),
-(66, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 15:14:13', 1),
-(67, 'ACTUALIZACIÓN DE PRODUCTO: MORTADELA, UNIDAD: KL, VALOR: 1, STOCK MINIMO: 5, STOCK MAXIMO: 100', 'PRODUCTOS', '2023-05-13 15:14:29', 1),
-(68, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 15:15:59', 1),
-(69, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 15:27:32', 1),
-(70, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 15:29:49', 1),
-(71, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 15:31:28', 1),
-(72, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-13 15:34:27', 1),
-(73, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-14 17:19:41', 1),
-(74, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-14 18:17:20', 1),
-(75, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-14 18:17:25', 2),
-(76, 'SALIDA DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-14 18:19:03', 2),
-(77, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-14 18:19:10', 2),
-(78, 'SALIDA DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-14 18:40:07', 2),
-(79, 'INICIO DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-14 18:40:13', 1),
-(80, 'SALIDA DE SESION DEL USUARIO: V-26587969, ALFREDO MENDEZZ', 'USUARIOS', '2023-05-14 18:40:32', 1),
-(81, 'INICIO DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-14 18:40:36', 2),
-(82, 'SALIDA DE SESION DEL USUARIO: V-30400100, RONALDO PEREZ', 'USUARIOS', '2023-05-14 18:41:34', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -153,7 +65,8 @@ INSERT INTO `cargo` (`id_cargo`, `des_cargo`, `estatus_cargo`) VALUES
 (9, 'ASASDFASDFA', 1),
 (10, 'ASASDFASDFA', 1),
 (11, 'JHJGHJGHJH', 1),
-(12, 'ALONSO', 1);
+(12, 'ALONSO', 1),
+(13, 'FSDFSDF', 1);
 
 -- --------------------------------------------------------
 
@@ -168,28 +81,6 @@ CREATE TABLE `codigos_recuperacion` (
   `char_code` char(8) NOT NULL,
   `id_user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `codigos_recuperacion`
---
-
-INSERT INTO `codigos_recuperacion` (`id_cod`, `date_cod`, `status_code`, `char_code`, `id_user`) VALUES
-(1, '2023-04-03 23:26:25', 0, 'zL3ktmFG', 8),
-(2, '2023-04-03 23:26:56', 0, 'y3ntgSWA', 8),
-(3, '2023-04-04 00:09:40', 0, '5jqeJXv7', 8),
-(4, '2023-04-04 00:11:41', 0, 'yENZ23vM', 8),
-(5, '2023-04-04 00:12:13', 0, 'aM8dV1cb', 8),
-(6, '2023-04-04 00:12:23', 0, '6z4Suhtd', 8),
-(7, '2023-04-04 00:13:48', 0, 'hA7eUTgO', 8),
-(8, '2023-04-04 00:20:25', 0, 'WDl9hZjN', 8),
-(9, '2023-04-04 00:20:44', 0, 'VMd2jo3E', 8),
-(10, '2023-04-04 00:22:09', 0, 'R8ZNbBHJ', 8),
-(11, '2023-04-04 00:22:30', 0, '5Cvc6uhO', 8),
-(12, '2023-04-04 00:27:49', 0, 'V6SDMcNv', 8),
-(13, '2023-04-04 16:49:21', 0, 'MU0fc9yK', 8),
-(14, '2023-04-04 17:01:41', 0, 'Y0OTpg3w', 8),
-(15, '2023-04-10 18:42:17', 1, 'djnf8LXp', 8),
-(16, '2023-04-10 19:15:42', 1, 'l9BAIiaz', 9);
 
 -- --------------------------------------------------------
 
@@ -207,14 +98,6 @@ CREATE TABLE `comedor` (
   `created_comedor` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `comedor`
---
-
-INSERT INTO `comedor` (`id_comedor`, `nom_comedor`, `encargado_comedor`, `direccion_comedor`, `status_comedor`, `if_sede`, `created_comedor`) VALUES
-(1, 'PAN DE VIDA', 6, 'SDASDADADSDS', 1, 1, '2022-10-07 11:08:02'),
-(2, 'ANA SUSANA DE OUSSET', 1, 'AFAFAFAF', 1, 0, '2023-05-13 14:32:00');
-
 -- --------------------------------------------------------
 
 --
@@ -228,15 +111,6 @@ CREATE TABLE `detalle_inventario` (
   `precio_product_ope` double DEFAULT NULL,
   `detalle_cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `detalle_inventario`
---
-
-INSERT INTO `detalle_inventario` (`product_id_ope`, `invent_id_ope`, `fecha_vencimiento_ope`, `precio_product_ope`, `detalle_cantidad`) VALUES
-(1, 'E-00000001', NULL, 0, 40),
-(1, 'S-00000001', NULL, NULL, 5),
-(1, 'S-00000002', NULL, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -261,15 +135,6 @@ CREATE TABLE `inventario` (
   `observacion_invent` varchar(120) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `inventario`
---
-
-INSERT INTO `inventario` (`id_invent`, `orden_invent`, `cantidad_invent`, `status_invent`, `created_invent`, `type_operacion_invent`, `concept_invent`, `if_credito`, `jornada_id_invent`, `person_id_invent`, `recibe_person_id_invent`, `comedor_id_invent`, `user_id_invent`, `observacion_invent`) VALUES
-('E-00000001', '445646548', 40, 1, '2023-05-13 15:03:00', 'E', 'C', 0, NULL, 1, 1, 2, 1, 'QUE LOCOOOOOOO\r\n'),
-('S-00000001', NULL, 5, 1, '2023-05-13 15:04:00', 'S', 'O', NULL, 1, NULL, 1, 2, 1, 'MORTADELA SE VA'),
-('S-00000002', NULL, 10, 1, '2023-05-13 15:04:00', 'S', 'R', NULL, NULL, NULL, 1, 2, 1, 'SEE LLEVARON 10');
-
 -- --------------------------------------------------------
 
 --
@@ -287,13 +152,6 @@ CREATE TABLE `jornada` (
   `person_id_responsable` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `jornada`
---
-
-INSERT INTO `jornada` (`id_jornada`, `titulo_jornada`, `des_jornada`, `cant_aproximada`, `estatus_jornada`, `fecha_jornada`, `menu_id_jornada`, `person_id_responsable`) VALUES
-(1, 'MORTADELA PUES', 'JORNADA DE HOY\r\n', 10, 1, '2023-05-13', 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -306,23 +164,6 @@ CREATE TABLE `marca` (
   `status_marca` tinyint(4) NOT NULL,
   `created_marca` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `marca`
---
-
-INSERT INTO `marca` (`id_marca`, `nom_marca`, `status_marca`, `created_marca`) VALUES
-(1, 'GUKJ,M ', 1, '2022-10-07 11:01:13'),
-(2, 'POLAR', 1, '2022-10-17 09:39:24'),
-(3, 'MACEITE', 1, '2022-11-28 07:44:55'),
-(4, 'PAN', 1, '2022-12-02 13:58:32'),
-(5, 'MARY', 1, '2022-12-02 14:01:18'),
-(6, 'AGUA BLANCA', 1, '2022-12-02 14:21:56'),
-(7, 'DEL MAR', 1, '2022-12-02 14:36:15'),
-(8, 'GDFGSDFGSDFG', 1, '2023-03-28 09:24:40'),
-(9, 'SABOR', 1, '2023-05-13 14:29:42'),
-(10, 'HPPP', 1, '2023-05-13 14:56:26'),
-(11, 'HOLA COMO', 1, '2023-05-13 14:56:34');
 
 -- --------------------------------------------------------
 
@@ -338,13 +179,6 @@ CREATE TABLE `menu` (
   `created_menu` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `menu`
---
-
-INSERT INTO `menu` (`id_menu`, `des_menu`, `des_procedimiento`, `status_menu`, `created_menu`) VALUES
-(1, 'MORTADELA CRUDA', 'MORTADELA CRUDA', 1, '2023-05-13');
-
 -- --------------------------------------------------------
 
 --
@@ -358,13 +192,6 @@ CREATE TABLE `menu_detalle` (
   `med_comida_detalle` char(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
---
--- Volcado de datos para la tabla `menu_detalle`
---
-
-INSERT INTO `menu_detalle` (`menu_id_detalle`, `product_id_menu_detalle`, `consumo`, `med_comida_detalle`) VALUES
-(1, 1, 500, 'GM');
-
 -- --------------------------------------------------------
 
 --
@@ -376,21 +203,6 @@ CREATE TABLE `permiso_vista` (
   `user_id` int(11) NOT NULL,
   `modulo_name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `permiso_vista`
---
-
-INSERT INTO `permiso_vista` (`id_per`, `user_id`, `modulo_name`) VALUES
-(11, 9, 'marcas'),
-(12, 9, 'personas'),
-(13, 9, 'jornada'),
-(18, 2, 'marcas'),
-(19, 2, 'personas'),
-(20, 2, 'jornada'),
-(21, 2, 'entradas'),
-(22, 2, 'cargo'),
-(23, 2, 'menu');
 
 -- --------------------------------------------------------
 
@@ -430,7 +242,10 @@ INSERT INTO `personas` (`id_person`, `cedula_person`, `tipo_person`, `nom_person
 (17, '26744045', 'V', 'CARLOS ORDO;EZ', 'M', '0424 5625680', '', 'AGUA LANCA', 'CARLOSORDONEZ@GMAIL.COM', 2, 0, 1, 1, '2022-10-17 09:43:42'),
 (18, '8659318', 'V', 'JESUSSSSS', 'M', '3092 3523333', '3___ ___4234', 'AFWADVSV', 'KCASN34243KANC@GMAIL.COM', 2, 1, 1, 1, '2022-11-28 07:53:14'),
 (19, '27132666', 'V', 'FASDFASDFASDFASDF', 'M', '0424 5616546', '', 'FASDFASDFASDFASDFASDFASDF', 'JESUSITOMORALES70@GMAIL.COM', 2, 0, 1, 1, '2023-03-28 09:28:13'),
-(20, '12341234', 'V', 'MESSI RONALDO', 'M', '1231 3231312', '', 'ADSFFAFAFA', 'CEORMUSICPRODUCER@GMAIL.COM', 1, 0, 1, 1, '2023-04-10 19:13:11');
+(20, '12341234', 'V', 'MESSI RONALDO', 'M', '1231 3231312', '', 'ADSFFAFAFA', 'CEORMUSICPRODUCER@GMAIL.COM', 1, 0, 1, 1, '2023-04-10 19:13:11'),
+(21, '2131231', 'V', 'SADASDCSDACA', 'M', '2131 2312312', '1232 1312312', 'DAFKLJDFKLJASDFDS', 'ADDFDAFADSFSDA@GMAIL.COM', 1, 0, 1, 1, '2023-05-15 13:52:17'),
+(22, '32132134', 'V', 'CASKLHDLKJASD', 'M', '2134 2141343', '2131 2412412', 'DFADSFAFA', 'DSAFAFADFADFFF@GMAIL.COM', 1, 0, 0, 1, '2023-05-15 13:53:37'),
+(23, '214124124', 'V', 'ACASCACASCAC', 'M', '1323 1231231', '2321 3123123', 'AFDSFADSFDSF', 'ASDADASDAFDSA@GMAIL.COM', 1, 0, 0, 1, '2023-05-15 13:54:01');
 
 -- --------------------------------------------------------
 
@@ -452,7 +267,9 @@ INSERT INTO `preguntas` (`id_pregun`, `des_pregun`) VALUES
 (2, 'Animal favorito'),
 (3, 'SSSSSSSSSS'),
 (4, 'EQUIPO FAVORITO DE FUTBOL'),
-(5, 'MESSI O CRISTIANO?');
+(5, 'MESSI O CRISTIANO?'),
+(6, 'ASDASD'),
+(7, 'AAAAAAA');
 
 -- --------------------------------------------------------
 
@@ -471,13 +288,6 @@ CREATE TABLE `productos` (
   `stock_maximo_product` int(11) NOT NULL,
   `marca_id_product` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Volcado de datos para la tabla `productos`
---
-
-INSERT INTO `productos` (`id_product`, `nom_product`, `med_product`, `valor_product`, `status_product`, `created_product`, `stock_product`, `stock_maximo_product`, `marca_id_product`) VALUES
-(1, 'MORTADELA', 'KL', 1, 1, '2023-05-13 14:28:56', 25, 100, 6);
 
 -- --------------------------------------------------------
 
@@ -680,67 +490,67 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-  MODIFY `id_operacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id_operacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `codigos_recuperacion`
 --
 ALTER TABLE `codigos_recuperacion`
-  MODIFY `id_cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_cod` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `comedor`
 --
 ALTER TABLE `comedor`
-  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_comedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `jornada`
 --
 ALTER TABLE `jornada`
-  MODIFY `id_jornada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_jornada` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso_vista`
 --
 ALTER TABLE `permiso_vista`
-  MODIFY `id_per` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_per` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_person` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id_pregun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pregun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles_usuario`
