@@ -152,7 +152,7 @@
             data: "concept_invent",
             render(data) {
               if (data == "O") return "Consumo";
-              if (data == "R") return "Rechazo";
+              if (data == "R") return "Remanente";
               if (data == "V") return "Vencimiento";
             }
           },

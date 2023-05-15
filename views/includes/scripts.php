@@ -59,6 +59,15 @@
 <?php
 	if(isset($this->code_error)) $this->ObjMessage->printError($this->code_error);
 	if(isset($this->code_done)) $this->ObjMessage->printMessage($this->code_done);
+	if(isset($this->url[2])){
+		if($this->url[2] == "err" || $this->url[2] == "msg"){
+			$this->ObjMessage->MensajePersonal([
+				'code' => $this->url[2],
+				'msg' => $this->url[3]
+			]);
+		}
+	}
+	
 
 	if(isset($_SESSION['user_id']) && constant("DEV") == false){
 		?>
@@ -70,7 +79,7 @@
 				window.setInterval(() => {
 					contador("sum")
 					show_alerta();
-					if(tiempo_inactividad > tiempo_final) CerrarSession.submit();
+					if(tiempo_inactividad > tiempo_final) cerrarSesion.submit();
 				}, 1000);
 				window.onblur = window.onmousemove = () =>{
 					if(!Swal.isVisible()) contador("clear");

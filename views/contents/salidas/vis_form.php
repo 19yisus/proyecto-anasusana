@@ -59,7 +59,7 @@
 														<option value="">Seleccione una Opción</option>
 														<option value="O">Consumo</option>
 														<option value="V">Vencimiento</option>
-														<option value="R">Rechazo</option>
+														<option value="R">Remanente</option>
 													</select>
 												</div>
 											</div>
@@ -179,7 +179,7 @@
 																	<td>{{ item.code }}</td>
 																	<td>{{ item.nom_product }}</td>
 																	<td>{{ item.cantidad }}</td>
-																	<td>{{ calculo_stock(item.stock,item.cantidad,item.stock_minimo)}}</td>
+																	<td>{{ calculo_stock(item.stock,item.cantidad)}}</td>
 																</tr>
 															</tbody>
 														</table>
@@ -226,7 +226,7 @@
 			el: '#VueApp',
 			data: {
 				productos: [
-					// {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0, stock_minimo: 0, stock_maximo: 0, nuevo_stock, if_entrada},
+					// {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0, stock_maximo: 0, nuevo_stock, if_entrada},
 				],
 				mensaje: "fasdfasdfsad",
 				motivo_salida: "",
@@ -356,7 +356,6 @@
 								let stock = parseInt(item.stock_product)
 								let consumo = parseInt(item.consumo)
 								let cant_proximada = parseInt(this.cant_aproximada)
-								let minimo_stock = parseInt(item.stock_minimo_product)
 								let total = (consumo * cant_proximada);
 								let consumo_total;
 
@@ -368,16 +367,15 @@
 										consumo_total = 1;
 									} else consumo_total = total;
 								}								
-								let restante = (item.stock_product - item.stock_minimo_product ) - consumo_total;
+								let restante = (item.stock_product - consumo_total);
 								let if_entrada;
 								let producto = [];
 								producto["code"] = item.id_product;
 								producto["nom"] = item.nom_product;
 								producto["cantidad"] = consumo_total;
 								producto["stock"] = parseInt(item.stock_product);
-								producto["limite_stock"] = parseInt(item.stock_product) - parseInt(item.stock_minimo_product);
+								producto["limite_stock"] = parseInt(item.stock_product);
 								producto["maximo_stock"] = parseInt(item.stock_maximo_product) - parseInt(item.stock_product);
-								producto["minimo_stock"] = parseInt(item.stock_minimo_product);
 								producto["nuevo_stock"] = 0;
 								if(restante <= 0) if_entrada = "SI"; else if_entrada = "NO";
 								producto["if_entrada"] = if_entrada;
@@ -414,8 +412,8 @@
 					}
 					return '';
 				},
-				calculo_stock(stock, cantidad, minimo) {
-					let stock_min = parseInt(stock) - parseInt(minimo)
+				calculo_stock(stock, cantidad) {
+					let stock_min = parseInt(stock)
 					let total = parseInt(stock_min) - parseInt(cantidad);
 					return total;
 				},
@@ -458,7 +456,6 @@
 							cantidad: item['cantidad'],
 							limite_stock: item['limite_stock'],
 							stock: item['stock'],
-							stock_minimo: item['minimo_stock'],
 							stock_maximo: item['maximo_stock'],
 							nuevo_stock: item['nuevo_stock'],
 							if_entrada: item['if_entrada']
@@ -474,7 +471,6 @@
 							cantidad: 0,
 							limite_stock: 0,
 							stock: 0,
-							stock_minimo: 0,
 							stock_maximo: 0,
 							nuevo_stock: 0,
 							if_entrada: "NO"
@@ -489,7 +485,6 @@
 							cantidad: 0,
 							limite_stock: 0,
 							stock: 0,
-							stock_minimo: 0,
 							stock_maximo: 0,
 							nuevo_stock: 0,
 							if_entrada: "NO"
@@ -510,7 +505,7 @@
 				consulta_limite_stock: async function(e) {
 					let resultado = await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Consultar_producto&id_producto=${this.productos[e.target.dataset.index].code}`)
 						.then(response => response.json()).then(res => res.data).catch(Err => console.error(Err));
-					this.productos[e.target.dataset.index].limite_stock = (parseInt(resultado.stock_product) - parseInt(resultado.stock_minimo_product));
+					this.productos[e.target.dataset.index].limite_stock = (parseInt(resultado.stock_product));
 				},
 				limpiarProductos() {
 					this.productos = [];
@@ -537,7 +532,6 @@
 							this.productos[e.target.dataset.index].cantidad = 0;
 							this.productos[e.target.dataset.index].stock = data.data.stock_product;
 							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product) - parseInt(data.stock_product);
-							this.productos[e.target.dataset.index].stock_minimo = parseInt(data.stock_minimo_product);
 							this.productos[e.target.dataset.index].nuevo_stock = parseInt(0);
 						}).catch(error => console.error(error));
 				},
@@ -571,13 +565,8 @@
 				validarStockMaximo: function(index) {
 					let input = index.target,
 						value = parseInt(input.value),
-						maximo = parseInt(input.max),
-						minimo = parseInt(input.min);
+						maximo = parseInt(input.max);
 
-					if (value < minimo) {
-						this.Fn_mensaje_error(`Este producto tiene un stock minimo de: (${minimo})`);
-						this.productos[input.dataset.index].nuevo_stock = minimo;
-					}
 					if (value > maximo) {
 						this.Fn_mensaje_error(`No se puede superar el Stock Maximo de este producto (${this.productos[input.dataset.index].stock_maximo})`);
 						this.productos[input.dataset.index].nuevo_stock = maximo;

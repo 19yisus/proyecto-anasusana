@@ -58,12 +58,6 @@
                                         <div class="row">
                                             <div class="col-3">
                                                 <div class="form-group">
-                                                    <label for="">Stock Minimo(<span class="text-danger text-md">*</span>)</label>
-                                                    <input type="number" name="stock_minimo_producto" step="1" min="1" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
-                                                </div>
-                                            </div>
-                                            <div class="col-3">
-                                                <div class="form-group">
                                                     <label for="">Stock Maximo(<span class="text-danger text-md">*</span>)</label>
                                                     <input type="number" name="stock_maximo_producto" step="1" min="1" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
                                                 </div>
@@ -161,20 +155,9 @@
                     required: true,
                     number: true,
                 },
-                stock_minimo_producto: {
-                    required: true,
-                    number: true,
-                    min: 1,
-                    max: function() {
-                        return parseInt($("#stock_maximo_producto").val())
-                    }
-                },
                 stock_maximo_producto: {
                     required: true,
                     number: true,
-                    min: function() {
-                        return parseInt($("#stock_minimo_producto").val())
-                    }
                 },
                 marca_id_producto: {
                     required: true
@@ -192,21 +175,9 @@
                     required: "Este Campo NO puede estar Vacio",
                     number: "Sólo se Aceptan Números"
                 },
-                stock_minimo_producto: {
-                    required: "Este Campo NO puede estar Vacio",
-                    number: "Sólo se Aceptan Números",
-                    max: function() {
-                        if (!parseInt($("#stock_maximo_producto").val()) > 0) return "Aun debes ingresar el stock maximo";
-                        else "El maximo a ingresar es: " + parseInt($("#stock_maximo_producto").val())
-                    }
-                },
                 stock_maximo_producto: {
                     required: "Este Campo NO puede estar Vacio",
                     number: "Sólo se Aceptan Números",
-                    min: function() {
-                        if (!parseInt($("#stock_minimo_producto").val()) > 0) return "Aun debes ingresar el stock minimo";
-                        else "El minimo a ingresar es: " + parseInt($("#stock_minimo_producto").val())
-                    }
                 },
                 marca_id_producto: {
                     required: "Debe de Seleccionar una Opción"

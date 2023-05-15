@@ -35,7 +35,6 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Cantidad en Stock</th>
-                        <th>Stock Minimo</th>
                         <th>Stock Máximo</th>
                         <th>Marca</th>
                         <th>Estado</th>
@@ -50,79 +49,6 @@
               <!-- /.card -->
             </div>
           </div>
-          <!-- <div class="row">
-            <div class="col-md-12">
-              <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Reportes de productos</h3>
-                </div>
-                <form action="<?php echo constant("URL"); ?>controller/c_pdf.php" method="POST" target="<?php echo constant("URL"); ?>controller/c_pdf.php" class="">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-3">
-                        <label for="">Tipo de reporte(<span class="text-danger text-md">*</span>)</label>
-                        <div class="row">
-                          <div class="form-check mx-3">
-                            <input type="radio" name="tipo_reporte" id="tipo_reporte" value="productos" class="form-check-input" readonly checked>
-                            <label for="tipo_reporte" class="form-check-label">Productos</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="form-group">
-                          <label for="">Filtro(<span class="text-danger text-md">*</span>)</label>
-                          <div class="row">
-                            <div class="form-check mx-3">
-                              <input type="radio" name="filtro" id="filtro" value="T" class="form-check-input" required>
-                              <label for="filtro" class="form-check-label">Todos</label>
-                            </div>
-                            <div class="form-check mx-3">
-                              <input type="radio" name="filtro" id="filtro" value="M" class="form-check-input" required>
-                              <label for="filtro" class="form-check-label">Por Marca</label>
-                            </div>
-                            <div class="form-check mx-3">
-                              <input type="radio" name="filtro" id="filtro" value="U" class="form-check-input" required>
-                              <label for="filtro" class="form-check-label">Por Unidad de Medida</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-3" style="display: none;" id="select_medidas">
-                        <div class="form-group">
-                          <label for="">Unidad de Medida(<span class="text-danger text-md">*</span>)</label>
-                          <select name="id" id="med_producto_select" class="custom-select" disabled required>
-                            <option value="">Seleccione una Medida</option>
-                            <option value="KL">Kilo gramos (KL)</option>
-                            <option value="LT">Litros (L)</option>
-                            <option value="GM">Gramos (G)</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-3" style="display: none;" id="select_marcas">
-                        <div class="form-group">
-                          <label for="">Marcas(<span class="text-danger text-md">*</span>)</label>
-                          <select name="id" id="mar_producto_select" class="custom-select" disabled required>
-                            <option value="">Seleccione una Marca</option>
-                            <?php
-                            foreach ($marcas as $marca) { ?>
-                              <option value="<?php echo $marca['id_marca']; ?>"><?php echo $marca['nom_marca']; ?></option><?php
-                                                                                                                          } ?>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-footer">
-                      <input type="hidden" name="ope" value="ReporteProductos">
-                      <button type="submit" id="btn" class="btn btn-primary">
-                        <i class="fas fa-save"></i>
-                        Enviar
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div> -->
           <!-- /.row -->
           <!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -196,7 +122,6 @@
           form.nom_producto.value = res.data.nom_product;
           form.med_producto.value = res.data.med_product;
           form.valor_producto.value = res.data.valor_product;
-          form.stock_minimo_producto.value = res.data.stock_minimo_product;
           form.stock_maximo_producto.value = res.data.stock_maximo_product;
           form.marca_id_producto.value = res.data.marca_id_product;
         })
@@ -219,9 +144,6 @@
           },
           {
             data: "stock_product"
-          },
-          {
-            data: "stock_minimo_product"
           },
           {
             data: "stock_maximo_product"

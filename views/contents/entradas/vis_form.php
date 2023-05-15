@@ -197,7 +197,7 @@
 			el: '#VueApp',
 			data: {
 				productos: [
-					// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: "", stock_maximo: 0, stock_minimo: 0},
+					// {code: "", nom_product: "", precio: 0, cantidad: 0, fecha: "", stock_maximo: 0},
 				],
 				if_credito: "",
 				concepto_operacion: "",
@@ -213,7 +213,6 @@
 							cantidad: 1,
 							fecha: "",
 							stock_maximo: 1,
-							stock_minimo: 1
 						});
 						return false;
 					}
@@ -225,7 +224,6 @@
 						cantidad: 1,
 						fecha: "",
 						stock_maximo: 1,
-						stock_minimo: 1
 					});
 					else this.Fn_mensaje_error("Completa los campos antes de agregar otro producto!");
 				},
@@ -252,7 +250,6 @@
 							this.productos[e.target.dataset.index].nom_product = data.nom_product;
 							this.productos[e.target.dataset.index].cantidad = parseInt(this.productos[e.target.dataset.index].cantidad);
 							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product) - parseInt(data.stock_product);
-							this.productos[e.target.dataset.index].stock_minimo = parseInt(data.stock_minimo_product);
 						}).catch(error => console.error(error));
 				},
 				CodigosDuplicados(element) {
@@ -269,13 +266,7 @@
 				validarStockMaximo: function(index) {
 					let input = index.target,
 						value = parseInt(input.value),
-						maximo = parseInt(input.max),
-						minimo = parseInt(input.min);
-
-					if (value < minimo) {
-						this.Fn_mensaje_error(`Este producto tiene un stock minimo de: (${minimo})`);
-						this.productos[input.dataset.index].cantidad = minimo;
-					}
+						maximo = parseInt(input.max);
 					if (value > maximo) {
 						this.Fn_mensaje_error(`No se puede superar el Stock Maximo de este producto (${this.productos[input.dataset.index].stock_maximo})`);
 						this.productos[input.dataset.index].cantidad = maximo;

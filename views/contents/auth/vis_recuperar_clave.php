@@ -2,8 +2,7 @@
 	$status_form = 1;
 	$cedula = null;
 	$id = null;
-	$pregun1 = null;
-	$pregun2 = null;
+	$pregun1 = $pregun2 = $respues1 = $respues2 = null;
 	$result =  null;
 
 	if(isset($_POST['ope'])){
@@ -22,8 +21,6 @@
 					$id = $result['id'];
 					$pregun1 = $result['pregun1'];
 					$pregun2 = $result['pregun2'];
-					$respues1 = $result['respues1'];
-					$respues2 = $result['respues2'];
 				}
 			break;
 

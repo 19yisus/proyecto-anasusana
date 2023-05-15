@@ -55,6 +55,8 @@
 
   function fn_Cerrar(){
     session_start();
+    $model = new m_auth();
+    $model->registrar_salida();
     session_unset();
     session_destroy();
     header("Location: ".constant("URL")."auth/login");

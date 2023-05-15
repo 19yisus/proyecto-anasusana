@@ -31,7 +31,7 @@
                                         <div class="form-group">
                                             <input type="hidden" name="id_marca">
                                             <label for="nom_marca">Nombre de la Marca(<span class="text-danger text-md">*</span>)</label>
-                                            <input type="text" name="nom_marca" id="nom_marca" placeholder="Ingrese el Nombre de la Marca" class="form-control">
+                                            <input type="text" minlength="3" name="nom_marca" id="nom_marca" placeholder="Ingrese el Nombre de la Marca" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-5">

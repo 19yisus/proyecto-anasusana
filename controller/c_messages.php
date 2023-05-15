@@ -1,5 +1,7 @@
 <?php
   class c_messages{
+    private $if_code_exists;
+
     private $list_errors = [
       '01AUTH' => "NO EXISTE SESSION ACTIVA",
       '02AUTH' => "La cédula es invalida o no esta registrado en el sistema",
@@ -19,9 +21,15 @@
       '02AUTH' => "Registro de usuario exitoso!",
     ];
 
+    public function __constructor(){
+      $this->if_code_exists = false;
+    }
+
     public function printError($indexError){
+      $this->if_code_exists = false;
       foreach($this->list_errors as $error => $key){
         if($indexError === $error){
+          $this->if_code_exists = true;
           ?>
           <script>
             Toast.fire({
@@ -35,8 +43,11 @@
     }
 
     public function printMessage($indexMessage){
+      
+      $this->if_code_exists = false;
       foreach($this->list_messages as $msg => $key){
         if($indexMessage === $msg){
+          $this->if_code_exists = true;
           ?>
           <script>
             Toast.fire({
@@ -46,12 +57,15 @@
           </script>
           <?php
         }
-      }
+      }    
     }
 
     public function MensajePersonal($array){
       $code = $array['code'];
       $mensaje = $array['msg'];
+      $code = ($code == "err") ? "error" : "success";
+      if($this->if_code_exists) return false;
+      $mensaje = str_ireplace("-"," ",$mensaje);
       ?>
       <script>
         Toast.fire({

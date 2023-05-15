@@ -50,12 +50,6 @@
                                         </div>
                                         <div class="col-7 col-sm-12">
                                           <div class="form-group">
-                                              <label for="">Stock Minimo(<span class="text-danger text-md">*</span>)</label>
-                                              <input type="number" name="stock_minimo_producto" step="1" id="stock_minimo_producto" class="form-control" placeholder="Ingrese los valores">
-                                          </div>
-                                        </div>
-                                        <div class="col-7 col-sm-12">
-                                          <div class="form-group">
                                             <label for="">Stock Maximo(<span class="text-danger text-md">*</span>)</label>
                                             <input type="number" name="stock_maximo_producto" step="1" id="stock_maximo_producto" class="form-control" placeholder="Ingrese los valores">
                                           </div>
@@ -132,10 +126,6 @@
                 required: true,
                 number: true,
             },
-            stock_minimo_producto:{
-                required: true,
-                number: true,
-            },
             stock_maximo_producto:{
                 required: true,
                 number: true,
@@ -153,10 +143,6 @@
                 required: "Debe de Seleccionar una Opción",
             },
             valor_producto:{
-                required: "Este Campo NO puede estar Vacio",
-                number: "Sólo se Aceptan Números"
-            },
-            stock_minimo_producto:{
                 required: "Este Campo NO puede estar Vacio",
                 number: "Sólo se Aceptan Números"
             },

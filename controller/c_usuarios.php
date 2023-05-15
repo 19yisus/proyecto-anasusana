@@ -69,6 +69,7 @@
         $model = new m_usuarios();
         $model->setDatos($_POST);
         $result = $model->Update();
+        $model->Actualizar_permisos_vista();
 
         print json_encode(["data" => $result]);
     }
@@ -99,9 +100,10 @@
     function fn_Consultar_user(){
         $model = new m_usuarios();
         $model->setDatos(["id_user" => $_GET["id_user"]]);
-        $result = $model->Get_user();
+        $result1 = $model->Get_user();
+        $result2 = $model->Get_permisosVistas();
 
-        print json_encode(["data" => $result]);
+        print json_encode(["data" => [$result1,$result2]]);
     }
 
     function fn_Consultar_preguntas(){

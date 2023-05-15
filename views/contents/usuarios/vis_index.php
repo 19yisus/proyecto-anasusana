@@ -57,6 +57,38 @@
   require_once("./views/contents/usuarios/modal.php");
 ?>
 <script>
+  
+  const app = new Vue({
+    el: '#app_vue',
+    data:{
+      modulos:[
+        "marcas",
+        "personas",
+        "jornada",
+        "productos",
+        "entradas",
+        "salidas",
+        "comedor",
+        "cargo",
+        "menu",
+        "reportes",
+      ],
+      modulosRegistrados:[]
+    },
+    computed:{
+      if_modulo(name){
+        let check = false;
+        this.modulosRegistrados.forEach(element => {
+          console.log(element, name)
+          if(element.modulo_name == name){
+            check = true;
+            return false;
+          }
+        });
+      }
+    }
+  });
+  
   const ChangeStatus = async (value, id) => {
     const form = document.getElementById(`formSecondary-${id}`);
 
@@ -86,8 +118,10 @@
     await fetch(`<?php echo constant("URL");?>controller/c_usuarios.php?ope=Consultar_user&id_user=${value}`)
     .then( response => response.json()).then( res => {
       const form = document.formulario;
-      form.id_user.value = res.data.id_user;
-      form.rol_user.value = res.data.id_rol;
+      form.id_user.value = res.data[0].id_user;
+      form.rol_user.value = res.data[0].id_rol;
+      app.modulosRegistrados = res.data[1];
+      console.log(app.modulosRegistrados)
     })
     .catch( Err => {
       console.error(Err)

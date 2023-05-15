@@ -35,6 +35,9 @@
             Registros
           </a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+          <?php 
+            if(isset($_SESSION['vistas_permitidas']) && in_array("marcas",$_SESSION['vistas_permitidas'])){
+          ?>
             <li>
               <a href="<?php $this->SetURL('marcas/index'); ?>" class="dropdown-item  <?php $this->IsActive("marcas/index"); ?>">
                 <p>
@@ -43,6 +46,10 @@
                 </p>
               </a>
             </li>
+          <?php 
+            }
+            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("productos",$_SESSION['vistas_permitidas'])){
+          ?>
             <li>
               <a href="<?php $this->SetURL('productos/index'); ?>" class="dropdown-item <?php $this->IsActive("productos/index"); ?>">
                 <p>
@@ -51,6 +58,10 @@
                 </p>
               </a>
             </li>
+          <?php 
+            }
+            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("cargos",$_SESSION['vistas_permitidas'])){
+          ?>
             <li>
               <a href="<?php $this->SetURL('cargo/index'); ?>" class="dropdown-item <?php $this->IsActive("cargo/index"); ?>">
                 <p>
@@ -62,6 +73,10 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("personas",$_SESSION['vistas_permitidas'])){
+            ?>
             <li>
               <a href="<?php $this->SetURL('personas/index'); ?>" class="dropdown-item  <?php $this->IsActive("personas/index"); ?>">
                 <p>
@@ -70,6 +85,10 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("comedor",$_SESSION['vistas_permitidas'])){
+            ?>
             <li>
               <a href="<?php $this->SetURL('comedor/index'); ?>" class="dropdown-item <?php $this->IsActive("comedor/index"); ?>">
                 <p>
@@ -78,6 +97,10 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("menu",$_SESSION['vistas_permitidas'])){
+            ?>
             <li>
               <a href="<?php $this->SetURL('menu/index'); ?>" class="dropdown-item <?php $this->IsActive("menu"); ?>">
                 <p>
@@ -86,6 +109,10 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("jornada",$_SESSION['vistas_permitidas'])){
+            ?>
             <li>
               <a href="<?php $this->SetURL('jornada/index'); ?>" class="dropdown-item <?php $this->IsActive("jornada/index"); ?>">
                 <p>
@@ -95,14 +122,26 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+            ?>
           </ul>
         </li>
+        <?php 
+          if(
+            isset($_SESSION['vistas_permitidas'][0]) && in_array("entradas",$_SESSION['vistas_permitidas']) ||
+            isset($_SESSION['vistas_permitidas'][0]) && in_array("salidas",$_SESSION['vistas_permitidas'])
+          ){
+        ?>
         <li class="nav-item dropdown">
           <a id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" class="nav-link dropdown-toggle <?php $this->IsActive(["entradas/index", "entradas/form", "salidas/index", "salidas/form"]); ?>">
             <i class="nav-icon fas fa-chart-pie"></i>
             Operaciones
           </a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+            <?php 
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("entradas",$_SESSION['vistas_permitidas'])){
+            ?>
             <li>
               <a href="<?php $this->SetURL('entradas/index'); ?>" class="dropdown-item <?php $this->IsActive("entradas"); ?>">
                 <p>
@@ -111,6 +150,10 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("salidas",$_SESSION['vistas_permitidas'])){
+            ?>
             <li>
               <a href="<?php $this->SetURL('salidas/index'); ?>" class="dropdown-item <?php $this->IsActive("salidas"); ?>">
                 <p>
@@ -119,8 +162,15 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+            ?>
           </ul>
         </li>
+        <?php 
+          }
+          if(isset($_SESSION['vistas_permitidas'][0]) && in_array("reportes",$_SESSION['vistas_permitidas'])){
+        ?>
         <li class="nav-item">
           <a href="<?php $this->SetURL('reportes/index'); ?>" class="nav-link <?php $this->IsActive("reportes"); ?>">
             <p>
@@ -129,6 +179,9 @@
             </p>
           </a>
         </li>
+        <?php 
+          }
+        ?>
         <?php if (isset($_SESSION) && $_SESSION['permisos'] == 3) { ?>
           <li class="nav-item dropdown">
             <a id="dropdownSubMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" class="nav-link dropdown-toggle <?php $this->IsActive(["usuarios/index", "usuarios/form"]); ?>">

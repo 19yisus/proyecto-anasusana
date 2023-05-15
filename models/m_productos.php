@@ -3,12 +3,12 @@ require_once("m_db.php");
 
 class m_productos extends m_db
 {
-	private $id_producto, $nom_producto, $status_producto, $med_producto, $valor_producto, $stock_producto, $marca_id_producto, $stock_maximo_producto, $stock_minimo_producto;
+	private $id_producto, $nom_producto, $status_producto, $med_producto, $valor_producto, $stock_producto, $marca_id_producto, $stock_maximo_producto;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->id_producto = $this->nom_producto = $this->status_producto = $this->med_producto = $this->valor_producto = $this->stock_producto = $this->marca_id_producto = $this->stock_maximo_producto = $this->stock_minimo_producto = "";
+		$this->id_producto = $this->nom_producto = $this->status_producto = $this->med_producto = $this->valor_producto = $this->stock_producto = $this->marca_id_producto = $this->stock_maximo_producto = "";
 	}
 
 	public function setDatos($d)
@@ -19,7 +19,6 @@ class m_productos extends m_db
 		$this->med_producto = isset($d['med_producto']) ? $this->Clean($d['med_producto']) : null;
 		$this->valor_producto = isset($d['valor_producto']) ? $this->Clean(intval($d['valor_producto'])) : null;
 		$this->stock_producto = isset($d['stock_producto']) ? $this->Clean(intval($d['stock_producto'])) : null;
-		$this->stock_minimo_producto = isset($d['stock_minimo_producto']) ? $this->Clean(intval($d['stock_minimo_producto'])) : null;
 		$this->stock_maximo_producto = isset($d['stock_maximo_producto']) ? $this->Clean(intval($d['stock_maximo_producto'])) : null;
 		$this->marca_id_producto = isset($d['marca_id_producto']) ? $this->Clean($d['marca_id_producto']) : null;
 	}
@@ -30,8 +29,8 @@ class m_productos extends m_db
 		$result = $this->Query($sqlVerificar);
 		if ($result->num_rows > 0) return "err/02ERR";
 
-		$sql = "INSERT INTO productos(id_product, nom_product, med_product, valor_product, status_product, created_product, stock_product, stock_minimo_product, stock_maximo_product, marca_id_product)
-            VALUES(null,'$this->nom_producto', '$this->med_producto', '$this->valor_producto', $this->status_producto, NOW(), 0,$this->stock_minimo_producto, $this->stock_maximo_producto, $this->marca_id_producto);";
+		$sql = "INSERT INTO productos(id_product, nom_product, med_product, valor_product, status_product, created_product, stock_product, stock_maximo_product, marca_id_product)
+            VALUES(null,'$this->nom_producto', '$this->med_producto', '$this->valor_producto', $this->status_producto, NOW(), 0, $this->stock_maximo_producto, $this->marca_id_producto);";
 		$this->Query($sql);
 
 		if(!isset($_SESSION['user_id'])) session_start();
@@ -40,7 +39,7 @@ class m_productos extends m_db
 			$this->reg_bitacora([
 				'user_id' => $_SESSION['user_id'],
 				'table_name'=> "PRODUCTOS",
-				'des' => "REGISTRO DE NUEVO PRODUCTO: $this->nom_producto, UNIDAD: $this->med_producto, VALOR: $this->valor_producto, STOCK MINIMO: $this->stock_minimo_producto, STOCK MAXIMO: $this->stock_maximo_producto"
+				'des' => "REGISTRO DE NUEVO PRODUCTO: $this->nom_producto, UNIDAD: $this->med_producto, VALOR: $this->valor_producto, STOCK MAXIMO: $this->stock_maximo_producto"
 			]);
 			return "msg/01DONE";
 		}
@@ -55,7 +54,7 @@ class m_productos extends m_db
 		if ($result->num_rows > 0) return ["code" => "error", "message" => "Operación Fallida!, el regitro no se puede duplicar"];
 		$sql = "UPDATE productos SET nom_product = '$this->nom_producto', med_product = '$this->med_producto',
             valor_product = '$this->valor_producto', marca_id_product = $this->marca_id_producto ,
-            stock_minimo_product = '$this->stock_minimo_producto', stock_maximo_product = '$this->stock_maximo_producto'
+            stock_maximo_product = '$this->stock_maximo_producto'
             WHERE id_product = $this->id_producto ;";
 		$this->Query($sql);
 
@@ -64,7 +63,7 @@ class m_productos extends m_db
 		$this->reg_bitacora([
 				'user_id' => $_SESSION['user_id'],
 				'table_name'=> "PRODUCTOS",
-				'des' => "ACTUALIZACIÓN DE PRODUCTO: $this->nom_producto, UNIDAD: $this->med_producto, VALOR: $this->valor_producto, STOCK MINIMO: $this->stock_minimo_producto, STOCK MAXIMO: $this->stock_maximo_producto"
+				'des' => "ACTUALIZACIÓN DE PRODUCTO: $this->nom_producto, UNIDAD: $this->med_producto, VALOR: $this->valor_producto, STOCK MAXIMO: $this->stock_maximo_producto"
 		]);
 		return ["code" => "success", "message" => "Operación Exitosa"];
 	}
@@ -148,7 +147,6 @@ class m_productos extends m_db
 		if ($filtro == "Marcas") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE marca.id_marca = $id;";
 		if ($filtro == "Unidades") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE productos.med_product = '$id';";
 		if ($filtro == "Stock_max") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE productos.stock_product = productos.stock_maximo_product;";
-		if ($filtro == "Stock_min") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product WHERE productos.stock_product = productos.stock_minimo_product;";
 		$results = $this->query($sql);
 		if ($results->num_rows > 0) return $this->Get_todos_array($results);
 		else return [];

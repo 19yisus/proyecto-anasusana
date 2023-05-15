@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-warning elevation-4">
   <!-- Brand Logo -->
   <a href="<?php $this->SetURL('inicio/index'); ?>" class="brand-link">
-    <span class="brand-text font-weight-bold mx-auto">Iglesia pan de vida</span>
+    <span class="brand-text font-weight-bold mx-auto">ANA SUSANA DE OUSET</span>
   </a>
 
   <!-- Sidebar -->
@@ -38,6 +38,10 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
+          <!-- $_SESSION['vistas_permitidas'] -->
+          <?php 
+            if(isset($_SESSION['vistas_permitidas']) && in_array("marcas",$_SESSION['vistas_permitidas'])){
+          ?>
             <li class="nav-item">
               <a href="<?php $this->SetURL('marcas/index'); ?>" class="nav-link  <?php $this->IsActive("marcas/index"); ?>">
                 <i class="nav-icon fas fa-bullseye"></i>
@@ -46,6 +50,10 @@
                 </p>
               </a>
             </li>
+          <?php 
+            }
+            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("productos",$_SESSION['vistas_permitidas'])){
+          ?>
             <li class="nav-item">
               <a href="<?php $this->SetURL('productos/index');?>" class="nav-link <?php $this->IsActive("productos/index"); ?>">
                 <i class="nav-icon fas fa-people-carry"></i>
@@ -54,6 +62,10 @@
                 </p>
               </a>
             </li>
+          <?php 
+            }
+            if(isset($_SESSION['vistas_permitidas'][0]) && in_array("cargos",$_SESSION['vistas_permitidas'])){
+          ?>
             <li class="nav-item">
               <a href="<?php $this->SetURL('cargo/index');?>" class="nav-link <?php $this->IsActive("cargo/index"); ?>">
                 <i class="nav-icon fas fa-people-carry"></i>
@@ -62,6 +74,10 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("personas",$_SESSION['vistas_permitidas'])){
+            ?>
             <li class="nav-item">
               <a href="<?php $this->SetURL('personas/index');?>" class="nav-link  <?php $this->IsActive("personas/index"); ?>">
                 <i class="nav-icon fas fa-users"></i>
@@ -70,6 +86,10 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("comedor",$_SESSION['vistas_permitidas'])){
+            ?>
             <li class="nav-item">
               <a href="<?php $this->SetURL('comedor/index');?>" class="nav-link <?php $this->IsActive("comedor/index"); ?>">
                 <i class="nav-icon fas fa-house-user"></i>
@@ -78,6 +98,9 @@
                 </p>
               </a>
             </li>
+            <?php 
+              }
+            ?>
           </ul>
         </li>
         <li class="nav-item">

@@ -322,6 +322,8 @@ class m_entrada_salida extends m_db
 					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
 					WHERE inventario.concept_invent = '$filtro' GROUP BY inventario.id_invent;";
 		} else {
+			$hasta = date("Y-m-d h:i:s",strtotime($hasta. "+ 1 days"));
+			$desde = date("Y-m-d h:i:s",strtotime($desde));
 			$sql_inventario = "SELECT * FROM inventario 
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent

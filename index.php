@@ -4,6 +4,7 @@
 
   class App{
     private $ruta_actual, $code_error, $code_done, $titleContent, $controlador, $file_view_name, $ObjMessage;
+    public $url;
 
     public function __construct(){
       session_start();
@@ -66,7 +67,8 @@
       $url = isset($_GET['url']) ? $_GET['url'] : "inicio/index";
       $url = rtrim($url, '/');
       $url = explode('/', $url);
-
+      $this->url = $url;
+      
       if(sizeof($url) > 2 && $url[2] === "err") $this->code_error = $url[3];
       if(sizeof($url) > 2 && $url[2] === "msg") $this->code_done = $url[3];
       return $url;

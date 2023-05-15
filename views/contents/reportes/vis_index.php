@@ -80,7 +80,7 @@
                             </div>
                             <div v-show="tipo_reporte == 'Salida'" class="form-check mx-3">
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Rechazo" class="form-check-input" v-bind:checked="filtro == 'Rechazo'" v-bind:disabled="tipo_reporte != 'Salida'" required>
-                              <label for="filtro" class="form-check-label">Salidas por rechazo</label>
+                              <label for="filtro" class="form-check-label">Salidas por remanente</label>
                             </div>
                           </div>
                         </div>
@@ -98,25 +98,6 @@
                         </div>
                       </div>
                       <!-- FILTROS PARA SALIDAS -->
-                      <!-- <div class="col-4" v-show="tipo_reporte == 'Salida'">
-                        <div class="form-group">
-                          <label for="">Filtro(<span class="text-danger text-md">*</span>)</label>
-                          <div class="row">
-                            <div class="form-check mx-3">
-                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Consumo" class="form-check-input" v-bind:checked="filtro == 'Consumo'" v-bind:disabled="tipo_reporte != 'Salida'" required>
-                              <label for="filtro" class="form-check-label">Salidas por consumo</label>
-                            </div>
-                            <div class="form-check mx-3">
-                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Vencimiento" class="form-check-input" v-bind:checked="filtro == 'Vencimiento'" v-bind:disabled="tipo_reporte != 'Salida'" required>
-                              <label for="filtro" class="form-check-label">Salidas por vencimiento</label>
-                            </div>
-                            <div class="form-check mx-3">
-                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Rechazo" class="form-check-input" v-bind:checked="filtro == 'Rechazo'" v-bind:disabled="tipo_reporte != 'Salida'" required>
-                              <label for="filtro" class="form-check-label">Salidas por rechazo</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
                       <!-- FILTROS PARA PRODUCTOS -->
                       <div class="col-4" v-show="tipo_reporte == 'Productos'">
                         <div class="form-group">
@@ -137,10 +118,6 @@
                             <div class="form-check mx-3">
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Stock_max" class="form-check-input" v-bind:disabled="tipo_reporte != 'Productos'" v-bind:checked="filtro == 'Stock_max'" required>
                               <label for="filtro" class="form-check-label">Por Stock maximo</label>
-                            </div>
-                            <div class="form-check mx-3">
-                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Stock_min" class="form-check-input" v-bind:disabled="tipo_reporte != 'Productos'" v-bind:checked="filtro == 'Stock_min'" required>
-                              <label for="filtro" class="form-check-label">Por Stock minimo</label>
                             </div>
                           </div>
                         </div>

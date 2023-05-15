@@ -42,17 +42,58 @@
 
         if(password_verify($this->password, $datos['password_user'])){
           session_start();
+          $res = $this->Query("SELECT * FROM permiso_vista WHERE user_id = ".$datos['id_user']." ;");
+          $vistas = $this->Get_todos_array($res);
+          $viss = [];
+
           $_SESSION['user_id'] = $datos['id_user'];
           $_SESSION['cedula'] = $datos['cedula_person'];
           $_SESSION['username'] = $datos['nom_person'];
           $_SESSION['permisos'] = $datos['nivel_permisos_rol'];
           $_SESSION['nom_rol'] = $datos['nom_rol'];
+          if(isset($vistas)){
+            foreach($vistas as $vis){
+              array_push($viss, $vis['modulo_name']);
+            }
+          }
+          $_SESSION['vistas_permitidas'] = isset($viss) ? $viss : [''];
+
+          $this->reg_bitacora([
+            'user_id' => $datos['id_user'],
+            'table_name'=> "USUARIOS",
+            'des' => "INICIO DE SESION DEL USUARIO: V-".$datos['cedula_person'].", ".$datos['nom_person']
+          ]);
           
           return [true,'msg/01AUTH'];
-        }else return [false,'err/07AUTH'];
+        }
+        if($datos['id_rol'] != 1) $this->intentos($datos['id_user']);
+        $pw = isset($_COOKIE["trying_pw"]) ? (2 - intval($_COOKIE["trying_pw"])) : 2;
+        return [false,"err/cuidado-solo-tienes-$pw-intentos-antes-de-bloquear-tu-usuario"];
       }
       else return [false,"err/05AUTH"];
-      
+    }
+
+    public function intentos($id_user){
+      if(!isset($_COOKIE['trying_pw'])){
+        setcookie("trying_pw",1,(time()+3600));
+      }else{
+        $pw = intval($_COOKIE["trying_pw"]);
+        if($pw == 1){
+          setcookie("trying_pw","",(time()-3600));
+          $this->query("UPDATE usuarios SET status_user = 0 WHERE id_user = $id_user");
+          return [false, "err/09AUTH"];
+        }
+        setcookie("trying_pw",2,(time()+3600));
+      }
+    }
+
+    public function registrar_salida(){
+      // session_start();
+      $this->reg_bitacora([
+        'user_id' => $_SESSION['user_id'],
+        'table_name'=> "USUARIOS",
+        'des' => "SALIDA DE SESION DEL USUARIO: V-".$_SESSION['cedula'].", ".$_SESSION['username']
+      ]);
     }
 
     public function Register_user(){
@@ -200,7 +241,7 @@
       $password = password_hash($array['password'], PASSWORD_BCRYPT, ['cost' => 12]);
       $id = $this->Clean(intval($array['user_id']));
 
-      $sql = "UPDATE usuarios SET password_user = '$password' WHERE id_user = $id ;";
+      $sql = "UPDATE usuarios SET status_user = 1,password_user = '$password' WHERE id_user = $id ;";
       $this->Query($sql);
 
       if($this->Result_last_query()){

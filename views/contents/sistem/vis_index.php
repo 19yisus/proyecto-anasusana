@@ -29,6 +29,7 @@
                           <th>ID operación</th>
                           <th>Módulo</th>
                           <th>Descripción</th>
+                          <th>Usuario</th>
                           <th>Fecha-Hora</th>
                         </tr>
                       </thead>
@@ -63,6 +64,11 @@
         {data: "id_operacion"},
         {data: "tabla_change"},
         {data: "descripcion"},
+        {data: "nom_person", 
+          render: function(data, type, row){
+            return `${row.tipo_person}-${row.cedula_person} ${row.nom_person}`
+          }
+        },
         {data: "hora_fecha",
         render: function(data){
           return moment(data).format("DD/MM/YYYY h:mm A")

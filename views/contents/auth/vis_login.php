@@ -4,7 +4,7 @@
 <body class="hold-transition login-page" id="fondo">
   <div class="login-box">
     <div class="login-logo">
-      <!-- <img src="<?php //echo constant("URL");?>views/images/logo.jpeg" alt="Logo" class="img-fluid rounded mx-auto d-block"> -->
+      <img src="<?php echo constant("URL");?>views/images/logo.jpg" style="width:15rem;" alt="Logo" class="img-fluid rounded mx-auto d-block">
     </div>
     <!-- /.login-logo -->
     <div class="card align-middle">
