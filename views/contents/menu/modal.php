@@ -1,3 +1,40 @@
+<div class="modal fade" id="modal-lg-receta">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Consulta</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Consulta de receta</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- card body -->
+              <div class="card-body">
+                <div class="row" id="content_menu_detalle">
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>
+
+
 <div class="modal fade" id="modal-lg">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -35,7 +72,7 @@
                   <div class="row">
                     <div class="col-12 col-sm-12">
                       <div class="form-group">
-                        <label for="">Procedimientos</label>
+                        <label for="">Procedimientos(<span class="text-danger text-md">*</span>)</label>
                         <textarea name="des_procedimiento" class="form-control" v-model="des_procedimiento" id="des_procedimiento" cols="30" rows="2"></textarea>
                       </div>
                     </div>
@@ -43,7 +80,7 @@
                   <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
                     <div class="col-6">
                       <div class="form-group">
-                        <label for="">Ingrediente {{(indice+1)}}</label>
+                        <label for="">Ingrediente {{(indice+1)}} (<span class="text-danger text-md">*</span>)</label>
                         <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
                           <option value="">Seleccione una opción</option>
                           <option v-for="item in selectProductos" :key="item.id_product" :data-medida="item.med_product" :id="item.med_product" :value="item.id_product">{{item.nom_product}}</option>
@@ -53,7 +90,7 @@
                     </div>
                     <div class="col-5">
                       <div class="form-group">
-                        <label for="">Cantidad</label>
+                        <label for="">Cantidad (<span class="text-danger text-md">*</span>)</label>
                         <div class="input-group">
                           <input type="number" step="1" min="1" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
                           <div class="input-group-append">
@@ -62,11 +99,13 @@
                               <option value="KL">KL</option>
                               <option value="LT">LT</option>
                               <option value="GM">GM</option>
+                              <option value="ML">ML</option>
                             </select>
                           </div>
                         </div>
                       </div>
                     </div>
+                    <button type="button" v-on:click="Disminuir(indice)" class="btn btn-danger mt-3">-</button>
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer">

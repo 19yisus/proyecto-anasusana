@@ -40,7 +40,9 @@
         $marcas = isset($_POST['id_marca']) ? $_POST['id_marca'] : [];
 
         $mensaje = $model->Create();
-        $model->RegistroMarcasProveedor($marcas);
+        if(isset($marcas[0])){
+            $model->RegistroMarcasProveedor($marcas);
+        }
         header("Location: ".constant("URL")."personas/form/$mensaje");
     }
 
@@ -86,4 +88,3 @@
 
         print json_encode(["data" => $result, 'marcas' => $result2]);
     }
-?>

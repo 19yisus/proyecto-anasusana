@@ -35,6 +35,10 @@ if (isset($_GET['ope'])) {
         case "Consultar_menu":
             fn_Consultar_menu();
             break;
+
+        case "Consultar_menu_detallado":
+            fn_Consultar_menu_detallado();
+            break;
     }
 }
 
@@ -98,4 +102,12 @@ function fn_Consultar_menu()
     $result = $model->Get_menu();
 
     print json_encode(["data" => $result]);
+}
+
+function fn_Consultar_menu_detallado()
+{
+    $model = new m_menu();
+    $model->setDatos(["id_menu" => $_GET["id_menu"]]);
+    $result = $model->Get_menu();
+    require_once("../models/tem_menu_detallado.php");
 }

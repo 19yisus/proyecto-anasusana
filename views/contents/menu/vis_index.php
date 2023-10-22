@@ -77,6 +77,9 @@
               this.selectProductos = data;
             }).catch(error => console.error(error));
         },
+        Disminuir: function(id) {
+					this.productos.splice(id, 1);
+				},
         async Consult(value) {
           this.productos = [];
           await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Consultar_menu&id_menu=${value}`)
@@ -86,9 +89,14 @@
               this.id = data[0].id_menu;
               this.des_menu = data[0].des_menu;
               this.des_procedimiento = data[0].des_procedimiento;
-              
-              data[1].forEach( item => {
-                this.productos.push({id: item.product_id_menu_detalle,des: item.nom_product, medida: item.med_comida_detalle, cantidad: item.consumo})
+
+              data[1].forEach(item => {
+                this.productos.push({
+                  id: item.product_id_menu_detalle,
+                  des: item.nom_product,
+                  medida: item.med_comida_detalle,
+                  cantidad: item.consumo
+                })
               })
             })
             .catch(Err => {
@@ -154,6 +162,13 @@
     }
 
     const Consultar = async (value) => app.Consult(value);
+    const consultaDetallada = async (id) => {
+      await fetch(`<?php echo constant("URL"); ?>controller/c_menu.php?ope=Consultar_menu_detallado&&id_menu=${id}`)
+        .then(response => response.text())
+        .then((data) => {
+          $("#content_menu_detalle").html(data)
+        }).catch(error => console.error(error));
+    }
 
     $(() => {
       $('#dataTable').DataTable({
@@ -194,7 +209,10 @@
               <input type="hidden" name="ope">
             </form>
             <div class="btn-group">
-              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_menu})"><i class="fas fa-edit"></i></button>${btn_secondary}
+              <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_menu})"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-lg-receta" onclick="consultaDetallada(${row.id_menu})"><i class="fas fa-list"></i></button>
+              ${btn_secondary}
+              
             </div>`;
 
               <?php if (isset($_SESSION['permisos'])) { ?>

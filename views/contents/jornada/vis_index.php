@@ -63,6 +63,14 @@
   </div>
   <!-- ./wrapper -->
   <script>
+    const consultaDetallada = async (id) => {
+      await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada_detallado&&id_jornada=${id}`)
+        .then(response => response.text())
+        .then((data) => { 
+          $("#content_jornada_detalle").html(data)
+        }).catch(error => console.error(error));
+    }
+
     const app = new Vue({
       el: "#VueApp",
       data: {
@@ -187,6 +195,7 @@
             </form>
             <div class="btn-group">
               <button type="button" ${estadoBtnEdit} class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-lg" onclick="Consultar(${row.id_jornada})"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-lg-jornada" onclick="consultaDetallada(${row.id_jornada})"><i class="fas fa-list"></i></button>
             </div>`;
 
               <?php if (isset($_SESSION['permisos'])) { ?>

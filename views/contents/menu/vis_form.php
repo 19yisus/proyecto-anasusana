@@ -59,7 +59,7 @@ $productos = $model->Get_todos_productos(1);
                     <div class="row" v-for="(itemx, indice) in productos" :key="itemx.id">
                       <div class="col-6">
                         <div class="form-group">
-                          <label for="">Ingrediente {{(indice+1)}}</label>
+                          <label for="">Ingrediente {{(indice+1)}} (<span class="text-danger text-md">*</span>)</label>
                           <!-- <input type="text" name="des_comida_detalle[]" id="" class="form-control" v-model="productos[indice].des"> -->
                           <select :data-index="indice" id="comida" name="comidas[]" class="custom-select" v-model="productos[indice].id" @change="cambio">
                             <option value="">Seleccione una opción</option>
@@ -69,7 +69,7 @@ $productos = $model->Get_todos_productos(1);
                       </div>
                       <div class="col-5">
                         <div class="form-group">
-                          <label for="">Cantidad</label>
+                          <label for="">Cantidad (<span class="text-danger text-md">*</span>)</label>
                           <div class="input-group">
                             <input type="number" step="1" min="1" class="form-control" name="consumo[]" v-model="productos[indice].cantidad" id="" placeholder="Cantidad">
                             <div class="input-group-append">
@@ -87,7 +87,7 @@ $productos = $model->Get_todos_productos(1);
                     <div class="row">
                       <div class="col-12">
                         <div class="form-group">
-                          <label for="">Procedimientos</label>
+                          <label for="">Procedimientos(<span class="text-danger text-md">*</span>)</label>
                           <textarea name="des_procedimiento" class="form-control" id="des_procedimiento" cols="30" rows="2"></textarea>
                         </div>
                       </div>
@@ -120,7 +120,7 @@ $productos = $model->Get_todos_productos(1);
   <!-- ./wrapper -->
   <?php $this->GetComplement("scripts"); ?>
   <script>
-    new Vue({
+    let app = new Vue({
       el: "#VueApp",
       data: {
         productos: [{
@@ -179,8 +179,15 @@ $productos = $model->Get_todos_productos(1);
 
     $("#btn").click(async () => {
       if ($("#formulario").valid()) {
-        let res = await Confirmar();
-        if (res) $("#formulario").submit();
+        if (app.productos[0]['id'] != '' && app.productos[0]['medida'] != '' && app.productos[0]['cantidad'] != '') {
+          let res = await Confirmar();
+          if (res) $("#formulario").submit();
+        } else {
+          Toast.fire({
+            icon: `error`,
+            title: `debe de ingresar datos completos al menos un ingrediente`
+          });
+        }
       }
     })
 

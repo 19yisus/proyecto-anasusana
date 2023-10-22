@@ -1,0 +1,141 @@
+
+
+
+/* mura */
+.logo{
+    width: 25vw;
+}
+
+.full-content__one{
+    width: 45vw;
+}
+.full-content__two{
+    width: 55vw;
+}
+
+
+.full__subcontent .box-content{
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid var(--color-dark);
+}
+
+.box-content span{
+    font-weight: 200;
+    font-size: 6rem;
+    transform: translateY(-10px);
+    margin: 0 0 0 10px;
+    color: var(--color-dark);
+}
+
+
+.full__subcontent .input-content{
+    display: flex;
+    flex-direction: column;
+
+}
+.full-content .input-subcontent{
+    position: relative;
+    height: 50px;
+    width: 350px;
+    margin: 15px 0;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-dark);
+    color: var(--color-dark);
+    background: var(--color-dark);
+}
+.input-subcontent .input{
+    height: 100%;
+    width: 100%;
+    border-radius: var(--border-radius-1);
+    padding: 0 15px;
+    padding-right: 40px;
+    font-size: 16px;
+    color: var(--color-white);
+    background: var(--color-dark);
+}
+
+.input-subcontent span{
+    position: absolute;
+    height: auto;
+    font-size: 1.2rem;
+    color: var(--color-white);
+    z-index: 100;
+    right: 12px;
+    top: 12px;
+}
+.input-subcontent:nth-child(2) span{
+    cursor: pointer;
+}
+
+.full__subcontent .input-content .btn-content{
+    width: 100%;
+}
+::placeholder {
+    color: var(--color-white); 
+}
+
+.full__subcontent .input-content .btn-content__btn{
+    height: 60px;
+    width: 100%;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-top: 60px;
+    cursor: pointer;
+    color: var(--color-white);
+    background: var(--color-dark);
+    transition: all 0.3s ease;
+}
+.btn-content__btn:hover{
+    background: var(--color-dark);
+    opacity: .4;
+    transition: all 0.3s ease;
+}
+
+.content-two__forgot{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.content-two__forgot a{
+    text-decoration: none;
+    color: var(--color-dark);
+    margin: 0 15px;
+    font-size: 18px;
+}
+
+
+@media only screen and (max-width: 800px){
+    .content__section{
+        flex-direction: column;
+    }
+    .content__section .full__subcontent{
+        height: auto;
+    }
+    .full-content__one{
+        width: 100vw;
+    }
+    .full-content__two{
+        width: 100vw;
+    }
+    .full__subcontent .box-content{
+        height: 150px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        border: none;
+    }
+    .logo{
+        width: 16vw;
+    }
+}

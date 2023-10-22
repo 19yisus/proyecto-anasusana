@@ -8,6 +8,10 @@
                 fn_Registrar();
             break;
 
+            case "Registrar_async":
+                fn_Registrar_async();
+            break;
+
             case "Actualizar":
                 fn_Actualizar();
             break;
@@ -40,6 +44,15 @@
         $mensaje = $model->Create();
 
         header("Location: ".constant("URL")."marcas/form/$mensaje");
+    }
+
+    function fn_Registrar_async(){
+        $model = new m_marca();
+        $model->setDatos($_POST);
+        $mensaje = $model->Create();
+        
+        if($mensaje == "msg/01DONE") print json_encode(["data" => ["code" => "success", "message" => "Operación Exitosa"]]);
+        else print json_encode(["data" => ["code" => "error", "message" => "Operación Fallida"]]);
     }
 
     function fn_Actualizar(){

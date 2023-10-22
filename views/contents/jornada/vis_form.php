@@ -94,7 +94,7 @@ $person2 = $model_person->Get_Personas();
                     <div class="row">
                       <div class="col-12">
                         <div class="form-group">
-                          <label for="">Descripción de la jornada</label>
+                          <label for="">Descripción de la jornada(<span class="text-danger text-md">*</span>)</label>
                           <textarea name="des_jornada" maxlength="120" class="form-control" id="des_jornada" cols="30" rows="2"></textarea>
                         </div>
                       </div>

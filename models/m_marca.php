@@ -12,7 +12,7 @@
         public function setDatos($d){
             $this->id_marca = isset($d['id_marca']) ? $this->Clean(intval($d['id_marca'])) : null;
             $this->nom_marca = isset($d['nom_marca']) ? $this->Clean($d['nom_marca']) : null;
-            $this->status_marca = isset($d['status_marca']) ? $this->Clean(intval($d['status_marca'])) : null;
+            $this->status_marca = isset($d['status_marca']) ? $this->Clean(intval($d['status_marca'])) : 1;
         }
 
         public function Create(){

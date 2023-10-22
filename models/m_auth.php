@@ -340,7 +340,8 @@
         $mail->Username   = constant('username_email');    //SMTP username
         $mail->Password   = constant('password_email');    //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;   //Enable implicit TLS encryption
-        $mail->Port       = constant('port_email');  
+        $mail->Port       = constant('port_email'); 
+         
 
         //Recipients
         $mail->setFrom(constant('username_email'), 'Mailer');

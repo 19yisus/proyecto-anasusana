@@ -87,18 +87,6 @@
             </li>
             <?php 
               }
-              if(isset($_SESSION['vistas_permitidas'][0]) && in_array("comedor",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
-            ?>
-            <li>
-              <a href="<?php $this->SetURL('comedor/index'); ?>" class="dropdown-item <?php $this->IsActive("comedor/index"); ?>">
-                <p>
-                  <i class="nav-icon fas fa-house-user"></i>
-                  Comedor
-                </p>
-              </a>
-            </li>
-            <?php 
-              }
               if(isset($_SESSION['vistas_permitidas'][0]) && in_array("menu",$_SESSION['vistas_permitidas']) || $_SESSION['permisos'] == '3'){
             ?>
             <li>

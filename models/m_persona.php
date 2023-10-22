@@ -125,7 +125,7 @@
         }
 
         public function RegistroMarcasProveedor($marcas){
-            $sql = "DELETE FROM proveedor_marca WHERE pro_id_persona =  $this->id_persona ;";
+            $sql = "DELETE FROM proveedor_marca WHERE pro_id_persona = $this->id_persona ;";
             $this->Query($sql);
             if(isset($marcas[0])){
                 foreach($marcas as $marca){

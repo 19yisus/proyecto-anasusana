@@ -1,0 +1,174 @@
+
+.content__section{
+    position: absolute;
+    min-height: 100vh;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 1s ease;
+}
+.section__formRU{
+    width: 48rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-dark);
+    border-radius: var(--border-radius-1);
+}
+
+.section__formRU .register__title{
+    text-align: center;
+    font-size: 22px;
+    margin-top: 10px;
+    color: var(--color-dark);
+}
+.section__formRU .formRU__register{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: 20px 0;
+}
+.formRU__register .register__container-input{
+    display: flex;
+
+}
+.register__container-input .container-camposO{
+    display: flex;
+    width: 50%;
+    margin: 15px 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.container-camposO .camposO{
+    font-size: 17px;
+    color: var(--color-dark);
+}
+.asterisco{
+    color: red;
+}
+.register__container-input .container__div-input{
+    position: relative;
+    height: 40px;
+    width: 50%;
+    margin: 18px 10px;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-dark);
+    color: var(--color-dark);
+    background: var(--color-dark);
+}
+.container__div-input input, .container__div-input select{
+    font-size: 15px;
+    height: 100%;
+    width: 100%;
+    padding: 0 15px;
+    padding-right: 35px;
+    border: none;
+    border-radius: var(--border-radius-1);
+    color: var(--color-white);
+    background: var(--color-dark);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+.container__div-input select::-ms-expand {
+    display: none; /*Evita que se muestre la flecha por defecto en versiones de IE*/
+}
+
+
+.container__div-input input::placeholder{
+    color: var(--color-white);
+    font-size: 15px;
+}
+.container__div-input span{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1rem;
+    color: var(--color-white);
+    z-index: 1000;
+}
+.viewPassword{
+    cursor: pointer;
+}
+
+.register__btn-content{
+    display: flex;
+    width: 100%;
+}
+
+.register__btn-content .btn-content__btn{
+    height: 60px;
+    width: 100%;
+    margin: 30px 10px 0 10px;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--color-white);
+    background: var(--color-dark);
+    transition: all 0.3s ease;
+}
+.btn-content__btn:hover{
+    background: var(--color-dark);
+    opacity: .7;
+    transition: all 0.3s ease;
+}
+
+.formRU__register .input__return{
+    width: 100%;
+    margin: 5px 0;
+}
+
+.formRU__register .input__return a{
+    text-decoration: none;
+    color: var(--color-dark);
+    margin: 10px 0 0 15px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.formRU__register .input__return a:hover{
+    opacity: .7;
+    transition: all 0.3s ease;
+}
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 670px){
+    .section3__formRU{
+        width: 90%;
+    }
+    .formRU__register .register__container-input{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .formRU__register .register__container-input{
+        flex-direction: column-reverse;
+    }
+    
+    .register__container-input .container__div-input{
+        width: auto;
+        margin: 15px 10px;
+    }
+
+
+    .register__container-input .container-camposO{
+        width: 100%;
+        margin: 0;
+    }
+    
+
+}
+

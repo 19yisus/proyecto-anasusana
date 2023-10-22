@@ -1,8 +1,40 @@
-<!-- <?php
-      // require_once("./models/m_persona.php");
-      // $model_person = new m_persona();
-      // $person = $model_person->Get_Personas();
-      ?> -->
+<div class="modal fade" id="modal-lg-jonada">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Consulta</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Consulta detalle de jornada</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- card body -->
+              <div class="card-body">
+                <div class="row" id="content_jornada_detalle">
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>
+
+
 <div class="modal fade" id="modal-lg">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

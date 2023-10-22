@@ -30,36 +30,26 @@ class m_jornada extends m_db
   {
     $this->verificarJornadas();
     try {
-      $sql1 = "INSERT INTO jornada(
-        titulo_jornada,
-        des_jornada, 
-        cant_aproximada, 
-        estatus_jornada, 
-        fecha_jornada,
-        menu_id_jornada,
-        person_id_responsable) 
-        
-        VALUES(
-          '$this->titulo_jornada',
-          '$this->des_jornada', 
-          $this->cant_aproximada, 
-          1, 
-          '$this->fecha_jornada',
-          $this->menu_id_jornada,
-          $this->responsable);";
-      $this->Query($sql1);
 
-      if(!isset($_SESSION['user_id'])) session_start();
-            
-      if($this->Result_last_query()){
+      $fechaFormateada = date_create($this->fecha_jornada)->format('Y-m-d');
+
+      $sql1 = "INSERT INTO `jornada` (`titulo_jornada`, `des_jornada`, `cant_aproximada`, `estatus_jornada`, `fecha_jornada`, `menu_id_jornada`, `person_id_responsable`) VALUES('$this->titulo_jornada', '$this->des_jornada', $this->cant_aproximada, 1, '$fechaFormateada', $this->menu_id_jornada, $this->responsable)";
+
+      
+      $this->Query($sql1);
+      var_dump($sql1);
+      die("dfdf");
+
+      if (!isset($_SESSION['user_id'])) session_start();
+
+      if ($this->Result_last_query()) {
         $this->reg_bitacora([
           'user_id' => $_SESSION['user_id'],
-          'table_name'=> "JORNADA",
+          'table_name' => "JORNADA",
           'des' => "REGISTRO DE NUEVA JORNADA: $this->titulo_jornada, DESCRIPCIÓN: $this->des_jornada, CANTIDAD APROXIMADA DE BENEFICIADOS: $this->cant_aproximada"
         ]);
         return "msg/01DONE";
-      }
-      else return "err/01ERR";
+      } else return "err/01ERR";
     } catch (Exception $e) {
       die("AH OCURRIDO UN ERROR: " . $e->getMessage());
     }
@@ -82,18 +72,17 @@ class m_jornada extends m_db
 
     $this->Query($sql);
 
-    if(!isset($_SESSION['user_id'])) session_start();
-            
-    if($this->Result_last_query()){
+    if (!isset($_SESSION['user_id'])) session_start();
+
+    if ($this->Result_last_query()) {
       $this->reg_bitacora([
         'user_id' => $_SESSION['user_id'],
-        'table_name'=> "JORNADA",
+        'table_name' => "JORNADA",
         'des' => "ACTUALIZACIÓN DE JORNADA: $this->nom_comedor, DESCRIPCIÓN: $this->direccion_comedor, CANTIDAD APROXIMADA DE BENEFICIADOS: $this->cant_aproximada, ID DEL MENÚ => $this->menu_id_jornada"
       ]);
 
       return ["code" => "success", "message" => "Operación Exitosa"];
-    }
-    else return ["code" => "error", "message" => "Operación Fallida"];
+    } else return ["code" => "error", "message" => "Operación Fallida"];
   }
 
   public function Update_cantidad()
@@ -106,18 +95,17 @@ class m_jornada extends m_db
 
     $this->Query($sql);
 
-    if(!isset($_SESSION['user_id'])) session_start();
-            
-    if($this->Result_last_query()){
+    if (!isset($_SESSION['user_id'])) session_start();
+
+    if ($this->Result_last_query()) {
       $this->reg_bitacora([
         'user_id' => $_SESSION['user_id'],
-        'table_name'=> "JORNADA",
+        'table_name' => "JORNADA",
         'des' => "ACTUALIZACIÓN DE JORNADA -CANTIDAD APROXIMADA DE BENEFICIADOS: $this->cant_aproximada, ID DEL MENÚ => $this->menu_id_jornada"
       ]);
 
       return ["code" => "success", "message" => "Operación Exitosa"];
-    }
-    else return ["code" => "error", "message" => "Operación Fallida"];
+    } else return ["code" => "error", "message" => "Operación Fallida"];
   }
 
   // public function Disable()
@@ -190,18 +178,17 @@ class m_jornada extends m_db
     $time->setTimestamp($unixTime)->setTimezone($timeZone);
     $fecha = $time->format('Y-m-d');
     $this->Query("UPDATE jornada SET estatus_jornada = 0 WHERE fecha_jornada < '$fecha';");
-    if(!isset($_SESSION['user_id'])) session_start();
-            
-    if($this->Result_last_query()){
+    if (!isset($_SESSION['user_id'])) session_start();
+
+    if ($this->Result_last_query()) {
       $this->reg_bitacora([
         'user_id' => $_SESSION['user_id'],
-        'table_name'=> "JORNADA",
-        'des' => "DESACTIVACIÓN AUTOMATICA DE LA JORNADA EN SESIÓN DEL USUARIO: ".$_SESSION['user_id']
+        'table_name' => "JORNADA",
+        'des' => "DESACTIVACIÓN AUTOMATICA DE LA JORNADA EN SESIÓN DEL USUARIO: " . $_SESSION['user_id']
       ]);
 
       return ["code" => "success", "message" => "Operación Exitosa"];
-    }
-    else return ["code" => "error", "message" => "Operación Fallida"];
+    } else return ["code" => "error", "message" => "Operación Fallida"];
   }
 
   public function GetPdf($post)

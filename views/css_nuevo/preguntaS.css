@@ -1,0 +1,98 @@
+.content__section{
+    position: absolute;
+    min-height: 100vh;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 1s ease;
+}
+
+
+.section__registerNU{
+    height: auto;
+    width: 380px;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-dark);
+}
+.section__input-content{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 380px;
+}
+.section__input-content h1{
+    font-size: 20px;
+    font-weight: 300;
+    margin: 25px 0;
+    color: var(--color-dark);
+}
+.section__input-content .input-content__div-input{
+    position: relative;
+    height: 40px;
+    width: 330px;
+    margin: 12px 0;
+    border-radius: var(--border-radius-1);
+    border: 1px solid var(--color-dark);
+    color: var(--color-dark);
+    background: var(--color-dark);
+}
+
+.input-content__div-input .input{
+    font-size: 15px;
+    height: 100%;
+    width: 100%;
+    padding: 0 15px;
+    border: none;
+    border-radius: var(--border-radius-1);
+    color: var(--color-white);
+    background: var(--color-dark);
+}
+
+.input-content__div-input input::placeholder{
+    color: var(--color-white);
+    font-size: 15px;
+}
+.input-content__div-input span{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--color-white);
+}
+
+.input__btn-content{
+    margin: 15px 0;
+}
+
+.btn-content__btn:hover{
+    background: var(--color-dark);
+    opacity: .7;
+    transition: all 0.3s ease;
+}
+.section__input-content .input__return{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.section__input-content .input__return span{
+    height: auto;
+    margin-top: 10px;
+}
+
+.section__input-content .input__return a{
+    display: block;
+    width: auto;
+    text-decoration: none;
+    color: var(--color-dark);
+    margin-top: 5px;
+    margin-left: 25px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+.section__input-content .input__return a:hover{
+    opacity: .7;
+    transition: all 0.3s ease;
+}
+
