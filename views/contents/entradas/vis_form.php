@@ -61,7 +61,6 @@
 												<div class="form-group">
 													<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
 													<select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
-														<option value="">Seleccione una Opción</option>
 														<?php foreach ($datosComedor as $comedor) { ?>
 															<option value="<?php echo $comedor['id_comedor']; ?>"><?php echo $comedor['nom_comedor']; ?></option>
 														<?php } ?>

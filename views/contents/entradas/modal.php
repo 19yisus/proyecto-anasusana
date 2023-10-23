@@ -36,7 +36,7 @@ $productos = $model->Get_todos_productos(1);
 										<div class="col-2">
 											<div class="form-group">
 												<label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-												<input type="number" name="cant_product" :data-index="index" v-on:keyup="validarStockMaximo" :max="productos[index].stock_maximo" min="1" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la Cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
+												<input type="number" name="cant_product" :data-index="index" value='1' v-on:keyup="validarStockMaximo" :max="productos[index].stock_maximo" min="1" v-model="productos[index].cantidad" :value="item.cantidad" id="cant_product" placeholder="Ingrese la Cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
 											</div>
 										</div>
 										<div class="col-2" v-show="concepto_operacion == 'C'">

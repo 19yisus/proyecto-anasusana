@@ -35,10 +35,7 @@ class m_jornada extends m_db
 
       $sql1 = "INSERT INTO `jornada` (`titulo_jornada`, `des_jornada`, `cant_aproximada`, `estatus_jornada`, `fecha_jornada`, `menu_id_jornada`, `person_id_responsable`) VALUES('$this->titulo_jornada', '$this->des_jornada', $this->cant_aproximada, 1, '$fechaFormateada', $this->menu_id_jornada, $this->responsable)";
 
-      
       $this->Query($sql1);
-      var_dump($sql1);
-      die("dfdf");
 
       if (!isset($_SESSION['user_id'])) session_start();
 
@@ -58,7 +55,7 @@ class m_jornada extends m_db
   public function Update()
   {
     $this->verificarJornadas();
-    $result = $this->Get_todos_array($this->Query("SELECT * FROM jornada WHERE titulo = '$this->titulo_jornada' AND id_jornada != $this->id_jornada AND fecha_jornada = '$this->fecha_jornada';"));
+    $result = $this->Get_todos_array($this->Query("SELECT * FROM jornada WHERE titulo_jornada = '$this->titulo_jornada' AND id_jornada != $this->id_jornada AND fecha_jornada = '$this->fecha_jornada';"));
     if (isset($result[0])) return ["code" => "error", "message" => "Los datos no se pueden duplicar"];
 
     $sql = "UPDATE jornada SET 
@@ -78,7 +75,7 @@ class m_jornada extends m_db
       $this->reg_bitacora([
         'user_id' => $_SESSION['user_id'],
         'table_name' => "JORNADA",
-        'des' => "ACTUALIZACIÓN DE JORNADA: $this->nom_comedor, DESCRIPCIÓN: $this->direccion_comedor, CANTIDAD APROXIMADA DE BENEFICIADOS: $this->cant_aproximada, ID DEL MENÚ => $this->menu_id_jornada"
+        'des' => "ACTUALIZACIÓN DE JORNADA: $this->titulo_jornada, DESCRIPCIÓN: $this->des_jornada, CANTIDAD APROXIMADA DE BENEFICIADOS: $this->cant_aproximada, ID DEL MENÚ => $this->menu_id_jornada"
       ]);
 
       return ["code" => "success", "message" => "Operación Exitosa"];

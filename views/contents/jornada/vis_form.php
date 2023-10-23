@@ -231,6 +231,7 @@ $person2 = $model_person->Get_Personas();
         cant_aproximada: {
           required: true,
           number: true,
+          min:1,
         },
         fecha_jornada: {
           required: true,
@@ -255,7 +256,8 @@ $person2 = $model_person->Get_Personas();
         },
         cant_aproximada: {
           required: "Este Campo NO Puede estar Vacio",
-          number: "Solo de aceptan numeros"
+          number: "Solo de aceptan numeros",
+          min: "Debe de ingresar al menos un beneficiado",
         },
         fecha_jornada: {
           required: "Este Campo NO Puede estar Vacio",

@@ -97,7 +97,7 @@
               this.responsable = data[0].person_id_responsable
               this.fecha = data[0].fecha_jornada;
               this.menu_id_jornada = data[0].menu_id_jornada;
-
+              $("#responsable").val(data[0].person_id_responsable)
             })
             .catch(Err => {
               console.error(Err)
