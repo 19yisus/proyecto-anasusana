@@ -3,7 +3,7 @@
 <?php $this->GetHeader(); ?>
 
 <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
-	<div class="wrapper" id="VueApp">
+	<div class="wrapper" id="VueAPP">
 		<?php
 		$this->titleContent = "Registro de Salida de Productos";
 
@@ -106,7 +106,7 @@
 											</div>
 											<div class="col-6">
 												<div class="form-group">
-													<input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
+													<input type="hidden" min="1" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_salida">
 													<label for="observacion_invent">Observación</label>
 													<textarea name="observacion_invent" minlength="4" maxlength="120" id="" cols="30" rows="2" class="form-control" placeholder="Ingrese una Observacion para esta Operación"></textarea>
 												</div>
@@ -122,7 +122,7 @@
 										</div>
 										<!-- INFORMACIÓN GENERAL DEL MENU AL SELECCIONAR LA JORNADA -->
 										<!-- {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0}, -->
-										<div class="row" v-show="jornada_id != ''">
+										<div class="row" v-show="valida_jornada_concepto">
 											<div class="col-12">
 												<div class="card card-success">
 													<div class="card-header">
@@ -216,13 +216,14 @@
 		require_once("./views/contents/salidas/modal_entrada.php");
 		require_once("./views/contents/salidas/modal_jornada.php");
 		require_once("./views/contents/salidas/modal_menu.php");
-		
+
 		?>
 	</div>
+	<!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
 	<!-- ./wrapper -->
 	<script>
 		const app = new Vue({
-			el: '#VueApp',
+			el: '#VueAPP',
 			data: {
 				productos: [
 					// {code: "",nom_product: "fasdf", cantidad: 0, limite_stock: 0, stock_maximo: 0, nuevo_stock, if_entrada},
@@ -253,7 +254,7 @@
 
 				// DATOS DE LA ENTRADA
 				next_id_entrada: '',
-				concepto_operacion:'',
+				concepto_operacion: '',
 				id_comedor: '',
 
 				cant_aproximada: 0,
@@ -315,6 +316,7 @@
 							console.log(data)
 							this.id_menu = data[0].id_menu;
 							this.des_menu = data[0].des_menu;
+							this.productos_menu = []
 
 							data[1].forEach(item => {
 								this.productos_menu.push({
@@ -365,7 +367,7 @@
 									if (item.med_comida_detalle == "GM") {
 										consumo_total = 1;
 									} else consumo_total = total;
-								}								
+								}
 								let restante = (item.stock_product - consumo_total);
 								let if_entrada;
 								let producto = [];
@@ -376,7 +378,8 @@
 								producto["limite_stock"] = parseInt(item.stock_product);
 								producto["maximo_stock"] = parseInt(item.stock_maximo_product) - parseInt(item.stock_product);
 								producto["nuevo_stock"] = 0;
-								if(restante <= 0) if_entrada = "SI"; else if_entrada = "NO";
+								if (restante <= 0) if_entrada = "SI";
+								else if_entrada = "NO";
 								producto["if_entrada"] = if_entrada;
 
 								this.Duplicar(producto);
@@ -423,6 +426,9 @@
 						medida: '',
 						cantidad: ''
 					})
+				},
+				Disminuir_menu(indice){
+					this.productos_menu.splice(indice, 1);
 				},
 				disminuir() {
 					this.productos_menu.pop();
@@ -580,11 +586,26 @@
 				}
 			},
 			computed: {
-				cantidad_productos: function() {
+				cantidad_salida: function() {
 					if (this.productos.length === 0) return 0;
 					let array = this.productos.map(element => parseInt(element.cantidad));
 					let total = array.reduce((item1, item2) => item1 + item2, 0);
+
 					return total;
+				},
+				cantidad_productos: function() {
+					if (this.productos.length === 0) return 0;
+					let array = this.productos.map(element => parseInt(element.nuevo_stock));
+					let total = array.reduce((item1, item2) => item1 + item2, 0);
+
+					return total;
+				},
+				valida_jornada_concepto: function() {
+					if (this.jornada_id != '' && this.motivo_salida == "O") return true;
+					else {
+						this.jornada_id = '';
+						return false;
+					}
 				}
 			},
 			async mounted() {
@@ -610,10 +631,17 @@
 					title: "Los Datos de los Productos están Incompletos"
 				});
 
-				if ($("#cant_ope").val() == 0) return Toast.fire({
-					icon: "error",
-					title: "Debes de Ingresar Productos para Realizar esta Operación"
-				});
+				if (app.productos[0].cantidad == 0 && app.productos[0].id == '') {
+					return Toast.fire({
+						icon: "error",
+						title: "Debes de Ingresar Productos para Realizar esta Operación"
+					});
+				}
+
+				// if ($("#cant_ope").val() == 0) return Toast.fire({
+				// 	icon: "error",
+				// 	title: "Debes de Ingresar Productos para Realizar esta Operación"
+				// });
 
 				let res = await Confirmar();
 				if (res) $("#formulario").submit();

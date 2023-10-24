@@ -33,17 +33,16 @@ class m_productos extends m_db
             VALUES(null,'$this->nom_producto', '$this->med_producto', '$this->valor_producto', $this->status_producto, NOW(), 0, $this->stock_maximo_producto, $this->marca_id_producto);";
 		$this->Query($sql);
 
-		if(!isset($_SESSION['user_id'])) session_start();
-                
-		if($this->Result_last_query()){
+		if (!isset($_SESSION['user_id'])) session_start();
+
+		if ($this->Result_last_query()) {
 			$this->reg_bitacora([
 				'user_id' => $_SESSION['user_id'],
-				'table_name'=> "PRODUCTOS",
+				'table_name' => "PRODUCTOS",
 				'des' => "REGISTRO DE NUEVO PRODUCTO: $this->nom_producto, UNIDAD: $this->med_producto, VALOR: $this->valor_producto, STOCK MAXIMO: $this->stock_maximo_producto"
 			]);
 			return "msg/01DONE";
-		}
-		else return "err/01ERR";
+		} else return "err/01ERR";
 	}
 
 	public function Update()
@@ -58,12 +57,12 @@ class m_productos extends m_db
             WHERE id_product = $this->id_producto ;";
 		$this->Query($sql);
 
-		if(!isset($_SESSION['user_id'])) session_start();
+		if (!isset($_SESSION['user_id'])) session_start();
 
 		$this->reg_bitacora([
-				'user_id' => $_SESSION['user_id'],
-				'table_name'=> "PRODUCTOS",
-				'des' => "ACTUALIZACIÓN DE PRODUCTO: $this->nom_producto, UNIDAD: $this->med_producto, VALOR: $this->valor_producto, STOCK MAXIMO: $this->stock_maximo_producto"
+			'user_id' => $_SESSION['user_id'],
+			'table_name' => "PRODUCTOS",
+			'des' => "ACTUALIZACIÓN DE PRODUCTO: $this->nom_producto, UNIDAD: $this->med_producto, VALOR: $this->valor_producto, STOCK MAXIMO: $this->stock_maximo_producto"
 		]);
 		return ["code" => "success", "message" => "Operación Exitosa"];
 	}
@@ -80,19 +79,19 @@ class m_productos extends m_db
 		$sql = "UPDATE productos SET status_product = $this->status_producto WHERE id_product = $this->id_producto ;";
 		$this->Query($sql);
 
-		if(!isset($_SESSION['user_id'])) session_start();
-            
-		if($this->Result_last_query()){
-			if($this->status_producto == 0) $des_estatus = "DESACTIVACIÓN"; else $des_estatus = "ACTIVACIÓN";
+		if (!isset($_SESSION['user_id'])) session_start();
+
+		if ($this->Result_last_query()) {
+			if ($this->status_producto == 0) $des_estatus = "DESACTIVACIÓN";
+			else $des_estatus = "ACTIVACIÓN";
 			$this->reg_bitacora([
 				'user_id' => $_SESSION['user_id'],
-				'table_name'=> "PRODUCTO",
+				'table_name' => "PRODUCTO",
 				'des' => "$des_estatus DEL PRODUCTO: ID => $this->id_producto"
 			]);
 
 			return ["code" => "success", "message" => "Operación Exitosa"];
-		}
-		else return ["code" => "error", "message" => "Operación Fallida"];
+		} else return ["code" => "error", "message" => "Operación Fallida"];
 	}
 
 	public function Delete()
@@ -105,18 +104,17 @@ class m_productos extends m_db
 		$sql = "DELETE FROM productos WHERE id_product = $this->id_producto AND status_product = '0' ;";
 		$this->Query($sql);
 
-		if(!isset($_SESSION['user_id'])) session_start();
-            
-		if($this->Result_last_query()){
+		if (!isset($_SESSION['user_id'])) session_start();
+
+		if ($this->Result_last_query()) {
 			$this->reg_bitacora([
 				'user_id' => $_SESSION['user_id'],
-				'table_name'=> "PRODUCTOS",
+				'table_name' => "PRODUCTOS",
 				'des' => "ELIMINACIÓN DEL PRODUCTO: ID => $this->id_producto"
 			]);
 
 			return ["code" => "success", "message" => "Operación Exitosa"];
-		}
-		else return ["code" => "error", "message" => "Operación Fallida"]; 
+		} else return ["code" => "error", "message" => "Operación Fallida"];
 	}
 
 	public function Get_todos_productos($status = '')
@@ -128,8 +126,10 @@ class m_productos extends m_db
 			$sql = "SELECT * FROM productos
                     INNER JOIN marca ON marca.id_marca = productos.marca_id_product
                     INNER JOIN detalle_inventario ON detalle_inventario.product_id_ope = productos.id_product
-                    $condition GROUP BY productos.id_product;";
+                    $condition ;";
 		}
+
+		// var_dump($sql); GROUP BY productos.id_product
 		$results = $this->query($sql);
 		if ($results->num_rows > 0) return $this->Get_todos_array($results);
 		else return [];

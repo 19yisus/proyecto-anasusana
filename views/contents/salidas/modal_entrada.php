@@ -83,7 +83,8 @@
                     <div v-if="productos[index].if_entrada == 'SI' " class="col-3">
                       <div class="form-group">
                         <label  for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
-                        <input v-if="productos[index].if_entrada == 'SI' " type="number" name="cantidad_product[]" :data-index="index" v-on:keyup="validarStockMaximo" :max="productos[index].stock_maximo" min="1" v-model="productos[index].nuevo_stock" :value="productos[index].cantidad" id="cant_product" placeholder="Ingrese la Cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
+                        <input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
+                        <input v-if="productos[index].if_entrada == 'SI' " type="number" name="cantidad_product[]" :data-index="index" v-on:keyup="validarStockMaximo" :max="productos[index].stock_maximo" min="1" v-model="productos[index].nuevo_stock" :value="productos[index].nuevo_stock" id="cant_product" placeholder="Ingrese la Cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
                       </div>
                     </div>
                     <!-- <button type="button" v-on:click="Disminuir(index)" class="btn btn-danger mt-3">-</button> -->

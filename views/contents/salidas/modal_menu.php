@@ -53,6 +53,7 @@
                         </div>
                       </div>
                     </div>
+                    <button type="button" v-on:click="Disminuir_menu(indice)" class="btn btn-danger mt-3">-</button>
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer">

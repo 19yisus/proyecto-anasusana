@@ -27,7 +27,7 @@ class m_entrada_salida extends m_db
 		$this->cantidad_invent = isset($d['cantidad_invent']) ? $this->Clean(intVal($d['cantidad_invent'])) : null;
 		$this->productos = isset($productos) ? $productos : null;
 		$this->fecha_invent = isset($d['fecha_invent']) ? $d['fecha_invent'] : null;
-		$this->if_credito = isset($d['if_credito']) ? $d['if_credito'] : null;
+		$this->if_credito = isset($d['if_credito']) ? $d['if_credito'] : 0;
 		$this->jornada_id_invent = isset($d['jornada_id_invent']) ? $d['jornada_id_invent'] : NULL;
 	}
 
@@ -40,7 +40,7 @@ class m_entrada_salida extends m_db
             concept_invent,if_credito,jornada_id_invent,person_id_invent,recibe_person_id_invent,comedor_id_invent,user_id_invent,observacion_invent) 
             VALUES (
                 '$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','E',
-                '$this->concept_invent','$this->if_credito',null,$this->person_id_invent,$this->recibe_person_id_invent,
+                '$this->concept_invent',$this->if_credito,null,$this->person_id_invent,$this->recibe_person_id_invent,
                 $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
 
 		try {
@@ -50,10 +50,9 @@ class m_entrada_salida extends m_db
 
 			if ($this->Result_last_query() || true) {
 
-
 				foreach ($this->productos as $producto) {
 					$id = $producto['id_product'];
-					$precio = $producto['precio_product'];
+					$precio = isset($producto['precio_product']) && $producto['precio_product'] != null ? $producto['precio_product'] : 0;
 					$fecha = $producto['fecha_product'];
 					$stock = $producto['stock_product'];
 
@@ -69,7 +68,7 @@ class m_entrada_salida extends m_db
 						$status_transaccion = false;
 						break;
 					}
-
+					
 					$results_producto_stock = $this->Query($sql_producto_stock);
 					if (!$this->Result_last_query()) {
 						$status_transaccion = false;
@@ -85,7 +84,7 @@ class m_entrada_salida extends m_db
 				$this->End_transacction();
 				$this->reg_bitacora([
 					'user_id' => $_SESSION['user_id'],
-					'table_name'=> "INVENTARIO - DETALLE_INVENTARIO",
+					'table_name'=> "INVENTARIO-DETALLE_INVENTARIO",
 					'des' => "TRANSACCIÓN DE ENTRADA DE PRODUCTOS| ID INVENTARIO: $this->id_invent, CANTIDAD: $this->cantidad_invent, OBSERVACIÓN: $this->observacion_invent"
 				]);
 				return "msg/01DONE";
