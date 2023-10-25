@@ -327,7 +327,7 @@
 				},
 				correo_persona: {
 					required: true,
-					minlength: 20,
+					minlength: 10,
 					maxlength: 60,
 					email: true,
 				},

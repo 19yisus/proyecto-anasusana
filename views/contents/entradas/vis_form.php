@@ -60,11 +60,8 @@
 											<div class="col-3">
 												<div class="form-group">
 													<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
-													<select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
-														<?php foreach ($datosComedor as $comedor) { ?>
-															<option value="<?php echo $comedor['id_comedor']; ?>"><?php echo $comedor['nom_comedor']; ?></option>
-														<?php } ?>
-													</select>
+													<input type="hidden" name="comeedor_id_invent" id="comedor_id_invent" value="<?php echo $datosComedor[0]['id_comedor'];?>">
+													<input type="text" name="" id="" readonly value="<?php echo $datosComedor[0]['nom_comedor'];?>" class="form-control">
 												</div>
 											</div>
 											<div class="col-3" v-show="concepto_operacion == 'C'">

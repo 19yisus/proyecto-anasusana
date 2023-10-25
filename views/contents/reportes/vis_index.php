@@ -69,6 +69,10 @@
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Donacion" class="form-check-input" v-bind:checked="filtro == 'Donacion'" v-bind:disabled="tipo_reporte != 'Entrada'" required>
                               <label for="filtro" class="form-check-label">Entrada por donación</label>
                             </div>
+                            <div v-show="tipo_reporte == 'Entrada'" class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Todas_entradas" class="form-check-input" v-bind:checked="filtro == 'Todos_entrada'" v-bind:disabled="tipo_reporte != 'Entrada'" required>
+                              <label for="filtro" class="form-check-label">Todas las entradas</label>
+                            </div>
                             <!-- FILTROS ESPECIFICOS PARA SALIDAS -->
                             <div v-show="tipo_reporte == 'Salida'" class="form-check mx-3">
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Consumo" class="form-check-input" v-bind:checked="filtro == 'Consumo'" v-bind:disabled="tipo_reporte != 'Salida'" required>
@@ -82,6 +86,11 @@
                               <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Rechazo" class="form-check-input" v-bind:checked="filtro == 'Rechazo'" v-bind:disabled="tipo_reporte != 'Salida'" required>
                               <label for="filtro" class="form-check-label">Salidas por remanente</label>
                             </div>
+                            <div v-show="tipo_reporte == 'Salida'" class="form-check mx-3">
+                              <input type="radio" v-model="filtro" name="filtro" id="filtro" value="Todas_salidas" class="form-check-input" v-bind:checked="filtro == 'Todas_salidas'" v-bind:disabled="tipo_reporte != 'Salida'" required>
+                              <label for="filtro" class="form-check-label">Todas las salidas</label>
+                            </div>
+
                           </div>
                         </div>
                       </div>
@@ -91,7 +100,7 @@
                           <div class="row">
                             <!-- FILTROS PARA ENTRADA, SALIDA, JORNADA Y MENU -->
                             <div v-show="tipo_reporte == 'Menu' || tipo_reporte == 'Jornada' || tipo_reporte == 'Entrada' || tipo_reporte == 'Salida'" class="form-check mx-3">
-                            <input type="radio" v-model="filtro_extra" name="filtro_extra" required id="filtro_extra" v-bind:checked="filtro_extra == 'Fecha_registro'" value="Fecha_registro" class="form-check-input" v-bind:disabled="tipo_reporte != 'Menu' && tipo_reporte != 'Jornada' && tipo_reporte != 'Entrada' && tipo_reporte != 'Salida'" required>
+                              <input type="radio" v-model="filtro_extra" name="filtro_extra" required id="filtro_extra" v-bind:checked="filtro_extra == 'Fecha_registro'" value="Fecha_registro" class="form-check-input" v-bind:disabled="tipo_reporte != 'Menu' && tipo_reporte != 'Jornada' && tipo_reporte != 'Entrada' && tipo_reporte != 'Salida'" required>
                               <label for="filtro" class="form-check-label">Por fecha de registro</label>
                             </div>
                           </div>

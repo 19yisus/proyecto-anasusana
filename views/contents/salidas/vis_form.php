@@ -66,11 +66,8 @@
 											<div class="col-3">
 												<div class="form-group">
 													<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
-													<select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
-														<?php foreach ($datosComedor as $comedor) { ?>
-															<option value="<?php echo $comedor['id_comedor']; ?>"><?php echo $comedor['nom_comedor']; ?></option>
-														<?php } ?>
-													</select>
+													<input type="hidden" name="comeedor_id_invent" id="comedor_id_invent" value="<?php echo $datosComedor[0]['id_comedor']; ?>">
+													<input type="text" name="" id="" readonly value="<?php echo $datosComedor[0]['nom_comedor']; ?>" class="form-control">
 												</div>
 											</div>
 											<div class="col-3">
@@ -427,7 +424,7 @@
 						cantidad: ''
 					})
 				},
-				Disminuir_menu(indice){
+				Disminuir_menu(indice) {
 					this.productos_menu.splice(indice, 1);
 				},
 				disminuir() {
@@ -603,6 +600,7 @@
 				valida_jornada_concepto: function() {
 					if (this.jornada_id != '' && this.motivo_salida == "O") return true;
 					else {
+						this.productos = [];
 						this.jornada_id = '';
 						return false;
 					}
@@ -631,7 +629,7 @@
 					title: "Los Datos de los Productos están Incompletos"
 				});
 
-				if (app.productos[0].cantidad == 0 && app.productos[0].id == '') {
+				if (app.productos.length == 0 || app.productos[0].cantidad == 0 && app.productos[0].id == '') {
 					return Toast.fire({
 						icon: "error",
 						title: "Debes de Ingresar Productos para Realizar esta Operación"

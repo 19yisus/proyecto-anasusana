@@ -45,9 +45,10 @@
                           <div class="input-group-append">
                             <select name="med_comida_detalle[]" id="med_comida_detalle" class="input-group-text custom-select" v-model="productos_menu[indice].medida">
                               <option value="">Medidas</option>
-                              <option value="KL">KL</option>
-                              <option value="LT">LT</option>
                               <option value="GM">GM</option>
+                              <option value="KL">KL</option>
+                              <option value="ML">ML</option>
+                              <option value="LT">LT</option>
                             </select>
                           </div>
                         </div>
@@ -79,13 +80,13 @@
   const envio = async () => {
     if ($("#formulario_menu").valid()) {
       let condicion = true;
-      app.productos_menu.forEach(item =>{
-        if(item.id == "") condicion = false;
-        if(item.cantidad == "") condicion = false;
-        if(item.medida == "") condicion = false;
+      app.productos_menu.forEach(item => {
+        if (item.id == "") condicion = false;
+        if (item.cantidad == "") condicion = false;
+        if (item.medida == "") condicion = false;
       })
 
-      if(!condicion){
+      if (!condicion) {
         app.Fn_mensaje_error("Debes de llenar los campos")
         return false;
       }
@@ -93,7 +94,7 @@
       let res = await Confirmar();
       if (!res) return false;
 
-      
+
 
       let datos = new FormData(document.formulario_menu);
       fetch(`<?php echo constant("URL"); ?>controller/c_menu.php`, {
@@ -121,10 +122,10 @@
         minlength: 3,
         maxlength: 20
       },
-      comidas:{
+      comidas: {
         required: true,
       },
-      consumo:{
+      consumo: {
         required: true
       }
     },

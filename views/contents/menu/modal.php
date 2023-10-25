@@ -96,10 +96,10 @@
                           <div class="input-group-append">
                             <select name="med_comida_detalle[]" id="med_comida_detalle" class="input-group-text custom-select" v-model="productos[indice].medida">
                               <option value="">Medidas</option>
-                              <option value="KL">KL</option>
-                              <option value="LT">LT</option>
                               <option value="GM">GM</option>
+                              <option value="KL">KL</option>
                               <option value="ML">ML</option>
+                              <option value="LT">LT</option>
                             </select>
                           </div>
                         </div>

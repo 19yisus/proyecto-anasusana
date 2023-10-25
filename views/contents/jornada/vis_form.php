@@ -176,11 +176,12 @@ $person2 = $model_person->Get_Personas();
           if (this.cant_aproximada != 0) {
             let simplificado, med;
             let total = parseInt(consumo) * parseInt(this.cant_aproximada);
-            if (total > 999 && medida == "GM") {
+            if (total > 999 && medida == "GM" || total > 999 && medida == "ML") {
               simplificado = total / 1000;
               if (medida == "GM") med = "KL";
+              if (medida == "KL") med = "KL";
               if (medida == "LT") med = "LT";
-              if (medida == "kL") med = "KL";
+              if (medida == "ML") med = "LT";              
               return `${total} ${medida} Ó ${simplificado} ${med}`;
             }
             return `${total} ${medida}`;
@@ -226,7 +227,7 @@ $person2 = $model_person->Get_Personas();
         titulo_jornada: {
           required: true,
           minlength: 3,
-          maxlength: 20
+          maxlength: 30
         },
         cant_aproximada: {
           required: true,

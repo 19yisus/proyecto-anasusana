@@ -129,7 +129,7 @@
     //   if (!res) return false;
 
     //   const data = new FormData(form);
-    //   await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php`, {
+    //   await fetch(`<?php //echo constant("URL"); ?>controller/c_jornada.php`, {
     //       method: "POST",
     //       body: data
     //     }).then(response => response.json())

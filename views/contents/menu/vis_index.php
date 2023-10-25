@@ -216,7 +216,7 @@
             </div>`;
 
               <?php if (isset($_SESSION['permisos'])) { ?>
-                if (<?php echo $_SESSION['permisos']; ?> == 1) btn = ``;
+                if (<?php echo $_SESSION['permisos']; ?> == 1) btn = `<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-lg-receta" onclick="consultaDetallada(${row.id_menu})"><i class="fas fa-list"></i></button>`;
               <?php } ?>
 
               return btn;

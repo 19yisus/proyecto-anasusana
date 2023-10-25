@@ -316,12 +316,15 @@ class m_entrada_salida extends m_db
 	{
 		$persona = [];
 
+		if($filtro == "S" || $filtro == "E") $where = "inventario.type_operacion_invent = '$filtro'";
+		else $where = "inventario.concept_invent = '$filtro'";
+
 		if ($desde == '') {
 			$sql_inventario = "SELECT * FROM inventario 
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
 					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
-					WHERE inventario.concept_invent = '$filtro' GROUP BY inventario.id_invent;";
+					WHERE $where GROUP BY inventario.id_invent;";
 		} else {
 			$hasta = date("Y-m-d h:i:s",strtotime($hasta. "+ 1 days"));
 			$desde = date("Y-m-d h:i:s",strtotime($desde. "- 1 days"));
@@ -329,8 +332,9 @@ class m_entrada_salida extends m_db
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
 					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
-					WHERE inventario.concept_invent = '$filtro'AND inventario.created_invent BETWEEN '$desde' AND '$hasta' GROUP BY inventario.id_invent;";
+					WHERE $where AND inventario.created_invent BETWEEN '$desde' AND '$hasta' GROUP BY inventario.id_invent;";
 		}
+
 
 		$datos_inventario = $this->Get_todos_array($this->Query($sql_inventario));
 		$datos = [];
@@ -345,7 +349,7 @@ class m_entrada_salida extends m_db
 
 			$datos_productos = $this->Get_todos_array($this->Query($sql_productos));
 
-			if ($item_i['type_operacion_invent'] == "S") {
+			if ($item_i['type_operacion_invent'] == "S" || $filtro == "S") {
 				$datos_persona2 = $this->BuscarPersona($code, "recibe_person_id_invent");
 				$persona = [
 					'quien_recibe' => [
