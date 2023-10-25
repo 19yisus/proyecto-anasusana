@@ -171,32 +171,6 @@
 </div>
 <!-- /.modal -->
 <script>
-    // $("#btn_actualizar").click( async () =>{
-    //     console.log("CLick")
-    //     if($("#formulario").valid()){
-    //         let res = await Confirmar();
-    //         if(!res) return false;
-
-    //         let datos = new FormData(document.formulario);
-    //         fetch(`<?php //echo constant("URL");
-                        ?>controller/c_persona.php`, {
-    //             method: "POST",
-    //             body: datos,
-    //         }).then( response => response.json())
-    //         .then( res =>{
-    //             FreshCatalogo();
-    //             document.formulario.reset();
-    //             $("#modal-lg").modal("hide");
-
-    //             Toast.fire({
-    //                 icon: `${res.data.code}`,
-    //                 title: `${res.data.message}`
-    //             });
-    //         }).catch( Err => console.log(Err))
-    //     }else{
-    //         console.log("Formulario invalido")
-    //     }
-    // })
 
     $("#formulario").validate({
         rules: {

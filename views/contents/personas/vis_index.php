@@ -213,7 +213,6 @@
         }},
         {defaultContent: "",
         render: function(data, type, row, meta){
-          console.log(row)
           let btn_secondary;
           let estadoBtnEdit;
           if(row.status_person === "1"){
