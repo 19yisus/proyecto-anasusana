@@ -12,6 +12,7 @@ class new_fpdf extends FPDF
   {
     $this->nombre = $name;
     $this->des = $des;
+    $this->AliasNbPages();
   }
   public function Header()
   {
@@ -30,7 +31,7 @@ class new_fpdf extends FPDF
     $this->SetFont("Arial", "B", 14);
     $this->SetY(-15);
     $this->SetX(-20);
-    $this->write(5, utf8_decode("Página número: " . $this->PageNo()));
+    $this->write(5, utf8_decode("Página número: " .$this->PageNo().'/{nb}'));
   }
 }
 
@@ -75,7 +76,7 @@ function fn_pdf_entrada()
 
   $model = new m_entrada_salida();
   $d = $model->GetPdf($_POST['id_invent'])[0];
-    
+
   // die("DFD"); 
   $fecha = new DateTime($d['doc']['fecha']);
 
@@ -202,7 +203,8 @@ function fn_pdf_filtrado()
   if ($filtro == "Rechazo") $f = "R";
   if ($filtro == "Todas_entradas") $f = "E";
   if ($filtro == "Todas_salidas") $f = "S";
-  if($filtro == "Todas_entradas" || $filtro == "Todas_salidas") $desf = "Todas"; else $desf = "";
+  if ($filtro == "Todas_entradas" || $filtro == "Todas_salidas") $desf = "Todas";
+  else $desf = "";
 
   if (isset($_POST['filtro_extra']) && $_POST['filtro_extra'] != '') {
     $d = $model->GetPdfWithFiltros($f, $_POST['desde'], $_POST['hasta']);
@@ -233,24 +235,27 @@ function fn_pdf_filtrado()
     $hasta_ = $date_hasta->format('d-m-Y');
     // echo $date_desde->format("d-m-Y");
     // echo $date_hasta->format('d-m-Y');
-    
-    $pdf->SetNombre("Reporte de operaciones de $tipo por ".($desf == "" ? $filtro : $desf), "Entre las fechas ($desde_ y $hasta_)");
+
+    $pdf->SetNombre("Reporte de operaciones de $tipo por " . ($desf == "" ? $filtro : $desf), "Entre las fechas ($desde_ y $hasta_)");
   } else {
-    $pdf->SetNombre("Reporte de operaciones de $tipo por ".($desf == "" ? $filtro : $desf));
+    $pdf->SetNombre("Reporte de operaciones de $tipo por " . ($desf == "" ? $filtro : $desf));
   }
 
   $pdf->addPage();
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 10);
-  $pdf->SetTextColor(255, 255, 255);
-  $pdf->SetFillColor(11, 63, 71);
-  $pdf->SetDrawColor(88, 88, 88);
   foreach ($d as $dato) {
     $fecha = new DateTime($dato['invent']['created_invent']);
+
+    $pdf->SetTextColor(255, 255, 255);
+    $pdf->SetFillColor(11, 63, 71);
+    $pdf->SetDrawColor(88, 88, 88);
 
     $pdf->cell(80, 7, utf8_decode("Código de la operacion: " . $dato['invent']['id_invent']), 1, 0, "C", 1);
     $pdf->cell(75, 7, utf8_decode("Fecha y Hora: " . $fecha->format("d/m/Y h:i a")), 1, 0, "C", 1);
     $pdf->cell(35, 7, utf8_decode("Cantidad total: " . $dato['invent']['cantidad_invent']), 1, 0, "C", 1);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
     $pdf->Ln();
     $pdf->cell(120, 7, utf8_decode("Nombre del comedor : " . $dato['invent']['nom_comedor']), 1, 0, "C", 1);
     $pdf->cell(70, 7, utf8_decode("N-Orden: " . $dato['invent']['orden_invent']), 1, 0, "C", 1);
@@ -289,14 +294,16 @@ function fn_pdf_filtrado()
       $pdf->cell(190, 7, utf8_decode("Descripción del menu: " . $dato['invent']['des_menu']), 1, 0, "C", 1);
       $pdf->Ln();
     }
-
+    $pdf->SetTextColor(255, 255, 255);
+    $pdf->SetFillColor(11, 63, 71);
+    $pdf->SetDrawColor(88, 88, 88);
     $pdf->cell(190, 7, utf8_decode('Datos de los productos'), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->SetFillColor(255, 255, 255);
     $pdf->SetTextColor(0, 0, 0);
     $pdf->setFont('Arial', 'B', 9);
     foreach ($dato['products'] as $prod) {
-      $pdf->cell(50, 7, utf8_decode("Descripción: " . $prod['nom_product']), 1, 0, "C", 1);
+      $pdf->cell(50, 7, utf8_decode("" . $prod['nom_product']), 1, 0, "C", 1);
       $pdf->cell(15, 7, utf8_decode($prod['valor_product'] . " " . $prod['med_product']), 1, 0, "C", 1);
       $pdf->cell(35, 7, utf8_decode("Cantidad c/u: " . $prod['detalle_cantidad']), 1, 0, "C", 1);
       $pdf->cell(40, 7, utf8_decode("Precio c/u: " . $prod['precio_product_ope'] . "Bs."), 1, 0, "C", 1);

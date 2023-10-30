@@ -52,7 +52,7 @@ if (isset($_POST['ope'])) {
 	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
 	<?php if ($status_form == 1) { ?>
 		<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/olvidarC.css">
-	<?php } else{ ?>
+	<?php } else { ?>
 		<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/preguntaS.css">
 	<?php  } ?>
 	<title>Recupración de contraseña</title>
@@ -146,14 +146,26 @@ if (isset($_POST['ope'])) {
 							<input type="password" class="input" id="password" name="password" placeholder="Nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
-						
+
 						<div class="input-content__div-input last-child">
 							<input type="password" class="input" id="" name="password2" placeholder="Repita su nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
+						<div class="row">
+							<label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
+
+							<div class="col-md-8"><br>
+								<a href="javascript:void(0)" id="reloadCaptcha">Recargar codigo</a>
+							</div>
+						</div>
+
+						<div class="input-subcontent">
+							<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+						</div>
+
 						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" value="form3" type="submit">Recuperar clave</button>
+							<button class="btn-content__btn" name="ope" value="form3" id="btn" type="button">Recuperar clave</button>
 						</div>
 
 						<div class="input__return">
@@ -170,28 +182,30 @@ if (isset($_POST['ope'])) {
 		<!-- cambio de clave -->
 	</div>
 
-
-
-
-	<!-- nuevo login ./ -->
-
-	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/jquery.js"></script>
-	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/jquery.validate.js"></script>
-	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/sweetAlert.js"></script>
+	<?php $this->GetComplement("scripts"); ?>
 	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
 	<?php if ($status_form == 1) { ?>
 		<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/olvidar.js"></script>
-	<?php } else{ ?>
+	<?php } else { ?>
 		<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/preguntaS.js"></script>
 	<?php } ?>
 
-	<?php $this->GetComplement("scripts"); ?>
 
 	<?php
 	if (isset($result['message'])) $this->ObjMessage->MensajePersonal($result['message']);
 
 	if ($status_form == 3) { ?>
 		<script>
+			$("#btn").click(async () => {
+				if ($("#question-content").valid()) $("#question-content").submit();
+			})
+			$("#reloadCaptcha").click(function() {
+				var captchaImage = $('#captcha').attr('src');
+				captchaImage = captchaImage.substring(0, captchaImage.lastIndexOf("?"));
+				captchaImage = captchaImage + "?rand=" + Math.random() * 1000;
+				$('#captcha').attr('src', captchaImage);
+			});
+
 			$("#question-content").validate({
 				rules: {
 					password: {
@@ -214,6 +228,12 @@ if (isset($_POST['ope'])) {
 						required: true,
 						minlength: 5,
 						maxlength: 60,
+					},
+					captcha_input: {
+						required: true,
+						maxlength: 4,
+						minlength: 4,
+						remote: "<?php echo constant("URL"); ?>controller/c_auth.php?ope=captcha"
 					}
 				},
 				messages: {
@@ -240,6 +260,12 @@ if (isset($_POST['ope'])) {
 						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
 						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
 					},
+					captcha_input: {
+						required: "Este campo es obligatorio",
+						maxlength: "Maximo 4 caracteres",
+						minlength: "Minimo 4 caracteres",
+						remote: "El codigo ingresado no es valido"
+					}
 				},
 				errorElement: "span",
 				errorPlacement: function(error, element) {

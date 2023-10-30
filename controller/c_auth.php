@@ -20,12 +20,16 @@
 
   if(isset($_GET['ope'])){
     switch($_GET['ope']){
-      case "Get_respuesta":
-        fn_Get_respuesta();
-      break;
+      // case "Get_respuesta":
+      //   fn_Get_respuesta();
+      // break;
 
-      case "Consultar_grupo":
-        fn_Consultar_grupo();
+      // case "Consultar_grupo":
+      //   fn_Consultar_grupo();
+      // break;
+
+      case "captcha":
+        fn_return_captcha();
       break;
     }
   }
@@ -47,10 +51,15 @@
     header("Location: ".constant("URL")."auth/sign_in/$mensaje");
   }
 
-  function fn_Get_respuesta(){
-    $model = new m_auth();
-    $result = $model->Get_Respuestas_to_preguntas($_GET['id']);
-    print json_encode(["data" => $result]);
+  // function fn_Get_respuesta(){
+  //   $model = new m_auth();
+  //   $result = $model->Get_Respuestas_to_preguntas($_GET['id']);
+  //   print json_encode(["data" => $result]);
+  // }
+
+  function fn_return_captcha(){
+    if(!session_start()) session_start();
+    if($_GET['captcha_input'] == $_SESSION['captcha']) return print json_encode(true); else return print json_encode(false);;
   }
 
   function fn_Cerrar(){

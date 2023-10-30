@@ -5,9 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/login.css">
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
+  <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/fontawesome-free/css/all.min.css">
+  <style>
+    .captcha-image {
+      background-color: white;
+    }
+  </style>
   <title>Login</title>
 </head>
 
@@ -36,6 +41,17 @@
             <span class="" id="viewPassword"><i class="fas fa-eye"></i></span>
           </div>
 
+          <div class="row">
+            <label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
+
+            <div class="col-md-8"><br>
+              <a href="javascript:void(0)" id="reloadCaptcha">Recargar codigo</a>
+            </div>
+          </div>
+
+          <div class="input-subcontent">
+            <input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+          </div>
 
           <div class="btn-content">
             <input type="hidden" name="ope">
@@ -50,62 +66,26 @@
     </div>
   </div>
 
-  <!-- <div class="login-box">
-    <div class="login-logo">
-      <img src="<?php //echo constant("URL"); 
-                ?>views/images/logo.jpg" style="width:15rem;" alt="Logo" class="img-fluid rounded mx-auto d-block">
-    </div>
-  
-    <div class="card align-middle">
-      <div class="card-body login-card-body rounded">
-        <p class="login-box-msg">Inicio de Sesión</p>
-        <form action="<?php //echo constant("URL"); 
-                      ?>controller/c_auth.php" autocomplete="off" method="post" id="formulario" class="needs-validation" novalidate>
-          <div class="input-group mb-3">
-            <input type="number" class="form-control" name="cedula" placeholder="Cédula de la Persona">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.,!@#$%^&*_=+-]).{8,20}$" class="form-control" name="password" placeholder="Contraseña">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-          <div class="row mb-2">
-            <div class="col-12">
-              <input type="hidden" name="ope">
-              <button type="button" onclick="ope.value = this.value" value="Login" class="btn btn-warning btn-block" id="btn">Ingresar</button>
-            </div>
-          </div>
-        </form>
-
-        <p class="mb-1">
-          <a href="<?php //echo constant("URL"); 
-                    ?>auth/recuperar_clave">Olvidé mi Contraseña</a>
-        </p>
-        <p class="mb-0">
-          <a href="<?php //echo constant("URL"); 
-                    ?>auth/sign_in" class="text-center">Registro de Nuevo Usuario</a>
-        </p>
-      </div>
-    </div>
-  </div> -->
-  <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/jquery.js"></script>
-  <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/jquery.validate.js"></script>
-  <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/sweetAlert.js"></script>
+  <!-- <script src="<?php //echo constant("URL"); 
+                    ?>views/javascript_nuevo/jquery.js"></script>
+  <script src="<?php //echo constant("URL"); 
+                ?>views/javascript_nuevo/jquery.validate.js"></script>
+  <script src="<?php //echo constant("URL"); 
+                ?>views/javascript_nuevo/sweetAlert.js"></script> -->
+  <?php $this->GetComplement("scripts"); ?>
   <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
   <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/login.js"></script>
-  <?php $this->GetComplement("scripts"); ?>
   <script>
     $("#btn").click(async () => {
       if ($("#login-content").valid()) $("#login-content").submit();
     })
+
+    $("#reloadCaptcha").click(function() {
+      var captchaImage = $('#captcha').attr('src');
+      captchaImage = captchaImage.substring(0, captchaImage.lastIndexOf("?"));
+      captchaImage = captchaImage + "?rand=" + Math.random() * 1000;
+      $('#captcha').attr('src', captchaImage);
+    });
 
     $("#login-content").validate({
       rules: {
@@ -119,6 +99,12 @@
           required: true,
           minlength: 8,
           maxlength: 50,
+        },
+        captcha_input: {
+          required: true,
+          maxlength: 4,
+          minlength: 4,
+          remote: "<?php echo constant("URL"); ?>controller/c_auth.php?ope=captcha"
         }
       },
       messages: {
@@ -133,12 +119,18 @@
           minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
           maxlength: "Máximo de 50 caracteres para una Contraseña",
           pattern: "Se debe de ingresar una Clave mas segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo)",
+        },
+        captcha_input: {
+          required: "Este campo es obligatorio",
+          maxlength: "Maximo 4 caracteres",
+          minlength: "Minimo 4 caracteres",
+          remote: "El codigo ingresado no es valido"
         }
       },
       errorElement: "span",
       errorPlacement: function(error, element) {
         error.addClass("invalid-feedback");
-        element.closest(".input-group").append(error);
+        element.closest(".input-subcontent").append(error);
       },
       highlight: function(element, errorClass, validClass) {
         $(element).addClass('is-invalid');
