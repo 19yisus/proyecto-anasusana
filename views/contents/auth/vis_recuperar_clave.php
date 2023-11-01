@@ -50,6 +50,8 @@ if (isset($_POST['ope'])) {
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
+	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/toastr/toastr.min.css">
 	<?php if ($status_form == 1) { ?>
 		<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/olvidarC.css">
 	<?php } else { ?>
@@ -68,7 +70,7 @@ if (isset($_POST['ope'])) {
 			<!-- busqueda de usuario -->
 			<div class="content__section">
 				<div class="section__registerNU">
-					<form action="#" method="post" class="section__input-content" id="forgot-password">
+					<form action="#" method="POST" class="section__input-content" id="forgot-password">
 						<h1 for="">Recuperacion de contraseña</h1>
 						<div class="input-content__div-input">
 							<input class="input" id="cedulaR" type="text" placeholder="Cédula de la persona" name="cedula">
@@ -135,7 +137,7 @@ if (isset($_POST['ope'])) {
 		<?php } else if ($status_form == 3) { ?>
 			<div class="content__section">
 				<div class="section__registerNU">
-					<form action="#" method="POST" class="section__input-content" id="question-content">
+					<form action="#" method="POST" class="section__input-content" id="password-content">
 						<h1 for="recuperacionC">Recuperacion de contraseña</h1>
 						<div class="input-content__div-input">
 							<input type="hidden" name="user_id" readonly value="<?php echo $id; ?>">
@@ -160,12 +162,12 @@ if (isset($_POST['ope'])) {
 							</div>
 						</div>
 
-						<div class="input-subcontent">
+						<div class="input-content__div-input last-child">
 							<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
 						</div>
 
 						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" value="form3" id="btn" type="button">Recuperar clave</button>
+							<button class="btn-content__btn" name="ope" value="form3" id="btn" type="submit">Recuperar clave</button>
 						</div>
 
 						<div class="input__return">
@@ -185,28 +187,50 @@ if (isset($_POST['ope'])) {
 	<?php $this->GetComplement("scripts"); ?>
 	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
 	<?php if ($status_form == 1) { ?>
-		<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/olvidar.js"></script>
-	<?php } else { ?>
-		<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/preguntaS.js"></script>
-	<?php } ?>
-
-
-	<?php
-	if (isset($result['message'])) $this->ObjMessage->MensajePersonal($result['message']);
-
-	if ($status_form == 3) { ?>
 		<script>
-			$("#btn").click(async () => {
-				if ($("#question-content").valid()) $("#question-content").submit();
-			})
-			$("#reloadCaptcha").click(function() {
-				var captchaImage = $('#captcha').attr('src');
-				captchaImage = captchaImage.substring(0, captchaImage.lastIndexOf("?"));
-				captchaImage = captchaImage + "?rand=" + Math.random() * 1000;
-				$('#captcha').attr('src', captchaImage);
+			$("#forgot-password").validate({
+				rules: {
+					cedula: {
+						required: true,
+						number: true,
+						minlength: 7,
+						maxlength: 8,
+					},
+				},
+				messages: {
+					cedula: {
+						required: "Campo vacío",
+						number: "Debe ser un numero",
+						minlength: "Cédula inválida",
+						maxlength: "Cédula inválida",
+					},
+				},
 			});
-
+		</script>
+	<?php } else if ($status_form == 2) { ?>
+		<script>
 			$("#question-content").validate({
+				rules: {
+					respuesta1: {
+						required: true,
+					},
+					respuesta2: {
+						required: true,
+					},
+				},
+				messages: {
+					respuesta1: {
+						required: "Campo vacío"
+					},
+					respuesta2: {
+						required: "Campo vacío"
+					},
+				},
+			});
+		</script>
+	<?php } else { ?>
+		<script>
+			$("#password-content").validate({
 				rules: {
 					password: {
 						required: true,
@@ -267,20 +291,10 @@ if (isset($_POST['ope'])) {
 						remote: "El codigo ingresado no es valido"
 					}
 				},
-				errorElement: "span",
-				errorPlacement: function(error, element) {
-					error.addClass("invalid-feedback");
-					element.closest(".input-group").append(error);
-				},
-				highlight: function(element, errorClass, validClass) {
-					$(element).addClass('is-invalid');
-				},
-				unhighlight: function(element, errorClass, validClass) {
-					$(element).removeClass('is-invalid');
-				}
 			});
 		</script>
 	<?php } ?>
+	<?php if (isset($result['message'])) $this->ObjMessage->MensajePersonal($result['message']); ?>
 </body>
 
 </html>

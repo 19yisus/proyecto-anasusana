@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/login.css">
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.css">
   <style>
     .captcha-image {
       background-color: white;
@@ -55,7 +57,7 @@
 
           <div class="btn-content">
             <input type="hidden" name="ope">
-            <button class="btn-content__btn" id="btn" onclick="ope.value = this.value" value="Login" type="button">Iniciar Sesion</button>
+            <button class="btn-content__btn" id="form-btn__submit" onclick="ope.value = this.value" value="Login" type="button">Iniciar Sesion</button>
           </div>
           <div class="content-two__forgot">
             <a class="olvidasteTC" href="<?php echo constant("URL"); ?>auth/recuperar_clave">¿Olvidaste tu contraseña?</a>
@@ -74,19 +76,7 @@
                 ?>views/javascript_nuevo/sweetAlert.js"></script> -->
   <?php $this->GetComplement("scripts"); ?>
   <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
-  <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/login.js"></script>
   <script>
-    $("#btn").click(async () => {
-      if ($("#login-content").valid()) $("#login-content").submit();
-    })
-
-    $("#reloadCaptcha").click(function() {
-      var captchaImage = $('#captcha').attr('src');
-      captchaImage = captchaImage.substring(0, captchaImage.lastIndexOf("?"));
-      captchaImage = captchaImage + "?rand=" + Math.random() * 1000;
-      $('#captcha').attr('src', captchaImage);
-    });
-
     $("#login-content").validate({
       rules: {
         cedula: {
@@ -127,18 +117,65 @@
           remote: "El codigo ingresado no es valido"
         }
       },
-      errorElement: "span",
-      errorPlacement: function(error, element) {
-        error.addClass("invalid-feedback");
-        element.closest(".input-subcontent").append(error);
-      },
-      highlight: function(element, errorClass, validClass) {
-        $(element).addClass('is-invalid');
-      },
-      unhighlight: function(element, errorClass, validClass) {
-        $(element).removeClass('is-invalid');
-      }
     });
+
+    $("#form-btn__submit").click(async (e) => {
+      if ($("#login-content").valid()) $("#login-content").submit();
+    });
+
+    // $("#login-content").validate({
+    //   rules: {
+    //     cedula: {
+    //       required: true,
+    //       minlength: 7,
+    //       maxlength: 8,
+    //       number: true,
+    //     },
+    //     password: {
+    //       required: true,
+    //       minlength: 8,
+    //       maxlength: 50,
+    //     },
+    //     captcha_input: {
+    //       required: true,
+    //       maxlength: 4,
+    //       minlength: 4,
+    //       remote: "<?php //echo constant("URL"); 
+                      ?>controller/c_auth.php?ope=captcha"
+    //     }
+    //   },
+    //   messages: {
+    //     cedula: {
+    //       required: "Este Campo es Obligatorio",
+    //       minlength: "Mínimo 7 caracteres numéricos para la cédula",
+    //       maxlength: "Máximo 8 caracteres numéricos para la cédula",
+    //       number: "Sólo se Aceptan Números",
+    //     },
+    //     password: {
+    //       required: "Este Campo es Obligatorio",
+    //       minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
+    //       maxlength: "Máximo de 50 caracteres para una Contraseña",
+    //       pattern: "Se debe de ingresar una Clave mas segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo)",
+    //     },
+    //     captcha_input: {
+    //       required: "Este campo es obligatorio",
+    //       maxlength: "Maximo 4 caracteres",
+    //       minlength: "Minimo 4 caracteres",
+    //       remote: "El codigo ingresado no es valido"
+    //     }
+    //   },
+    //   errorElement: "span",
+    //   errorPlacement: function(error, element) {
+    //     error.addClass("invalid-feedback");
+    //     element.closest(".input-subcontent").append(error);
+    //   },
+    //   highlight: function(element, errorClass, validClass) {
+    //     $(element).addClass('is-invalid');
+    //   },
+    //   unhighlight: function(element, errorClass, validClass) {
+    //     $(element).removeClass('is-invalid');
+    //   }
+    // });
   </script>
 </body>
 

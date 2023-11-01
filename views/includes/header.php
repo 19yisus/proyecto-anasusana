@@ -41,6 +41,4 @@
     <link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.css">
     <!-- Select2 -->
     <link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/select2/css/select2.min.css">
-
-    <link rel="stylesheet" href="<?php echo constant("URL");?>views/css/login.css"> 
 </head>

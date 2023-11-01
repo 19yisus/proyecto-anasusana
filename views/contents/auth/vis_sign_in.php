@@ -34,6 +34,9 @@ if (isset($_POST['ope'])) {
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
+	<!-- Toastr -->
+	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/toastr/toastr.min.css">
 	<?php if ($status_form == 1) { ?>
 		<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/registroNU.css">
 	<?php } else { ?>
@@ -132,20 +135,21 @@ if (isset($_POST['ope'])) {
 								<span class="viewPassword" id="viewPassword2"><i class="fas fa-eye"></i></span>
 							</div>
 						</div>
-						<div class="row">
-							<label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
 
-							<div class="col-md-8"><br>
-								<a href="javascript:void(0)" id="reloadCaptcha">Recargar codigo</a>
+						<div class="register__container-input">
+							<div class="container__div-input">
+								<label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
+							</div>
+
+
+							<div class="container__div-input">
+								<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
 							</div>
 						</div>
 
-						<div class="input-subcontent">
-							<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
-						</div>
 						<div class="register__btn-content">
 							<input type="hidden" name="ope">
-							<button class="btn-content__btn" type="button" id="btn" onclick="ope.value = this.value" value="Register">Registrarse</button>
+							<button class="btn-content__btn" type="button" id="btn-registrar" onclick="ope.value = this.value" value="Register">Registrarse</button>
 						</div>
 
 						<div class="input__return">
@@ -165,19 +169,109 @@ if (isset($_POST['ope'])) {
 
 	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
 	<?php if ($status_form == 1) { ?>
-		<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/registroNU.js"></script>
+		<script>
+			$("#register-content").validate({
+				rules: {
+					cedula: {
+						required: true,
+						number: true,
+						minlength: 7,
+						maxlength: 8,
+					},
+				},
+				messages: {
+					cedula: {
+						required: "Campo vacío",
+						number: "Debe ser un numero",
+						minlength: "Cédula inválida",
+						maxlength: "Cédula inválida",
+					},
+				},
+			});
+		</script>
+	<?php }
+	if ($status_form == 2) { ?>
+		<script>
+			$("#formRU__register").validate({
+				rules: {
+					cedula: {
+						required: true,
+						minlength: 7,
+						maxlength: 8,
+						number: true,
+					},
+					password: {
+						required: true,
+						minlength: 8,
+						maxlength: 20,
+					},
+					password2: {
+						required: true,
+						minlength: 8,
+						maxlength: 20,
+						equalTo: "#password",
+					},
+					respuesta1: {
+						required: true,
+						minlength: 5,
+						maxlength: 60,
+					},
+					respuesta2: {
+						required: true,
+						minlength: 5,
+						maxlength: 60,
+					},
+					captcha_input: {
+						required: true,
+						maxlength: 4,
+						minlength: 4,
+						remote: "<?php echo constant("URL"); ?>controller/c_auth.php?ope=captcha"
+					}
+				},
+				messages: {
+					cedula: {
+						required: "Este campo es Obligatorio",
+						minlength: "Mínimo 7 caracteres Numéricos para la Cédula",
+						maxlength: "Maximo 8 caracteres Numéricos para la Cédula",
+						number: "Sólo se Aceptan Números",
+					},
+					password: {
+						required: "Este campo es Obligatorio",
+						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
+						maxlength: "Máximo de 20 caracteres para una Contraseña",
+						pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+					},
+					password2: {
+						required: "Este campo es Obligatorio",
+						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
+						maxlength: "Máximo de 20 caracteres para una Contraseña",
+						pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+						equalTo: "Las Contraseñas Ingresadas NO Conciden"
+					},
+					respuesta1: {
+						required: "Este campo es Obligatorio",
+						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
+						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
+					},
+					respuesta2: {
+						required: "Este campo es Obligatorio",
+						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
+						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
+					},
+					captcha_input: {
+						required: "Este campo es obligatorio",
+						maxlength: "Maximo 4 caracteres",
+						minlength: "Minimo 4 caracteres",
+						remote: "El codigo ingresado no es valido"
+					}
+				},
+			});
+		</script>
 	<?php } ?>
 	<script>
-		$("#btn").click(async () => {
-			if ($("#formRU__register").valid()) $("#formRU__register").submit();
-		})
-
-		$("#reloadCaptcha").click(function() {
-			var captchaImage = $('#captcha').attr('src');
-			captchaImage = captchaImage.substring(0, captchaImage.lastIndexOf("?"));
-			captchaImage = captchaImage + "?rand=" + Math.random() * 1000;
-			$('#captcha').attr('src', captchaImage);
-		});
+		// $("#btn").click(async () => {
+		// 	if ($("#formRU__register").valid()) $("#formRU__register").submit();
+		// })
 
 		const Get_respuestas = (id_element, id_pregun) => {
 			if (id_element != "#respues_2") {
@@ -186,92 +280,6 @@ if (isset($_POST['ope'])) {
 				Get_respuestas('#respues_2', $('#pregun2').val())
 			}
 		}
-
-		$("#formRU__register").validate({
-			rules: {
-				user_id: {
-					required: true,
-					minlength: 7,
-					maxlength: 8,
-					number: true,
-				},
-				password: {
-					required: true,
-					minlength: 8,
-					maxlength: 20,
-				},
-				password2: {
-					required: true,
-					minlength: 8,
-					maxlength: 20,
-					equalTo: "#password",
-				},
-				respuesta1: {
-					required: true,
-					minlength: 5,
-					maxlength: 60,
-				},
-				respuesta2: {
-					required: true,
-					minlength: 5,
-					maxlength: 60,
-				},
-				captcha_input: {
-					required: true,
-					maxlength: 4,
-					minlength: 4,
-					remote: "<?php echo constant("URL"); ?>controller/c_auth.php?ope=captcha"
-				}
-			},
-			messages: {
-				user_id: {
-					required: "Este campo es Obligatorio",
-					minlength: "Mínimo 7 caracteres Numéricos para la Cédula",
-					maxlength: "Maximo 8 caracteres Numéricos para la Cédula",
-					number: "Sólo se Aceptan Números",
-				},
-				password: {
-					required: "Este campo es Obligatorio",
-					minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
-					maxlength: "Máximo de 20 caracteres para una Contraseña",
-					pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
-				},
-				password2: {
-					required: "Este campo es Obligatorio",
-					minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
-					maxlength: "Máximo de 20 caracteres para una Contraseña",
-					pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
-					equalTo: "Las Contraseñas Ingresadas NO Conciden"
-				},
-				respuesta1: {
-					required: "Este campo es Obligatorio",
-					minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
-					maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
-				},
-				respuesta2: {
-					required: "Este campo es Obligatorio",
-					minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
-					maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
-				},
-				captcha_input: {
-					required: "Este campo es obligatorio",
-					maxlength: "Maximo 4 caracteres",
-					minlength: "Minimo 4 caracteres",
-					remote: "El codigo ingresado no es valido"
-				}
-			},
-			errorElement: "span",
-			errorPlacement: function(error, element) {
-				error.addClass("invalid-feedback");
-				element.closest(".input-group").append(error);
-			},
-			highlight: function(element, errorClass, validClass) {
-				$(element).addClass('is-invalid');
-			},
-			unhighlight: function(element, errorClass, validClass) {
-				$(element).removeClass('is-invalid');
-			}
-		});
 	</script>
 </body>
 

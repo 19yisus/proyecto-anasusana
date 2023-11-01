@@ -52,6 +52,8 @@ if (isset($_POST['ope'])) {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
 	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/registroNU.css">
+	<link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.css">
 	<title>Recuperación por correo</title>
 </head>
 

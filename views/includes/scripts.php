@@ -34,6 +34,50 @@
 		width: "resolve"
 	}));
 
+	$("#viewPassword").on("click", function() {
+		$("#password").attr("type", function(index, attr) {
+			$("#viewPassword i").toggleClass("fa-eye-slash").toggleClass("fa-eye");
+			return attr == "text" ? "password" : "text";
+		});
+	});
+
+	$("#viewPassword2").on("click", function() {
+		$("#password2").attr("type", function(index, attr) {
+			$("#viewPassword2 i").toggleClass("fa-eye-slash").toggleClass("fa-eye");
+			return attr == "text" ? "password" : "text";
+		});
+	});
+
+	$("#reloadCaptcha").click(function() {
+		var captchaImage = $('#captcha').attr('src');
+		captchaImage = captchaImage.substring(0, captchaImage.lastIndexOf("?"));
+		captchaImage = captchaImage + "?rand=" + Math.random() * 1000;
+		$('#captcha').attr('src', captchaImage);
+	});
+
+	jQuery.validator.addMethod(
+		"lettersonly",
+		function(value, e) {
+			return (
+				this.optional(e) || /^[a-z áãâäàéêëèíîïìóõôöòúûüùçñ]+$/i.test(value)
+			);
+		},
+		"No es un nombre válido"
+	);
+
+	jQuery.validator.addMethod(
+		"passwordsecure",
+		function(value, e) {
+			return (
+				this.optional(e) ||
+				/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/i.test(
+					value
+				)
+			);
+		},
+		"Contraseña inválida"
+	);
+
 	const FreshCatalogo = () => $(`#dataTable`).DataTable().ajax.reload(null, false);
 
 	const Toast = Swal.mixin({
@@ -45,7 +89,7 @@
 
 	window.addEventListener("keypress", function(event) {
 		if (event.keyCode == 13) {
-			if($("#btn")) $("#btn").click();
+			if ($("#btn")) $("#btn").click();
 			event.preventDefault();
 		}
 	}, false);
