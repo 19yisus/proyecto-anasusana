@@ -23,7 +23,7 @@ class m_entrada_salida extends m_db
 		$this->recibe_person_id_invent = isset($d['recibe_person_id_invent']) ? $d['recibe_person_id_invent'] : null;
 		$this->comedor_id_invent = isset($d['comedor_id_invent']) ? $d['comedor_id_invent'] : null;
 		$this->user_id_invent = isset($d['user_id_invent']) ? $d['user_id_invent'] : 1;
-		$this->observacion_invent = isset($d['observacion_invent']) ? $this->Clean($d['observacion_invent']) : null;
+		$this->observacion_invent = isset($d['observacion_invent']) ? $this->Clean($d['observacion_invent']) : '.';
 		$this->cantidad_invent = isset($d['cantidad_invent']) ? $this->Clean(intVal($d['cantidad_invent'])) : null;
 		$this->productos = isset($productos) ? $productos : null;
 		$this->fecha_invent = isset($d['fecha_invent']) ? $d['fecha_invent'] : null;
@@ -33,7 +33,7 @@ class m_entrada_salida extends m_db
 
 	public function Entrada_productos()
 	{
-		if(!isset($_SESSION['user_id'])) session_start();
+		if (!isset($_SESSION['user_id'])) session_start();
 		// TRANSACCTION
 		$status_transaccion = true;
 		$sql_inventario_insert = "INSERT INTO inventario(id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
@@ -44,7 +44,6 @@ class m_entrada_salida extends m_db
                 $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
 
 		try {
-
 			$this->Start_transacction();
 			$results_invent = $this->Query($sql_inventario_insert);
 
@@ -68,7 +67,7 @@ class m_entrada_salida extends m_db
 						$status_transaccion = false;
 						break;
 					}
-					
+
 					$results_producto_stock = $this->Query($sql_producto_stock);
 					if (!$this->Result_last_query()) {
 						$status_transaccion = false;
@@ -84,7 +83,7 @@ class m_entrada_salida extends m_db
 				$this->End_transacction();
 				$this->reg_bitacora([
 					'user_id' => $_SESSION['user_id'],
-					'table_name'=> "INVENTARIO-DETALLE_INVENTARIO",
+					'table_name' => "INVENTARIO-DETALLE_INVENTARIO",
 					'des' => "TRANSACCIÓN DE ENTRADA DE PRODUCTOS| ID INVENTARIO: $this->id_invent, CANTIDAD: $this->cantidad_invent, OBSERVACIÓN: $this->observacion_invent"
 				]);
 				return "msg/01DONE";
@@ -101,17 +100,13 @@ class m_entrada_salida extends m_db
 	{
 		// TRANSACCTION
 		$status_transaccion = true;
-		$sql_inventario_insert = "INSERT INTO inventario(
-                id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent,
-                concept_invent,if_credito,jornada_id_invent,person_id_invent,recibe_person_id_invent,
-                comedor_id_invent,user_id_invent,observacion_invent) 
-            VALUES (
-                '$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','S',
-                '$this->concept_invent',null,'$this->jornada_id_invent',null,$this->recibe_person_id_invent,
-                $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+		$sql_inventario_insert = "INSERT INTO inventario( id_invent,orden_invent,cantidad_invent,status_invent,created_invent,type_operacion_invent, concept_invent,if_credito,jornada_id_invent,person_id_invent,recibe_person_id_invent, comedor_id_invent,user_id_invent,observacion_invent) 
+		VALUES ( '$this->id_invent','$this->orden_invent',$this->cantidad_invent,1,'$this->fecha_invent','S', '$this->concept_invent',null,'$this->jornada_id_invent',null,$this->recibe_person_id_invent, $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
+
 
 		try {
 			$sql_inventario_insert = str_ireplace("''", "NULL", $sql_inventario_insert);
+			
 			$this->Start_transacction();
 			$results_invent = $this->Query($sql_inventario_insert);
 
@@ -148,7 +143,7 @@ class m_entrada_salida extends m_db
 				$this->End_transacction();
 				$this->reg_bitacora([
 					'user_id' => $_SESSION['user_id'],
-					'table_name'=> "INVENTARIO - DETALLE_INVENTARIO",
+					'table_name' => "INVENTARIO - DETALLE_INVENTARIO",
 					'des' => "TRANSACCIÓN DE SALIDA DE PRODUCTOS| ID INVENTARIO: $this->id_invent, CANTIDAD: $this->cantidad_invent, OBSERVACIÓN: $this->observacion_invent"
 				]);
 				return "msg/01DONE";
@@ -316,7 +311,7 @@ class m_entrada_salida extends m_db
 	{
 		$persona = [];
 
-		if($filtro == "S" || $filtro == "E") $where = "inventario.type_operacion_invent = '$filtro'";
+		if ($filtro == "S" || $filtro == "E") $where = "inventario.type_operacion_invent = '$filtro'";
 		else $where = "inventario.concept_invent = '$filtro'";
 
 		if ($desde == '') {
@@ -326,8 +321,8 @@ class m_entrada_salida extends m_db
 					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
 					WHERE $where GROUP BY inventario.id_invent;";
 		} else {
-			$hasta = date("Y-m-d h:i:s",strtotime($hasta. "+ 1 days"));
-			$desde = date("Y-m-d h:i:s",strtotime($desde. "- 1 days"));
+			$hasta = date("Y-m-d h:i:s", strtotime($hasta . "+ 1 days"));
+			$desde = date("Y-m-d h:i:s", strtotime($desde . "- 1 days"));
 			$sql_inventario = "SELECT * FROM inventario 
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent

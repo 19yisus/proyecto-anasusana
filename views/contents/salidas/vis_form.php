@@ -66,7 +66,7 @@
 											<div class="col-3">
 												<div class="form-group">
 													<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
-													<input type="hidden" name="comeedor_id_invent" id="comedor_id_invent" value="<?php echo $datosComedor[0]['id_comedor']; ?>">
+													<input type="hidden" name="comedor_id_invent" id="comedor_id_invent" value="<?php echo $datosComedor[0]['id_comedor']; ?>">
 													<input type="text" name="" id="" readonly value="<?php echo $datosComedor[0]['nom_comedor']; ?>" class="form-control">
 												</div>
 											</div>
@@ -421,7 +421,7 @@
 						id: '',
 						des: '',
 						medida: '',
-						cantidad: ''
+						cantidad: 1
 					})
 				},
 				Disminuir_menu(indice) {
@@ -531,10 +531,10 @@
 					await fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Consultar_producto&id_producto=${this.productos[e.target.dataset.index].code}`)
 						.then(response => response.json()).then(data => {
 							this.productos[e.target.dataset.index].nom_product = data.data.nom_product;
-							this.productos[e.target.dataset.index].cantidad = 0;
+							this.productos[e.target.dataset.index].cantidad = 1;
 							this.productos[e.target.dataset.index].stock = data.data.stock_product;
 							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product) - parseInt(data.stock_product);
-							this.productos[e.target.dataset.index].nuevo_stock = parseInt(0);
+							this.productos[e.target.dataset.index].nuevo_stock = parseInt(1);
 						}).catch(error => console.error(error));
 				},
 				CodigosDuplicados(element) {
@@ -553,6 +553,13 @@
 						this.Fn_mensaje_error("Primero Selecciona un Producto para Consultar su Disponibilidad");
 						return;
 					}
+
+					if (this.productos[element.target.dataset.index].cantidad == 0) {
+						this.Fn_mensaje_error("El cantidad no puede ser 0");
+						this.productos[element.target.dataset.index].cantidad = 1;
+						return;
+					}
+
 					if (parseInt(element.target.max) == 0) {
 						this.Fn_mensaje_error("No hay Stock para este Producto");
 						this.productos[element.target.dataset.index].cantidad = 0;

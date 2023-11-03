@@ -35,6 +35,7 @@
                         <th>Código</th>
                         <th>Titulo</th>
                         <th>Cantidad aproximada de beneficiados</th>
+                        <th>Menú a realizar</th>
                         <th>Fecha para esta jornada</th>
                         <th>Responsable</th>
                         <th>Estado</th>
@@ -160,6 +161,9 @@
             data: "cant_aproximada"
           },
           {
+            data: "des_menu"
+          },
+          {
             data: "fecha_jornada",
             render(data) {
               return moment(data).format("DD/MM/YYYY h:mm A")
@@ -199,7 +203,7 @@
             </div>`;
 
               <?php if (isset($_SESSION['permisos'])) { ?>
-                if (<?php echo $_SESSION['permisos']; ?> == 1) btn = ``;
+                if (<?php echo $_SESSION['permisos']; ?> == 1) btn = `<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-lg-jornada" onclick="consultaDetallada(${row.id_jornada})"><i class="fas fa-list"></i></button>`;
               <?php } ?>
 
               return btn;

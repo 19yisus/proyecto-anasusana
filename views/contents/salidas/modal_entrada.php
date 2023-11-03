@@ -39,12 +39,8 @@
                     <div class="col-3 col-sm-6">
                       <div class="form-group">
                         <label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
-                        <select name="comedor_id_invent" id="comedor_id_invent" class="custom-select" readonly>
-                          <option value="">Seleccione una Opción</option>
-                          <?php foreach ($datosComedor as $comedor) { ?>
-                            <option value="<?php echo $comedor['id_comedor']; ?>"><?php echo $comedor['nom_comedor']; ?></option>
-                          <?php } ?>
-                        </select>
+                        <input type="hidden" name="comedor_id_invent" id="comedor_id_invent" value="<?php echo $datosComedor[0]['id_comedor']; ?>">
+                        <input type="text" name="" id="" readonly value="<?php echo $datosComedor[0]['nom_comedor']; ?>" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -82,7 +78,7 @@
                     </div>
                     <div v-if="productos[index].if_entrada == 'SI' " class="col-3">
                       <div class="form-group">
-                        <label  for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
+                        <label for="cant_product">Cantidad(<span class="text-danger text-md">*</span>)</label>
                         <input type="hidden" min="0" name="cantidad_invent" id="cant_ope" class="form-control" readonly :value="cantidad_productos">
                         <input v-if="productos[index].if_entrada == 'SI' " type="number" name="cantidad_product[]" :data-index="index" v-on:keyup="validarStockMaximo" :max="productos[index].stock_maximo" min="1" v-model="productos[index].nuevo_stock" :value="productos[index].nuevo_stock" id="cant_product" placeholder="Ingrese la Cantidad" class="form-control" onchange="this.value = parseInt(this.value);">
                       </div>

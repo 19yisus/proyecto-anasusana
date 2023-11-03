@@ -128,7 +128,9 @@ class m_jornada extends m_db
   {
     $this->verificarJornadas();
     if ($status != '') $sql = "SELECT * FROM jornada WHERE estatus_jornada = $status";
-    else $sql = "SELECT * FROM jornada INNER JOIN personas ON personas.id_person = jornada.person_id_responsable";
+    else $sql = "SELECT * FROM jornada 
+      INNER JOIN personas ON personas.id_person = jornada.person_id_responsable 
+      INNER JOIN menu ON menu.id_menu = jornada.menu_id_jornada";
     $results = $this->query($sql);
     return $this->Get_todos_array($results);
   }

@@ -122,14 +122,14 @@ class m_productos extends m_db
 		if ($status != '') $condition = "WHERE productos.status_product = '1' ";
 		else $condition = "";
 		$sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product $condition ;";
-		if ($status != '' && $status == 2) {
-			$sql = "SELECT * FROM productos
-                    INNER JOIN marca ON marca.id_marca = productos.marca_id_product
-                    INNER JOIN detalle_inventario ON detalle_inventario.product_id_ope = productos.id_product
-                    $condition ;";
+
+		if ($status === 2) {
+			$sql = "SELECT DISTINCT productos.id_product, productos.*, marca.* FROM productos 
+				INNER JOIN marca ON marca.id_marca = productos.marca_id_product
+				INNER JOIN detalle_inventario ON detalle_inventario.product_id_ope = productos.id_product $condition;";
 		}
 
-		// var_dump($sql); GROUP BY productos.id_product
+		// GROUP BY productos.id_product
 		$results = $this->query($sql);
 		if ($results->num_rows > 0) return $this->Get_todos_array($results);
 		else return [];

@@ -60,7 +60,7 @@
 											<div class="col-3">
 												<div class="form-group">
 													<label for="comedor_id_invent">Comedor(<span class="text-danger text-md">*</span>)</label>
-													<input type="hidden" name="comeedor_id_invent" id="comedor_id_invent" value="<?php echo $datosComedor[0]['id_comedor'];?>">
+													<input type="hidden" name="comedor_id_invent" id="comedor_id_invent" value="<?php echo $datosComedor[0]['id_comedor'];?>">
 													<input type="text" name="" id="" readonly value="<?php echo $datosComedor[0]['nom_comedor'];?>" class="form-control">
 												</div>
 											</div>
@@ -263,10 +263,15 @@
 					let input = index.target,
 						value = parseInt(input.value),
 						maximo = parseInt(input.max);
+					if(value < 1) this.productos[input.dataset.index].cantidad = 1;
+
 					if (value > maximo) {
 						this.Fn_mensaje_error(`No se puede superar el Stock Maximo de este producto (${this.productos[input.dataset.index].stock_maximo})`);
-						this.productos[input.dataset.index].cantidad = maximo;
+						if(maximo == 0) this.productos.splice(this.productos[input.dataset.index].codigo, 1); 
+						else this.productos[input.dataset.index].cantidad = maximo;
 					}
+
+					
 				},
 				Fn_mensaje_error: function(sms) {
 					Toast.fire({
