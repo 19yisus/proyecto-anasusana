@@ -52,8 +52,48 @@ if (isset($_POST['ope'])) {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
 	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/registroNU.css">
-	<link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-	<link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.css">
+	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+	<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/toastr/toastr.min.css">
+	<style>
+		.section__nuevaC .content-requirement {
+			width: 330px;
+			margin-top: 20px;
+		}
+
+		.content-requirement span:nth-child(1) {
+			font-size: 1.2rem;
+		}
+
+		.content-requirement .requirement-list {
+			margin-top: 20px;
+		}
+
+		.requirement-list li {
+			list-style: none;
+			font-size: 1rem;
+			display: flex;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+
+		.requirement-list li i {
+			font-size: 1.2rem;
+			color: #c02424;
+			width: 20px;
+		}
+
+		.requirement-list li span {
+			font-size: 1.1rem;
+		}
+
+		.requirement-list li.valid i {
+			color: #16922b;
+		}
+
+		.requirement-list li.valid span {
+			color: #999999;
+		}
+	</style>
 	<title>Recuperación por correo</title>
 </head>
 
@@ -68,7 +108,7 @@ if (isset($_POST['ope'])) {
 			<!-- Se requiere el correo para confirmar que sea correcto -->
 			<div class="content__section active">
 				<div class="section__registerNU">
-					<form action="#" method="POST" class="section__input-content" id="register-content">
+					<form action="#" method="POST" class="section__input-content" id="verificacion_correo">
 						<h1>verificación de correo</h1>
 						<div class="input-content__div-input">
 							<input class="input" id="cedula" type="number" value="<?php echo $cedula; ?>" placeholder="Verifica tu correo" name="cedula" required>
@@ -93,10 +133,10 @@ if (isset($_POST['ope'])) {
 			<!-- Se requiere el código enviado al correo para recuperar contraseña -->
 			<div class="content__section active">
 				<div class="section__registerNU">
-					<form action="#" method="POST" class="section__input-content" id="register-content">
+					<form action="#" method="POST" class="section__input-content" id="verificacion_code">
 						<h1>verificación de código</h1>
 						<div class="input-content__div-input">
-						<input type="hidden" name="id" readonly value="<?php echo $id; ?>">
+							<input type="hidden" name="id" readonly value="<?php echo $id; ?>">
 							<input class="input" id="cedula" type="number" value="<?php echo $cedula; ?>" placeholder="Verifica tu correo" name="cedula" required>
 							<span><i class="fas fa-user"></i></span>
 						</div>
@@ -115,7 +155,7 @@ if (isset($_POST['ope'])) {
 
 			<div class="content__section">
 				<div class="section__registerNU">
-					<form action="#" method="POST" class="section__input-content" id="question-content">
+					<form action="#" method="POST" class="section__input-content" id="cambio_clave">
 						<h1 for="recuperacionC">Recuperacion de contraseña</h1>
 						<div class="input-content__div-input">
 							<input type="hidden" name="id" readonly value="<?php echo $id; ?>">
@@ -132,14 +172,38 @@ if (isset($_POST['ope'])) {
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
+						<div class="content-requirement">
+							<span>La contraseña debe contener</span>
+							<ul class="requirement-list">
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 8 caracteres de longitud</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 mayuscula (A...Z)</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 minuscula (a...z)</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 caracter especial (!...$)</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 numero (0...9)</p>
+								</li>
+							</ul>
+						</div>
+
 						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" value="form3" type="submit">Recuperar clave</button>
+							<button class="btn-content__btn" name="ope" id="btn_recuperar" disabled value="form3" type="submit">Recuperar clave</button>
 						</div>
 
 						<div class="input__return">
-							<span>
-								<a class="back" id="backIn" href="<?php echo constant("URL"); ?>auth/login">Inicio</a>
-							</span>
+							<a class="back" id="backIn" href="<?php echo constant("URL"); ?>auth/login">Inicio</a>
 							<a class="back" id="backRNU" href="<?php echo constant("URL"); ?>auth/sign_in">Registro de nuevo usuario</a>
 						</div>
 					</form>
@@ -151,15 +215,103 @@ if (isset($_POST['ope'])) {
 	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/jquery.validate.js"></script>
 	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/sweetAlert.js"></script>
 	<script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
-	
+
 	<?php $this->GetComplement("scripts"); ?>
 
 	<?php
 	if (isset($result['message'])) $this->ObjMessage->MensajePersonal($result['message']);
 
-	if ($status_form == 3) { ?>
+	if ($status_form == 1) {
+	?>
 		<script>
-			$("#question-content").validate({
+			$("#verificacion_correo").validate({
+				rules: {
+					email: {
+						required: true,
+						minlength: 10,
+						maxlength: 60,
+						email: true,
+					},
+				},
+				messages: {
+					email: {
+						required: "Este Campo NO puede estar Vacio",
+						minlength: "Mínimo de 20 caracteres",
+						maxlength: "Máximo de 120 caracteres",
+						email: "Ingrese un Correo Válido",
+					},
+				},
+			});
+		</script>
+	<?php
+	} else if ($status_form == 2) {
+	?>
+		<script>
+			$("#verificacion_code").validate({
+				rules: {
+					code: {
+						required: true,
+						minlength: 8,
+						maxlength: 8,
+					},
+				},
+				messages: {
+					code: {
+						required: "Este Campo NO puede estar Vacio",
+						minlength: "Mínimo de 8 caracteres",
+						maxlength: "Máximo de 8 caracteres",
+					},
+				},
+			});
+		</script>
+
+	<?php
+	} else if ($status_form == 3) { ?>
+		<script>
+			const passwordInput = document.querySelector('#password');
+			const requirementList = document.querySelectorAll('.requirement-list li');
+
+			const requirements = [{
+					regex: /.{8,}/,
+					index: 0
+				},
+				{
+					regex: /[0-9]/,
+					index: 1
+				},
+				{
+					regex: /[a-z]/,
+					index: 2
+				},
+				{
+					regex: /[^A-Za-z0-9]/,
+					index: 3
+				},
+				{
+					regex: /[A-Z]/,
+					index: 4
+				},
+			]
+
+			passwordInput.addEventListener('keyup', e => {
+				requirements.forEach(item => {
+					const isValid = item.regex.test(e.target.value);
+					const requirementItem = requirementList[item.index];
+
+
+					if (isValid) {
+						requirementItem.firstElementChild.className = 'fa-solid fa-check';
+						requirementItem.classList.add('valid');
+						console.log(item.index)
+						$("#btn_recuperar").attr("disabled", false)
+					} else {
+						requirementItem.firstElementChild.className = 'fa-solid fa-times';
+						requirementItem.classList.remove('valid');
+						$("#btn_recuperar").attr("disabled", true)
+					}
+				})
+			})
+			$("#cambio_clave").validate({
 				rules: {
 					password: {
 						required: true,
@@ -207,17 +359,6 @@ if (isset($_POST['ope'])) {
 						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
 						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
 					},
-				},
-				errorElement: "span",
-				errorPlacement: function(error, element) {
-					error.addClass("invalid-feedback");
-					element.closest(".input-group").append(error);
-				},
-				highlight: function(element, errorClass, validClass) {
-					$(element).addClass('is-invalid');
-				},
-				unhighlight: function(element, errorClass, validClass) {
-					$(element).removeClass('is-invalid');
 				}
 			});
 		</script>

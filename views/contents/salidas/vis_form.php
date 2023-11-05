@@ -398,13 +398,15 @@
 					if (this.cant_aproximada != 0) {
 						let simplificado, med;
 						let total = parseInt(c) * parseInt(this.cant_aproximada);
-						if (total > 999 && u == "GM") {
+						
+						if (total > 999 && u == "GM" || total > 999 && u == "ML") {
 							simplificado = total / 1000;
 							if (u == "GM") med = "KL";
-							if (u == "LT") med = "LT";
 							if (u == "kL") med = "KL";
+							if (u == "LT") med = "LT";
+							if (u == "ML") med = "LT";
 
-							if (!Number.isInteger(simplificado)) simplificado = Math.round(simplificado)
+							if (!Number.isInteger(simplificado)) simplificado = Math.ceil(simplificado)
 							return `${total} ${u} Ó ${simplificado} ${med}`;
 						}
 						return `${total} ${u}`;

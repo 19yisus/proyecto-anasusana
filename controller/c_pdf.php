@@ -18,7 +18,7 @@ class new_fpdf extends FPDF
   {
     $this->SetFont("Arial", "B", 14);
     $this->write(5, utf8_decode("ANA SUSSANA DE OUSSET, Acarigua - Portuguesa"));
-    $this->Image("../views/images/logo.jpg", 150, 5, 45, 20, "JPG");
+    $this->Image("../views/images/logo.png", 150, 5, 45, 20, "PNG");
     $this->Ln();
     $this->write(5, utf8_decode("$this->nombre"));
     $this->Ln(5);

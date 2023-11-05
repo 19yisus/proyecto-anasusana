@@ -94,7 +94,7 @@ if (isset($_POST['ope'])) {
 			<!-- preguntas de seguridad -->
 			<div class="content__section">
 				<div class="section__registerNU">
-					<form action="#" method="POST" class="section__input-content" id="question-content">
+					<form action="#" method="POST" autocomplete="off" class="section__input-content" id="question-content">
 						<h1 for="recuperacionC">Recuperacion de contraseña</h1>
 						<div class="input-content__div-input">
 							<input type="hidden" name="user_id" readonly value="<?php echo $id; ?>">
@@ -107,7 +107,7 @@ if (isset($_POST['ope'])) {
 							<span><i class="fas fa-question"></i></span>
 						</div>
 						<div class="input-content__div-input">
-							<input type="text" class="input" id="" name="respuesta1" placeholder="Primera respuesta de seguridad (*)">
+							<input type="text" class="input" id="" autocomplete="off" name="respuesta1" placeholder="Primera respuesta de seguridad (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 						<div class="input-content__div-input">
@@ -116,7 +116,7 @@ if (isset($_POST['ope'])) {
 							<span><i class="fas fa-question"></i></span>
 						</div>
 						<div class="input-content__div-input last-child">
-							<input type="text" class="input" id="" name="respuesta2" placeholder="Segunda respuesta de seguridad (*)">
+							<input type="text" class="input" id="" autocomplete="off" name="respuesta2" placeholder="Segunda respuesta de seguridad (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
@@ -145,12 +145,12 @@ if (isset($_POST['ope'])) {
 							<span><i class="fas fa-user"></i></span>
 						</div>
 						<div class="input-content__div-input">
-							<input type="password" class="input" id="password" name="password" placeholder="Nueva contraseña (*)">
+							<input type="password" class="input" id="password" autocomplete="off" name="password" placeholder="Nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
 						<div class="input-content__div-input last-child">
-							<input type="password" class="input" id="" name="password2" placeholder="Repita su nueva contraseña (*)">
+							<input type="password" class="input" id="" autocomplete="off" name="password2" placeholder="Repita su nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 

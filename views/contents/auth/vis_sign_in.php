@@ -41,6 +41,46 @@ if (isset($_POST['ope'])) {
 		<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/registroNU.css">
 	<?php } else { ?>
 		<link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/registroNUF.css">
+		<style>
+			.section__nuevaC .content-requirement {
+				width: 330px;
+				margin-top: 20px;
+			}
+
+			.content-requirement span:nth-child(1) {
+				font-size: 1.2rem;
+			}
+
+			.content-requirement .requirement-list {
+				margin-top: 20px;
+			}
+
+			.requirement-list li {
+				list-style: none;
+				font-size: 1rem;
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+			}
+
+			.requirement-list li i {
+				font-size: 1.2rem;
+				color: #c02424;
+				width: 20px;
+			}
+
+			.requirement-list li span {
+				font-size: 1.1rem;
+			}
+
+			.requirement-list li.valid i {
+				color: #16922b;
+			}
+
+			.requirement-list li.valid span {
+				color: #999999;
+			}
+		</style>
 	<?php  } ?>
 	<title>Registro de nuevo usuario</title>
 </head>
@@ -79,7 +119,7 @@ if (isset($_POST['ope'])) {
 				<div class="section__formRU">
 					<h1 class="register__title">Registro de nuevo usuario</h1>
 
-					<form action="<?php echo constant("URL"); ?>controller/c_auth.php" method="post" class="formRU__register" id="formRU__register">
+					<form action="<?php echo constant("URL"); ?>controller/c_auth.php" autocomplete="off" method="post" class="formRU__register" id="formRU__register">
 
 						<div class="register__container-input">
 							<div class="container__div-input">
@@ -117,23 +157,49 @@ if (isset($_POST['ope'])) {
 						</div>
 						<div class="register__container-input">
 							<div class="container__div-input">
-								<input type="text" class="input" name="respuesta1" id="respuesta1" placeholder="Primera respuesta de seguridad (*)">
+								<input type="text" class="input" name="respuesta1" autocomplete="off" id="respuesta1" placeholder="Primera respuesta de seguridad (*)">
 								<span><i class="fas fa-question"></i></span>
 							</div>
 							<div class="container__div-input">
-								<input type="text" class="input" name="respuesta2" id="respuesta2" placeholder="Segunda respuesta de seguridad (*)">
+								<input type="text" class="input" name="respuesta2" autocomplete="off" id="respuesta2" placeholder="Segunda respuesta de seguridad (*)">
 								<span><i class="fas fa-question"></i></span>
 							</div>
 						</div>
 						<div class="register__container-input">
 							<div class="container__div-input">
-								<input type="password" class="input password" name="password" id="password" placeholder="Ingresa tu contraseña (*)">
+								<input type="password" class="input password" autocomplete="off" name="password" id="password" placeholder="Ingresa tu contraseña (*)">
 								<span class="viewPassword" id="viewPassword"><i class="fas fa-eye"></i></span>
 							</div>
 							<div class="container__div-input">
-								<input type="password" class="input password" name="password2" id="password2" placeholder="Confirma tu contraseña (*)">
+								<input type="password" class="input password" autocomplete="off" name="password2" id="password2" placeholder="Confirma tu contraseña (*)">
 								<span class="viewPassword" id="viewPassword2"><i class="fas fa-eye"></i></span>
 							</div>
+						</div>
+
+						<div class="content-requirement" style="margin:auto;">
+							<span>La contraseña debe contener</span>
+							<ul class="requirement-list">
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 8 caracteres de longitud</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 mayuscula (A...Z)</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 minuscula (a...z)</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 caracter especial (!...$)</p>
+								</li>
+								<li>
+									<i class="fa-solid fa-times"></i>
+									<p>Al menos 1 numero (0...9)</p>
+								</li>
+							</ul>
 						</div>
 
 						<div class="register__container-input">
@@ -149,7 +215,7 @@ if (isset($_POST['ope'])) {
 
 						<div class="register__btn-content">
 							<input type="hidden" name="ope">
-							<button class="btn-content__btn" type="button" id="btn-registrar" onclick="ope.value = this.value" value="Register">Registrarse</button>
+							<button class="btn-content__btn" type="submit" disabled id="btn-registrar" onclick="ope.value = this.value" value="Register">Registrarse</button>
 						</div>
 
 						<div class="input__return">
@@ -192,6 +258,49 @@ if (isset($_POST['ope'])) {
 	<?php }
 	if ($status_form == 2) { ?>
 		<script>
+			const passwordInput = document.querySelector('#password');
+			const requirementList = document.querySelectorAll('.requirement-list li');
+
+			const requirements = [{
+					regex: /.{8,}/,
+					index: 0
+				},
+				{
+					regex: /[0-9]/,
+					index: 1
+				},
+				{
+					regex: /[a-z]/,
+					index: 2
+				},
+				{
+					regex: /[^A-Za-z0-9]/,
+					index: 3
+				},
+				{
+					regex: /[A-Z]/,
+					index: 4
+				},
+			]
+
+			passwordInput.addEventListener('keyup', e => {
+				requirements.forEach(item => {
+					const isValid = item.regex.test(e.target.value);
+					const requirementItem = requirementList[item.index];
+
+
+					if (isValid) {
+						requirementItem.firstElementChild.className = 'fa-solid fa-check';
+						requirementItem.classList.add('valid');
+						console.log(item.index)
+						$("#btn-registrar").attr("disabled", false)
+					} else {
+						requirementItem.firstElementChild.className = 'fa-solid fa-times';
+						requirementItem.classList.remove('valid');
+						$("#btn-registrar").attr("disabled", true)
+					}
+				})
+			})
 			$("#formRU__register").validate({
 				rules: {
 					cedula: {
