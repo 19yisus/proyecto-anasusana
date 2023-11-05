@@ -163,12 +163,12 @@ if (isset($_POST['ope'])) {
 							<span><i class="fas fa-user"></i></span>
 						</div>
 						<div class="input-content__div-input">
-							<input type="password" class="input" id="password" name="password" placeholder="Nueva contraseña (*)">
+							<input type="password" class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password" placeholder="Nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
 						<div class="input-content__div-input last-child">
-							<input type="password" class="input" id="" name="password2" placeholder="Repita su nueva contraseña (*)">
+							<input type="password" class="input" id="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="password2" placeholder="Repita su nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
@@ -276,7 +276,7 @@ if (isset($_POST['ope'])) {
 					index: 0
 				},
 				{
-					regex: /[0-9]/,
+					regex: /[A-Z]/,
 					index: 1
 				},
 				{
@@ -288,7 +288,7 @@ if (isset($_POST['ope'])) {
 					index: 3
 				},
 				{
-					regex: /[A-Z]/,
+					regex: /[0-9]/,
 					index: 4
 				},
 			]
@@ -302,7 +302,6 @@ if (isset($_POST['ope'])) {
 					if (isValid) {
 						requirementItem.firstElementChild.className = 'fa-solid fa-check';
 						requirementItem.classList.add('valid');
-						console.log(item.index)
 						$("#btn_recuperar").attr("disabled", false)
 					} else {
 						requirementItem.firstElementChild.className = 'fa-solid fa-times';
@@ -311,6 +310,12 @@ if (isset($_POST['ope'])) {
 					}
 				})
 			})
+
+			document.querySelector("#cambio_clave").addEventListener("submit", (e) => {
+				e.preventDefault();
+				if ($("#cambio_clave").validate()) $("#cambio_clave").submit();
+			});
+
 			$("#cambio_clave").validate({
 				rules: {
 					password: {

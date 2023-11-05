@@ -167,11 +167,11 @@ if (isset($_POST['ope'])) {
 						</div>
 						<div class="register__container-input">
 							<div class="container__div-input">
-								<input type="password" class="input password" autocomplete="off" name="password" id="password" placeholder="Ingresa tu contraseña (*)">
+								<input type="password" class="input password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password" id="password" placeholder="Ingresa tu contraseña (*)">
 								<span class="viewPassword" id="viewPassword"><i class="fas fa-eye"></i></span>
 							</div>
 							<div class="container__div-input">
-								<input type="password" class="input password" autocomplete="off" name="password2" id="password2" placeholder="Confirma tu contraseña (*)">
+								<input type="password" class="input password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password2" id="password2" placeholder="Confirma tu contraseña (*)">
 								<span class="viewPassword" id="viewPassword2"><i class="fas fa-eye"></i></span>
 							</div>
 						</div>
@@ -266,7 +266,7 @@ if (isset($_POST['ope'])) {
 					index: 0
 				},
 				{
-					regex: /[0-9]/,
+					regex: /[A-Z]/,
 					index: 1
 				},
 				{
@@ -278,7 +278,7 @@ if (isset($_POST['ope'])) {
 					index: 3
 				},
 				{
-					regex: /[A-Z]/,
+					regex: /[0-9]/,
 					index: 4
 				},
 			]
@@ -288,11 +288,9 @@ if (isset($_POST['ope'])) {
 					const isValid = item.regex.test(e.target.value);
 					const requirementItem = requirementList[item.index];
 
-
 					if (isValid) {
 						requirementItem.firstElementChild.className = 'fa-solid fa-check';
 						requirementItem.classList.add('valid');
-						console.log(item.index)
 						$("#btn-registrar").attr("disabled", false)
 					} else {
 						requirementItem.firstElementChild.className = 'fa-solid fa-times';
@@ -301,6 +299,12 @@ if (isset($_POST['ope'])) {
 					}
 				})
 			})
+
+			document.querySelector("#formRU__register").addEventListener("submit", (e) => {
+				e.preventDefault();
+				if($("#formRU__register").validate()) $("#formRU__register").submit();
+			});
+
 			$("#formRU__register").validate({
 				rules: {
 					cedula: {

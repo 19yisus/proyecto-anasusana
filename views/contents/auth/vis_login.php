@@ -5,14 +5,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/login.css">
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/css_nuevo/generalStyles.css">
   <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-	<link rel="stylesheet" href="<?php echo constant("URL");?>views/plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <link rel="stylesheet" href="<?php echo constant("URL"); ?>views/plugins/toastr/toastr.min.css">
   <style>
     .captcha-image {
       background-color: white;
+    }
+
+    .section__nuevaC .content-requirement {
+      width: 330px;
+      margin-top: 20px;
+    }
+
+    .content-requirement span:nth-child(1) {
+      font-size: 1.2rem;
+    }
+
+    .content-requirement .requirement-list {
+      margin-top: 20px;
+    }
+
+    .requirement-list li {
+      list-style: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .requirement-list li i {
+      font-size: 1.2rem;
+      color: #c02424;
+      width: 20px;
+    }
+
+    .requirement-list li span {
+      font-size: 1.1rem;
+    }
+
+    .requirement-list li.valid i {
+      color: #16922b;
+    }
+
+    .requirement-list li.valid span {
+      color: #999999;
     }
   </style>
   <title>Login</title>
@@ -39,7 +79,7 @@
           </div>
 
           <div class="input-subcontent">
-            <input class="input" id="password" type="password" name="password" placeholder="Password">
+            <input class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" name="password" placeholder="Password">
             <span class="" id="viewPassword"><i class="fas fa-eye"></i></span>
           </div>
 
@@ -53,6 +93,32 @@
 
           <div class="input-subcontent">
             <input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+          </div>
+
+          <div class="content-requirement">
+            <span>La contraseña debe contener</span>
+            <ul class="requirement-list">
+              <li>
+                <i class="fa-solid fa-times"></i>
+                <p>Al menos 8 caracteres de longitud</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-times"></i>
+                <p>Al menos 1 mayuscula (A...Z)</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-times"></i>
+                <p>Al menos 1 minuscula (a...z)</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-times"></i>
+                <p>Al menos 1 caracter especial (!...$)</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-times"></i>
+                <p>Al menos 1 numero (0...9)</p>
+              </li>
+            </ul>
           </div>
 
           <div class="btn-content">
@@ -77,6 +143,53 @@
   <?php $this->GetComplement("scripts"); ?>
   <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
   <script>
+    const passwordInput = document.querySelector('#password');
+    const requirementList = document.querySelectorAll('.requirement-list li');
+
+    const requirements = [{
+        regex: /.{8,}/,
+        index: 0
+      },
+      {
+        regex: /[A-Z]/,
+        index: 1
+      },
+      {
+        regex: /[a-z]/,
+        index: 2
+      },
+      {
+        regex: /[^A-Za-z0-9]/,
+        index: 3
+      },
+      {
+        regex: /[0-9]/,
+        index: 4
+      },
+    ]
+
+    passwordInput.addEventListener('keyup', e => {
+      requirements.forEach(item => {
+        const isValid = item.regex.test(e.target.value);
+        const requirementItem = requirementList[item.index];
+
+        if (isValid) {
+          requirementItem.firstElementChild.className = 'fa-solid fa-check';
+          requirementItem.classList.add('valid');
+          $("#btn_recuperar").attr("disabled", false)
+        } else {
+          requirementItem.firstElementChild.className = 'fa-solid fa-times';
+          requirementItem.classList.remove('valid');
+          $("#btn_recuperar").attr("disabled", true)
+        }
+      })
+    })
+
+    document.querySelector("#login-content").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if ($("#login-content").validate()) $("#login-content").submit();
+    });
+
     $("#login-content").validate({
       rules: {
         cedula: {
