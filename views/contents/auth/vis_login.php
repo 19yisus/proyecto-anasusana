@@ -15,45 +15,6 @@
     .captcha-image {
       background-color: white;
     }
-
-    .section__nuevaC .content-requirement {
-      width: 330px;
-      margin-top: 20px;
-    }
-
-    .content-requirement span:nth-child(1) {
-      font-size: 1.2rem;
-    }
-
-    .content-requirement .requirement-list {
-      margin-top: 20px;
-    }
-
-    .requirement-list li {
-      list-style: none;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .requirement-list li i {
-      font-size: 1.2rem;
-      color: #c02424;
-      width: 20px;
-    }
-
-    .requirement-list li span {
-      font-size: 1.1rem;
-    }
-
-    .requirement-list li.valid i {
-      color: #16922b;
-    }
-
-    .requirement-list li.valid span {
-      color: #999999;
-    }
   </style>
   <title>Login</title>
 </head>
@@ -78,7 +39,7 @@
             <span><i class="fas fa-user"></i></span>
           </div>
 
-          <div class="input-subcontent">
+          <div class="input-subcontent" style="margin-bottom: 40px;">
             <input class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" name="password" placeholder="Password">
             <span class="" id="viewPassword"><i class="fas fa-eye"></i></span>
           </div>
@@ -93,32 +54,6 @@
 
           <div class="input-subcontent">
             <input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
-          </div>
-
-          <div class="content-requirement">
-            <span>La contraseña debe contener</span>
-            <ul class="requirement-list">
-              <li>
-                <i class="fa-solid fa-times"></i>
-                <p>Al menos 8 caracteres de longitud</p>
-              </li>
-              <li>
-                <i class="fa-solid fa-times"></i>
-                <p>Al menos 1 mayuscula (A...Z)</p>
-              </li>
-              <li>
-                <i class="fa-solid fa-times"></i>
-                <p>Al menos 1 minuscula (a...z)</p>
-              </li>
-              <li>
-                <i class="fa-solid fa-times"></i>
-                <p>Al menos 1 caracter especial (!...$)</p>
-              </li>
-              <li>
-                <i class="fa-solid fa-times"></i>
-                <p>Al menos 1 numero (0...9)</p>
-              </li>
-            </ul>
           </div>
 
           <div class="btn-content">
@@ -143,47 +78,6 @@
   <?php $this->GetComplement("scripts"); ?>
   <script src="<?php echo constant("URL"); ?>views/javascript_nuevo/toggleMode.js"></script>
   <script>
-    const passwordInput = document.querySelector('#password');
-    const requirementList = document.querySelectorAll('.requirement-list li');
-
-    const requirements = [{
-        regex: /.{8,}/,
-        index: 0
-      },
-      {
-        regex: /[A-Z]/,
-        index: 1
-      },
-      {
-        regex: /[a-z]/,
-        index: 2
-      },
-      {
-        regex: /[^A-Za-z0-9]/,
-        index: 3
-      },
-      {
-        regex: /[0-9]/,
-        index: 4
-      },
-    ]
-
-    passwordInput.addEventListener('keyup', e => {
-      requirements.forEach(item => {
-        const isValid = item.regex.test(e.target.value);
-        const requirementItem = requirementList[item.index];
-
-        if (isValid) {
-          requirementItem.firstElementChild.className = 'fa-solid fa-check';
-          requirementItem.classList.add('valid');
-          $("#btn_recuperar").attr("disabled", false)
-        } else {
-          requirementItem.firstElementChild.className = 'fa-solid fa-times';
-          requirementItem.classList.remove('valid');
-          $("#btn_recuperar").attr("disabled", true)
-        }
-      })
-    })
 
     document.querySelector("#login-content").addEventListener("submit", (e) => {
       e.preventDefault();
@@ -221,7 +115,7 @@
           required: "Este Campo es Obligatorio",
           minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
           maxlength: "Máximo de 50 caracteres para una Contraseña",
-          pattern: "Se debe de ingresar una Clave mas segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo)",
+          pattern: "La clave requiere al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo",
         },
         captcha_input: {
           required: "Este campo es obligatorio",

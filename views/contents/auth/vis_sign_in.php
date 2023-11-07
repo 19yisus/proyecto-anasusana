@@ -165,7 +165,7 @@ if (isset($_POST['ope'])) {
 								<span><i class="fas fa-question"></i></span>
 							</div>
 						</div>
-						<div class="register__container-input">
+						<div class="register__container-input" style="margin-bottom: 20px;">
 							<div class="container__div-input">
 								<input type="password" class="input password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password" id="password" placeholder="Ingresa tu contraseña (*)">
 								<span class="viewPassword" id="viewPassword"><i class="fas fa-eye"></i></span>
@@ -175,41 +175,40 @@ if (isset($_POST['ope'])) {
 								<span class="viewPassword" id="viewPassword2"><i class="fas fa-eye"></i></span>
 							</div>
 						</div>
-
-						<div class="content-requirement" style="margin:auto;">
-							<span>La contraseña debe contener</span>
-							<ul class="requirement-list">
-								<li>
-									<i class="fa-solid fa-times"></i>
-									<p>Al menos 8 caracteres de longitud</p>
-								</li>
-								<li>
-									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 mayuscula (A...Z)</p>
-								</li>
-								<li>
-									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 minuscula (a...z)</p>
-								</li>
-								<li>
-									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 caracter especial (!...$)</p>
-								</li>
-								<li>
-									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 numero (0...9)</p>
-								</li>
-							</ul>
-						</div>
-
-						<div class="register__container-input">
-							<div class="container__div-input">
-								<label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
+						
+						<div style="display:flex; justify-content:space-between;">
+							<div class="content-requirement" style="margin-left:20px;">
+								<span>La contraseña debe contener</span>
+								<ul class="requirement-list">
+									<li>
+										<i class="fa-solid fa-times"></i>
+										<p>Al menos 8 caracteres de longitud</p>
+									</li>
+									<li>
+										<i class="fa-solid fa-times"></i>
+										<p>Al menos 1 mayuscula (A...Z)</p>
+									</li>
+									<li>
+										<i class="fa-solid fa-times"></i>
+										<p>Al menos 1 minuscula (a...z)</p>
+									</li>
+									<li>
+										<i class="fa-solid fa-times"></i>
+										<p>Al menos 1 caracter especial (!...$)</p>
+									</li>
+									<li>
+										<i class="fa-solid fa-times"></i>
+										<p>Al menos 1 numero (0...9)</p>
+									</li>
+								</ul>
 							</div>
-
-
-							<div class="container__div-input">
-								<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+							<div style="margin-right:20px;">
+								<div class="container__div-input" >
+									<label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
+								</div>
+								<div class="container__div-input" style="height:40px; margin-top:20px;">
+									<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+								</div>
 							</div>
 						</div>
 
@@ -302,7 +301,7 @@ if (isset($_POST['ope'])) {
 
 			document.querySelector("#formRU__register").addEventListener("submit", (e) => {
 				e.preventDefault();
-				if($("#formRU__register").validate()) $("#formRU__register").submit();
+				if ($("#formRU__register").validate()) $("#formRU__register").submit();
 			});
 
 			$("#formRU__register").validate({
@@ -326,12 +325,12 @@ if (isset($_POST['ope'])) {
 					},
 					respuesta1: {
 						required: true,
-						minlength: 5,
+						minlength: 4,
 						maxlength: 60,
 					},
 					respuesta2: {
 						required: true,
-						minlength: 5,
+						minlength: 4,
 						maxlength: 60,
 					},
 					captcha_input: {
@@ -352,23 +351,23 @@ if (isset($_POST['ope'])) {
 						required: "Este campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
-						pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+						pattern: "Se debe de Ingresar una Clave más Segura",
 					},
 					password2: {
 						required: "Este campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
-						pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+						pattern: "Se debe de Ingresar una Clave más Segura",
 						equalTo: "Las Contraseñas Ingresadas NO Conciden"
 					},
 					respuesta1: {
 						required: "Este campo es Obligatorio",
-						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
+						minlength: "Su respuesta no cumple con el minimo requerido (4 caracteres)",
 						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
 					},
 					respuesta2: {
 						required: "Este campo es Obligatorio",
-						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
+						minlength: "Su respuesta no cumple con el minimo requerido (4 caracteres)",
 						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
 					},
 					captcha_input: {

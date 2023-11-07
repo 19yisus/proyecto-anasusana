@@ -263,7 +263,10 @@
 					let input = index.target,
 						value = parseInt(input.value),
 						maximo = parseInt(input.max);
-					if(value < 1) this.productos[input.dataset.index].cantidad = 1;
+					if(value < 1){
+						this.Fn_mensaje_error("La cantidad no puede ser 0");
+						this.productos[input.dataset.index].cantidad = 1;
+					} 
 
 					if (value > maximo) {
 						this.Fn_mensaje_error(`No se puede superar el Stock Maximo de este producto (${this.productos[input.dataset.index].stock_maximo})`);

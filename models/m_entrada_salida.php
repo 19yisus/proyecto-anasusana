@@ -316,19 +316,24 @@ class m_entrada_salida extends m_db
 
 		if ($desde == '') {
 			$sql_inventario = "SELECT * FROM inventario 
+			INNER JOIN detalle_inventario ON detalle_inventario.invent_id_ope = inventario.id_invent
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
 					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
-					WHERE $where GROUP BY inventario.id_invent;";
+					WHERE $where ";
 		} else {
 			$hasta = date("Y-m-d h:i:s", strtotime($hasta . "+ 1 days"));
 			$desde = date("Y-m-d h:i:s", strtotime($desde . "- 1 days"));
 			$sql_inventario = "SELECT * FROM inventario 
+			INNER JOIN detalle_inventario ON detalle_inventario.invent_id_ope = inventario.id_invent
 					INNER JOIN comedor ON inventario.comedor_id_invent = comedor.id_comedor 
 					LEFT JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent
 					LEFT JOIN menu ON menu.id_menu = jornada.menu_id_jornada
-					WHERE $where AND inventario.created_invent BETWEEN '$desde' AND '$hasta' GROUP BY inventario.id_invent;";
+					WHERE $where AND inventario.created_invent BETWEEN '$desde' AND '$hasta' ";
 		}
+
+		// var_dump($sql_inventario);
+		// die("sdfd"); GROUP BY inventario.id_invent;
 
 
 		$datos_inventario = $this->Get_todos_array($this->Query($sql_inventario));

@@ -18,12 +18,12 @@ class new_fpdf extends FPDF
   {
     $this->SetFont("Arial", "B", 14);
     $this->write(5, utf8_decode("ANA SUSSANA DE OUSSET, Acarigua - Portuguesa"));
-    $this->Image("../views/images/logo.png", 150, 5, 45, 20, "PNG");
+    $this->Image("../views/images/logo.png", 150, 5, 45, 40, "PNG");
     $this->Ln();
     $this->write(5, utf8_decode("$this->nombre"));
-    $this->Ln(5);
+    $this->Ln(2);
     $this->write(5, utf8_decode("$this->des"));
-    $this->Ln(10);
+    $this->Ln(30);
   }
 
   public function Footer()
@@ -31,7 +31,7 @@ class new_fpdf extends FPDF
     $this->SetFont("Arial", "B", 14);
     $this->SetY(-15);
     $this->SetX(-20);
-    $this->write(5, utf8_decode("Página número: " .$this->PageNo().'/{nb}'));
+    $this->write(5, utf8_decode("Página número: " . $this->PageNo() . '/{nb}'));
   }
 }
 
@@ -88,20 +88,24 @@ function fn_pdf_entrada()
   $pdf->SetNombre("Entrada de productos");
   $pdf->addPage();
   $pdf->setFont('Arial', 'B', 12);
-  $pdf->SetTextColor(16, 87, 97);
+  $pdf->SetTextColor(0, 0, 0);
   $pdf->cell(70, 5, utf8_decode("Numero de operación: " . $d['doc']['id']), 0, 1, 'L');
   $pdf->cell(70, 5, utf8_decode("Fecha de la operación: " . $fecha->format("d-m-Y h:i a")), 0, 1, 'L');
   $pdf->cell(70, 5, utf8_decode("N-Orden: " . $d['doc']['orden']), 0, 1, 'L');
   $pdf->cell(90, 5, utf8_decode("Proveedor: " . $d['persona'][0]['proveedor']['tipo_persona'] . "-" . $d['persona'][0]['proveedor']['cedula'] . " " . $d['persona'][0]['proveedor']['nom']), 0, 1, 'L');
   $pdf->cell(80, 5, utf8_decode("Concepto de entrada: " . $conceptos[$d['doc']['concepto']]), 0, 1, 'L');
   $pdf->cell(80, 5, utf8_decode("Comedor: " . $d['comedor']['nom']), 0, 1, 'L');
-  $pdf->Ln(10);
+  $pdf->Ln(2);
   $pdf->setFont('Arial', 'B', 11);
-  $pdf->SetTextColor(255, 255, 255);
-  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->SetFillColor(253, 234, 13);
   $pdf->SetDrawColor(88, 88, 88);
-  $pdf->cell(190, 8, utf8_decode("Observación: " . $d['doc']['observacion']), 1, 1, "C", 1);
   $pdf->cell(190, 8, utf8_decode("Descripción general de los productos"), 1, 1, "C", 1);
+  $pdf->SetFillColor(255, 255, 255);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->cell(190, 8, utf8_decode("Observación: " . $d['doc']['observacion']), 1, 1, "C", 1);
+  $pdf->SetFillColor(253, 234, 13);
+  $pdf->SetDrawColor(88, 88, 88);
   $pdf->cell(16, 7, utf8_decode("Código"), 1, 0, "C", 1);
   $pdf->cell(80, 7, utf8_decode("Descripción"), 1, 0, "C", 1);
   // $pdf->cell(48,7,"Fecha de vencimiento",1,0,"C",1);
@@ -144,17 +148,20 @@ function fn_pdf_salida()
   $pdf->SetNombre("Salida de productos");
   $pdf->addPage();
   $pdf->setFont('Arial', 'B', 12);
-  $pdf->SetTextColor(16, 87, 97);
+  $pdf->SetTextColor(0, 0, 0);
   $pdf->cell(70, 5, utf8_decode("Número de operación: " . $d['doc']['id']), 0, 1, 'L');
   $pdf->cell(70, 5, utf8_decode("Fecha de la operación: " . $fecha->format("d-m-Y h:i a")), 0, 1, 'L');
-  $pdf->cell(70, 5, utf8_decode("N-Orden: " . $d['doc']['orden']), 0, 1, 'L');
+  // $pdf->cell(70, 5, utf8_decode("N-Orden: " . $d['doc']['orden']), 0, 1, 'L');
   $pdf->cell(90, 5, utf8_decode("Receptor: " . $d['persona'][0]['quien_recibe']['tipo_persona'] . "-" . $d['persona'][0]['quien_recibe']['cedula'] . " " . $d['persona'][0]['quien_recibe']['nom']), 0, 1, 'L');
   $pdf->cell(80, 5, utf8_decode("Concepto de salida: " . $conceptos[$d['doc']['concepto']]), 0, 1, 'L');
   $pdf->cell(80, 5, utf8_decode("Comedor: " . $d['comedor']['nom']), 0, 1, 'L');
-  $pdf->Ln(10);
+  $pdf->Ln(2);
   $pdf->setFont('Arial', 'B', 11);
   // $pdf->SetTextColor(255, 255, 255);
   // $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->SetFillColor(253, 234, 13);
+  $pdf->cell(190, 8, utf8_decode("Salida de productos"), 1, 1, "C", 1);
   $pdf->SetFillColor(255, 255, 255);
   $pdf->SetTextColor(0, 0, 0);
   $pdf->SetDrawColor(88, 88, 88);
@@ -167,8 +174,8 @@ function fn_pdf_salida()
     $pdf->cell(90, 8, utf8_decode("Cantidad de platos aproximada: " . $d['doc']['cant_aproximada']), 1, 1, "C", 1);
     // die("Hay jornada");
   }
-  $pdf->SetTextColor(255, 255, 255);
-  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->SetFillColor(253, 234, 13);
   $pdf->cell(190, 8, utf8_decode("Descripción general de los productos"), 1, 1, "C", 1);
   $pdf->cell(16, 7, utf8_decode("Código"), 1, 0, "C", 1);
   $pdf->cell(80, 7, utf8_decode("Descripción"), 1, 0, "C", 1);
@@ -247,8 +254,8 @@ function fn_pdf_filtrado()
   foreach ($d as $dato) {
     $fecha = new DateTime($dato['invent']['created_invent']);
 
-    $pdf->SetTextColor(255, 255, 255);
-    $pdf->SetFillColor(11, 63, 71);
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFillColor(253, 234, 13);
     $pdf->SetDrawColor(88, 88, 88);
 
     $pdf->cell(80, 7, utf8_decode("Código de la operacion: " . $dato['invent']['id_invent']), 1, 0, "C", 1);
@@ -260,18 +267,34 @@ function fn_pdf_filtrado()
     $pdf->cell(120, 7, utf8_decode("Nombre del comedor : " . $dato['invent']['nom_comedor']), 1, 0, "C", 1);
     $pdf->cell(70, 7, utf8_decode("N-Orden: " . $dato['invent']['orden_invent']), 1, 0, "C", 1);
     $pdf->Ln();
-    $pdf->Cell(190, 7, utf8_decode("Observación: " . $dato['invent']['observacion_invent']), 1, 0, "C", 1);
+    $pdf->Cell(190, 7, utf8_decode("Observación: " . $dato['invent']['observacion_invent']), 1, 1, "C", 1);
+    $concepto = "";
+    $concepto = ($dato['invent']['concept_invent'] == "O") ? "Consumo" : $concepto;
+    $concepto = ($dato['invent']['concept_invent'] == "V") ? "Vencimiento" : $concepto;
+    $concepto = ($dato['invent']['concept_invent'] == "R") ? "Remanente" : $concepto;
+    $concepto = ($dato['invent']['concept_invent'] == "D") ? "Donación" : $concepto;
+    $concepto = ($dato['invent']['concept_invent'] == "C") ? "Compra" : $concepto;
+
+    $pdf->Cell(190, 7, utf8_decode("Concepto de operación: " . $concepto), 1, 0, "C", 1);
     $pdf->Ln();
 
     if ($filtro == "Compra" || $filtro == "Donacion" || $filtro == "Todas_entradas") {
+      $pdf->SetTextColor(0, 0, 0);
+      $pdf->SetFillColor(253, 234, 13);
       $pdf->cell(190, 7, utf8_decode('Datos del proveedor'), 1, 0, "C", 1);
+      $pdf->SetFillColor(255, 255, 255);
+      $pdf->SetTextColor(0, 0, 0);
       $pdf->Ln();
       $pdf->cell(35, 7, utf8_decode($dato['persona']['proveedor']['tipo_persona'] . "-" . $dato['persona']['proveedor']['cedula']), 1, 0, "C", 1);
       $pdf->cell(110, 7, utf8_decode($dato['persona']['proveedor']['nom']), 1, 0, "C", 1);
       $pdf->cell(45, 7, utf8_decode("Telf: " . $dato['persona']['proveedor']['telf']), 1, 0, "C", 1);
       $pdf->Ln();
     } else {
+      $pdf->SetTextColor(0, 0, 0);
+      $pdf->SetFillColor(253, 234, 13);
       $pdf->cell(190, 7, utf8_decode('Datos de quien recibe los alimentos'), 1, 0, "C", 1);
+      $pdf->SetFillColor(255, 255, 255);
+      $pdf->SetTextColor(0, 0, 0);
       $pdf->Ln();
       $pdf->cell(35, 7, utf8_decode($dato['persona']['quien_recibe']['tipo_persona'] . "-" . $dato['persona']['quien_recibe']['cedula']), 1, 0, "C", 1);
       $pdf->cell(110, 7, utf8_decode($dato['persona']['quien_recibe']['nom']), 1, 0, "C", 1);
@@ -279,24 +302,36 @@ function fn_pdf_filtrado()
       $pdf->Ln();
     }
 
-    if ($filtro == "Consumo" || $filtro == "Todas_salidas") {
+    if ($filtro == "Consumo" || $filtro == "Todas_salidas" && isset($dato['invent']['titulo_jornada'])) {
+      $pdf->SetTextColor(0, 0, 0);
+      $pdf->SetFillColor(253, 234, 13);
       $pdf->cell(190, 7, utf8_decode('Jornada del dia'), 1, 0, "C", 1);
+      $pdf->SetFillColor(255, 255, 255);
+      $pdf->SetTextColor(0, 0, 0);
       $pdf->Ln();
-      $pdf->cell(100, 7, utf8_decode("Nombre: " . ($dato['invent']['titulo_jornada'] !== "NULL") ? $dato['invent']['titulo_jornada'] : "Sin titulo"), 1, 0, "C", 1);
+      if (!isset($dato['invent']['titulo_jornada']) || $dato['invent']['titulo_jornada'] === "") {
+        $titulo = "Sin titulo";
+      } else $titulo = $dato['invent']['titulo_jornada'];
+      $pdf->cell(100, 7, utf8_decode("Nombre: " . $titulo), 1, 0, "C", 1);
       $pdf->cell(90, 7, utf8_decode("Cantidad Aproximada de platos: " . $dato['invent']['cant_aproximada']), 1, 0, "C", 1);
       $pdf->Ln();
       $pdf->cell(190, 7, utf8_decode("Descripción de la jornada: " . $dato['invent']['des_jornada']), 1, 0, "C", 1);
       $pdf->Ln();
+      $pdf->SetTextColor(0, 0, 0);
+      $pdf->SetFillColor(253, 234, 13);
       $pdf->cell(190, 7, utf8_decode('Menú del dia'), 1, 0, "C", 1);
+      $pdf->SetFillColor(255, 255, 255);
+      $pdf->SetTextColor(0, 0, 0);
       $pdf->Ln();
       // $pdf->cell(100, 7, "Nombre: " . ($dato['invent']['des_menu'] !== "NULL") ? $dato['invent']['des_menu'] : "Sin titulo", 1, 0, "C", 1);
       // $pdf->Ln();
       $pdf->cell(190, 7, utf8_decode("Descripción del menu: " . $dato['invent']['des_menu']), 1, 0, "C", 1);
       $pdf->Ln();
     }
-    $pdf->SetTextColor(255, 255, 255);
-    $pdf->SetFillColor(11, 63, 71);
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFillColor(253, 234, 13);
     $pdf->SetDrawColor(88, 88, 88);
+
     $pdf->cell(190, 7, utf8_decode('Datos de los productos'), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->SetFillColor(255, 255, 255);
@@ -327,32 +362,32 @@ function fn_pdf_productos()
   $pdf = new new_fpdf();
 
   if ($_POST['filtro'] == "Todos") $des_report = "Todos los productos";
-  if ($_POST['filtro'] == "Marcas") $des_report = "Todos los productos segun su Marca";
-  if ($_POST['filtro'] == "Unidades") $des_report = "Todos los productos segun su precentación";
-  if ($_POST['filtro'] == "Stock_max") $des_report = "Todos los productos segun su stock maximo";
+  if ($_POST['filtro'] == "Marcas") $des_report = "Todos los productos según su Marca";
+  if ($_POST['filtro'] == "Unidades") $des_report = "Todos los productos según su presentación";
+  if ($_POST['filtro'] == "Stock_max") $des_report = "Todos los productos según su stock maximo";
 
   $pdf->SetNombre($des_report);
   $pdf->addPage();
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 10);
-  $pdf->SetTextColor(255, 255, 255);
-  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->SetFillColor(253, 234, 13);
   $pdf->SetDrawColor(88, 88, 88);
   $pdf->cell(190, 7, utf8_decode('Datos de los productos'), 1, 0, "C", 1);
   $pdf->Ln();
   $pdf->cell(70, 7, utf8_decode('Descripción'), 1, 0, "C", 1);
   $pdf->cell(50, 7, utf8_decode('Marca'), 1, 0, "C", 1);
-  $pdf->cell(100, 7, utf8_decode('Información del stock'), 1, 0, "C", 1);
+  $pdf->cell(70, 7, utf8_decode('Información del stock'), 1, 0, "C", 1);
   $pdf->Ln();
   $pdf->SetFillColor(255, 255, 255);
   $pdf->SetTextColor(0, 0, 0);
   $pdf->setFont('Arial', 'B', 9);
   foreach ($dato as $prod) {
-    $pdf->cell(60, 7, utf8_decode($prod['nom_product'], 1), 0, "C", 1);
-    $pdf->cell(10, 7, utf8_decode($prod['valor_product'] . " " . $prod['med_product'], 1), 0, "C", 1);
-    $pdf->cell(50, 7, utf8_decode($prod['nom_marca'], 1), 0, "C", 1);
-    $pdf->cell(35, 7, utf8_decode("Stock maximo: " . $prod['stock_maximo_product'], 1), 0, "C", 1);
-    $pdf->cell(35, 7, utf8_decode("Stock en almacen: " . $prod['stock_product'], 1), 0, "C", 1);
+    $pdf->cell(55, 7, utf8_decode($prod['nom_product']), 1, 0, "C", 1);
+    $pdf->cell(15, 7, utf8_decode($prod['valor_product'] . " " . $prod['med_product']), 1, 0, "C", 1);
+    $pdf->cell(50, 7, utf8_decode($prod['nom_marca']), 1, 0, "C", 1);
+    $pdf->cell(35, 7, utf8_decode("Stock maximo: " . $prod['stock_maximo_product']), 1, 0, "C", 1);
+    $pdf->cell(35, 7, utf8_decode("Stock en almacen: " . $prod['stock_product']), 1, 0, "C", 1);
     $pdf->Ln();
   }
   $pdf->Output();
@@ -370,19 +405,23 @@ function fn_pdf_menu()
   $pdf->addPage();
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 10);
-  $pdf->SetTextColor(255, 255, 255);
-  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->SetFillColor(253, 234, 13);
   $pdf->SetDrawColor(88, 88, 88);
 
   foreach ($menu as $item_menu) {
     $fecha = new DateTime($item_menu['menu']['created_menu']);
     $pdf->cell(190, 7, utf8_decode('Datos de los menus'), 1, 0, "C", 1);
     $pdf->Ln();
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
     $pdf->cell(100, 7, utf8_decode('Descripción del menú: ' . $item_menu['menu']['des_menu']), 1, 0, "C", 1);
     $pdf->cell(90, 7, utf8_decode("Fecha de creación: " . $fecha->format("d-m-Y")), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, utf8_decode("Procedimiento: " . $item_menu['menu']['des_procedimiento']), 1, 0, "C", 1);
     $pdf->Ln();
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFillColor(253, 234, 13);
     $pdf->cell(190, 7, utf8_decode('Detalles del menú'), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(150, 7, utf8_decode('Descripción del ingrediente'), 1, 0, "C", 1);
@@ -413,8 +452,8 @@ function fn_pdf_Jornada()
   $pdf->addPage();
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 10);
-  $pdf->SetTextColor(255, 255, 255);
-  $pdf->SetFillColor(11, 63, 71);
+  $pdf->SetTextColor(0, 0, 0);
+  $pdf->SetFillColor(253, 234, 13);
   $pdf->SetDrawColor(88, 88, 88);
 
   foreach ($datos as $item_jornada_menu) {
@@ -423,6 +462,8 @@ function fn_pdf_Jornada()
     // INFORMACIÓN DE LA JORNADA
     $pdf->cell(190, 7, utf8_decode('Datos de la jornada'), 1, 0, "C", 1);
     $pdf->Ln();
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
     $pdf->cell(190, 7, utf8_decode("Título: " . $item_jornada_menu['jornada_menu']['titulo_jornada']), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, utf8_decode('Descripción del jornada: ' . $item_jornada_menu['jornada_menu']['des_jornada']), 1, 0, "C", 1);
@@ -430,21 +471,27 @@ function fn_pdf_Jornada()
     $pdf->cell(80, 7, utf8_decode("Cantidad aproximada de benecifiados: " . $item_jornada_menu['jornada_menu']['cant_aproximada']), 1, 0, "C", 1);
     $pdf->cell(110, 7, utf8_decode("Fecha de creación: " . $fecha2->format("d-m-Y")), 1, 0, "C", 1);
     $pdf->Ln();
-    $pdf->cell(190, 7, utf8_decode('Detalles del menú'), 1, 0, "C", 1);
-    $pdf->Ln();
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFillColor(253, 234, 13);
     // INFORMACIÓN DEL MENU
-    $pdf->cell(190, 7, utf8_decode('Datos de los menus'), 1, 0, "C", 1);
+    $pdf->cell(190, 7, utf8_decode('Datos del menú'), 1, 0, "C", 1);
     $pdf->Ln();
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
     $pdf->cell(100, 7, utf8_decode('Descripción del menu: ' . $item_jornada_menu['jornada_menu']['des_menu']), 1, 0, "C", 1);
     // $pdf->cell(80, 7, "Porcion: " . $item_jornada_menu['jornada_menu']['porcion'], 1, 0, "C", 1);
     $pdf->cell(90, 7, utf8_decode("Fecha de creación: " . $fecha->format("d-m-Y")), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(190, 7, utf8_decode("Procedimiento: " . $item_jornada_menu['jornada_menu']['des_procedimiento']), 1, 0, "C", 1);
     $pdf->Ln();
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFillColor(253, 234, 13);
     $pdf->cell(190, 7, utf8_decode('Detalles del menú'), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->cell(150, 7, utf8_decode('Descripción del ingrediente'), 1, 0, "C", 1);
     $pdf->cell(40, 7, utf8_decode('Consumo'), 1, 0, "C", 1);
+    $pdf->SetFillColor(255, 255, 255);
+    $pdf->SetTextColor(0, 0, 0);
     $pdf->SetFillColor(255, 255, 255);
     $pdf->SetTextColor(0, 0, 0);
     $pdf->setFont('Arial', 'B', 9);

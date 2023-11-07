@@ -356,15 +356,22 @@
 								let cant_proximada = parseInt(this.cant_aproximada)
 								let total = (consumo * cant_proximada);
 								let consumo_total;
-
-								if (total > 999 && item.med_comida_detalle != item.med_product) {
+								
+								// total > 999 && item.med_comida_detalle != item.med_product
+								if (total > 999 && item.med_comida_detalle == "GM" || total > 999 && item.med_comida_detalle == "ML") {
 									consumo_total = total / 1000;
-									if (!Number.isInteger(consumo_total)) consumo_total = Math.round(consumo_total)
+									console.log(consumo_total)
+									if (!Number.isInteger(consumo_total)) consumo_total = Math.ceil(consumo_total)
 								} else {
-									if (item.med_comida_detalle == "GM") {
+									if (item.med_comida_detalle == "GM" || item.med_comida_detalle == "ML") {
 										consumo_total = 1;
 									} else consumo_total = total;
 								}
+								
+								// console.log(consumo_total)
+								// console.log(item)
+								// console.groupEnd();
+
 								let restante = (item.stock_product - consumo_total);
 								let if_entrada;
 								let producto = [];
@@ -557,7 +564,7 @@
 					}
 
 					if (this.productos[element.target.dataset.index].cantidad == 0) {
-						this.Fn_mensaje_error("El cantidad no puede ser 0");
+						this.Fn_mensaje_error("La cantidad no puede ser 0");
 						this.productos[element.target.dataset.index].cantidad = 1;
 						return;
 					}

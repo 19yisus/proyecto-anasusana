@@ -184,12 +184,12 @@ if (isset($_POST['ope'])) {
 							<input class="input" name="cedula" id="cedula" value="<?php echo $cedula; ?>" readonly type="text" placeholder="Cédula de la persona">
 							<span><i class="fas fa-user"></i></span>
 						</div>
-						<div class="input-content__div-input">
+						<div class="input-content__div-input" style="margin-bottom: 10px;">
 							<input type="password" class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password" placeholder="Nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
-						<div class="input-content__div-input last-child">
+						<div class="input-content__div-input last-child" style="margin-bottom: 30px;">
 							<input type="password" class="input" id="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password2" placeholder="Repita su nueva contraseña (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
@@ -202,7 +202,7 @@ if (isset($_POST['ope'])) {
 							</div>
 						</div>
 
-						<div class="input-content__div-input last-child">
+						<div class="input-content__div-input last-child" style="margin-bottom: 17px;">
 							<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
 						</div>
 
@@ -234,7 +234,8 @@ if (isset($_POST['ope'])) {
 						</div>
 
 						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" value="form3" id="btn" type="submit">Recuperar clave</button>
+							<input type="hidden" name="ope" value="form3">
+							<button class="btn-content__btn" name="ope" id="btn" type="submit">Recuperar clave</button>
 						</div>
 
 						<div class="input__return">
@@ -379,13 +380,13 @@ if (isset($_POST['ope'])) {
 						required: "Este campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
-						pattern: "Se debe de Ingresar una Clave más segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un Caracter Especial, 8 caracteres Mínimo)",
+						pattern: "Se debe de Ingresar una Clave más segura",
 					},
 					password2: {
 						required: "Este campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
-						pattern: "Se debe de Ingresar una Clave más Segura ( Al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres Mínimo)",
+						pattern: "Se debe de Ingresar una Clave más Segura",
 						equalTo: "Las Contraseñas Ingresadas NO Coinciden"
 					},
 					respuesta1: {
