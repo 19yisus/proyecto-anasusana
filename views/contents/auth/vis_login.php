@@ -39,7 +39,7 @@
             <span><i class="fas fa-user"></i></span>
           </div>
 
-          <div class="input-subcontent" style="margin-bottom: 40px;">
+          <div class="input-subcontent" style="margin-bottom: 60px;">
             <input class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" name="password" placeholder="Password">
             <span class="" id="viewPassword"><i class="fas fa-eye"></i></span>
           </div>
@@ -115,7 +115,7 @@
           required: "Este Campo es Obligatorio",
           minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
           maxlength: "Máximo de 50 caracteres para una Contraseña",
-          pattern: "La clave requiere al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo",
+          pattern: "La clave debe contener al menos 1 Mayúscula, 1 Minúscula, 1 Número y un caracter especial, 8 caracteres mínimo",
         },
         captcha_input: {
           required: "Este campo es obligatorio",
