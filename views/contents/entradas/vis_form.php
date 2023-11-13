@@ -166,7 +166,8 @@
 											Registrar Entrada
 										</button>
 										<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg">
-											<i class="fas fa-plus-square"></i> Agregar Productos</button>
+											<i class="fas fa-plus-square"></i> Agregar Productos
+										</button>
 									</div>
 								</form>
 							</div>

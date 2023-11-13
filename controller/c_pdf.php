@@ -21,7 +21,7 @@ class new_fpdf extends FPDF
     $this->Image("../views/images/logo.png", 150, 5, 45, 40, "PNG");
     $this->Ln();
     $this->write(5, utf8_decode("$this->nombre"));
-    $this->Ln(2);
+    $this->Ln(7);
     $this->write(5, utf8_decode("$this->des"));
     $this->Ln(30);
   }

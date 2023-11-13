@@ -60,11 +60,8 @@
                                                 <label for="">Marca del Producto(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="marca_id_producto" id="marca_id_producto" class="custom-select">
                                                     <option value="">Seleccione una Marca</option>
-                                                    <?php
-                                                    foreach ($marcas as $marca) {
-                                                    ?><option value="<?php echo $marca['id_marca']; ?>"><?php echo $marca['nom_marca']; ?></option><?php
-                                                                                                                                                        }
-                                                                                                                                                            ?>
+                                                    <?php foreach ($marcas as $marca) {
+                                                    ?><option value="<?php echo $marca['id_marca']; ?>"><?php echo $marca['nom_marca']; ?></option><?php } ?>
                                                 </select>
                                             </div>
                                         </div>

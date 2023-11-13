@@ -319,7 +319,6 @@
         return $code;
       }
 
-      die("FALLO algo");
       $this->Make_code_recovery($id_user);
     }
 

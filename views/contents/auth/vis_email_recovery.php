@@ -140,13 +140,19 @@ if (isset($_POST['ope'])) {
 							<input class="input" id="cedula" type="number" value="<?php echo $cedula; ?>" placeholder="Verifica tu correo" name="cedula" required>
 							<span><i class="fas fa-user"></i></span>
 						</div>
-						<div class="input-content__div-input">
+						<!-- <div class="input-content__div-input">
 							<input class="input" id="code" type="password" maxlength="8" placeholder="Ingrese su código de seguridad" name="code" required>
 							<span><i class="fas fa-user"></i></span>
+						</div> -->
+						<div class="input-content__div-input last-child" style="margin-bottom: 30px;">
+							<input class="input" id="code" type="password" name="code" placeholder="Ingrese su código de seguridad">
+							<!-- <input type="password" class="input" id="" autocomplete="off" id="code" name="code" > -->
+							<span class="viewPassword" id="viewPassword3"><i class="fas fa-eye"></i></span>
 						</div>
 
-						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" value="form2" type="submit">Enviar</button>
+						<div class="input__btn-content" style="margin-bottom: 10px;">
+							<input type="hidden" name="ope" value="form2">
+							<button class="btn-content__btn" type="submit">Enviar</button>
 						</div>
 					</form>
 				</div>
@@ -158,7 +164,7 @@ if (isset($_POST['ope'])) {
 					<form action="#" method="POST" class="section__input-content" id="cambio_clave">
 						<h1 for="recuperacionC">Recuperacion de contraseña</h1>
 						<div class="input-content__div-input">
-							<input type="hidden" name="id" readonly value="<?php echo $id; ?>">
+							<input type="hidden" name="user_id" readonly value="<?php echo $id; ?>">
 							<input class="input" name="cedula" id="cedula" value="<?php echo $cedula; ?>" readonly type="text" placeholder="Cédula de la persona">
 							<span><i class="fas fa-user"></i></span>
 						</div>
@@ -199,7 +205,8 @@ if (isset($_POST['ope'])) {
 						</div>
 
 						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" id="btn_recuperar" disabled value="form3" type="submit">Recuperar clave</button>
+							<input type="hidden" name="ope" value="form3">
+							<button class="btn-content__btn" id="btn_recuperar" disabled type="submit">Recuperar clave</button>
 						</div>
 
 						<div class="input__return">

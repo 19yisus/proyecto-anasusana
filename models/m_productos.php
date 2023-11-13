@@ -31,6 +31,8 @@ class m_productos extends m_db
 
 		$sql = "INSERT INTO productos(id_product, nom_product, med_product, valor_product, status_product, created_product, stock_product, stock_maximo_product, marca_id_product)
             VALUES(null,'$this->nom_producto', '$this->med_producto', '$this->valor_producto', $this->status_producto, NOW(), 0, $this->stock_maximo_producto, $this->marca_id_producto);";
+		$sql=str_replace(", )",",null)", $sql);
+		
 		$this->Query($sql);
 
 		if (!isset($_SESSION['user_id'])) session_start();
@@ -53,8 +55,10 @@ class m_productos extends m_db
 		if ($result->num_rows > 0) return ["code" => "error", "message" => "Operación Fallida!, el regitro no se puede duplicar"];
 		$sql = "UPDATE productos SET nom_product = '$this->nom_producto', med_product = '$this->med_producto',
             valor_product = '$this->valor_producto', marca_id_product = $this->marca_id_producto ,
-            stock_maximo_product = '$this->stock_maximo_producto'
-            WHERE id_product = $this->id_producto ;";
+            stock_maximo_product = '$this->stock_maximo_producto' WHERE id_product = $this->id_producto ;";
+		
+		$sql=str_replace(", marca_id_product = ","", $sql);
+		
 		$this->Query($sql);
 
 		if (!isset($_SESSION['user_id'])) session_start();
@@ -121,11 +125,11 @@ class m_productos extends m_db
 	{
 		if ($status != '') $condition = "WHERE productos.status_product = '1' ";
 		else $condition = "";
-		$sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product $condition ;";
+		$sql = "SELECT * FROM productos LEFT JOIN marca ON marca.id_marca = productos.marca_id_product $condition ;";
 
 		if ($status === 2) {
 			$sql = "SELECT DISTINCT productos.id_product, productos.*, marca.* FROM productos 
-				INNER JOIN marca ON marca.id_marca = productos.marca_id_product
+				LEFT JOIN marca ON marca.id_marca = productos.marca_id_product
 				INNER JOIN detalle_inventario ON detalle_inventario.product_id_ope = productos.id_product $condition;";
 		}
 

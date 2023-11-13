@@ -35,6 +35,10 @@ if (isset($_GET['ope'])) {
 		case "next_ope":
 			fn_Consultar_nextId();
 			break;
+
+		case "menus_recientes":
+			fn_consultar_menus_recientes();
+			break;
 	}
 }
 
@@ -97,6 +101,12 @@ function fn_Salida()
 	$mensage = $model->Salida_productos();
 
 	header("Location: " . constant("URL") . "salidas/form/$mensage");
+}
+
+function fn_consultar_menus_recientes(){
+	$model = new m_entrada_salida();
+	$resultado = $model->menus_recientes();
+	print json_encode(['data' => $resultado]);
 }
 
 function fn_Consultar_todos_entradas()

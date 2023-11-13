@@ -123,7 +123,10 @@
           form.med_producto.value = res.data.med_product;
           form.valor_producto.value = res.data.valor_product;
           form.stock_maximo_producto.value = res.data.stock_maximo_product;
-          form.marca_id_producto.value = res.data.marca_id_product;
+
+          if(res.data.marca_id_product !== null) form.marca_id_producto.value = res.data.marca_id_product; 
+          else $("#marca_id_producto").attr("disabled", true);
+
         })
         .catch(Err => {
           console.error(Err)

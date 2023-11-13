@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0"><?php echo (isset($this->titleContent) ? $this->titleContent : "Inicio"); ?></h1>
+                <h1 class="m-0"><?php echo (isset($this->titleContent) ? $this->titleContent : ""); ?></h1>
             </div><!-- /.col -->
             <?php if($this->controlador !== "reportes"){?>
             <div class="col-sm-6">

@@ -48,6 +48,13 @@
 		});
 	});
 
+	$("#viewPassword3").on("click", function() {
+		$("#code").attr("type", function(index, attr) {
+			$("#viewPassword3 i").toggleClass("fa-eye-slash").toggleClass("fa-eye");
+			return attr == "text" ? "password" : "text";
+		});
+	});
+
 	$("#reloadCaptcha").click(function() {
 		var captchaImage = $('#captcha').attr('src');
 		captchaImage = captchaImage.substring(0, captchaImage.lastIndexOf("?"));

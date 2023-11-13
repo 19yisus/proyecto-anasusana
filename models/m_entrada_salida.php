@@ -43,6 +43,8 @@ class m_entrada_salida extends m_db
                 '$this->concept_invent',$this->if_credito,null,$this->person_id_invent,$this->recibe_person_id_invent,
                 $this->comedor_id_invent,$this->user_id_invent,'$this->observacion_invent')";
 
+		$sql_inventario_insert = str_replace(",,",",null,", $sql_inventario_insert);
+
 		try {
 			$this->Start_transacction();
 			$results_invent = $this->Query($sql_inventario_insert);
@@ -156,6 +158,15 @@ class m_entrada_salida extends m_db
 		}
 	}
 
+	public function menus_recientes() {
+		try {
+			// SELECT menu.* FROM inventario INNER JOIN jornada ON jornada.id_jornada = inventario.jornada_id_invent INNER JOIN menu ON menu.id_menu = jornada.menu_id_jornada ORDER BY inventario.created_invent DESC LIMIT 0, 4;
+			$results_operacion = $this->Query("SELECT * FROM menu ORDER BY menu.created_menu DESC LIMIT 0,4;");
+			if($results_operacion->num_rows > 0) return $this->Get_todos_array($results_operacion); else return [];
+		} catch (Exception $e) {
+			die("AH OCURRIDO UN ERROR: " . $e->getMessage());
+		}
+	}
 	public function Get_todos_invent($type_operacion)
 	{
 		$second_inner = $select_person = "";
@@ -343,7 +354,7 @@ class m_entrada_salida extends m_db
 			$code = $item_i['id_invent'];
 			$sql_productos = "SELECT * FROM detalle_inventario 
 					INNER JOIN productos ON productos.id_product = detalle_inventario.product_id_ope 
-					INNER JOIN marca ON marca.id_marca = productos.marca_id_product
+					LEFT JOIN marca ON marca.id_marca = productos.marca_id_product
 					WHERE detalle_inventario.invent_id_ope = '$code';";
 			// GROUP BY detalle_inventario.invent_id_ope					
 
