@@ -48,12 +48,12 @@
               <img src="<?php echo constant('URL');?>views/images/cooking.svg" alt="">
             </div>
           </div>
-          <!-- <div class="div-products">
+          <div class="div-products">
             <div class="title-product">
               <h3>Productos más usados</h3>
               <div class="div-btn">
-                <img class="slide-button btn-prev" id="btn-prev" src="<?php //echo constant('URL');?>views/images/left.png" alt="">
-                <img class="slide-button btn-next" id="btn-next" src="<?php //echo constant('URL');?>views/images/right.png" alt="">
+                <img class="slide-button btn-prev" id="btn-prev" src="<?php echo constant('URL');?>views/images/left.png" alt="">
+                <img class="slide-button btn-next" id="btn-next" src="<?php echo constant('URL');?>views/images/right.png" alt="">
               </div>
             </div>
             <div class="slider-scrollbar">
@@ -65,7 +65,7 @@
               <div class="subproduct-track">
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/aceite.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/aceite.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Aceite</h2>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/arroz.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/arroz.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Arroz</h2>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/cebolla.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/cebolla.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Cebolla</h2>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/harina.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/harina.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Harina</h2>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/aceite.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/aceite.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Aceite</h2>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/arroz.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/arroz.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Arroz</h2>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/cebolla.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/cebolla.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Cebolla</h2>
@@ -135,7 +135,7 @@
                 </div>
                 <div class="card">
                   <div class="imgBx">
-                    <img src="<?php //echo constant('URL');?>views/images/harina.png" alt="">
+                    <img src="<?php echo constant('URL');?>views/images/harina.png" alt="">
                   </div>
                   <div class="card-content">
                     <h2>Harina</h2>
@@ -145,11 +145,11 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
 
-          <!-- <div class="registrar-producto">
+          <div class="registrar-producto">
             <span><a href="">Registrar más productos</a></span>
-          </div> -->
+          </div>
 
           <div class="div-lastmenu" id="menus_recientes">
             <div class="title-lastmenu">
