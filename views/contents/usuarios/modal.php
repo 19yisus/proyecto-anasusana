@@ -43,7 +43,7 @@ $roles = $model->Get_roles();
 																			</div>
 																			<div class="col-7 col-sm-12">
 																				<div class="form-group">
-																					<label for="nom_user">Permisos de vista(<span class="text-danger text-md">*</span>)</label>
+																					<label for="nom_user">Permisos de Vista(<span class="text-danger text-md">*</span>)</label>
 																					<div class="row">
 																						<div class="form-check mx-3" v-for="mod in modulos">
 																							<input type="checkbox" name="modulos[]" :value="mod" class="form-check-input">

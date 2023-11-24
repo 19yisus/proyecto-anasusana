@@ -51,7 +51,7 @@
 											</div>
 											<div class="col-3">
 												<div class="form-group">
-													<label for="">Cantidad de medida(<span class="text-danger text-md">*</span>)</label>
+													<label for="">Cantidad de Medida(<span class="text-danger text-md">*</span>)</label>
 													<input type="number" name="valor_producto" step="0.01" min="0.01" id="valor_producto" class="form-control" placeholder="Ingrese un Valor">
 												</div>
 											</div>

@@ -182,7 +182,7 @@
                 <a href="<?php $this->SetURL('usuarios/index'); ?>" class="dropdown-item <?php $this->IsActive("usuarios"); ?>">
                   <p>
                     <i class="nav-icon fas fa-user-cog"></i>
-                    usuarios
+                    Usuarios
                   </p>
                 </a>
               </li>
@@ -190,7 +190,7 @@
                 <a href="<?php $this->SetURL('usuarios/preguntas'); ?>" class="dropdown-item <?php $this->IsActive("usuarios"); ?>">
                   <p>
                     <i class="nav-icon fas fa-cog"></i>
-                    Preguntas de seguridad
+                    Preguntas de Seguridad
                   </p>
                 </a>
               </li>

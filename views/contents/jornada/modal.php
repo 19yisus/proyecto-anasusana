@@ -12,7 +12,7 @@
           <div class="col-md-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Consulta detalle de jornada</h3>
+                <h3 class="card-title">Consulta Detalle de Jornada</h3>
               </div>
               <!-- /.card-header -->
               <!-- card body -->
@@ -59,13 +59,13 @@
                     <div class="col-12 col-sm-12">
                       <div class="form-group">
                         <input type="hidden" name="id_jornada" v-model="id">
-                        <label for="titulo_jornada">Titulo de la jornada(<span class="text-danger text-md">*</span>)</label>
+                        <label for="titulo_jornada">Titulo de la Jornada(<span class="text-danger text-md">*</span>)</label>
                         <input type="text" v-model="titulo" maxlength="30" name="titulo_jornada" id="titulo_jornada" placeholder="Ingrese el titulo de la jornada" class="form-control">
                       </div>
                     </div>
                     <div class="col-4 col-sm-6">
                       <div class="form-group">
-                        <label for="titulo_jornada">Cantidad aproximada de beneficiados(<span class="text-danger text-md">*</span>)</label>
+                        <label for="titulo_jornada">Cantidad Aproximada de Beneficiados(<span class="text-danger text-md">*</span>)</label>
                         <input type="number" v-model="cant" name="cant_aproximada" id="cant_aproximada" placeholder="Ingrese una cantidad aproximadas de platos" class="form-control">
                       </div>
                     </div>
@@ -73,7 +73,7 @@
                       <div class="form-group col-sm-12">
                         <label for="">Menú(<span class="text-danger text-md">*</span>)</label>
                         <select name="menu_id_jornada" id="menu_id_jornada" class="custom-select" v-model="menu_id_jornada">
-                          <option value="">Seleccione una opción</option>
+                          <option value="">Seleccione una Opción</option>
                           <option v-for="item in selectMenu" :key="item.id_menu" :value="item.id_menu">{{item.des_menu}}</option>
                         </select>
                       </div>
@@ -83,13 +83,13 @@
                   <div class="row">
                     <div class="col-6 col-sm-6">
                       <div class="form-group">
-                        <label for="titulo_jornada">Fecha para la jornada(<span class="text-danger text-md">*</span>)</label>
+                        <label for="titulo_jornada">Fecha para la Jornada(<span class="text-danger text-md">*</span>)</label>
                         <input type="date" v-model="fecha" min="<?php echo $this->DateNow(); ?>" name="fecha_jornada" id="fecha_jornada" class="form-control">
                       </div>
                     </div>
                     <div class="col-6 col-sm-6">
                       <div class="form-group">
-                        <label for="responsable">responsable de esta jornada(<span class="text-danger text-md">*</span>)</label>
+                        <label for="responsable">Responsable de Esta Jornada(<span class="text-danger text-md">*</span>)</label>
                         <select name="responsable" id="responsable" class="custom-select special_select2" v-model="responsable">
                           <option value="">Seleccione a una Persona</option>
                           <?php foreach ($person2 as $persona) { ?>
@@ -102,7 +102,7 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="form-group">
-                        <label for="">Descripción de la jornada</label>
+                        <label for="">Descripción de la Jornada(<span class="text-danger text-md">*</span>)</label>
                         <textarea name="des_jornada" v-model="des" maxlength="120" class="form-control" id="des_jornada" cols="30" rows="2"></textarea>
                       </div>
                     </div>

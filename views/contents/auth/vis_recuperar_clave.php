@@ -111,9 +111,9 @@ if (isset($_POST['ope'])) {
 			<div class="content__section">
 				<div class="section__registerNU">
 					<form action="#" method="POST" class="section__input-content" id="forgot-password">
-						<h1 for="">Recuperacion de contraseña</h1>
+						<h1 for="">Recuperacion de Contraseña</h1>
 						<div class="input-content__div-input">
-							<input class="input" id="cedulaR" type="text" placeholder="Cédula de la persona" name="cedula">
+							<input class="input" id="cedulaR" type="text" placeholder="Cédula de la Persona" name="cedula">
 							<span><i class="fas fa-user"></i></span>
 						</div>
 
@@ -125,7 +125,7 @@ if (isset($_POST['ope'])) {
 							<span>
 								<a class="back" id="backIn" href="<?php echo constant("URL"); ?>auth/login">Inicio</a>
 							</span>
-							<a class="back" id="backRNU" href="<?php echo constant("URL"); ?>auth/sign_in">Registro de nuevo usuario</a>
+							<a class="back" id="backRNU" href="<?php echo constant("URL"); ?>auth/sign_in">Registro de Nuevo Usuario</a>
 						</div>
 					</form>
 				</div>
@@ -135,7 +135,7 @@ if (isset($_POST['ope'])) {
 			<div class="content__section">
 				<div class="section__registerNU">
 					<form action="#" method="POST" autocomplete="off" class="section__input-content" id="question-content">
-						<h1 for="recuperacionC">Recuperacion de contraseña</h1>
+						<h1 for="recuperacionC">Recuperacion de Contraseña</h1>
 						<div class="input-content__div-input">
 							<input type="hidden" name="user_id" readonly value="<?php echo $id; ?>">
 							<input class="input" name="cedula" id="cedula" value="<?php echo $cedula; ?>" type="text" placeholder="Cédula de la persona">
@@ -143,20 +143,20 @@ if (isset($_POST['ope'])) {
 						</div>
 						<div class="input-content__div-input">
 							<input type="hidden" name="pregunta1" readonly value="<?php echo $pregun1['id_pregun']; ?>">
-							<input type="text" class="input" id="" value="<?php echo $pregun1['des_pregun']; ?>" placeholder="Primera pregunta de seguridad (*)" readonly>
+							<input type="text" class="input" id="" value="<?php echo $pregun1['des_pregun']; ?>" placeholder="Primera Pregunta de Seguridad (*)" readonly>
 							<span><i class="fas fa-question"></i></span>
 						</div>
 						<div class="input-content__div-input">
-							<input type="text" class="input" id="" autocomplete="off" name="respuesta1" placeholder="Primera respuesta de seguridad (*)">
+							<input type="text" class="input" id="" autocomplete="off" name="respuesta1" placeholder="Primera Respuesta de Seguridad (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 						<div class="input-content__div-input">
 							<input type="hidden" name="pregunta2" readonly value="<?php echo $pregun2['id_pregun']; ?>">
-							<input type="text" class="input" id="" name="pregunta2" value="<?php echo $pregun2['des_pregun']; ?>" placeholder="Segunda pregunta de seguridad (*)" readonly>
+							<input type="text" class="input" id="" name="pregunta2" value="<?php echo $pregun2['des_pregun']; ?>" placeholder="Segunda Pregunta de Seguridad (*)" readonly>
 							<span><i class="fas fa-question"></i></span>
 						</div>
 						<div class="input-content__div-input last-child">
-							<input type="text" class="input" id="" autocomplete="off" name="respuesta2" placeholder="Segunda respuesta de seguridad (*)">
+							<input type="text" class="input" id="" autocomplete="off" name="respuesta2" placeholder="Segunda Respuesta de Seguridad (*)">
 							<span><i class="fas fa-reply"></i></span>
 						</div>
 
@@ -168,7 +168,7 @@ if (isset($_POST['ope'])) {
 							<span>
 								<a class="back" id="backIn" href="<?php echo constant("URL"); ?>auth/login">Inicio</a>
 							</span>
-							<a class="back" id="backRNU" href="<?php echo constant("URL"); ?>auth/sign_in">Registro de nuevo usuario</a>
+							<a class="back" id="backRNU" href="<?php echo constant("URL"); ?>auth/sign_in">Registro de Nuevo Usuario</a>
 							<a class="back" id="RecEmail" href="<?php echo constant("URL"); ?>auth/email_recovery?id=<?php echo $_POST['cedula']; ?>">Recuperación con Email</a>
 						</div>
 					</form>
@@ -178,71 +178,71 @@ if (isset($_POST['ope'])) {
 			<div class="content__section">
 				<div class="section__registerNU">
 					<form action="#" method="POST" class="section__input-content" id="password-content">
-						<h1 for="recuperacionC">Recuperacion de contraseña</h1>
+						<h1 for="recuperacionC">Recuperacion de Contraseña</h1>
 						<div class="input-content__div-input">
 							<input type="hidden" name="user_id" readonly value="<?php echo $id; ?>">
-							<input class="input" name="cedula" id="cedula" value="<?php echo $cedula; ?>" readonly type="text" placeholder="Cédula de la persona">
+							<input class="input" name="cedula" id="cedula" value="<?php echo $cedula; ?>" readonly type="text" placeholder="Cédula de la Persona">
 							<span><i class="fas fa-user"></i></span>
 						</div>
 						<div class="input-content__div-input" style="margin-bottom: 10px;">
-							<input type="password" class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password" placeholder="Nueva contraseña (*)">
-							<span><i class="fas fa-reply"></i></span>
+							<input type="password" class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password" placeholder="Nueva Contraseña (*)">
+							<span class="" id="viewPassword"><i class="fas fa-eye"></i></span>
 						</div>
 
 						<div class="input-content__div-input last-child" style="margin-bottom: 30px;">
-							<input type="password" class="input" id="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password2" placeholder="Repita su nueva contraseña (*)">
-							<span><i class="fas fa-reply"></i></span>
+							<input type="password" class="input" id="password2" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password2" placeholder="Repita su Nueva Contraseña (*)">
+							<span class="" id="viewPassword2"><i class="fas fa-eye"></i></span>
 						</div>
 
 						<div class="row">
 							<label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
 
 							<div class="col-md-8"><br>
-								<a href="javascript:void(0)" id="reloadCaptcha">Recargar codigo</a>
+								<a href="javascript:void(0)" id="reloadCaptcha">Recargar Código</a>
 							</div>
 						</div>
 
 						<div class="input-content__div-input last-child" style="margin-bottom: 17px;">
-							<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+							<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="Captcha" maxlength="4">
 						</div>
 
 
 						<div class="content-requirement" style="margin:auto;">
-							<span>La contraseña debe contener</span>
+							<span>La Contraseña debe Contener</span>
 							<ul class="requirement-list">
 								<li>
 									<i class="fa-solid fa-times"></i>
-									<p>Al menos 8 caracteres de longitud</p>
+									<p>Al menos 8 Caracteres de Longitud</p>
 								</li>
 								<li>
 									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 mayuscula (A...Z)</p>
+									<p>Al Menos 1 Mayuscula (A...Z)</p>
 								</li>
 								<li>
 									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 minuscula (a...z)</p>
+									<p>Al Menos 1 Minuscula (a...z)</p>
 								</li>
 								<li>
 									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 caracter especial (!...$)</p>
+									<p>Al Menos 1 Caracter Especial (!...$)</p>
 								</li>
 								<li>
 									<i class="fa-solid fa-times"></i>
-									<p>Al menos 1 numero (0...9)</p>
+									<p>Al Menos 1 Numero (0...9)</p>
 								</li>
 							</ul>
 						</div>
 
 						<div class="input__btn-content">
 							<input type="hidden" name="ope" value="form3">
-							<button class="btn-content__btn" name="ope" id="btn" type="submit">Recuperar clave</button>
+							<button class="btn-content__btn" name="ope" id="btn" type="submit">Recuperar Clave</button>
 						</div>
 
 						<div class="input__return">
 							<span>
 								<a class="back" id="backIn" href="<?php echo constant("URL"); ?>auth/login">Inicio</a>
 							</span>
-							<a class="back" id="backRNU" href="<?php echo constant("URL"); ?>auth/sign_in">Registro de nuevo usuario</a>
+							<a class="back" id="backRNU" href="<?php echo constant("URL"); ?>auth/sign_in">Registro de Nuevo Usuario</a>
 							<a class="back" id="RecEmail" href="<?php echo constant("URL"); ?>auth/email_recovery?id=<?php echo $_POST['cedula']; ?>">Recuperación con Email</a>
 						</div>
 					</form>
@@ -267,10 +267,10 @@ if (isset($_POST['ope'])) {
 				},
 				messages: {
 					cedula: {
-						required: "Campo vacío",
-						number: "Debe ser un numero",
-						minlength: "Cédula inválida",
-						maxlength: "Cédula inválida",
+						required: "Campo Vacío",
+						number: "Debe ser un Numero",
+						minlength: "Cédula Inválida",
+						maxlength: "Cédula Inválida",
 					},
 				},
 			});
@@ -288,10 +288,10 @@ if (isset($_POST['ope'])) {
 				},
 				messages: {
 					respuesta1: {
-						required: "Campo vacío"
+						required: "Campo Vacío"
 					},
 					respuesta2: {
-						required: "Campo vacío"
+						required: "Campo Vacío"
 					},
 				},
 			});
@@ -380,30 +380,30 @@ if (isset($_POST['ope'])) {
 						required: "Este campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
-						pattern: "Se debe de Ingresar una Clave más segura",
+						pattern: "Se debe de Ingresar una Clave más Segura",
 					},
 					password2: {
-						required: "Este campo es Obligatorio",
+						required: "Este Campo es Obligatorio",
 						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
 						maxlength: "Máximo de 20 caracteres para una Contraseña",
 						pattern: "Se debe de Ingresar una Clave más Segura",
 						equalTo: "Las Contraseñas Ingresadas NO Coinciden"
 					},
 					respuesta1: {
-						required: "Este campo es Obligatorio",
+						required: "Este Campo es Obligatorio",
 						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
 						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
 					},
 					respuesta2: {
-						required: "Este campo es Obligatorio",
+						required: "Este Campo es Obligatorio",
 						minlength: "Su respuesta no cumple con el minimo requerido (5 caracteres)",
 						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
 					},
 					captcha_input: {
-						required: "Este campo es obligatorio",
-						maxlength: "Maximo 4 caracteres",
-						minlength: "Minimo 4 caracteres",
-						remote: "El codigo ingresado no es valido"
+						required: "Este Campo es Obligatorio",
+						maxlength: "Maximo 4 Caracteres",
+						minlength: "Minimo 4 Caracteres",
+						remote: "El Codigo Ingresado no es Valido"
 					}
 				},
 			});

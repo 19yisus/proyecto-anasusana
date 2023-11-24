@@ -21,7 +21,7 @@
                   <div class="row">
                     <div class="col-12 col-sm-12">
                       <div class="form-group">
-                        <label for="des_cargo">Nombre del cargo(<span class="text-danger text-md">*</span>)</label>
+                        <label for="des_cargo">Nombre del Cargo(<span class="text-danger text-md">*</span>)</label>
                         <input type="text" name="des_cargo" id="des_cargo" placeholder="Ingrese el nombre del marca" class="form-control">
                       </div>
                     </div>

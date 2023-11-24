@@ -7,6 +7,7 @@ require_once("../models/fpdf/fpdf.php");
 class new_fpdf extends FPDF
 {
   private $nombre;
+  public $des_reporte;
 
   public function SetNombre($name, $des = '')
   {
@@ -17,13 +18,23 @@ class new_fpdf extends FPDF
   public function Header()
   {
     $this->SetFont("Arial", "B", 14);
-    $this->write(5, utf8_decode("ANA SUSSANA DE OUSSET, Acarigua - Portuguesa"));
-    $this->Image("../views/images/logo.png", 150, 5, 45, 40, "PNG");
+    $this->SetX(70);
+    $this->write(5, utf8_decode("Escuela Ana Susana De Ousset"));
+    $this->Image("../views/images/logo.png", 150, 5, 45, 35, "PNG");
     $this->Ln();
-    $this->write(5, utf8_decode("$this->nombre"));
-    $this->Ln(7);
-    $this->write(5, utf8_decode("$this->des"));
-    $this->Ln(30);
+    $this->SetX(80);
+    $this->write(5, utf8_decode("Acarigua - Portuguesa"));
+    // $this->Ln(7);
+    // $this->write(5, utf8_decode("$this->des"));
+    $this->Ln(22);
+    $this->Cell(190,5, utf8_decode("$this->nombre"), 0, 0, 'C');
+    if($this->des !== ''){
+      $this->Ln();
+      $this->Cell(190,5, utf8_decode("$this->des"), 0, 0, 'C');
+    }else{
+      $this->Ln();
+    }
+    // $this->write(5, utf8_decode("$this->nombre"));
   }
 
   public function Footer()
@@ -242,10 +253,11 @@ function fn_pdf_filtrado()
     $hasta_ = $date_hasta->format('d-m-Y');
     // echo $date_desde->format("d-m-Y");
     // echo $date_hasta->format('d-m-Y');
-
-    $pdf->SetNombre("Reporte de operaciones de $tipo por " . ($desf == "" ? $filtro : $desf), "Entre las fechas ($desde_ y $hasta_)");
+    if($filtro == "Rechazo") $filtro = "Remanente";
+    $pdf->SetNombre("Reporte de Operaciones de $tipo por " . ($desf == "" ? $filtro : $desf), "Entre las Fechas ($desde_ y $hasta_)");
   } else {
-    $pdf->SetNombre("Reporte de operaciones de $tipo por " . ($desf == "" ? $filtro : $desf));
+    if($filtro == "Rechazo") $filtro = "Remanente";
+    $pdf->SetNombre("Reporte de Operaciones de $tipo por " . ($desf == "" ? $filtro : $desf));
   }
 
   $pdf->addPage();
@@ -259,7 +271,7 @@ function fn_pdf_filtrado()
     $pdf->SetDrawColor(88, 88, 88);
 
     $pdf->cell(80, 7, utf8_decode("Código de la operacion: " . $dato['invent']['id_invent']), 1, 0, "C", 1);
-    $pdf->cell(75, 7, utf8_decode("Fecha y Hora: " . $fecha->format("d/m/Y h:i a")), 1, 0, "C", 1);
+    $pdf->cell(75, 7, utf8_decode("Fecha y hora: " . $fecha->format("d/m/Y h:i a")), 1, 0, "C", 1);
     $pdf->cell(35, 7, utf8_decode("Cantidad total: " . $dato['invent']['cantidad_invent']), 1, 0, "C", 1);
     $pdf->SetFillColor(255, 255, 255);
     $pdf->SetTextColor(0, 0, 0);
@@ -361,10 +373,10 @@ function fn_pdf_productos()
 
   $pdf = new new_fpdf();
 
-  if ($_POST['filtro'] == "Todos") $des_report = "Todos los productos";
-  if ($_POST['filtro'] == "Marcas") $des_report = "Todos los productos según su Marca";
-  if ($_POST['filtro'] == "Unidades") $des_report = "Todos los productos según su presentación";
-  if ($_POST['filtro'] == "Stock_max") $des_report = "Todos los productos según su stock maximo";
+  if ($_POST['filtro'] == "Todos") $des_report = "Todos los Productos";
+  if ($_POST['filtro'] == "Marcas") $des_report = "Todos los Productos Según su Marca";
+  if ($_POST['filtro'] == "Unidades") $des_report = "Todos los Productos Según su Presentación";
+  if ($_POST['filtro'] == "Stock_max") $des_report = "Todos los Productos Según su Stock Maximo";
 
   $pdf->SetNombre($des_report);
   $pdf->addPage();
@@ -405,12 +417,12 @@ function fn_pdf_menu()
   $pdf->addPage();
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 10);
-  $pdf->SetTextColor(0, 0, 0);
-  $pdf->SetFillColor(253, 234, 13);
-  $pdf->SetDrawColor(88, 88, 88);
 
   foreach ($menu as $item_menu) {
     $fecha = new DateTime($item_menu['menu']['created_menu']);
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFillColor(253, 234, 13);
+    $pdf->SetDrawColor(88, 88, 88);
     $pdf->cell(190, 7, utf8_decode('Datos de los menus'), 1, 0, "C", 1);
     $pdf->Ln();
     $pdf->SetFillColor(255, 255, 255);
@@ -446,7 +458,7 @@ function fn_pdf_Jornada()
   $datos = $model->GetPdf($_POST);
   $pdf = new new_fpdf();
 
-  if ($_POST['filtro_extra'] == "Fecha_registro") $des_report = "Todos las jornada por fecha";
+  if ($_POST['filtro_extra'] == "Fecha_registro") $des_report = "Todas las jornadas por fecha";
 
   $pdf->SetNombre($des_report);
   $pdf->addPage();

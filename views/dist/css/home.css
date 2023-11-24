@@ -11,10 +11,11 @@
 .div-header{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
-.div-header .div__search{
+.div .search{
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
 }
 .div__search .welcome{
     font-size: 1.5rem;
@@ -23,24 +24,6 @@
 }
 .welcome span{
     font-weight: 600;
-}
-.div__search .search{
-    position: relative;
-    margin-top: 5px;
-}
-.search img{
-    width: 20px;
-    position: absolute;
-    z-index: 11111;
-    top: 5px;
-    left: 5px;
-}
-.search input{
-    position: absolute;
-    width: 100%;
-    height: 30px;
-    padding: 0 5px 0 30px;
-    border-radius: 5px;
 }
 
 
@@ -79,132 +62,72 @@
 }
 
 .div-products{
-    width: auto;
-    height: 280px;
+    margin-top: 20px;
+    text-transform: capitalize;
 }
-
-.title-product{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 15px;
-}
-.title-product img{
-    margin: 0 15px;
-    border-radius: 50%;
-    width: 30px;
-    cursor: pointer;
-}
-.product-track{
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-.product-track::-webkit-scrollbar{
-    display: none;
-}
-.subproduct-track{
-    display: grid;
-    gap: 18px;
-    grid-template-columns: repeat(20, 1fr);
-    margin-top: 25px;
-}
-
-/* .card{
-    position: relative;
-    padding: 20px 0;
-    min-width: 200px;
-    max-width: 200px;
-    background: #ffffff;
-    border-radius: 20px;
-    transition: ease .3s;
-    height: 160px;
-    z-index: 1111;
-} */
-/* .card:hover{
-    background: #e0e0e0;
-    box-shadow: 1px 1px 25px -2px rgba(107,107,107,0.75);
--webkit-box-shadow: 1px 1px 25px -2px rgba(107,107,107,0.75);
--moz-box-shadow: 1px 1px 25px -2px rgba(107,107,107,0.75);
-border-radius: 20px;
-    height: 200px;
-} */
-.card .imgBx{
-    display: flex;
-    justify-content: center;
+.product-list{
     width: 100%;
-    top: -40px;
-    position: relative;
-    transition: 0.3s ease-in-out;
+    padding: 10px;
+    margin-top: 10px;
+    background: #EBEBEB;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.20);
 }
-.imgBx img{
-    width: 90px;
+.div-products h3{
+    margin-bottom: 30px;
 }
-.card:hover .imgBx{
-    top: -10px;
+
+.custom-table {
+    min-width: 900px; 
 }
-.card .card-content h2{
+.custom-table thead{
+    background: #ddd2b2;
+}
+.custom-table thead tr{
+    margin-top: 50px !important;
+}
+.custom-table thead tr, .custom-table thead th {
+    border-top: none;
+    border-bottom: none !important; 
     text-align: center;
-    font-size: 1.8rem;
-    margin-top: -20px;
-    transition: 0.3s ease-in-out;
 }
-.card:hover .card-content h2{
-    margin-top: 0;
+.custom-table thead tr th:nth-child(1){
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
-.card .card-content span{
-    position: relative;
-    margin-top: -140px;
-    padding: 10px 15px;
+.custom-table thead tr th:last-child{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+    
+.custom-table tbody th, .custom-table tbody td {
+    color: #000000;
+    font-weight: 400;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-weight: 500; 
     text-align: center;
-    color: #111;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s ease-in-out;
+    background: #fff;
+    border: none;
+    font-weight: 500;
 }
-.card:hover .card-content span{
-    visibility: visible;
-    opacity: 1;
+.custom-table tbody tr th:first-child, .custom-table tbody tr td:first-child {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px; 
+}
+.custom-table tbody tr th:last-child, .custom-table tbody tr td:last-child {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px; 
+}
+.custom-table tbody tr.spacer td {
+    padding: 0 !important;
+    height: 10px;
+    border-radius: 0 !important;
+    background: transparent !important; 
 }
 
-.content .slider-scrollbar{
-    position: relative;
-    height: 24px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
-.slider-scrollbar .scrollbar-track{
-    position: relative;
-    height: 2px;
-    max-width: 100%;
-    width: 100%;
-    background: #cccccc;
-    border-radius: 4px;
-}
-.slider-scrollbar:hover .scrollbar-track{
-    height: 4px;
-}
-.slider-scrollbar .scrollbar-thumb{
-    position: absolute;
-    height: 100%;
-    width: 50%;
-    background: #000;
-    border-radius: inherit;
-    cursor: grab;
-}
-.slider-scrollbar .scrollbar-thumb:active{
-    cursor: grabbing;
-    height: 8px;
-    top: -2px;
-}
-.slider-scrollbar .scrollbar-thumb::after{
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -10px;
-    bottom: -10px;
-}
+
+
 
 .div-lastmenu{
     width: 100%;
@@ -337,17 +260,3 @@ border-radius: 20px;
     color: #9c9c9c;
 }
 
-
-
-
-@media screen and (max-width: 1023px){
-    .title-product img{
-        display: none!important;
-    }
-    .subproduct-track{
-        gap: 10px;
-    }
-    .slider-scrollbar .scrollbar-thumb{
-        width: 20%;
-    }
-}

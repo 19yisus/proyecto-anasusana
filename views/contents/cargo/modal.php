@@ -21,13 +21,13 @@
                                     <div class="row">
                                         <div class="col-5 col-sm-12">
                                             <div class="form-group">
-                                                <label for="id_cargo">Código del cargo(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="id_cargo">Código del Cargo(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="id_cargo" id="id_cargo" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="des_cargo">Descripción del cargo(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="des_cargo">Descripción del Cargo(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="des_cargo" id="des_cargo" placeholder="Ingrese la descripción del cargo" class="form-control">
                                             </div>
                                         </div>

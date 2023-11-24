@@ -29,7 +29,7 @@
                                     <div class="col-5">
                                         <div class="form-group">
                                             <input type="hidden" name="id_cargo">
-                                            <label for="des_cargo">Nombre del cargo(<span class="text-danger text-md">*</span>)</label>
+                                            <label for="des_cargo">Nombre del Cargo(<span class="text-danger text-md">*</span>)</label>
                                             <input type="text" name="des_cargo" id="des_cargo" placeholder="Ingrese la descripción del cargo" class="form-control">
                                         </div>
                                     </div>

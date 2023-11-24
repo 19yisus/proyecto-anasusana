@@ -97,7 +97,7 @@ if (isset($_POST['ope'])) {
 			<div class="content__section active">
 				<div class="section__registerNU">
 					<form action="#" method="POST" class="section__input-content" id="register-content">
-						<h1>Registro de nuevo usuario</h1>
+						<h1>Registro de Nuevo Usuario</h1>
 						<div class="input-content__div-input">
 							<input class="input" id="cedulaR" type="text" placeholder="Cédula de la persona" name="cedula" required>
 							<span><i class="fas fa-user"></i></span>
@@ -108,7 +108,7 @@ if (isset($_POST['ope'])) {
 						</div>
 
 						<div class="input__return">
-							<a class="back" id="backRC" href="<?php echo constant("URL"); ?>auth/login">Ya tengo una cuenta</a>
+							<a class="back" id="backRC" href="<?php echo constant("URL"); ?>auth/login">Ya tengo una Cuenta</a>
 						</div>
 					</form>
 				</div>
@@ -117,7 +117,7 @@ if (isset($_POST['ope'])) {
 		if ($status_form == 2) { ?>
 			<div class="content__section">
 				<div class="section__formRU">
-					<h1 class="register__title">Registro de nuevo usuario</h1>
+					<h1 class="register__title">Registro de Nuevo Usuario</h1>
 
 					<form action="<?php echo constant("URL"); ?>controller/c_auth.php" autocomplete="off" method="post" class="formRU__register" id="formRU__register">
 
@@ -128,13 +128,13 @@ if (isset($_POST['ope'])) {
 								<span><i class="fas fa-user"></i></span>
 							</div>
 							<div class="container-camposO">
-								<span class="camposO">Todos los campos con (<span class="asterisco">*</span>), son obligatorios</span>
+								<span class="camposO">Todos los Campos con (<span class="asterisco">*</span>), son Obligatorios</span>
 							</div>
 						</div>
 						<div class="register__container-input select">
 							<div class="container__div-input">
 								<select name="pregunta1" onchange="Get_respuestas('#respues_1', this.value)">
-									<option value="">Elige una pregunta (*)</option>
+									<option value="">Elige una Pregunta (*)</option>
 									<?php foreach ($preguntas as $pregunta1) {
 										$id_pregun1 = $pregunta1['id_pregun'];
 									?>
@@ -145,7 +145,7 @@ if (isset($_POST['ope'])) {
 							</div>
 							<div class="container__div-input">
 								<select name="pregunta2" id="pregun2">
-									<option value="">Elige una pregunta (*)</option>
+									<option value="">Elige una Pregunta (*)</option>
 									<?php foreach ($preguntas as $pregunta2) {
 										$id_pregun2 = $pregunta2['id_pregun'];
 									?>
@@ -157,57 +157,60 @@ if (isset($_POST['ope'])) {
 						</div>
 						<div class="register__container-input">
 							<div class="container__div-input">
-								<input type="text" class="input" name="respuesta1" autocomplete="off" id="respuesta1" placeholder="Primera respuesta de seguridad (*)">
+								<input type="text" class="input" name="respuesta1" autocomplete="off" id="respuesta1" placeholder="Primera Respuesta de Seguridad (*)">
 								<span><i class="fas fa-question"></i></span>
 							</div>
 							<div class="container__div-input">
-								<input type="text" class="input" name="respuesta2" autocomplete="off" id="respuesta2" placeholder="Segunda respuesta de seguridad (*)">
+								<input type="text" class="input" name="respuesta2" autocomplete="off" id="respuesta2" placeholder="Segunda Respuesta de Seguridad (*)">
 								<span><i class="fas fa-question"></i></span>
 							</div>
 						</div>
 						<div class="register__container-input" style="margin-bottom: 20px;">
 							<div class="container__div-input">
-								<input type="password" class="input password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password" id="password" placeholder="Ingresa tu contraseña (*)">
+								<input type="password" class="input password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password" id="password" placeholder="Ingresa tu Contraseña (*)">
 								<span class="viewPassword" id="viewPassword"><i class="fas fa-eye"></i></span>
 							</div>
 							<div class="container__div-input">
-								<input type="password" class="input password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password2" id="password2" placeholder="Confirma tu contraseña (*)">
+								<input type="password" class="input password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="off" name="password2" id="password2" placeholder="Confirma tu Contraseña (*)">
 								<span class="viewPassword" id="viewPassword2"><i class="fas fa-eye"></i></span>
 							</div>
 						</div>
 						
 						<div style="display:flex; justify-content:space-between;">
 							<div class="content-requirement" style="margin-left:20px;">
-								<span>La contraseña debe contener</span>
+								<span>La contraseña debe Contener</span>
 								<ul class="requirement-list">
 									<li>
 										<i class="fa-solid fa-times"></i>
-										<p>Al menos 8 caracteres de longitud</p>
+										<p>Al Menos 8 caracteres de Longitud</p>
 									</li>
 									<li>
 										<i class="fa-solid fa-times"></i>
-										<p>Al menos 1 mayuscula (A...Z)</p>
+										<p>Al Menos 1 Mayuscula (A...Z)</p>
 									</li>
 									<li>
 										<i class="fa-solid fa-times"></i>
-										<p>Al menos 1 minuscula (a...z)</p>
+										<p>Al Menos 1 Minuscula (a...z)</p>
 									</li>
 									<li>
 										<i class="fa-solid fa-times"></i>
-										<p>Al menos 1 caracter especial (!...$)</p>
+										<p>Al Menos 1 Caracter Especial (!...$)</p>
 									</li>
 									<li>
 										<i class="fa-solid fa-times"></i>
-										<p>Al menos 1 numero (0...9)</p>
+										<p>Al Menos 1 Numero (0...9)</p>
 									</li>
 								</ul>
 							</div>
 							<div style="margin-right:20px;">
 								<div class="container__div-input" >
 									<label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
+									<div class="col-md-8"><br>
+										<a href="javascript:void(0)" id="reloadCaptcha">Recargar Código</a>
+									</div>
 								</div>
 								<div class="container__div-input" style="height:40px; margin-top:20px;">
-									<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+									<input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="Captcha" maxlength="4">
 								</div>
 							</div>
 						</div>
@@ -218,7 +221,7 @@ if (isset($_POST['ope'])) {
 						</div>
 
 						<div class="input__return">
-							<a class="back" id="backRU" href="<?php echo constant("URL"); ?>auth/login">Ya tengo una cuenta</a>
+							<a class="back" id="backRU" href="<?php echo constant("URL"); ?>auth/login">Ya tengo una Cuenta</a>
 						</div>
 					</form>
 				</div>
@@ -246,10 +249,10 @@ if (isset($_POST['ope'])) {
 				},
 				messages: {
 					cedula: {
-						required: "Campo vacío",
-						number: "Debe ser un numero",
-						minlength: "Cédula inválida",
-						maxlength: "Cédula inválida",
+						required: "Campo Vacío",
+						number: "Debe ser un Numero",
+						minlength: "Cédula Invalida",
+						maxlength: "Cédula Invalida",
 					},
 				},
 			});
@@ -342,39 +345,39 @@ if (isset($_POST['ope'])) {
 				},
 				messages: {
 					cedula: {
-						required: "Este campo es Obligatorio",
-						minlength: "Mínimo 7 caracteres Numéricos para la Cédula",
-						maxlength: "Maximo 8 caracteres Numéricos para la Cédula",
+						required: "Este Campo es Obligatorio",
+						minlength: "Mínimo 7 Caracteres Numéricos para la Cédula",
+						maxlength: "Maximo 8 Caracteres Numéricos para la Cédula",
 						number: "Sólo se Aceptan Números",
 					},
 					password: {
-						required: "Este campo es Obligatorio",
-						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
-						maxlength: "Máximo de 20 caracteres para una Contraseña",
+						required: "Este Campo es Obligatorio",
+						minlength: "Mínimo de 8 Caracteres para Ingresar una Contraseña",
+						maxlength: "Máximo de 20 Caracteres para una Contraseña",
 						pattern: "Se debe de Ingresar una Clave más Segura",
 					},
 					password2: {
-						required: "Este campo es Obligatorio",
-						minlength: "Mínimo de 8 caracteres para Ingresar una Contraseña",
-						maxlength: "Máximo de 20 caracteres para una Contraseña",
+						required: "Este Campo es Obligatorio",
+						minlength: "Mínimo de 8 Caracteres para Ingresar una Contraseña",
+						maxlength: "Máximo de 20 Caracteres para una Contraseña",
 						pattern: "Se debe de Ingresar una Clave más Segura",
 						equalTo: "Las Contraseñas Ingresadas NO Conciden"
 					},
 					respuesta1: {
-						required: "Este campo es Obligatorio",
-						minlength: "Su respuesta no cumple con el minimo requerido (4 caracteres)",
-						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
+						required: "Este Campo es Obligatorio",
+						minlength: "Su Respuesta no Cumple con el Minimo Requerido (4 Caracteres)",
+						maxlength: "Su Respuesta Excede el Maximo Requerido (60 Caracteres)",
 					},
-					respuesta2: {
-						required: "Este campo es Obligatorio",
-						minlength: "Su respuesta no cumple con el minimo requerido (4 caracteres)",
-						maxlength: "Su respuesta excede el maximo requerido (60 caracteres)",
+					Respuesta2: {
+						required: "Este Campo es Obligatorio",
+						minlength: "Su Respuesta no Cumple con el Minimo Requerido (4 Caracteres)",
+						maxlength: "Su Respuesta Excede el Maximo Requerido (60 Caracteres)",
 					},
 					captcha_input: {
-						required: "Este campo es obligatorio",
-						maxlength: "Maximo 4 caracteres",
-						minlength: "Minimo 4 caracteres",
-						remote: "El codigo ingresado no es valido"
+						required: "Este Campo es Obligatorio",
+						maxlength: "Maximo 4 Caracteres",
+						minlength: "Minimo 4 Caracteres",
+						remote: "El codigo ingresado no es Valido"
 					}
 				},
 			});

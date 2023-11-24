@@ -25,7 +25,9 @@ class m_productos extends m_db
 
 	public function Create()
 	{
-		$sqlVerificar = "SELECT * FROM productos WHERE nom_product = '$this->nom_producto' ;";
+		$sqlVerificar = "SELECT * FROM productos WHERE nom_product = '$this->nom_producto' AND marca_id_product = $this->marca_id_producto;";
+		$sqlVerificar=str_replace("AND marca_id_product != ;",";", $sqlVerificar);
+
 		$result = $this->Query($sqlVerificar);
 		if ($result->num_rows > 0) return "err/02ERR";
 
@@ -57,8 +59,8 @@ class m_productos extends m_db
             valor_product = '$this->valor_producto', marca_id_product = $this->marca_id_producto ,
             stock_maximo_product = '$this->stock_maximo_producto' WHERE id_product = $this->id_producto ;";
 		
-		$sql=str_replace(", marca_id_product = ","", $sql);
-		
+		$sql=str_replace(", marca_id_product =  ","", $sql);
+				
 		$this->Query($sql);
 
 		if (!isset($_SESSION['user_id'])) session_start();
@@ -125,12 +127,12 @@ class m_productos extends m_db
 	{
 		if ($status != '') $condition = "WHERE productos.status_product = '1' ";
 		else $condition = "";
-		$sql = "SELECT * FROM productos LEFT JOIN marca ON marca.id_marca = productos.marca_id_product $condition ;";
+		$sql = "SELECT * FROM productos LEFT JOIN marca ON marca.id_marca = productos.marca_id_product $condition ORDER BY productos.nom_product ASC;";
 
 		if ($status === 2) {
 			$sql = "SELECT DISTINCT productos.id_product, productos.*, marca.* FROM productos 
 				LEFT JOIN marca ON marca.id_marca = productos.marca_id_product
-				INNER JOIN detalle_inventario ON detalle_inventario.product_id_ope = productos.id_product $condition;";
+				INNER JOIN detalle_inventario ON detalle_inventario.product_id_ope = productos.id_product $condition ORDER BY productos.nom_product ASC;";
 		}
 
 		// GROUP BY productos.id_product
@@ -145,6 +147,14 @@ class m_productos extends m_db
 		$results = $this->Query($sql);
 		return $this->Get_array($results);
 	}
+
+	public function Get_productos_minimos()
+	{
+		$sql = "SELECT * FROM productos LEFT JOIN marca ON marca.id_marca = productos.marca_id_product WHERE productos.stock_product < 5 ORDER BY productos.stock_product ASC LIMIT 0,7";
+		$results = $this->Query($sql);
+		if ($results->num_rows > 0) return $this->Get_todos_array($results); else return [];
+	}
+
 	public function GetPdf($filtro, $id = "")
 	{
 		if ($filtro == "Todos") $sql = "SELECT * FROM productos INNER JOIN marca ON marca.id_marca = productos.marca_id_product";

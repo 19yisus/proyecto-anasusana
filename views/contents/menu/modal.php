@@ -49,7 +49,7 @@
           <div class="col-md-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Formulario de Modificación de menú</h3>
+                <h3 class="card-title">Formulario de Modificación de Menú</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-4 col-sm-12">
                       <div class="form-group">
-                        <label for="des_cargo">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
+                        <label for="des_cargo">Nombre del Menú(<span class="text-danger text-md">*</span>)</label>
                         <input type="text" name="des_menu" id="des_menu" v-model="des_menu" placeholder="Ingrese la descripción del menú" class="form-control">
                       </div>
                     </div>

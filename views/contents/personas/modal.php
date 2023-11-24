@@ -112,7 +112,7 @@
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="cargo_persona">Cargo</label>
+                                                <label for="cargo_persona">Cargo(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="cargo_id" id="" class="custom-select">
                                                     <option value="">Seleccione una opción</option>
                                                     <?php

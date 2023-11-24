@@ -40,7 +40,7 @@
           </div>
 
           <div class="input-subcontent" style="margin-bottom: 60px;">
-            <input class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" name="password" placeholder="Password">
+            <input class="input" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" type="password" name="password" placeholder="Contraseña">
             <span class="" id="viewPassword"><i class="fas fa-eye"></i></span>
           </div>
 
@@ -48,12 +48,12 @@
             <label class="col-md-4 control-label"> <img style="border: 1px solid #D3D0D0" src="<?php echo constant("URL"); ?>views/contents/auth/captcha/captcha.php?rand=<?php echo rand(); ?>" id='captcha'></label>
 
             <div class="col-md-8"><br>
-              <a href="javascript:void(0)" id="reloadCaptcha">Recargar codigo</a>
+              <a href="javascript:void(0)" id="reloadCaptcha">Recargar Código</a>
             </div>
           </div>
 
           <div class="input-subcontent">
-            <input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="captcha" maxlength="4">
+            <input class="input" id="captcha_input" type="password" name="captcha_input" placeholder="Captcha" maxlength="4">
           </div>
 
           <div class="btn-content">

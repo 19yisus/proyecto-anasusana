@@ -4,7 +4,7 @@
   <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
     <div class="wrapper">
       <?php
-        $this->titleContent = "Configuración (preguntas de seguridad)";
+        $this->titleContent = "Configuración (Preguntas de Seguridad)";
 
         $this->GetComplement("navbar");
         // $this->GetComplement("sidebar");
@@ -21,9 +21,9 @@
               <div class="col-md-12">
                 <div class="card card-warning">
                   <div class="card-header d-flex justify-content-between">
-                    <h3 class="card-title">Configuración de preguntas de seguridad</h3>
+                    <h3 class="card-title">Configuración de Preguntas de Seguridad</h3>
                     <div class="ml-auto">
-                      <button type="button" data-toggle="modal" data-target="#modal-lg" onclick="Reset_form()" class="btn btn-sm btn-success font-weight-bold">Nueva pregunta</button>
+                      <button type="button" data-toggle="modal" data-target="#modal-lg" onclick="Reset_form()" class="btn btn-sm btn-success font-weight-bold">Nueva Pregunta</button>
                     </div>
                   </div>
                   <!-- /.card-header -->
@@ -32,7 +32,7 @@
                       <thead>
                         <tr>
                           <th>Id</th>
-                          <th>Descripción de la pregunta</th>
+                          <th>Descripción de la Pregunta</th>
                           <th>Opciones</th>
                         </tr>
                       </thead>

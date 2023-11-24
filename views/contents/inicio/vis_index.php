@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php $this->GetHeader(); ?>
-
+<?php 
+  require_once("./models/m_productos.php");
+  $cls = new m_productos();
+  $data = $cls->Get_productos_minimos();
+  $this->GetHeader(); 
+?>
 <body class="hold-transition sidebar-collapse layout-top-nav layout-footer-fixed text-sm">
   <div class="wrapper">
 
@@ -39,8 +43,8 @@
             <div class="presentation">
               <div class="presentation__text">
                 <h1>Bienvenido(a)</h1>
-                <span>al comedor de la escuela </span>
-                <span>Ana Susana de Ouset</span>
+                <span>Al comedor de la escuela </span>
+                <span>Ana Susana de Ousset</span>
               </div>
               <div class="description">
                 <p>Esta es una sección informativa y resumida de lo más realizado en el sistema</p>
@@ -49,106 +53,58 @@
             </div>
           </div>
           <div class="div-products">
-            <div class="title-product">
-              <h3>Productos más usados</h3>
-              <div class="div-btn">
-                <img class="slide-button btn-prev" id="btn-prev" src="<?php echo constant('URL');?>views/images/left.png" alt="">
-                <img class="slide-button btn-next" id="btn-next" src="<?php echo constant('URL');?>views/images/right.png" alt="">
-              </div>
-            </div>
-            <div class="slider-scrollbar">
-              <div class="scrollbar-track">
-                <div class="scrollbar-thumb"></div>
-              </div>
-            </div>
-            <div class="product-track">
-              <div class="subproduct-track">
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/aceite.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Aceite</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/arroz.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Arroz</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/cebolla.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Cebolla</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/harina.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Harina</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/aceite.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Aceite</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/arroz.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Arroz</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/cebolla.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Cebolla</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="imgBx">
-                    <img src="<?php echo constant('URL');?>views/images/harina.png" alt="">
-                  </div>
-                  <div class="card-content">
-                    <h2>Harina</h2>
-                    <span>Veces usadas: </span> <br>
-                    <span>Restantes: </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+						<h3>Productos en stock minimo</h3>
+						<div class="product-list">
+							<div class="table-responsive custom-table-responsive">
+								<table class="table custom-table">
+								  	<thead>
+										<tr>  
+											<th scope="col">Código</th>
+											<th scope="col">Descripción</th>
+											<th scope="col">Cantidad en stock</th>
+											<th scope="col">Stock Maximo</th>
+										</tr>
+									</thead>
+								  <tbody>
+                    <?php 
+                      if(isset($data[0])){
+                        foreach($data as $item){
+                          ?>
+                          <tr scope="row">
+                            <td><?php echo $item['id_product'];?></td>
+                            <td>
+                              <?php 
+                                echo $item['nom_product'].' '; 
+                                echo ($item['nom_marca']) ? "MARCA: ".$item['nom_marca'].' ' : '';
+                                echo $item['valor_product'].' '.$item['med_product'];
+                              ?>
+                            </td>
+                            <td><?php echo $item['stock_product'];?></td>
+                            <td><?php echo $item['stock_maximo_product'];?></td>
+                          </tr>
+                          <tr class="spacer"><td colspan="100"></td></tr>                          
+                          <?php
+                        }
+                      }
+                    ?>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 
-          <div class="registrar-producto">
-            <span><a href="">Registrar más productos</a></span>
+          <!-- <div class="registrar-producto">
+            <span><a href=""></a></span>
+          </div> -->
+          <div class="registrar-menu">
+            <ul style="list-style: none;">
+              <li>
+                <span><a href="<?php echo constant('URL');?>productos">Ver más</a></span>
+              </li>
+              <li>
+                <span><a href="<?php echo constant('URL');?>productos/form">Registrar más productos</a></span>
+              </li>
+            </ul>
           </div>
 
           <div class="div-lastmenu" id="menus_recientes">
@@ -164,7 +120,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="registrar-menu">
               <ul style="list-style: none;">
                 <li>
@@ -203,7 +159,7 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-10">
-                          <h2>Reseña historica de la escuela Ana Susana de Ousset:</h2>
+                          <h2>Reseña historica de la Escuela Ana Susana de Ousset</h2>
                           <h6 class="text-justify" style="font-size: 23px !important;">La institución fue fundada en el año 1963, en una casa de paredes de bahareque y techo de zinc bajo el nombre de Escuela Pimpinela, para ese entonces contaba con cuatro maestros, entre los cuales se conocen los nombres de Carlina de Rodríguez, Luisa Graterol de Pérez y Alicia de Gavidea; y un obrero. Haciendo una mención especial a la señora Guadalupe Colmenárez, quien fue pionera de la fundación de la escuela.</h6>
                         </div>
                         <div class="col-2">
@@ -213,7 +169,7 @@
                       <hr>
                       <div class="row">
                         <div class="mx-1">
-                          <h2>Misión de la escuela Ana Susana de Ousset</h2>
+                          <h2>Misión de la Escuela Ana Susana de Ousset</h2>
                           <h6 class="text-justify" style="font-size: 23px !important;">Brindar una educación a los niños, niñas y adolescentes de la educación inicial y primaria con una práctica pedagógica abierta, reflexiva, holística, cualitativa y constructiva; que atienda a los intereses y necesidades de los educandos, permitiendo el desarrollo de su personalidad y fortaleciendo los valores de convivencia, solidaridad, trabajo y responsabilidad.
                           </h6>
                         </div>
@@ -221,7 +177,7 @@
                       <hr>
                       <div class="row">
                         <div class="mx-1">
-                          <h2>Visión de la escuela Ana Susana de Ousset</h2>
+                          <h2>Visión de la Escuela Ana Susana de Ousset</h2>
                           <h6 class="text-justify" style="font-size: 23px !important;">Lograr la formación de un educando responsable, con conciencia nacional, soberana; que aprecie los valores patrios, sus tradiciones y costumbres ancestrales, en el marco de un enfoque geohistórico, en pro y para el trabajo liberador, que se apropie del desarrollo humanístico y sociable.
                           </h6>
                         </div>

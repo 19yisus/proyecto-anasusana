@@ -39,18 +39,18 @@ $person2 = $model_person->Get_Personas();
                       <div class="col-5">
                         <div class="form-group">
                           <input type="hidden" name="id_jornada">
-                          <label for="titulo_jornada">Titulo de la jornada(<span class="text-danger text-md">*</span>)</label>
+                          <label for="titulo_jornada">Titulo de la Jornada(<span class="text-danger text-md">*</span>)</label>
                           <input type="text" maxlength="30" name="titulo_jornada" id="titulo_jornada" placeholder="Ingrese el titulo de la jornada" class="form-control">
                         </div>
                       </div>
                       <div class="col-4">
                         <div class="form-group">
-                          <label for="titulo_jornada">Cantidad aproximada de beneficiados(<span class="text-danger text-md">*</span>)</label>
+                          <label for="titulo_jornada">Cantidad Aproximada de Beneficiados(<span class="text-danger text-md">*</span>)</label>
                           <input type="number" name="cant_aproximada" v-model="cant_aproximada" :min="porciones" id="cant_aproximada" placeholder="Ingrese una cantidad aproximadas de beneficiados" class="form-control">
                         </div>
                       </div>
                       <div class="col-3">
-                        <label for="">Estado de la jornada(<span class="text-danger text-md">*</span>)</label>
+                        <label for="">Estado de la Jornada(<span class="text-danger text-md">*</span>)</label>
                         <div class="row">
                           <div class="form-check mx-3">
                             <input type="radio" name="estatus_jornada" id="estatus_jornada" value="1" class="form-check-input" readonly checked>
@@ -66,7 +66,7 @@ $person2 = $model_person->Get_Personas();
                     <div class="row">
                       <div class="col-3">
                         <div class="form-group">
-                          <label for="titulo_jornada">Fecha para la jornada(<span class="text-danger text-md">*</span>)</label>
+                          <label for="titulo_jornada">Fecha para la Jornada(<span class="text-danger text-md">*</span>)</label>
                           <input type="date" min="<?php echo $this->DateNow(); ?>" name="fecha_jornada" id="fecha_jornada" class="form-control">
                         </div>
                       </div>
@@ -74,14 +74,14 @@ $person2 = $model_person->Get_Personas();
                         <div class="form-group">
                           <label for="">Menú(<span class="text-danger text-md">*</span>)</label>
                           <select name="menu_id_jornada" id="" class="custom-select" v-model="menu_id_jornada" v-on:change="consultar_menu">
-                            <option value="">Seleccione una opción</option>
+                            <option value="">Seleccione una Opción</option>
                             <option v-for="item in selectMenu" :key="item.id_menu" :value="item.id_menu">{{item.des_menu}}</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-3">
                         <div class="form-group">
-                          <label for="responsable">responsable de esta jornada(<span class="text-danger text-md">*</span>)</label>
+                          <label for="responsable">Responsable de Esta Jornada(<span class="text-danger text-md">*</span>)</label>
                           <select name="responsable" id="responsable" class="custom-select special_select2">
                             <option value="">Seleccione a una Persona</option>
                             <?php foreach ($person2 as $persona) { ?>
@@ -94,7 +94,7 @@ $person2 = $model_person->Get_Personas();
                     <div class="row">
                       <div class="col-12">
                         <div class="form-group">
-                          <label for="">Descripción de la jornada(<span class="text-danger text-md">*</span>)</label>
+                          <label for="">Descripción de la Jornada(<span class="text-danger text-md">*</span>)</label>
                           <textarea name="des_jornada" maxlength="120" class="form-control" id="des_jornada" cols="30" rows="2"></textarea>
                         </div>
                       </div>

@@ -266,7 +266,6 @@
 						.then(({
 							data
 						}) => {
-							console.log(data)
 							this.next_id_entrada = data;
 						}).catch(error => console.error(error));
 				},
@@ -328,78 +327,123 @@
 							console.error(Err)
 						});
 				},
+				async consultar_producto(id){
+					return fetch(`<?php echo constant("URL"); ?>controller/c_productos.php?ope=Consultar_producto&id_producto=${id}`)
+					.then(response => response.json()).then(({data}) => data).catch(error => console.error(error));
+				},
 				async consultar_jornada() {
 					if (this.jornada_id == '') {
 						this.enviar_condicion = true;
 						this.limpiarProductos();
 						return false;
 					}
-					await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
-						.then(response => response.json())
-						.then(({
-							data
-						}) => {
-							this.limpiarProductos()
-							this.enviar_condicion = true;
-							let datos_menu = data[1];
-							let datos_jornada = data[0];
-							this.titulo_jornada = datos_jornada.titulo_jornada;
-							this.titulo_menu = datos_jornada.des_menu;
-							this.cant_aproximada = datos_jornada.cant_aproximada;
-							this.ingrediente = data[1];
-							this.id_menu = datos_jornada.id_menu;
-							let si_sobrePasa = false;
+					let data = await fetch(`<?php echo constant("URL"); ?>controller/c_jornada.php?ope=Consultar_jornada&id_jornada=${this.jornada_id}`)
+					.then(response => response.json())
+					.then(({
+						data
+					}) => {
+						this.limpiarProductos()
+						this.enviar_condicion = true;
+						return data;
+					}).catch(error => console.error(error));
 
-							datos_menu.forEach(item => {
-								let stock = parseInt(item.stock_product)
-								let consumo = parseInt(item.consumo)
-								let cant_proximada = parseInt(this.cant_aproximada)
-								let total = (consumo * cant_proximada);
-								let consumo_total;
-								
-								// total > 999 && item.med_comida_detalle != item.med_product
-								if (total > 999 && item.med_comida_detalle == "GM" || total > 999 && item.med_comida_detalle == "ML") {
-									consumo_total = total / 1000;
-									console.log(consumo_total)
-									if (!Number.isInteger(consumo_total)) consumo_total = Math.ceil(consumo_total)
-								} else {
-									if (item.med_comida_detalle == "GM" || item.med_comida_detalle == "ML") {
-										consumo_total = 1;
-									} else consumo_total = total;
-								}
-								
-								// console.log(consumo_total)
-								// console.log(item)
-								// console.groupEnd();
+					let datos_menu = data[1];
+					let datos_jornada = data[0];
+					this.titulo_jornada = datos_jornada.titulo_jornada;
+					this.titulo_menu = datos_jornada.des_menu;
+					this.cant_aproximada = datos_jornada.cant_aproximada;
+					this.ingrediente = data[1];
+					this.id_menu = datos_jornada.id_menu;
+					let si_sobrePasa = false;
 
-								let restante = (item.stock_product - consumo_total);
-								let if_entrada;
-								let producto = [];
-								producto["code"] = item.id_product;
-								producto["nom"] = item.nom_product;
-								producto["cantidad"] = consumo_total;
-								producto["stock"] = parseInt(item.stock_product);
-								producto["limite_stock"] = parseInt(item.stock_product);
-								producto["maximo_stock"] = parseInt(item.stock_maximo_product) - parseInt(item.stock_product);
-								producto["nuevo_stock"] = 0;
-								if (restante <= 0) if_entrada = "SI";
-								else if_entrada = "NO";
-								producto["if_entrada"] = if_entrada;
+					await datos_menu.forEach(async item => {
+						let datos = await this.consultar_producto(item.id_product);
 
-								this.Duplicar(producto);
-								if (producto['cantidad'] > producto['limite_stock']) {
-									si_sobrePasa = true;
-								}
-							});
+						let stock = parseInt(item.stock_product)
+						let consumo = parseInt(item.consumo)
+						let cant_proximada = parseInt(this.cant_aproximada)
+						let total = (consumo * cant_proximada);
+						let consumo_total;
 
-							if (si_sobrePasa) {
-								this.save_condicion = true;
-								this.Fn_mensaje_error("No coincide la cantidad requerida!");
-							} else {
-								this.save_condicion = false;
-							}
+						ct = total / 1000;
+						if (!Number.isInteger(ct)) ct = Math.ceil(ct)
+						
+						// SI SE REGSTRO CON MLIGRAMOS EN EL MENÚ, PERO EL PRODUCTO ESTA EN EL INVENTARIO CON LITROS
+						if(item.med_comida_detalle == "ML" && item.med_product == "LT") consumo_total = ct;
+						// SI EN AMBOS CASOS ESTÁ CON MILIGRAMOS
+						if(
+							item.med_comida_detalle == "ML" && item.med_product == "ML" ||
+							item.med_comida_detalle == "LT" && item.med_product == "LT"
+						) consumo_total = cant_proximada;
+						// SI SE REGSTRO CON LITROS EN EL MENÚ, PERO EL PRODUCTO ESTA EN EL INVENTARIO CON MILILITROS
+						if(item.med_comida_detalle == "LT" && item.med_product == "ML"){
+							let cantidad_gramos = cant_proximada * 1000;
+							let to = cantidad_gramos / item.valor_product;
+							consumo_total = Math.ceil(to)
+						}
+						// SI SE REGSTRO CON GRAMOS EN EL MENÚ, PERO EL PRODUCTO ESTA EN EL INVENTARIO CON KILOS
+						if(item.med_comida_detalle == "GM" && item.med_product == "KL") consumo_total = ct;
+						// SI EN AMBOS CASOS ESTÁ CON GRAMOS
+						if(
+							item.med_comida_detalle == "GM" && item.med_product == "GM" ||
+							item.med_comida_detalle == "KL" && item.med_product == "KL"
+						) consumo_total = cant_proximada;
+						// SI SE REGSTRO CON KILOS EN EL MENÚ, PERO EL PRODUCTO ESTA EN EL INVENTARIO CON GRAMOS
+						if(item.med_comida_detalle == "KL" && item.med_product == "GM"){
+							let cantidad_gramos = cant_proximada * 1000;
+							let to = cantidad_gramos / item.valor_product;
+							consumo_total = Math.ceil(to)
+						}
 
-						}).catch(error => console.error(error));
+						// console.group("DATOS DEL PRODUCTO (CONSULTA)")
+						// console.log(datos)
+						// console.groupEnd();
+						
+						// console.group("DATOS DEL PRODUCTO (MENU)")
+						// console.log(item)
+						// console.log("Cantidad aproximada a gastar")
+						// console.log(this.cant_aproximada)
+						// console.log("Consumo")
+						// console.log(consumo_total)
+						// console.groupEnd();
+
+						// total > 999 && item.med_comida_detalle != item.med_product
+						// if (total > 999 && item.med_comida_detalle == "GM" || total > 999 && item.med_comida_detalle == "ML") {
+						// 	consumo_total = total / 1000;
+						// 	if (!Number.isInteger(consumo_total)) consumo_total = Math.ceil(consumo_total)
+						// } else {
+						// 	if (item.med_comida_detalle == "GM" || item.med_comida_detalle == "ML") {
+						// 		consumo_total = 1;
+						// 	} else consumo_total = total;
+						// }
+						let restante = (item.stock_product - consumo_total);
+						let if_entrada;
+						let producto = [];
+						producto["code"] = item.id_product;
+						producto["nom"] = item.nom_product;
+						producto["cantidad"] = consumo_total;
+						producto["stock"] = parseInt(item.stock_product);
+						producto["limite_stock"] = parseInt(item.stock_product);
+						producto["maximo_stock"] = parseInt(item.stock_maximo_product) - parseInt(item.stock_product);
+						producto["nuevo_stock"] = 0;
+						if (restante <= 0) if_entrada = "SI";
+						else if_entrada = "NO";
+						producto["if_entrada"] = if_entrada;
+
+						this.Duplicar(producto);
+						if(producto['cantidad'] > producto['limite_stock']){
+							si_sobrePasa = true;
+						}
+					});
+
+					setTimeout( () => {	
+						if (si_sobrePasa) {
+							this.save_condicion = true;
+							this.Fn_mensaje_error("No coincide la cantidad requerida!");
+						} else {
+							this.save_condicion = false;
+						}
+					},400)
 				},
 				calculo(c, u) {
 					if (this.cant_aproximada != 0) {

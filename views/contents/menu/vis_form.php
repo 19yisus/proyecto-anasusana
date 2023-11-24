@@ -24,7 +24,7 @@ $productos = $model->Get_todos_productos(1);
             <div class="col-md-12">
               <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Formulario de Registro de menú</h3>
+                  <h3 class="card-title">Formulario de Registro de Menú</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -34,7 +34,7 @@ $productos = $model->Get_todos_productos(1);
                       <div class="col-5">
                         <div class="form-group">
                           <input type="hidden" name="id_menu">
-                          <label for="des_menu">Nombre del menú(<span class="text-danger text-md">*</span>)</label>
+                          <label for="des_menu">Nombre del Menú(<span class="text-danger text-md">*</span>)</label>
                           <input type="text" name="des_menu" id="des_menu" placeholder="Ingrese la descripción del menú" class="form-control">
                         </div>
                       </div>
