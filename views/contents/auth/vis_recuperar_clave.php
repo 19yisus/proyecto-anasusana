@@ -161,7 +161,7 @@ if (isset($_POST['ope'])) {
 						</div>
 
 						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" value="form2" type="submit">Recuperar</button>
+							<button class="btn-content__btn" id="btn" name="ope" value="form2" type="submit">Recuperar</button>
 						</div>
 
 						<div class="input__return">

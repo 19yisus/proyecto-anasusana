@@ -43,8 +43,8 @@
             $variable = str_ireplace("INSERT INTO","",$variable);
             $variable = str_ireplace("[","",$variable);
             $variable = str_ireplace("]","",$variable);
-            $variable = str_ireplace("(","",$variable);
-            $variable = str_ireplace(")","",$variable);
+            // $variable = str_ireplace("(","",$variable);
+            // $variable = str_ireplace(")","",$variable);
             $variable = str_ireplace("{","",$variable);
             $variable = str_ireplace("}","",$variable);
             $variable = str_ireplace("==","",$variable);

@@ -7,6 +7,7 @@
     public $url;
 
     public function __construct(){
+      session_set_cookie_params(0);
       session_start();
       $this->ObjMessage = new c_messages();
       $this->GetView($this->GetRoute());

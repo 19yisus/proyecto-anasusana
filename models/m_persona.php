@@ -13,7 +13,7 @@
         public function setDatos($d){
             $this->id_persona = isset($d['id_persona']) ? $this->Clean(intval($d['id_persona'])) : null;
             $this->nom_persona = isset($d['nom_persona']) ? $this->Clean($d['nom_persona']) : null;
-            $this->sexo_persona = isset($d['sexo_persona']) ? $this->Clean($d['sexo_persona']) : null;
+            $this->sexo_persona = isset($d['sexo_persona']) ? $this->Clean($d['sexo_persona']) : 'N';
             $this->status_persona = isset($d['status_persona']) ? $this->Clean(intval($d['status_persona'])) : null;
             $this->cedula_persona = isset($d['cedula_persona']) ? $this->Clean($d['cedula_persona']) : null;
             $this->tipo_persona = isset($d['tipo_persona']) ? $this->Clean($d['tipo_persona']) : null;
@@ -21,8 +21,8 @@
             $this->telefono_casa_persona = isset($d['telefono_casa_persona']) ? $this->Clean($d['telefono_casa_persona']) : null;
             $this->direccion_persona = isset($d['direccion_persona']) ? $this->Clean($d['direccion_persona']) : null;
             $this->correo_persona = isset($d['correo_persona']) ? $this->Clean($d['correo_persona']) : null; 
-            $this->if_proveedor = isset($d['if_proveedor']) ? $d['if_proveedor'] : null;
-            $this->if_user = isset($d['if_user']) ? $d['if_user'] : null;
+            $this->if_proveedor = isset($d['if_proveedor']) ? $d['if_proveedor'] : 1;
+            $this->if_user = isset($d['if_user']) ? $d['if_user'] : 0;
             $this->status_persona =  isset($d['status_persona']) ? $d['status_persona'] : null;
             $this->cargo_id = isset($d['cargo_id']) ? $d['cargo_id'] : null;
         }
@@ -37,8 +37,10 @@
                 $sql = "INSERT INTO personas(id_person,cedula_person,tipo_person,nom_person,sexo_person,telefono_movil_person,telefono_casa_person,direccion_person,correo_person,cargo_id,if_proveedor,if_user,status_person,created_person) 
                 VALUES(null,'$this->cedula_persona','$this->tipo_persona','$this->nom_persona', '$this->sexo_persona',
                 '$this->telefono_movil_persona','$this->telefono_casa_persona','$this->direccion_persona','$this->correo_persona','$this->cargo_id',$this->if_proveedor,$this->if_user,$this->status_persona, NOW());";
+                $sql=str_replace(",,",",null,", $sql);
+                $sql=str_replace(",'',",",null,", $sql);
+                
                 $this->Query($sql);
-
                 $this->id_persona = $this->Returning_id();                
                 
                 if(!isset($_SESSION['user_id'])) session_start();
@@ -64,6 +66,8 @@
                 telefono_movil_person = '$this->telefono_movil_persona', telefono_casa_person = '$this->telefono_casa_persona', 
                 direccion_person = '$this->direccion_persona', correo_person = '$this->correo_persona', 
                 if_proveedor = '$this->if_proveedor', if_user = '$this->if_user', cargo_id = '$this->cargo_id' WHERE id_person = $this->id_persona ;";
+                $sql=str_replace(", cargo_id = ,","", $sql);
+
                 $this->Query($sql);
                 
                 if(!isset($_SESSION['user_id'])) session_start();

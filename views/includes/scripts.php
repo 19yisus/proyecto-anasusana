@@ -96,6 +96,11 @@
 
 	window.addEventListener("keypress", function(event) {
 		if (event.keyCode == 13) {
+			if($("#btn")) $("#btn").click();
+			if($("#btn_recuperar")) $("#btn_recuperar").click();
+			if($("#btn-registrar")) $("#btn-registrar").click();
+			if($("#btn-recuperar")) $("#btn-recuperar").click();
+			if($("#form-btn__submit")) $("#form-btn__submit").click();
 			if ($("#btn")) $("#btn").click();
 			event.preventDefault();
 		}
@@ -134,13 +139,13 @@ if (isset($_SESSION['user_id']) && constant("DEV") == false) {
 ?>
 	<script>
 		let tiempo_inactividad = 0;
-		let tiempo_final = 60;
+		let tiempo_final = 45;
 		// 3 minutos de inactividad
 
 		window.setInterval(() => {
 			contador("sum")
 			show_alerta();
-			if(tiempo_inactividad > tiempo_final) cerrarSesion.submit();
+			if(tiempo_inactividad > tiempo_final) CerrarSession.submit();;
 		}, 1000);
 		window.onblur = window.onmousemove = () =>{
 			if(!Swal.isVisible()) contador("clear");
@@ -152,7 +157,7 @@ if (isset($_SESSION['user_id']) && constant("DEV") == false) {
 		}
 
 		function show_alerta() {
-			if (tiempo_inactividad > 40 && !Swal.isVisible()) {
+			if (tiempo_inactividad > 30 && !Swal.isVisible()) {
 				Swal.fire({
 					title: `Se cerrará la sesión, ¿desea extender la?`,
 					showDenyButton: true,

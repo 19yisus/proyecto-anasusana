@@ -39,30 +39,31 @@
 														<div class="input-group-prepend">
 															<select v-model="tipo_persona" name="tipo_persona" id="" class="custom-select">
 																<option selected value="V">V</option>
-																<option value="R">R</option>
 																<option value="J">J</option>
 																<option value="E">E</option>
+																<option value="G">G</option>
 															</select>
 														</div>
-														<input type="number" name="cedula_persona" id="cedula_persona" placeholder="Ingrese la Cédula o RIF" class="form-control">
+														<input type="text" maxlength="11" minlength="6" name="cedula_persona" id="cedula_persona" v-on:keyup="valida_cedula" placeholder="Ingrese la Cédula o RIF" class="form-control">
 													</div>
 												</div>
 											</div>
 											<div class="col-5">
 												<div class="form-group">
-													<label for="nom_persona">Nombre y Apellido(<span class="text-danger text-md">*</span>)</label>
-													<input type="text" name="nom_persona" id="nom_persona" placeholder="Ingrese el Nombre de la Persona" class="form-control">
+													<label for="nom_persona" v-if="val_tipo_persona">Nombre y Apellido(<span class="text-danger text-md">*</span>)</label>
+													<label for="nom_persona" v-if="!val_tipo_persona">Razón social(<span class="text-danger text-md">*</span>)</label>
+													<input type="text" name="nom_persona" id="nom_persona" placeholder="Ingrese el Nombre" class="form-control">
 												</div>
 											</div>
-											<div class="col-3">
+											<div class="col-3" v-if="val_tipo_persona">
 												<label for="sexo_persona">Sexo(<span class="text-danger text-md">*</span>)</label>
 												<div class="row">
 													<div class="form-check mx-3">
-														<input type="radio" name="sexo_persona" id="sexo_persona" value="F" class="form-check-input">
+														<input type="radio" v-bind:disabled="!val_tipo_persona" name="sexo_persona" id="sexo_persona" value="F" class="form-check-input">
 														<label for="sexo_persona" class="form-check-label">Femenino</label>
 													</div>
 													<div class="form-check">
-														<input type="radio" name="sexo_persona" id="sexo_persona" value="M" class="form-check-input">
+														<input type="radio" v-bind:disabled="!val_tipo_persona" name="sexo_persona" id="sexo_persona" value="M" class="form-check-input">
 														<label for="sexo_persona" class="form-check-label">Masculino</label>
 													</div>
 												</div>
@@ -71,13 +72,13 @@
 										<div class="row">
 											<div class="col-3">
 												<div class="form-group">
-													<label for="telefono_movil_persona">Teléfono Móvil(<span class="text-danger text-md">*</span>)</label>
+													<label for="telefono_movil_persona">Teléfono Primario(<span class="text-danger text-md">*</span>)</label>
 													<input type="text" name="telefono_movil_persona" id="telefono_movil_persona" placeholder="Ingrese su Teléfono Móvil" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" inputmode="text">
 												</div>
 											</div>
 											<div class="col-3">
 												<div class="form-group">
-													<label for="telefono_casa_persona">Teléfono de Casa</label>
+													<label for="telefono_casa_persona">Teléfono Secundario</label>
 													<input type="text" name="telefono_casa_persona" id="telefono_casa_persona" placeholder="Ingrese su Teléfono de Casa" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" inputmode="text">
 												</div>
 											</div>
@@ -94,15 +95,15 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-3">
+											<div class="col-3" v-if="val_tipo_persona">
 												<label for="if_user">¿Tendrá Usuario?(<span class="text-danger text-md">*</span>)</label>
 												<div class="row">
 													<div class="form-check mx-3">
-														<input type="radio" name="if_user" id="if_user" value="1" class="form-check-input">
+														<input type="radio" v-bind:disabled="!val_tipo_persona" name="if_user" id="if_user" value="1" class="form-check-input">
 														<label for="if_user" class="form-check-label">Sí</label>
 													</div>
 													<div class="form-check">
-														<input type="radio" checked name="if_user" id="if_user" value="0" class="form-check-input">
+														<input type="radio" v-bind:disabled="!val_tipo_persona" checked name="if_user" id="if_user" value="0" class="form-check-input">
 														<label for="if_user" class="form-check-label">No</label>
 													</div>
 												</div>
@@ -122,14 +123,14 @@
 											</div>
 											<div class="col-3">
 												<div class="form-group">
-													<label for="direccion_persona">Dirección de la Persona(<span class="text-danger text-md">*</span>)</label>
-													<textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la Dirección de la Persona"></textarea>
+													<label for="direccion_persona">Dirección(<span class="text-danger text-md">*</span>)</label>
+													<textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la Dirección"></textarea>
 												</div>
 											</div>
-											<div class="col-3">
+											<div class="col-3" v-if="val_tipo_persona" >
 												<div class="form-group">
 													<label for="cargo_persona">Cargo(<span class="text-danger text-md">*</span>)</label>
-													<select name="cargo_id" id="cargo_id" class="custom-select">
+													<select v-bind:disabled="!val_tipo_persona" name="cargo_id" id="cargo_id" class="custom-select">
 														<option value="">Seleccione una opción</option>
 													</select>
 												</div>
@@ -237,6 +238,11 @@
 						this.marcas.splice(indice, 1);
 					}
 				},
+				valida_cedula(e){
+					$(e.target).val(function (index, value) {
+						return value.replace(/[^0-9-]/g, "");
+					});
+				},
 				eliminacionSelectiva: function(e) {
 					if (this.marcas.length > 1) this.marcas.splice(e.target.dataset.index, 1);
 				},
@@ -248,6 +254,10 @@
 				}
 			},
 			computed: {
+				val_tipo_persona(){
+					if(this.tipo_persona != "V" && this.tipo_persona != "E") return false;
+					else return true;
+				},
 				validando_extra: function() {
 					if (this.tipo_persona == "J" && this.es_proveedor == 1) {
 						// $validator.methods

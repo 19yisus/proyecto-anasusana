@@ -47,7 +47,7 @@ $productos = $model->Get_todos_productos(2);
 								<div class="card-footer">
 									<button type="button" v-on:click="Duplicar" id="btn_duplicar" class="btn btn-success"><i class="fas fa-plus-square"></i> Más Productos</button>
 									<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-primary"><i class="fas fa-save"></i> Guardar y Salir</button>
-									<button type="button" v-on:click="resetProductos" class="btn btn-danger"><i class="fas fa-trash"></i> Cancelar</button>
+									<button type="button" v-on:click="resetProductos" class="btn btn-danger"><i class="fas fa-trash"></i> Vaciar</button>
 								</div>
 							</form>
 						</div>

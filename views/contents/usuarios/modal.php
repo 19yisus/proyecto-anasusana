@@ -46,8 +46,8 @@ $roles = $model->Get_roles();
 																					<label for="nom_user">Permisos de Vista(<span class="text-danger text-md">*</span>)</label>
 																					<div class="row">
 																						<div class="form-check mx-3" v-for="mod in modulos">
-																							<input type="checkbox" name="modulos[]" :value="mod" class="form-check-input">
-																							<label class="form-check-label">{{mod}}</label>
+																							<input type="checkbox" name="modulos[]" :value="mod.name" v-model="mod.checked" :checked="mod.checked" class="form-check-input">
+																							<label class="form-check-label">{{mod.name}}</label>
 																						</div>
 																					</div>
 																				</div>
@@ -75,7 +75,7 @@ $roles = $model->Get_roles();
 <script>
 	async function envio(){
 		$("#oper").val("Actualizar")
-		if($("#formulario").valid()){
+		if($("#formulario").valid() && app.modulos.some( i => i.checked == true)){
 			let res = await Confirmar();
 			if(!res) return false;
 
@@ -89,11 +89,20 @@ $roles = $model->Get_roles();
 					document.formulario.reset();
 					$("#modal-lg").modal("hide");
 
+					app.modulos = [{name: "marcas", checked: false},{name: "personas", checked: false},{name: "jornada", checked: false},
+						{name: "productos", checked: false},{name: "entradas", checked: false},{name: "salidas", checked: false},
+						{name: "comedor", checked: false},{name: "cargo", checked: false},{name: "menu", checked: false},{name: "reportes", checked: false}]
+
 					Toast.fire({
 						icon: `${res.data.code}`,
 						title: `${res.data.message}`
 					});
 			}).catch( Err => console.log(Err))
+		}else{
+			Toast.fire({
+				icon: `error`,
+				title: `Debes de seleccionar al menos un módulo`
+			});
 		}
 	}
 

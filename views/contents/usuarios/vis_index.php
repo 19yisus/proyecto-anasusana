@@ -62,16 +62,16 @@
     el: '#app_vue',
     data:{
       modulos:[
-        "marcas",
-        "personas",
-        "jornada",
-        "productos",
-        "entradas",
-        "salidas",
-        "comedor",
-        "cargo",
-        "menu",
-        "reportes",
+        {name: "marcas", checked: false},
+        {name: "personas", checked: false},
+        {name: "jornada", checked: false},
+        {name: "productos", checked: false},
+        {name: "entradas", checked: false},
+        {name: "salidas", checked: false},
+        {name: "comedor", checked: false},
+        {name: "cargo", checked: false},
+        {name: "menu", checked: false},
+        {name: "reportes", checked: false},
       ],
       modulosRegistrados:[]
     },
@@ -82,9 +82,11 @@
           console.log(element, name)
           if(element.modulo_name == name){
             check = true;
-            return false;
+            return true;
           }
         });
+
+        return true;
       }
     }
   });
@@ -121,7 +123,15 @@
       form.id_user.value = res.data[0].id_user;
       form.rol_user.value = res.data[0].id_rol;
       app.modulosRegistrados = res.data[1];
-      console.log(app.modulosRegistrados)
+
+      app.modulos.forEach( (i, x) => {
+        app.modulos[x].checked = false;
+        res.data[1].forEach( (ix) => {
+          if(i.name === ix.modulo_name){
+            app.modulos[x].checked = true;
+          }
+        })
+      })
     })
     .catch( Err => {
       console.error(Err)

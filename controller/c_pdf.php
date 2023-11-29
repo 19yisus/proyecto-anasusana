@@ -122,8 +122,12 @@ function fn_pdf_entrada()
   // $pdf->cell(48,7,"Fecha de vencimiento",1,0,"C",1);
   // $pdf->cell(30,7,"Grupo",1,0,"C",1);
   $pdf->cell(20, 7, utf8_decode("Medida"), 1, 0, "C", 1);
-  $pdf->cell(26, 7, utf8_decode("Catidad"), 1, 0, "C", 1);
-  $pdf->cell(48, 7, utf8_decode("Precio"), 1, 1, "C", 1);
+  if($d['doc']['concepto'] == "C"){
+    $pdf->cell(26, 7, utf8_decode("Catidad"), 1, 0, "C", 1);
+    $pdf->cell(48, 7, utf8_decode("Precio"), 1, 1, "C", 1);
+  }else{
+    $pdf->cell(74, 7, utf8_decode("Catidad"), 1, 1, "C", 1);
+  }
   $pdf->SetFillColor(255, 255, 255);
   $pdf->SetTextColor(0, 0, 0);
   $pdf->setFont('Arial', 'B', 9);
@@ -133,8 +137,12 @@ function fn_pdf_entrada()
     // $pdf->cell(48,7,$dato['fecha_vencimiento_ope'],1,0,"C",1);
     // $pdf->cell(30,7,$dato['nom_grupo'],1,0,"C",1);
     $pdf->cell(20, 7, utf8_decode($dato['valor_product'] . " " . $dato['med_product']), 1, 0, "C", 1);
-    $pdf->cell(26, 7, utf8_decode($dato['detalle_cantidad']), 1, 0, "C", 1);
-    $pdf->cell(48, 7, utf8_decode($dato['precio_product_ope'] . "Bs."), 1, 1, "C", 1);
+    if($d['doc']['concepto'] == "C"){
+      $pdf->cell(26, 7, utf8_decode($dato['detalle_cantidad']), 1, 0, "C", 1);
+      $pdf->cell(48, 7, utf8_decode($dato['precio_product_ope'] . "Bs."), 1, 1, "C", 1);
+    }else{
+      $pdf->cell(74, 7, utf8_decode($dato['detalle_cantidad']), 1, 1, "C", 1);
+    }
   }
   $pdf->Output();
 }
@@ -353,8 +361,12 @@ function fn_pdf_filtrado()
       $pdf->cell(50, 7, utf8_decode("" . $prod['nom_product']), 1, 0, "C", 1);
       $pdf->cell(15, 7, utf8_decode($prod['valor_product'] . " " . $prod['med_product']), 1, 0, "C", 1);
       $pdf->cell(35, 7, utf8_decode("Cantidad c/u: " . $prod['detalle_cantidad']), 1, 0, "C", 1);
-      $pdf->cell(40, 7, utf8_decode("Precio c/u: " . $prod['precio_product_ope'] . "Bs."), 1, 0, "C", 1);
-      $pdf->cell(50, 7, utf8_decode("Marca: " . $prod['nom_marca']), 1, 0, "C", 1);
+      if($dato['invent']['concept_invent'] == "C"){
+        $pdf->cell(40, 7, utf8_decode("Precio c/u: " . $prod['precio_product_ope'] . "Bs."), 1, 0, "C", 1);
+        $pdf->cell(50, 7, utf8_decode("Marca: " . $prod['nom_marca']), 1, 0, "C", 1);
+      }else{
+        $pdf->cell(90, 7, utf8_decode("Marca: " . $prod['nom_marca']), 1, 0, "C", 1);
+      }
       $pdf->Ln();
     }
     $pdf->Ln(10);

@@ -95,6 +95,11 @@
           title: `${sms}`
         });
       },
+      valida_cedula(e){
+        $(e.target).val(function (index, value) {
+          return value.replace(/[^0-9-]/g, "");
+        });
+      },
       envio: async function(){
         if($("#formulario").valid()){
           let res = await Confirmar();
@@ -119,6 +124,10 @@
       }
     },
     computed:{
+      val_tipo_persona(){
+        if(this.tipo_persona != "V" && this.tipo_persona != "E") return false;
+        else return true;
+      },
       juridico: function(){
         if(this.tipo_persona == "J" && this.if_proveedor == 1) return true; 
         else{
@@ -235,7 +244,7 @@
             </div>`;
 
             <?php if(isset($_SESSION['permisos'])){?>
-              if(<?php echo $_SESSION['permisos'];?> == 1) btn = ``;
+              if(<?php echo $_SESSION['permisos'];?> < 3) btn = ``;
             <?php }?>
 
           return btn;

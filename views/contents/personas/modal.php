@@ -28,30 +28,31 @@
                                                         <select v-model="tipo_persona" name="tipo_persona" id="" class="custom-select" readonly>
                                                             <option value="V">V</option>
                                                             <option value="J">J</option>
-                                                            <option value="R">R</option>
                                                             <option value="E">E</option>
+                                                            <option value="G">G</option>
                                                         </select>
                                                     </div>
-                                                    <input type="number" name="cedula_persona" id="cedula_persona" placeholder="Ingrese la Cédula o RIF" class="form-control" readonly>
+                                                    <input type="text" name="cedula_persona" id="cedula_persona" v-on:keyup="valida_cedula" placeholder="Ingrese la Cédula o RIF" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="nom_persona">Nombres y Apellidos(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="nom_persona" v-if="val_tipo_persona">Nombre y Apellido(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="nom_persona" v-if="!val_tipo_persona">Razón social(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="nom_persona" id="nom_persona" placeholder="Ingrese el nombre de la persona" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-7 col-sm-12">
+                                        <div class="col-7 col-sm-12" v-if="val_tipo_persona">
                                             <div class="form-group">
                                                 <label for="sexo_persona">Sexo(<span class="text-danger text-md">*</span>)</label>
                                                 <div class="row">
                                                     <div class="form-check mx-3">
-                                                        <input type="radio" name="sexo_persona" id="sexo_persona" value="F" class="form-check-input">
+                                                        <input v-bind:disabled="!val_tipo_persona" type="radio" name="sexo_persona" id="sexo_persona" value="F" class="form-check-input">
                                                         <label for="sexo_persona" class="form-check-label">Femenino</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input type="radio" name="sexo_persona" id="sexo_persona" value="M" class="form-check-input">
+                                                        <input v-bind:disabled="!val_tipo_persona" type="radio" name="sexo_persona" id="sexo_persona" value="M" class="form-check-input">
                                                         <label for="sexo_persona" class="form-check-label">Masculino</label>
                                                     </div>
                                                 </div>
@@ -59,13 +60,13 @@
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="telefono_movil_persona">Teléfono Móvil(<span class="text-danger text-md">*</span>)</label>
+                                                <label for="telefono_movil_persona">Teléfono Primario(<span class="text-danger text-md">*</span>)</label>
                                                 <input type="text" name="telefono_movil_persona" id="telefono_movil_persona" placeholder="Ingrese su Teléfono Móvil" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" inputmode="text">
                                             </div>
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="telefono_casa_persona">Teléfono de Casa</label>
+                                                <label for="telefono_casa_persona">Teléfono Secundario</label>
                                                 <input type="text" name="telefono_casa_persona" id="telefono_casa_persona" placeholder="Ingrese su Teléfono de Casa" class="form-control" data-inputmask="&quot;mask&quot;: &quot;(9999) 999-9999&quot;" data-mask="" inputmode="text">
                                             </div>
                                         </div>
@@ -84,16 +85,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-7 col-sm-12">
+                                        <div class="col-7 col-sm-12" v-if="val_tipo_persona">
                                             <div class="form-group">
                                                 <label for="if_user">¿Tendrá Usuario?(<span class="text-danger text-md">*</span>)</label>
                                                 <div class="row">
                                                     <div class="form-check mx-3">
-                                                        <input type="radio" name="if_user" id="if_user" value="1" class="form-check-input">
+                                                        <input type="radio" v-bind:disabled="!val_tipo_persona" name="if_user" id="if_user" value="1" class="form-check-input">
                                                         <label for="if_user" class="form-check-label">Sí</label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input type="radio" name="if_user" id="if_user" value="0" class="form-check-input">
+                                                        <input type="radio" v-bind:disabled="!val_tipo_persona" name="if_user" id="if_user" value="0" class="form-check-input">
                                                         <label for="if_user" class="form-check-label">No</label>
                                                     </div>
                                                 </div>
@@ -110,7 +111,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-3" v-if="val_tipo_persona">
                                             <div class="form-group">
                                                 <label for="cargo_persona">Cargo(<span class="text-danger text-md">*</span>)</label>
                                                 <select name="cargo_id" id="" class="custom-select">
@@ -127,8 +128,8 @@
                                         </div>
                                         <div class="col-7 col-sm-12">
                                             <div class="form-group">
-                                                <label for="direccion_persona">Dirección de la Persona(<span class="text-danger text-md">*</span>)</label>
-                                                <textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la Direcion de la Persona"></textarea>
+                                                <label for="direccion_persona">Dirección(<span class="text-danger text-md">*</span>)</label>
+                                                <textarea name="direccion_persona" id="direccion_persona" cols="30" rows="2" class="form-control" placeholder="Ingrese la Direción"></textarea>
                                             </div>
                                         </div>
                                         <div v-show="marcas.length > 0" v-for="(item, index) in marcas" class="col-7 col-sm-12">

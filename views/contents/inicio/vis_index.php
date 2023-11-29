@@ -109,7 +109,7 @@
 
           <div class="div-lastmenu" id="menus_recientes">
             <div class="title-lastmenu">
-              <h3 class="title__menu">Menú's agregados recientes</h3>
+              <h3 class="title__menu">Menú's agregados recientemente</h3>
             </div>
             <div class="menu-track">
               <div class="card-food" v-for="(menu,index) in menus" :key="index">

@@ -69,15 +69,19 @@
       }
 
       public function Actualizar_permisos_vista(){
-        $sql = "DELETE FROM permiso_vista WHERE user_id = $this->id_user;";
-        $this->Query($sql);
-
-        foreach($this->modulos as $modulo){
-          $sql = "INSERT INTO permiso_vista(user_id, modulo_name) VALUES($this->id_user, '$modulo');";
+        if(is_array($this->modulos)){
+          $sql = "DELETE FROM permiso_vista WHERE user_id = $this->id_user;";
           $this->Query($sql);
+  
+          foreach($this->modulos as $modulo){
+            $sql = "INSERT INTO permiso_vista(user_id, modulo_name) VALUES($this->id_user, '$modulo');";
+            $this->Query($sql);
+          }
+  
+          return ["code" => "success", "message" => "Operación Exitosa"];
         }
 
-        return ["code" => "success", "message" => "Operación Exitosa"];
+        return ["code" => "error", "message" => "Operación Fallida"];
       }
 
       public function Save_pregunta($pregunta){

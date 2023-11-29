@@ -26,8 +26,8 @@ class m_productos extends m_db
 	public function Create()
 	{
 		$sqlVerificar = "SELECT * FROM productos WHERE nom_product = '$this->nom_producto' AND marca_id_product = $this->marca_id_producto;";
-		$sqlVerificar=str_replace("AND marca_id_product != ;",";", $sqlVerificar);
-
+		$sqlVerificar=str_replace("AND marca_id_product = ;",";", $sqlVerificar);
+		
 		$result = $this->Query($sqlVerificar);
 		if ($result->num_rows > 0) return "err/02ERR";
 

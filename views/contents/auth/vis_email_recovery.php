@@ -120,7 +120,7 @@ if (isset($_POST['ope'])) {
 						</div>
 
 						<div class="input__btn-content">
-							<button class="btn-content__btn" name="ope" value="form1" type="submit">Consultar</button>
+							<button class="btn-content__btn" id="btn" name="ope" value="form1" type="submit">Consultar</button>
 						</div>
 
 						<div class="input__return">
@@ -152,7 +152,7 @@ if (isset($_POST['ope'])) {
 
 						<div class="input__btn-content" style="margin-bottom: 10px;">
 							<input type="hidden" name="ope" value="form2">
-							<button class="btn-content__btn" type="submit">Enviar</button>
+							<button class="btn-content__btn" id="btn" type="submit">Enviar</button>
 						</div>
 					</form>
 				</div>

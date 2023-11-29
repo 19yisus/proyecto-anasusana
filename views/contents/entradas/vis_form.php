@@ -139,7 +139,7 @@
 																	<th>Código</th>
 																	<th>Descripción</th>
 																	<th>Cantidad</th>
-																	<th>Precio</th>
+																	<th v-show="concepto_operacion == 'C'">Precio</th>
 																	<th>Fecha de Vencimiento</th>
 																</tr>
 															</thead>
@@ -148,7 +148,7 @@
 																	<td>{{ item.code }}</td>
 																	<td>{{ item.nom_product }}</td>
 																	<td>{{ item.cantidad }}</td>
-																	<td>{{ item.precio }}</td>
+																	<td v-show="concepto_operacion == 'C'">{{ item.precio }}</td>
 																	<td>{{ item.fecha }}</td>
 																</tr>
 															</tbody>

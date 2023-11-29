@@ -3,7 +3,7 @@
     private $if_code_exists;
 
     private $list_errors = [
-      '01AUTH' => "NO EXISTE SESSION ACTIVA",
+      '01AUTH' => "No existe sesión activa",
       '02AUTH' => "La cédula es invalida o no esta registrado en el sistema",
       '03AUTH' => "Usted no esta habilitado para poseer un usuario",
       '04AUTH' => "Usted ya posee un usuario registrado",
