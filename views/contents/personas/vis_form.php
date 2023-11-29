@@ -44,7 +44,8 @@
 																<option value="G">G</option>
 															</select>
 														</div>
-														<input type="text" maxlength="11" minlength="6" name="cedula_persona" id="cedula_persona" v-on:keyup="valida_cedula" placeholder="Ingrese la Cédula o RIF" class="form-control">
+														<!-- pattern="[0-9-]{7-11}" -->
+														<input type="text" maxlength="11" name="cedula_persona" id="cedula_persona" v-on:keyup="valida_cedula" placeholder="Ingrese la Cédula o RIF" class="form-control">
 													</div>
 												</div>
 											</div>
@@ -310,8 +311,8 @@
 				cedula_persona: {
 					required: true,
 					minlength: 7,
-					maxlength: 9,
-					number: true,
+					maxlength: 11,
+					number: true
 				},
 				nom_persona: {
 					required: true,
@@ -363,7 +364,7 @@
 				cedula_persona: {
 					required: "La Cédula es Requerida",
 					minlength: "Mínimo de 7 caracteres",
-					maxlength: "Máximo de 9 caracteres",
+					maxlength: "Máximo de 11 caracteres",
 					number: "Sólo se Permiten Números",
 				},
 				nom_persona: {
