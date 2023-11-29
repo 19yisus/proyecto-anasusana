@@ -44,8 +44,8 @@
 																<option value="G">G</option>
 															</select>
 														</div>
-														<!-- pattern="[0-9-]{7-11}" -->
-														<input type="text" maxlength="11" name="cedula_persona" id="cedula_persona" v-on:keyup="valida_cedula" placeholder="Ingrese la Cédula o RIF" class="form-control">
+														<!-- pattern="[0-9-]{7-11}" v-on:keyup="valida_cedula" --> 
+														<input type="number" maxlength="11" name="cedula_persona" id="cedula_persona" placeholder="Ingrese la Cédula o RIF" class="form-control">
 													</div>
 												</div>
 											</div>
