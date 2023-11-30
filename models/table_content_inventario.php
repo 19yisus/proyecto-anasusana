@@ -18,7 +18,7 @@
   <thead class="table-dark">
     <tr>
       <th>Código</th>
-      <?php if($datos_inventario['type_operacion_invent'] != "S" && $datos_inventario['concept_invent'] != "C"){?>
+      <?php if($datos_inventario['type_operacion_invent'] != "S" && $datos_inventario['concept_invent'] == "C"){?>
       <th>Numero de orden</th>
       <?php } ?>
       <th>Concepto de operación</th>
