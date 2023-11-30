@@ -142,14 +142,14 @@ if (isset($_SESSION['user_id']) && constant("DEV") == false) {
 		let tiempo_final = 45;
 		// 3 minutos de inactividad
 
-		// window.setInterval(() => {
-		// 	contador("sum")
-		// 	show_alerta();
-		// 	if(tiempo_inactividad > tiempo_final) CerrarSession.submit();;
-		// }, 1000);
-		// window.onblur = window.onmousemove = () =>{
-		// 	if(!Swal.isVisible()) contador("clear");
-		// }
+		window.setInterval(() => {
+			contador("sum")
+			show_alerta();
+			if(tiempo_inactividad > tiempo_final) CerrarSession.submit();;
+		}, 1000);
+		window.onblur = window.onmousemove = () =>{
+			if(!Swal.isVisible()) contador("clear");
+		}
 
 		function contador(orden) {
 			if (orden == "clear") tiempo_inactividad = 0;

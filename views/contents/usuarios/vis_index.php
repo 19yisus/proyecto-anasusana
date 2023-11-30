@@ -68,7 +68,6 @@
         {name: "productos", checked: false},
         {name: "entradas", checked: false},
         {name: "salidas", checked: false},
-        {name: "comedor", checked: false},
         {name: "cargo", checked: false},
         {name: "menu", checked: false},
         {name: "reportes", checked: false},
