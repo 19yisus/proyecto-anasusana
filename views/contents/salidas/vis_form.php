@@ -173,7 +173,7 @@
 															<tbody>
 																<tr v-for="(item, index) in productos" :key="index">
 																	<td>{{ item.code }}</td>
-																	<td>{{ item.nom_product }}</td>
+																	<td>{{ item.nom_product }} {{item.valor}} {{item.medida}}</td>
 																	<td>{{ item.cantidad }}</td>
 																	<td>{{ calculo_stock(item.stock,item.cantidad)}}</td>
 																</tr>
@@ -309,7 +309,6 @@
 						.then(response => response.json()).then(({
 							data
 						}) => {
-							console.log(data)
 							this.id_menu = data[0].id_menu;
 							this.des_menu = data[0].des_menu;
 							this.productos_menu = []
@@ -369,12 +368,34 @@
 						if (!Number.isInteger(ct)) ct = Math.ceil(ct)
 						
 						// SI SE REGSTRO CON MLIGRAMOS EN EL MENÚ, PERO EL PRODUCTO ESTA EN EL INVENTARIO CON LITROS
-						if(item.med_comida_detalle == "ML" && item.med_product == "LT") consumo_total = ct;
+						if(item.med_comida_detalle == "ML" && item.med_product == "LT"){
+							consumo_total = ct;
+						}
 						// SI EN AMBOS CASOS ESTÁ CON MILIGRAMOS
 						if(
 							item.med_comida_detalle == "ML" && item.med_product == "ML" ||
 							item.med_comida_detalle == "LT" && item.med_product == "LT"
-						) consumo_total = cant_proximada;
+						){
+							let cantidad_gramos = cant_proximada * 1000;
+							if(item.med_comida_detalle == "ML" && item.med_product == "ML"){
+								var x = parseInt(item.valor_product); // Define el valor de x aquí
+								var resultado = parseInt(item.valor_product);
+								var index = 0;
+	
+								if (x != 1 && x != 0) {
+									while (resultado < total) {
+										resultado += x;
+										index +=1;
+									}
+								} else {
+									console.log("El valor de x debe ser diferente de 0 y 1 para evitar un bucle infinito.");
+								}
+
+								consumo_total = index;
+							}else{
+								consumo_total = cant_proximada;
+							}
+						} 
 						// SI SE REGSTRO CON LITROS EN EL MENÚ, PERO EL PRODUCTO ESTA EN EL INVENTARIO CON MILILITROS
 						if(item.med_comida_detalle == "LT" && item.med_product == "ML"){
 							let cantidad_gramos = cant_proximada * 1000;
@@ -387,7 +408,26 @@
 						if(
 							item.med_comida_detalle == "GM" && item.med_product == "GM" ||
 							item.med_comida_detalle == "KL" && item.med_product == "KL"
-						) consumo_total = cant_proximada;
+						){
+							if(item.med_comida_detalle == "GM" && item.med_product == "GM"){
+								var x = parseInt(item.valor_product); // Define el valor de x aquí
+								var resultado = parseInt(item.valor_product);
+								var index = 0;
+	
+								if (x != 1 && x != 0) {
+									while (resultado < total) {
+										resultado += x;
+										index +=1;
+									}
+								} else {
+									console.log("El valor de x debe ser diferente de 0 y 1 para evitar un bucle infinito.");
+								}
+
+								consumo_total = index;
+							}else{
+								consumo_total = cant_proximada;
+							} 
+						} 
 						// SI SE REGSTRO CON KILOS EN EL MENÚ, PERO EL PRODUCTO ESTA EN EL INVENTARIO CON GRAMOS
 						if(item.med_comida_detalle == "KL" && item.med_product == "GM"){
 							let cantidad_gramos = cant_proximada * 1000;
@@ -395,32 +435,13 @@
 							consumo_total = Math.ceil(to)
 						}
 
-						// console.group("DATOS DEL PRODUCTO (CONSULTA)")
-						// console.log(datos)
-						// console.groupEnd();
-						
-						// console.group("DATOS DEL PRODUCTO (MENU)")
-						// console.log(item)
-						// console.log("Cantidad aproximada a gastar")
-						// console.log(this.cant_aproximada)
-						// console.log("Consumo")
-						// console.log(consumo_total)
-						// console.groupEnd();
-
-						// total > 999 && item.med_comida_detalle != item.med_product
-						// if (total > 999 && item.med_comida_detalle == "GM" || total > 999 && item.med_comida_detalle == "ML") {
-						// 	consumo_total = total / 1000;
-						// 	if (!Number.isInteger(consumo_total)) consumo_total = Math.ceil(consumo_total)
-						// } else {
-						// 	if (item.med_comida_detalle == "GM" || item.med_comida_detalle == "ML") {
-						// 		consumo_total = 1;
-						// 	} else consumo_total = total;
-						// }
 						let restante = (item.stock_product - consumo_total);
 						let if_entrada;
 						let producto = [];
 						producto["code"] = item.id_product;
 						producto["nom"] = item.nom_product;
+						producto['valor'] = item.valor_product;
+						producto['medida'] = item.med_product;
 						producto["cantidad"] = consumo_total;
 						producto["stock"] = parseInt(item.stock_product);
 						producto["limite_stock"] = parseInt(item.stock_product);
@@ -510,6 +531,8 @@
 							nom_product: item['nom'],
 							cantidad: item['cantidad'],
 							limite_stock: item['limite_stock'],
+							medida: item['medida'],
+							valor: item['valor'],
 							stock: item['stock'],
 							stock_maximo: item['maximo_stock'],
 							nuevo_stock: item['nuevo_stock'],
@@ -588,6 +611,8 @@
 							this.productos[e.target.dataset.index].stock = data.data.stock_product;
 							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product) - parseInt(data.stock_product);
 							this.productos[e.target.dataset.index].nuevo_stock = parseInt(1);
+							this.productos[e.target.dataset.index].valor = data.data.valor_product;
+							this.productos[e.target.dataset.index].medida = data.data.med_product;
 						}).catch(error => console.error(error));
 				},
 				CodigosDuplicados(element) {

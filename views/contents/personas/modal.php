@@ -33,7 +33,7 @@
                                                         </select>
                                                     </div>
                                                     <!-- pattern="[0-9-]*"  v-on:keyup="valida_cedula"-->
-                                                    <input type="number" maxlength="11" name="cedula_persona" id="cedula_persona"  placeholder="Ingrese la Cédula o RIF" class="form-control" readonly>
+                                                    <input type="number" maxlength="11" name="cedula_persona" v-model="cedula_persona" id="cedula_persona"  placeholder="Ingrese la Cédula o RIF" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>

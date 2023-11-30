@@ -197,23 +197,23 @@ function fn_pdf_salida()
   $pdf->SetFillColor(253, 234, 13);
   $pdf->cell(190, 8, utf8_decode("Descripción general de los productos"), 1, 1, "C", 1);
   $pdf->cell(16, 7, utf8_decode("Código"), 1, 0, "C", 1);
-  $pdf->cell(80, 7, utf8_decode("Descripción"), 1, 0, "C", 1);
+  $pdf->cell(128, 7, utf8_decode("Descripción"), 1, 0, "C", 1);
   // $pdf->cell(48,7,"Fecha de vencimiento",1,0,"C",1);
   // $pdf->cell(30,7,"Grupo",1,0,"C",1);
   $pdf->cell(20, 7, utf8_decode("Medida"), 1, 0, "C", 1);
-  $pdf->cell(26, 7, utf8_decode("Cantidad"), 1, 0, "C", 1);
-  $pdf->cell(48, 7, utf8_decode("Precio"), 1, 1, "C", 1);
+  $pdf->cell(26, 7, utf8_decode("Cantidad"), 1, 1, "C", 1);
+  // $pdf->cell(48, 7, utf8_decode("Precio"), 1, 1, "C", 1);
   $pdf->SetFillColor(255, 255, 255);
   $pdf->SetTextColor(0, 0, 0);
   $pdf->setFont('Arial', 'B', 9);
   foreach ($d['productos'][0] as $dato) {
     $pdf->cell(16, 7, utf8_decode($dato['id_product']), 1, 0, "C", 1);
-    $pdf->cell(80, 7, utf8_decode($dato['nom_product']), 1, 0, "C", 1);
+    $pdf->cell(128, 7, utf8_decode($dato['nom_product']), 1, 0, "C", 1);
     // $pdf->cell(48,7,$dato['fecha_vencimiento_ope'],1,0,"C",1);
     // $pdf->cell(30,7,$dato['nom_grupo'],1,0,"C",1);
     $pdf->cell(20, 7, utf8_decode($dato['valor_product'] . " " . $dato['med_product']), 1, 0, "C", 1);
-    $pdf->cell(26, 7, utf8_decode($dato['detalle_cantidad']), 1, 0, "C", 1);
-    $pdf->cell(48, 7, utf8_decode($dato['precio_product_ope'] . "Bs."), 1, 1, "C", 1);
+    $pdf->cell(26, 7, utf8_decode($dato['detalle_cantidad']), 1, 1, "C", 1);
+    // $pdf->cell(48, 7, utf8_decode($dato['precio_product_ope'] . "Bs."), 1, 1, "C", 1);
   }
   $pdf->Output();
 }
@@ -476,11 +476,12 @@ function fn_pdf_Jornada()
   $pdf->addPage();
   $pdf->Ln(10);
   $pdf->setFont('Arial', 'B', 10);
-  $pdf->SetTextColor(0, 0, 0);
-  $pdf->SetFillColor(253, 234, 13);
-  $pdf->SetDrawColor(88, 88, 88);
-
+  
   foreach ($datos as $item_jornada_menu) {
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFillColor(253, 234, 13);
+    $pdf->SetDrawColor(88, 88, 88);
+    
     $fecha = new DateTime($item_jornada_menu['jornada_menu']['created_menu']);
     $fecha2 = new DateTime($item_jornada_menu['jornada_menu']['fecha_jornada']);
     // INFORMACIÓN DE LA JORNADA

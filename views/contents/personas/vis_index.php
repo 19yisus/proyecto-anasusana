@@ -69,6 +69,8 @@
     data:{
       tipo_persona: "",
       if_proveedor: "",
+      cedula_persona: "",
+      nom_persona: "",
       marcas: []
     },
     methods:{
@@ -163,36 +165,35 @@
   }
 
   const Consultar = async (value) => {
-    await fetch(`<?php echo constant("URL");?>controller/c_persona.php?ope=Consultar_persona&id_persona=${value}`)
-    .then( response => response.json()).then( res => {
-      app_vue.tipo_persona = res.data.tipo_person;
-      app_vue.if_proveedor = res.data.if_proveedor;
-      marcas = res.marcas.map( item =>{
-        let array = [];
-        array['id_marca'] = item.id_marca
-        return array
-      });
+    let datos = await fetch(`<?php echo constant("URL");?>controller/c_persona.php?ope=Consultar_persona&id_persona=${value}`)
+    .then( response => response.json()).then( res => res.data)
+    .catch( Err => console.error(Err));
+    
+    console.log(datos)
+    
+    app_vue.tipo_persona = datos.tipo_person;
+    app_vue.if_proveedor = datos.if_proveedor;
+    // marcas = res.marcas.map( item =>{
+    //   let array = [];
+    //   array['id_marca'] = item.id_marca
+    //   return array
+    // });
 
-      app_vue.marcas = marcas;
+    // app_vue.marcas = marcas;
 
-      const form = document.formulario;
-      form.tipo_persona.value = res.data.tipo_person;
-      form.if_proveedor.value = res.data.if_proveedor;
-      form.if_user.value = res.data.if_user;
-      form.id_persona.value = res.data.id_person;
-      form.cedula_persona.value = res.data.cedula_person;
-      form.nom_persona.value = res.data.nom_person;
-      form.sexo_persona.value = res.data.sexo_person;
-      form.telefono_movil_persona.value = res.data.telefono_movil_person;
-      form.telefono_casa_persona.value = res.data.telefono_casa_person;
-      form.correo_persona.value = res.data.correo_person;
-      form.direccion_persona.value = res.data.direccion_person;
-      form.cargo_id.value = res.data.cargo_id;
-      return res;
-    })
-    .catch( Err => {
-      console.error(Err)
-    });
+    const form = document.formulario;
+    form.tipo_persona.value = datos.tipo_person;
+    form.if_proveedor.value = datos.if_proveedor;
+    form.if_user.value = datos.if_user;
+    form.id_persona.value = datos.id_person;
+    form.cedula_persona.value = datos.cedula_person;
+    form.nom_persona.value = datos.nom_person;
+    form.sexo_persona.value = datos.sexo_person;
+    form.telefono_movil_persona.value = datos.telefono_movil_person;
+    form.telefono_casa_persona.value = datos.telefono_casa_person;
+    form.correo_persona.value = datos.correo_person;
+    form.direccion_persona.value = datos.direccion_person;
+    form.cargo_id.value = datos.cargo_id;
   }
 
   $( () => {

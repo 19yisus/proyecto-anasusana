@@ -150,25 +150,23 @@
 												</div>
 											</div>
 										</div>
-										<div class="row" v-show="validando_extra">
+										<!-- <div class="row" v-show="validando_extra">
 											<div v-for="(item, index) in marcas" class="container d-flex align-items-center justify-content-between col-12">
 												<div class="col-5">
 													<label for="marcas_proveedor">Marcas que donará este proveedor(<span class="text-danger text-md">*</span>)</label>
-													<!-- v-bind:disabled="disabled_input" -->
 													<select v-bind:disabled="disabled_input" :data-index="index" name="id_marca[]" class="custom-select id_marcas" v-model="marcas[index].value" @click="validaRepetidos">
 														<option value="">Seleccione una opción</option>
 														<?php
-														foreach ($marcas as $marca) {
+														//foreach ($marcas as $marca) {
 														?>
-															<option value="<?php echo $marca['id_marca']; ?>"><?php echo $marca['nom_marca']; ?></option>
+															<option value="<?php //echo $marca['id_marca']; ?>"><?php //echo $marca['nom_marca']; ?></option>
 														<?php
-														}
+														//}
 														?>
 													</select>
 												</div>
 											</div>
-
-										</div>
+										</div> -->
 									</div>
 									<!-- /.card-body -->
 									<div class="card-footer">
@@ -177,10 +175,9 @@
 											<i class="fas fa-save"></i>
 											Registrar
 										</button>
-										<button class="btn btn-success" title="Botón para añadir un nuevo cargo" data-toggle="modal" data-target="#modal-lg-cargo" type="button">Añadir Cargos <i class="fas fa-plus-square"></i></button>
-
-										<button v-show="validando_extra" class="btn btn-success" @click="duplicar" type="button">Añadir Marcas <i class="fas fa-plus-square"></i></button>
-										<button v-show="marcas.length > 1" class="btn btn-danger" @click="disminuir" type="button">Eliminar Marcas <i class="fas fa-trash"></i></button>
+										<button class="btn btn-success" v-if="val_tipo_persona" title="Botón para añadir un nuevo cargo" data-toggle="modal" data-target="#modal-lg-cargo" type="button">Añadir Cargos <i class="fas fa-plus-square"></i></button>
+										<!-- <button v-show="validando_extra" class="btn btn-success" @click="duplicar" type="button">Añadir Marcas <i class="fas fa-plus-square"></i></button>
+										<button v-show="marcas.length > 1" class="btn btn-danger" @click="disminuir" type="button">Eliminar Marcas <i class="fas fa-trash"></i></button> -->
 									</div>
 								</form>
 							</div>

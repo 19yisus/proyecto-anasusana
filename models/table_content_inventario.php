@@ -18,7 +18,9 @@
   <thead class="table-dark">
     <tr>
       <th>Código</th>
+      <?php if($datos_inventario['type_operacion_invent'] != "S" && $datos_inventario['concept_invent'] != "C"){?>
       <th>Numero de orden</th>
+      <?php } ?>
       <th>Concepto de operación</th>
       <th>Cantidad de productos</th>
       <th>Fecha y hora</th>
@@ -28,7 +30,9 @@
   <tbody>
     <tr>
       <td><?php echo $this->id_invent;?></td>
+      <?php if($datos_inventario['type_operacion_invent'] != "S" && $datos_inventario['concept_invent'] == "C"){?>
       <td><?php echo $datos_inventario['orden_invent'];?></td>
+      <?php } ?>
       <td><?php echo $conceptos[$datos_inventario['concept_invent']];?></td>
       <td><?php echo $datos_inventario['cantidad_invent'];?></td>
       <td><?php echo $fecha_inventario->format("d-m-Y h:i a");?></td>
@@ -119,7 +123,9 @@
       <th>Código</th>
       <th>Descripción</th>
       <th>Medidas</th>
+      <?php if($datos_inventario['type_operacion_invent'] != "S" && $datos_inventario['concept_invent'] == "C"){?>
       <th>Precio</th>
+      <?php } ?>
       <th>Marca</th>
       <th>Cantidad</th>
       <th>Stock Max.</th>
@@ -131,7 +137,9 @@
         <td><?php echo $producto['id_product'];?></td>
         <td><?php echo $producto['nom_product'];?></td>
         <td><?php echo $producto['valor_product']." ".$producto['med_product'];?></td>
+        <?php if($datos_inventario['type_operacion_invent'] != "S" && $datos_inventario['concept_invent'] == "C"){?>
         <td><?php echo $producto['precio_product_ope'];?></td>
+        <?php }?>
         <td><?php echo $producto['nom_marca'];?></td>
         <td><?php echo $producto['detalle_cantidad'];?></td>
         <td><?php echo $producto['stock_maximo_product'];?></td>

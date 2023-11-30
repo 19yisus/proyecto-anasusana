@@ -246,6 +246,7 @@
 						}) => {
 							this.productos[e.target.dataset.index].nom_product = data.nom_product;
 							this.productos[e.target.dataset.index].cantidad = parseInt(this.productos[e.target.dataset.index].cantidad);
+							console.log(parseInt(data.stock_maximo_product), parseInt(data.stock_product))
 							this.productos[e.target.dataset.index].stock_maximo = parseInt(data.stock_maximo_product) - parseInt(data.stock_product);
 						}).catch(error => console.error(error));
 				},

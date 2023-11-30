@@ -66,7 +66,7 @@
                 telefono_movil_person = '$this->telefono_movil_persona', telefono_casa_person = '$this->telefono_casa_persona', 
                 direccion_person = '$this->direccion_persona', correo_person = '$this->correo_persona', 
                 if_proveedor = '$this->if_proveedor', if_user = '$this->if_user', cargo_id = '$this->cargo_id' WHERE id_person = $this->id_persona ;";
-                $sql=str_replace(", cargo_id = ,","", $sql);
+                $sql=str_replace(", cargo_id = ''","", $sql);
 
                 $this->Query($sql);
                 
